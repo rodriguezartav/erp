@@ -1,0 +1,7 @@
+script(type='text/javascript', charset='utf-8')
+  var jQuery  = require("jqueryify");
+  var exports = this;
+  jQuery(function(){
+    var App = require("index");
+    exports.app =  new App({ el: $("body") , app: '!{app}' });
+  });

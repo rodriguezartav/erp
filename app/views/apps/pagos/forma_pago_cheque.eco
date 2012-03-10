@@ -1,0 +1,11 @@
+<h3>Cheque</h3>
+  <select class="span2">
+      <option>Banco Nacional</option>
+      <option>Banco de Costa Rica</option>
+      <option>Bac San Jose</option>
+      <option>BCT</option>
+  </select>
+  <input placeholder="Referencia" class="span2" />
+  <input placeholder="Fecha" class="span2" />
+  <input name="txt_monto" placeholder="Monto" class="span2 txt_forma_pago_monto" />
+  <a class="btn remove_forma_pago">x</a>

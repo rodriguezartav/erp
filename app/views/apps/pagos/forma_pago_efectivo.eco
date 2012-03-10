@@ -1,0 +1,4 @@
+
+<h3>Efectivo</h3>
+  <input  name="txt_monto"  placeholder="Monto" class="span2 txt_forma_pago_monto" />
+  <a class="btn remove_forma_pago">x</a>

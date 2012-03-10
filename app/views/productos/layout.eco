@@ -1,0 +1,4 @@
+<input type="text" placeholder="Busque Productos" class="input-medium search-query">
+
+<ul class="nav nav-tabs nav-stacked productos_list">
+</ul>

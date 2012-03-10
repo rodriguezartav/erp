@@ -1,0 +1,15 @@
+<ul class="nav nav-tabs">
+  <li class="active"><a class="js_view_selector" data-type="" href="#">Inicio</a></li>
+  <li><a class="js_view_selector" data-type="pagos" href="#">Pagos</a></li>
+  <li><a  class="js_view_selector" data-type="estados"  href="#">Estados</a></li>
+  <li><a  class="js_view_selector" data-type="ajustes" href="#">Ajustes</a></li>
+</ul>
+
+
+<div class="alert_wrapper">
+</div>
+
+<div class="content">
+
+</div>
+

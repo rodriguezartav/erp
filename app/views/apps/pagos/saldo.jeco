@@ -1,0 +1,6 @@
+<tr>
+  <td><%= @Consecutivo %></td>
+  <td><%= @Total %></td>
+  <td><%= @Saldo %></td>
+  <td><input data-max="<%= @Saldo %>" class="span2 txt_saldo_pendiente_monto"/></td>
+</tr>

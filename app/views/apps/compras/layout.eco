@@ -1,0 +1,74 @@
+<h1>Ingreso de Mercaderia</h2>
+
+<div class="well">
+  <h2>Cliente</h2>
+  <div class="src_cliente" >
+  </div>
+</div>
+
+<div class="well">
+  <div class="row">
+
+    <div class="columns four">
+      <h3>Proveedor</h3>
+      <input class="span3" />
+    </div>
+
+    <div class="columns four">
+      <h3>Fecha</h3>
+      <input class="span1" placeholder="dia" value="<%= new Date().getDate() %>" />
+      <input class="span1" placeholder="mes" value="<%= new Date().getMonth() + 1 %>"/>
+      <input class="span1" placeholder="año " value="<%= new Date().getFullYear() %>"/>
+    </div>
+
+    <div class="columns four">
+      <h3>Numero de Documento</h3>
+      <input class="span3" placeholder="# documento" />
+    </div>
+
+  </div>
+</div>
+
+<hr/>
+
+
+<div class="btn-group inline pull-right">
+   <a class="btn  btn-primary" href="#">Aplicar a Pagos</a>
+   <a class="btn  btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+     <span class="caret"></span>
+   </a>
+    <ul class="dropdown-menu">
+     <li><a data-include_notas="true" class="btn_apply_deposito" href="#">Incluyendo Notas</a></li>
+     <li><a data-include_notas="false" class="btn_apply_deposito" href="#">Sin Incluir Notas</a></li>
+   </ul>
+</div>
+
+<hr/>
+
+<div class="saldos_pendientes">
+  <h2>Saldos Pendientes</h2>
+  <table class="table table-striped table-bordered table-condensed table-contable">
+    <thead>
+      <tr>
+        <th class="span1">Documento</th>
+        <th class="yellow span3">Total</th>
+        <th class="blue">Saldo</th>
+        <th class="green span3">Pago</th>
+      </tr>
+    </thead>
+    <tbody class="list">
+    
+    </tbody>
+  </table>
+
+  <h4>Total: <strong class="total"><strong> </h4>
+
+</div>
+
+<hr/>
+
+<div class="pull-right">
+  <a class="btn">Guardar</a>
+</div>
+
+
