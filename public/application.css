@@ -1,0 +1,147 @@
+html {
+  height: 100%;
+}
+body {
+  background-image: url("images/furley_bg.png");
+  padding-bottom: 100px;
+  padding-top: 60px;
+  height: 100%;
+  font-familiy: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body .validatable,
+body .editable,
+body .loadable {
+  width: 90%;
+}
+body .span12 input,
+body .span12 textarea {
+  width: 95%;
+}
+body h1 {
+  color: #08c;
+}
+body >hr {
+  margin: 10px 0px;
+}
+body .well {
+  background-color: #fafafa;
+  border-color: #f89406;
+}
+body .btn.save {
+  padding: 8px 30px;
+}
+body .btn.cancel {
+  padding: 8px 30px;
+  float: left;
+}
+.action_footer .modal-footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+.action_footer .modal-footer .btn.last {
+  float: left;
+}
+.action_footer .modal-footer .btn.next {
+  float: right;
+}
+.clientes {
+  position: relative;
+}
+.clientes .clientes_list {
+  max-height: 150px;
+  overflow-y: scroll;
+  background-color: #fff;
+  position: absolute;
+  top: 28px;
+  left: 29px;
+  z-index: 66;
+  border: 1px solid #ccc;
+  width: 610px;
+}
+.clientes .clientes_list li {
+  cursor: pointer;
+}
+.clientes .clientes_list li.active a {
+  background-color: #08c;
+  color: #fff;
+}
+.clientes .clientes_list li a {
+  text-transform: capitalize;
+}
+.productos {
+  position: relative;
+}
+.productos .productos_list {
+  max-height: 290px;
+  overflow-y: scroll;
+  background-color: #fff;
+  position: absolute;
+  top: 27px;
+  left: 4px;
+  z-index: 66;
+  border: 1px solid #ccc;
+  width: 650px;
+}
+.productos .productos_list li {
+  cursor: pointer;
+}
+.productos .productos_list li.active a {
+  background-color: #08c;
+  color: #fff;
+}
+.productos .productos_list li a {
+  text-transform: capitalize;
+}
+.proveedores {
+  position: relative;
+}
+.proveedores .proveedores_list {
+  max-height: 290px;
+  overflow-y: scroll;
+  background-color: #fff;
+  position: absolute;
+  top: 27px;
+  left: 4px;
+  z-index: 66;
+  border: 1px solid #ccc;
+  width: 650px;
+}
+.proveedores .proveedores_list li {
+  cursor: pointer;
+}
+.proveedores .proveedores_list li.active a {
+  background-color: #08c;
+  color: #fff;
+}
+.proveedores .proveedores_list li a {
+  text-transform: capitalize;
+}
+.table-contable thead>tr>th {
+  text-align: center;
+}
+.table-contable tr td {
+  text-align: center;
+}
+.table-contable tr td:first-child {
+  text-align: left;
+}
+.table-contable tr td:last-child {
+  text-align: right;
+}
+.lightbox .modal .alert-box {
+  display: none;
+}
+.lightbox .modal .show_on_error {
+  display: none;
+}
+.lightbox .modal.error {
+  border: 2px solid #f00;
+}
+.lightbox .modal.error .show_on_error {
+  display: block;
+}
+.lightbox .modal.error .alert-box {
+  display: block;
+}

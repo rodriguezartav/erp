@@ -1,1 +1,1 @@
-<li data-id="<%= @id %>"><a><%= @Name.capitalize() %></a></li>
+<li class="" data-id="<%= @id %>"><a><%= @Name.capitalize() %></a></li>

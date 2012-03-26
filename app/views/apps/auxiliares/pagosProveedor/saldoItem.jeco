@@ -1,0 +1,5 @@
+<tr data-id="<%= @id %>">
+    <td><h3 class=""><%= @CodigoExterno %></h3></td>
+    <td><h3 class=""><%= @Saldo.toMoney() %></h3></td>
+    <td><input  data-id="<%= @id %>"  data-saldo="<%= @Saldo %>" class="txt_saldo" /></td>
+<tr>

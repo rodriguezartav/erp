@@ -1,6 +1,5 @@
 Spine   = require('spine')
-User = require('models/user')
-Cliente = require('models/cliente')
+Session = require('models/session')
 $       = Spine.$
 
 class Login extends Spine.Controller
@@ -11,49 +10,72 @@ class Login extends Spine.Controller
     "#txt_password" : "txt_password"
     "#txt_token" : "txt_token"
     ".alert-box" : "alert_box"
-    ".login" : "login"
     ".loader" : "loader"
-    ".noNet"  : "noNet"
+    ".login"   : "login"
+    ".continue"   : "continue"
 
   events:
     "click .login" : "login"
-    "click .cancel" : "cancel"
+    "click .continue" : "on_continue"
     "click .close-reveal-modal" : "cancel"
 
+  @type = "login"
 
   constructor: ->
     super
+    Spine.session = Session.record || Session.create()
+    @data = {} if !@data
+    Spine.session.loadFromSalesforce(@data.salesforceSession) if @data.salesforceSession
+    if Spine.session.token and !Spine.session.isExpired()
+      if navigator.onLine
+        @renderComplete()
+      else
+        @renderOffline()
+    else
+      @renderLogin()
 
-  render: =>
-    obj = localStorage.getItem("auth")
-    try
-      auth = JSON.parse obj
-  
-    @html require('views/lighthouse/login')(auth)
-    
+    Session.bind "login_success" , =>
+      @renderComplete()
+      
+    Session.bind "login_error" , (response) =>
+      @renderLogin(response.error)
+
+    Session.bind "no_net" , ->
+      @renderNoNet()
+
+
+  askForNotificationPermision: ->
+    if window.webkitNotifications.checkPermission() != 0
+      window.webkitNotifications.requestPermission();
+
   login: =>
-    obj = JSON.stringify { email: @txt_email.val() , token: @txt_token.val() }
-    localStorage.setItem "auth" , obj
-    @log localStorage.getItem("auth")
-    User.bind "login_complete" , @on_login_complete
-    User.bind "login_error" , @on_login_error
-    User.bind "login_no_net_error" , @on_login_no_net_error  
-    User.login  @txt_email.val(),  @txt_token.val() , @txt_password.val()
-
-  on_login_complete: =>
-    User.unbind "login_complete" , @on_login_complete
-    User.unbind "login_error" , @on_login_error
-    User.unbind "login_no_net_error" , @on_login_no_net_error
-    Spine.trigger "hide_lightbox"
-
-  on_login_error: (response) =>
-    @alert_box.show()
-    User.unbind "login_complete" , @on_login_complete
-    User.unbind "login_error" , @on_login_error
-    User.unbind "login_no_net_error" , @on_login_no_net_error
-    @alert_box.html response.error
-   
-  cancel:->
-    User.current.session = null
+    @askForNotificationPermision()
+    Spine.session.username = @txt_email.val()
+    Spine.session.passwordToken = @txt_token.val()
+    Spine.session.password = @txt_password.val()
+    Spine.session.save()
     
+    Spine.session.login()
+    @loader.show()
+    @alert_box.hide()
+    @login.hide()
+
+  on_continue: =>
+    @askForNotificationPermision()
+    Spine.trigger "hide_lightbox"
+    @callback?.apply @, [true]    
+
+  renderLogin: (error = false ) =>
+    @html require("views/lightbox/login/login")(Spine.session)
+    if error
+      @alert_box.show()
+      @alert_box.html error
+  
+  renderOffLine: ->
+    @html require("views/lightbox/login/noNet")(Spine.session)
+
+  renderComplete: =>
+    @html require("views/lightbox/login/complete")(Spine.session)
+
+
 module.exports = Login

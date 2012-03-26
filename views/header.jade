@@ -1,13 +1,22 @@
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      .row
-          a.brand(href='#') Rodco S.A.
-          ul.nav.hide-on-phones.pull-right
-            li.btn-danger
-              a(href='#',style="color: #fff") Errores
+      .row-fluid
+        .span3
+          a.brand Rodco S.A.
+        .span9.infoBar
+          .btn-group.pull-right(style="margin-top: 7px;width: 18%;margin-left: 10px")
+            button.btn.btn-success.status_button.status_button_label Online
+            button.btn.dropdown-toggle.btn-success.status_button(data-toggle="dropdown")
+              span.caret
+        
+            ul.dropdown-menu
+              li 
+                a.actualizar Actualizar Ahora
+              li 
+                a.reset Master Reset (Cuidado)
 
-.subnav.subnav-fixed
-  .container
-    .row
-      h5 Ahora puede chatear con nosotros
+          div.pull-right.progress.progress-striped.loader.active(style="height: 30px;margin-top: 6px;margin-bottom: 6px;width: 20%")
+            .bar(style="width: 100%;padding-top: 7px;padding-bottom: 7px;height: 30px") Cargando...
+              
+        

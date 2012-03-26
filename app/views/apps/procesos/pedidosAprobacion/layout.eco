@@ -1,0 +1,16 @@
+<h1>Aprobacion de Pedidos</h2>
+
+<br/>
+
+<hr/>
+
+<ul class="src_pedidos nav nav-tabs nav-stacked"></ul>
+
+
+<div class="action_footer">
+    <div class="modal-footer">
+      <a class="btn btn-primary save">Guardar</a>
+      <a class="btn btn-danger cancel">Cancel</a>
+    </div>
+</div>
+

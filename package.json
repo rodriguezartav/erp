@@ -1,6 +1,10 @@
 {
   "name": "app",
   "version": "0.0.1",
+  engines: {
+    "node": "~0.6.6"
+    "npm" : "~1.0.106"
+  },
   "dependencies": { 
     "serveup": "~0.0.2",
     "hem": "0.1.6",
@@ -9,7 +13,6 @@
     "jqueryify": "~0.0.1",
     "spine": "~1.0.5",
     "jade" : "~0.16.2", 
-    "express" : "~2.5.8",
-    "node-salesforce" : "~0.2.0"
-  }
+    "express" : "~2.5.8"
+    }
 }

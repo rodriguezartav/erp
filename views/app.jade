@@ -3,5 +3,9 @@ script(type='text/javascript', charset='utf-8')
   var exports = this;
   jQuery(function(){
     var App = require("index");
-    exports.app =  new App({ el: $("body") , app: '!{app}' });
+    exports.app =  new App({ el: $(".appCanvas") , options: {app: '!{app}' , salesforceSession: null }});
   });
+  
+.appCanvas.container
+
+.lightboxCanvas

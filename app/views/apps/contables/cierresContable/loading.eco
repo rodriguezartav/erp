@@ -1,0 +1,13 @@
+<h1>Cierre Diario</h2>
+
+<br/>
+
+<h3>Espere, cargando datos del servidor</h3>
+
+<div class="progress progress-striped loader active">
+  <div class="bar"
+    style="width: 100%;">
+  </div>
+</div>
+
+<div style="display: none" class="error alert alert-error">Ocurrio un error, favor vuelva a cargar la pagina</div>

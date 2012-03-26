@@ -1,0 +1,12 @@
+<tr>
+    <td>
+    <h4>
+      <%= @label%>
+    </h4>
+    </td>
+    <td class="">
+      <h5 class="pull-left">
+      <%= @value.toMoney() %>
+      </h5>
+    </td>
+</tr>

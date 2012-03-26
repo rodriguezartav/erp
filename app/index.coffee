@@ -1,44 +1,84 @@
 require('lib/setup')
 Spine = require('spine')
-User = require("models/user")
+
 Lightbox = require("controllers/lightbox")
-Recibos = require("apps/recibos")
-Compras = require("apps/compras")
+InfoBar = require("controllers/infoBar")
+
+User = require("models/user")
+Cliente = require("models/cliente")
+Producto = require("models/producto")
+Session = require('models/session')
+
+Menu = require("apps/menu")
+Entradas = require("apps/auxiliares/entradas")
+Salidas = require("apps/auxiliares/salidas")
+Devoluciones = require("apps/auxiliares/devoluciones")
+Compras = require("apps/auxiliares/compras")
+FacturasProveedor = require("apps/auxiliares/facturasProveedor")
+PagosProveedor = require("apps/auxiliares/pagosProveedor")
+NotasCredito = require("apps/auxiliares/notasCredito")
+NotasDebito = require("apps/auxiliares/notasDebito")
+EmitirRecibo = require("apps/auxiliares/emitirRecibo")
+ConvertirRecibo = require("apps/auxiliares/convertirRecibo")
+CierresContable = require("apps/contables/cierresContable")
+DocumentosImpresion = require("apps/procesos/documentosImpresion")
 
 class App extends Spine.Controller
+  className: "app"
 
   constructor: ->
     super
-    Spine.server = if @test then "http://127.0.0.1:9393" else "http://rodco-api2.heroku.com"
+    #Spine.server = if @test then "http://127.0.0.1:9393" else "http://rodco-api2.heroku.com"
+    #Spine.server = if @test then "http://127.0.0.1:9393" else "http://api2s.heroku.com"
+    Spine.server = "http://127.0.0.1:9393"
     @setup_plugins()
-    User.retrieve()
+    @fetchLocalData()
+    @buildProfiles()
     
-    @application = null
+    new Lightbox(el: $(".lightboxCanvas"))
+    new InfoBar(el: $(".infoBar"))
     
-    switch @app
-      when "depositos" 
-        @application = Recibos
-      when "compras" 
-        @application = Compras
+    Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 
-  
-    
-    @application.login_complete = =>
-      User.unbind "login_complete" , @login_complete
-      @prepend new @application
-      
-    @append new Lightbox
+    @routes
+      "/apps": =>
+         @currentApp?.reset()
+         @currentApp = new Menu(apps: @apps)
+         @html @currentApp
+     
+      "/apps/:name": (params) =>
+        @currentApp?.reset()
+        for app in @apps
+          @currentApp = app if app.name == params.name
+        @currentApp = new @currentApp
+        @html @currentApp
+     
+  registerStatusHandler: ->
+    Spine.bind "status_changed" , @handleStatus
 
-    if @email
-      User.current.session = { instance_url: @instance_url , token: @token }
-      User.current.email = @email
-      User.current.last_login = new Date()
-      User.current.is_visualforce = true
-      User.current.save()
-      @application.login_complete()
-    else
-      Spine.trigger("show_lightbox","login")
-      User.bind "login_complete" , @application.login_complete
+  handleStatus: (status) ->
+    if status == "online" and Spine.session.isExpired()
+      Spine.trigger "show_lightbox" , "login" , @options 
+
+  fetchLocalData: =>
+    Session.fetch()    
+    for model in Spine.nSync
+      model.fetch()
+
+  fetchServerData: =>
+    for model in Spine.nSync
+      model.query()
+
+  loginComplete: =>
+    @registerStatusHandler()
+    @registerApps()   
+    @fetchServerData()
+    route = if @options.app then "/#{@options.app}" else ""
+    @navigate "/apps" + route
+
+  registerApps: =>
+    profile = Spine.session.user.Profile.Name
+    @apps = Spine.profiles[profile]
 
   setup_plugins: =>
     $('.dropdown-toggle').dropdown()
@@ -46,6 +86,15 @@ class App extends Spine.Controller
     $('a.popable').popover()
     $('#subnav').scrollspy(offset: -100)
     $(".auto-alert").alert()
+
+  buildProfiles: =>
+    profiles = {}
+    apps = [Entradas,Salidas,Devoluciones,Compras,FacturasProveedor,PagosProveedor, NotasCredito,NotasDebito,EmitirRecibo,CierresContable , DocumentosImpresion]
+    profiles["Platform System Admin"] = apps
+    profiles["Gerencia"] = apps
+    Spine.profiles = profiles
+    
+    
 
 module.exports = App
     

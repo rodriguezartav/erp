@@ -1,0 +1,11 @@
+<li data-referencia="<%= @Referencia %>">
+  <div class="row">
+    <h4 class="columns four"><%= @Referencia %></h3>
+    <h3 class="columns two"><%= @NombreCliente %></h3>
+    <h3 class="columns two"><%= @Total %></h3>
+    <div class="buttons columns two pull-right">
+      <a class="btn btn-primary">Aprobar</a>
+      <a class="btn btn-danger">Archivar</a>
+    </div>
+  </div>
+<li>

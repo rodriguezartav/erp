@@ -1,3 +1,5 @@
-<input type="text" placeholder="Busque Clientes con Saldo " class="input-medium search-query js_cliente_search">
+<input type="text" placeholder="Busque Clientes"  class="js_cliente_search loadable">
 
-<ul class="cliente_list"></ul>
+
+
+<ul class="clientes_list block-grid two-up nav nav-tabs"></ul>

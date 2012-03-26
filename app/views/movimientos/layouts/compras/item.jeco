@@ -1,0 +1,6 @@
+<tr data-id="<%= @id %>">
+       <td><p><%= @ProductoName %><p></td>
+       <td><input class="editable" data-type="ProductoCantidad" value="" /></td>
+       <td><input class="editable" data-type="ProductoCosto" value="<%= @ProductoCosto %>"  /></td>
+       <td><a class="btn btn-danger btn-small btn_remove"><i class="icon-remove icon-white"></i></a></td>
+</tr>

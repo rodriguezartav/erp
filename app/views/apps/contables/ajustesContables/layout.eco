@@ -1,0 +1,72 @@
+<h1>Ajustes Contables</h2>
+
+<br/>
+
+<div class="row">
+  <div class="columns four">
+    <h3>Ventas</h3>
+    <table id="ventas" class="table table-striped table-bordered table-condensed">
+    
+    </table>
+  </div>
+
+  <div class="columns four">
+    <h3>Inventarios</h3>
+    <table id="inventarios" class="table table-striped table-bordered table-condensed">
+    </table>
+  </div>
+
+
+  <div class="columns four">
+    <h3>Saldos</h3>
+    <table id="saldos" class="table table-striped table-bordered table-condensed">
+    
+    </table>
+  </div>
+
+
+</div>
+
+<div class="row">
+
+
+  <div class="columns three">
+    <h3>Cobros</h3>
+    <table id="cobros" class=" table table-striped table-bordered table-condensed">
+    
+    </table>
+  </div>
+
+
+  <div class="columns three">
+    <h3>Compras a Proveedores</h3>
+    <table id="comprasProveedores" class="table table-striped table-bordered table-condensed ">
+    
+    </table>
+  </div>
+
+
+  <div class="columns three">
+    <h3>Saldo a Proveedores</h3>
+    <table id="saldosProveedores" class="table table-striped table-bordered table-condensed ">
+    
+    </table>
+  </div>
+
+  <div class="columns three">
+    <h3>Pagos a Proveedores</h3>
+    <table id="pagosProveedores" class="table table-striped table-bordered table-condensed ">
+    
+    </table>
+  </div>
+
+</div>
+
+<div class="action_footer">
+    <div class="modal-footer">
+      <a class="btn btn-primary save">Guardar</a>
+      <a class="btn btn-danger cancel">Cancel</a>
+
+    </div>
+</div>
+

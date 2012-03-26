@@ -1,0 +1,38 @@
+<h5 class="preHeader">Administracion de Inventarios</h2>
+<h1>Compra de Mercaderia</h2>
+
+
+<div class="well">
+
+  <div class=" row-fluid">
+      <div class="span3">
+        <h3>Proveedor</h3>
+        <input autocomplete="on" data-type="Nombre_Contado" data-length="3" class="validatable" />
+      </div>
+
+      <div class="span3">
+        <h3>Consecutivo</h3>
+        <input class="validatable" data-type="Referencia" data-length="3"  id="txt_referencia" placeholder="# documento" />
+      </div>
+
+      <div class="span6">
+        <h3>Observacion</h3>
+        <textarea class="validatable " data-required="false" data-type="Observacion" placeholder="Observacion" />
+      </div>
+  </div>
+
+
+  <hr/>
+
+  <div class="src_movimientos"></div>
+  
+</div>
+
+<div class="action_footer">
+    <div class="modal-footer">
+      <a class="btn btn-primary save">Guardar</a>
+      <a class="btn btn-danger cancel">Cancel</a>
+
+    </div>
+</div>
+

@@ -1,0 +1,22 @@
+<h5 class="preHeader">Facturacion</h2>
+<h1>Impresion de Documentos</h2>
+
+<hr/>
+
+<div class="well">
+  
+</div>
+
+<table class="table table-striped table-bordered ">
+
+  <thead>
+      <tr>
+        <th>Consecutivo</th>
+        <th>Tipo</th>
+        <th>Cliente</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+
+  <tbody class="src_documentos"></tbody>
+</table>

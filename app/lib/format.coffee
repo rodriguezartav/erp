@@ -39,12 +39,44 @@ Number.prototype.toSmallPrice = ->
     return i.substr(0, 2) + "." + i[3] +  "k"
   return this.toMoney(0)
 
+String.replaceAll = (txt, replace, with_this) ->
+  return txt.replace(new RegExp(replace, 'g'),with_this)
+
+
 String.prototype.capitalize = -> 
   str = this.toLowerCase()
   str = str.replace(', s.a.','')
   str = str.replace('s.a.','')
   return str.replace( /(^|\s)([a-z])/g , (m,p1,p2) -> return p1+p2.toUpperCase() )
 
+Date.prototype.toSimple = ->
+  months = this.getMonth() + 1
+  months = "0" + months if months < 10
+ 
+  date = this.getDate()
+  date = "0" + date if date < 10
+  str = ""
+  str += this.getFullYear()
+  str += "-"
+  str += months
+  str += "-"
+  str += date
+  str
+
+Date.prototype.to_salesforce_date = ->
+  months = this.getMonth() + 1
+  months = "0" + months if months < 10
+ 
+  date = this.getDate()
+  date = "0" + date if date < 10
+ 
+  str = ""
+  str += this.getFullYear()
+  str += "-"
+  str += months
+  str += "-"
+  str += date
+  return str
 
 Date.prototype.to_salesforce = ->
   hours = this.getUTCHours()
@@ -107,8 +139,8 @@ Date.prototype.to_pretty = ->
 		  return "Primera Vez"
 
 		return day_diff == 0 && (
-			diff < 3600 && Math.floor( diff / 60 ) + "minutos atras" ||
-			diff < 86400 &&  Math.floor( diff / 3600 ) + " horas atras") ||
+			diff < 3600 && Math.floor( diff / 60 ) + " minutos " ||
+			diff < 86400 &&  Math.floor( diff / 3600 ) + " horas ") ||
 			day_diff == 1 && "Manana" ||
 			day_diff < 60 &&   "en " + day_diff + " dias" ||
 			day_diff < 100 &&  "en " + Math.ceil( day_diff / 7 ) + " semanas" ||

@@ -1,0 +1,23 @@
+
+<div class="modal-header">
+  <h3>Error en <%= @header %></h3>
+</div>
+
+<div style="display:none" class="alert-box error alert-error alert">
+</div>
+
+<div class="modal-body">
+<%= @warning %>
+</div>
+
+<div class="modal-footer">
+<div class="progress progress-striped loader active">
+  <div class="bar" style="width: 100%;"></div>  
+</div>
+<a class="btn btn-primary show_on_error accept">Ok</a>
+</div>
+
+
+
+
+

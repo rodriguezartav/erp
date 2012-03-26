@@ -1,0 +1,16 @@
+  <table class="table table-striped table-bordered table-condensed">
+     <thead>
+       <tr>
+         <div class="src_producto"></div>
+       </tr>
+       <tr>
+         <th>Producto</th>
+         <th>Cantidad</th>
+         <th>Costo</th>
+         <th>Action</th>
+       </tr>
+     </thead>
+     <tbody class="movimientos_list">
+     </tbody>
+   </table>
+   

@@ -13,15 +13,15 @@ if process.env.NODE_ENV != "production"
   hem = new Hem()
   app.get(hem.options.cssPath, hem.cssPackage().createServer())
   app.get(hem.options.jsPath, hem.hemPackage().createServer())
-
+  
 app.set 'views' , './views'
 app.set 'view engine'  , 'jade'
 
 app.use(express.static("./public"))
 
 app.get '/' , (req, res) ->
- res.render "index"
-
+  res.render "app" , { app: ""}
+  
 app.get '/app/:app',(req,res)->
   res.render "app" , {app: req.params.app}
 

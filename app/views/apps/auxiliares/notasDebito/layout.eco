@@ -1,0 +1,38 @@
+<h5>Departamento de Credito y Cobro</h5>
+
+<h1>Notas de Debito</h2>
+
+
+<div class="well">
+  <div class="row-fluid">
+
+    <div class="span9">
+      <h3>Cliente</h3>
+      <div class="src_cliente">
+      </div>
+    </div>
+   
+    <div class="span3">
+        <h3>Total</h3>
+        <input data-type="Total" data-numeric="true" data-positive="true"  id="txt_total" class=" validatable"  placeholder="" />
+      </div>
+
+    <div class="span12">
+      <h3>Explicacion del Debito</h3>
+      <textarea class="span8 validatable" data-type="Observacion"  id="txt_observacion" placeholder="Observacion"/>
+    </div>
+
+  </div>
+
+  
+</div>
+
+<div class="navbar navbar-fixed-bottom">
+    <div class="modal-footer">
+      <div class="btn-group pull-right">
+        <a class="btn btn-primary pull-right btn-medium save">Guardar</a>
+        <a class="btn btn-danger cancel">Cancelar</a>
+      </div>
+    </div>
+</div>
+

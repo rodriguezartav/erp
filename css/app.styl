@@ -2,47 +2,166 @@ html
   height: 100%
 
 body
-  //background-image: url("images/background.png");
+  background-image: url("images/furley_bg.png");
   padding-bottom: 100px
-  padding-top: 80px
   height: 100%
+  font-familiy: "Helvetica Neue", Helvetica, Arial, sans-serif
 
-  >.row
-    max-width: 970px
-    height: 100%
+  .table-total
+    width: 200px
+
+    font-size: 15px
+    td
+      text-align: right
+      padding-right: 8px
+      &:last-child
+        font-weight: bold
+
+  a
+    cursor: pointer
+
+  .validatable,.editable,.loadable
+    width: 90%
+    
+  .span12
+    input,textarea
+      width: 95%
+    
+  h1
+    color: #006391
+    
+
+  h5.preHeader
+    color: #333
+    font-size: 17px
+    line-height: 12px
+    
+  h3
+    color: darken(#006391,35%)
+
+  hr.double
+    &.top
+      margin: 13px 0px 0px 0px
+      border-color: #fff
+    
+    &.bottom
+      margin: 0px 0px 13px 0px
+      border-color: #eee
+    
+
+  .well,.hero-unit
+    margin-top: 10px
+    background-color: rgba(255,255,255,0.33)
+    border: rgba(99,99,99,0.20) 1px dotted
     
     
-.title
-  line-height: 20px
-  margin-bottom: 10px
+  table
+    thead
+      color: #006391
+      border-color: #333
+      text-transform: capitalize
+    
 
-.well.small
-  padding: 7px 15px
-  .nav-list
-    padding: 0px
+  .btn.save
+    padding: 8px 30px
 
-a
-  i
-    padding-right: 4px
+  .btn.cancel
+    padding: 8px 30px
+    float: left
+
+
+.action_footer
+  .modal-footer
+    position: fixed
+    bottom: 0px
+    left: 0px
+    right: 0px
+    .btn.last
+      float: left
+    .btn.next
+      float: right
 
 .clientes
-  min-height: 100%
-  overflow-y: scroll
-  overflow-x: hidden
+  position: relative
+  
   .clientes_list
-    margin-top: 10px
-    padding-left: 0px
+    max-height: 150px
+    overflow-y: scroll
+    background-color: #fff
+    
+    position: absolute
+    top: 27px
+    left: 4px
+    z-index: 66
+    border: 1px solid #ccc
+    width: 90%
     li
       cursor: pointer
+      height: 50px
+      border-bottom: 1px solid #ded
+      width: 50%
+      
       &.active
+        background-color: #08C
+        
         a
-          background-color: #08C
           color: #fff
       a
         text-transform: capitalize
   
-.btn-group.inline
-  display: inline-block
+.productos
+  position: relative
+
+  .productos_list
+    max-height: 290px
+    overflow-y: scroll
+    background-color: #fff
+
+    position: absolute
+    top: 27px
+    left: 4px
+    z-index: 66
+    width: 90%
+    li
+      cursor: pointer
+      height: 40px
+      border-bottom: 1px solid #dee
+      width: 50%
+      
+      &.active
+        background-color: #08C
+        a
+          color: #fff
+      a
+        text-transform: capitalize
+  
+  
+.proveedores
+  position: relative
+
+  .proveedores_list
+    max-height: 290px
+    overflow-y: scroll
+    background-color: #fff
+
+    position: absolute
+    top: 27px
+    left: 4px
+    z-index: 66
+    border: 1px solid #ccc
+    width: 100%
+    li
+      cursor: pointer
+      height: 40px
+      border-bottom: 1px solid #dee
+
+      &.active
+        background-color: #08C
+
+        a
+          color: #fff
+      a
+        text-transform: capitalize
 
 .table-contable
   thead>tr>th
@@ -55,3 +174,30 @@ a
     td:last-child
       text-align: right
       
+      
+      
+.lightbox
+  position: fixed; 
+  
+  height: 100%;
+  width: 100%;
+  background: rgba(33,33,33,0.2)
+  z-index: 2000;
+  display: none;
+  top: 0;
+  left: 0;
+  .modal
+    .alert-box
+      display: none
+    .show_on_error
+      display: none
+     &.error
+      border: 2px solid red
+      .show_on_error
+        display: block
+      .alert-box
+        display: block
+
+@media (min-width: 900px)
+  body
+    padding-top: 60px

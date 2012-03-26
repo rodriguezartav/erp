@@ -1,0 +1,30 @@
+<h5 class="preHeader">Administracion de Inventarios</h2>
+<h1>Entrada de Mercaderia</h2>
+
+
+<div class="well">
+  <div class="row-fluid">
+
+    <div class="span3">
+      <h3>Numero de Boleta</h3>
+      <input class="span3 validatable" date-type="Referencia" date-length="3"  id="txt_referencia" placeholder="#" />
+    </div>
+  </div>
+
+  <div class="span3">
+    <h3>Explicacion de la Entrada</h3>
+      <textarea class="validatable" data-required="false" date-type="Observacion" placeholder="Observacion" />
+    </div>
+</div>
+
+<hr/>
+
+<div class="src_movimientos"></div>
+
+<div class="action_footer">
+  <div class="modal-footer">
+    <a class="btn btn-primary save">Guardar</a>
+    <a class="btn btn-danger cancel">Cancel</a>
+  </div>
+</div>
+
