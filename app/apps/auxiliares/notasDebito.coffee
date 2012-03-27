@@ -52,13 +52,11 @@ class NotasDebito extends Spine.Controller
     Spine.trigger "show_lightbox" , "sendDocumento" , @documento , @after_send
     
   after_send: =>
-    @reset()
+    @reset(false)
     
   reset: =>
-    @inputs_to_validate.val ""
     Cliente.reset_current()
     @documento.destroy() if @documento
-    @navigate "/apps"
     
 
 module.exports = NotasDebito

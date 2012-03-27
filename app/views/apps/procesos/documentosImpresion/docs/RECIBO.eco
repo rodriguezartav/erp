@@ -1,0 +1,13 @@
+<% Cliente = require("models/cliente") %>
+
+<div style="width: 250px">
+
+
+
+<h1>Rodco S.A.<h1>
+<h2>Recibo de Pago</h2>
+<h2><%= Cliente.find(@Cliente).Name %></h2>
+
+<h4><%= @CodigoExterno %></h4>
+
+</div>

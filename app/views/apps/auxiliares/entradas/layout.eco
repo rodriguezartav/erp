@@ -9,12 +9,12 @@
       <h3>Numero de Boleta</h3>
       <input class="span3 validatable" date-type="Referencia" date-length="3"  id="txt_referencia" placeholder="#" />
     </div>
-  </div>
 
-  <div class="span3">
+  <div class="span9">
     <h3>Explicacion de la Entrada</h3>
-      <textarea class="validatable" data-required="false" date-type="Observacion" placeholder="Observacion" />
-    </div>
+    <textarea class="validatable" data-required="false" date-type="Observacion" placeholder="Observacion" />
+  </div>
+  
 </div>
 
 <hr/>

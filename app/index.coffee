@@ -22,6 +22,8 @@ EmitirRecibo = require("apps/auxiliares/emitirRecibo")
 ConvertirRecibo = require("apps/auxiliares/convertirRecibo")
 CierresContable = require("apps/contables/cierresContable")
 DocumentosImpresion = require("apps/procesos/documentosImpresion")
+EstadoCuentaCliente = require("apps/procesos/estadoCuentaCliente")
+
 
 class App extends Spine.Controller
   className: "app"
@@ -31,6 +33,8 @@ class App extends Spine.Controller
     #Spine.server = if @test then "http://127.0.0.1:9393" else "http://rodco-api2.heroku.com"
     #Spine.server = if @test then "http://127.0.0.1:9393" else "http://api2s.heroku.com"
     Spine.server = "http://127.0.0.1:9393"
+    #Spine.server = "http://api2s.heroku.com"
+    
     @setup_plugins()
     @fetchLocalData()
     @buildProfiles()
@@ -65,6 +69,10 @@ class App extends Spine.Controller
     for model in Spine.nSync
       model.fetch()
 
+    for model in Spine.transitoryModels
+      model.fetch()
+
+
   fetchServerData: =>
     for model in Spine.nSync
       model.query()
@@ -77,7 +85,7 @@ class App extends Spine.Controller
     @navigate "/apps" + route
 
   registerApps: =>
-    profile = Spine.session.user.Profile.Name
+    profile = Spine.session.user.Perfil__c
     @apps = Spine.profiles[profile]
 
   setup_plugins: =>
@@ -85,11 +93,10 @@ class App extends Spine.Controller
     $('a.tipable').tooltip()
     $('a.popable').popover()
     $('#subnav').scrollspy(offset: -100)
-    $(".auto-alert").alert()
 
   buildProfiles: =>
     profiles = {}
-    apps = [Entradas,Salidas,Devoluciones,Compras,FacturasProveedor,PagosProveedor, NotasCredito,NotasDebito,EmitirRecibo,CierresContable , DocumentosImpresion]
+    apps = [Entradas,Salidas,Devoluciones,Compras,FacturasProveedor,PagosProveedor, NotasCredito,NotasDebito,EmitirRecibo,CierresContable , DocumentosImpresion, EstadoCuentaCliente ]
     profiles["Platform System Admin"] = apps
     profiles["Gerencia"] = apps
     Spine.profiles = profiles

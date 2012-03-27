@@ -1,8 +1,8 @@
 Spine = require('spine')
 
 class Recibo extends Spine.Model
-  @configure "Recibo" , "Monto", "FormaPago" ,"FechaFormaPago" , "Observacion", "Referencia" , "Documentos","CodigoExterno" , 
-    "DocumentosList","MontosList","ConsecutivosList","DocumentosLinks"
+  @configure "Recibo" , "Cliente" , "Monto", "FormaPago" ,"FechaFormaPago" , "Observacion", "Referencia" , "CodigoExterno", 
+    "DocumentosList","MontosList","ConsecutivosList","DocumentosLinks" 
   
   
   # "CodigoUnico" ,"Cliente" , "Documentos" , "Encargado" ,  "Monto" , "FormaPago" , "FechaFormaPago" , "ReferenciaFormaPago" , "Observacion" , 
@@ -32,8 +32,27 @@ class Recibo extends Spine.Model
   # cualquier diferencia o error, se nota en el cierre diario: total de saldos contables vrs el total de saldos auxiliar...
   
   @extend Spine.Model.Salesforce
+  @extend Spine.Model.NSyncModel
 
-
+  createLists: ->
+    #montosList = montosList.substring(0,montosList.length-1)
+    #documentosList = documentosList.substring(0,documentosList.length-1)
+    #consecutivosList = consecutivosList.substring(0,consecutivosList.length-1)
+    #object.DocumentosList = documentosList
+    #documentosList += "#{src.id},"
+    #montosList += "#{item.Monto},"
+    #consecutivosList += "#{item.Consecutivo},"
+  #  documentosLinks += '<a href="/' + item.Documento + '">' + item.Consecutivo + '</a><br/>'
+    
+    
+    #object.MontosList = montosList
+    #object.ConsecutivosList = consecutivosList
+    #object.DocumentosLinks = documentosLinks
+    
+    
+  beforeInsert: ->
+    @createLists()
+    @ReciboItems = JSON.stringify @ReciboItems
 
 module.exports = Recibo
 

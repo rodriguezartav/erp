@@ -60,7 +60,6 @@ class Salidas extends Spine.Controller
     @movimientos?.reset()
     Movimiento.destroyAll()
     @documento.destroy() if @documento   
-    @inputs_to_validate.val ""
-    @navigate "/apps"
+
 
 module.exports = Salidas

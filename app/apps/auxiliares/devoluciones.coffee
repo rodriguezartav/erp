@@ -99,15 +99,13 @@ class Devoluciones extends Spine.Controller
       @buttons.show()
 
   after_send: =>
-    @reset()
+    @reset(false)
 
-  reset: ->
+  customReset: ->
     Cliente.cancel_current()
     @documento=null 
     Movimiento.destroyAll()
-    @inputs_to_validate.val("")
     @movimientos_list.empty()
-    @navigate "/apps"
     
 
 module.exports = Devoluciones

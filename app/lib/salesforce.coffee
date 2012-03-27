@@ -31,7 +31,11 @@ Spine.Model.Salesforce =
         url = if items.length == 1 then url = "/save" else "/save/bulk"
         return Spine.server + url
 
+      beforeInsert: () ->
+        return false
+
       insert: (documentos,url) =>
+        @beforeInsert()
         className = @overrideName || @className 
         $.ajax
           url        : @sendUrl(documentos)
@@ -101,8 +105,6 @@ Spine.Model.Salesforce =
           success: @on_query_success
           error: @on_query_error
           complete: @on_query_complete
-
-      
 
       on_query_complete:  ->
         Spine.trigger "query_complete"

@@ -60,13 +60,11 @@ class FacturasProveedor extends Spine.Controller
  
 
   after_send: =>
-    @reset()
+    @reset(false)
  
-  reset: ->
-    @inputs_to_validate.val ""
+  customReset: ->
     Proveedor.reset_current()
     @documento.destroy() if @documento 
-    @navigate "/apps"
       
 
 module.exports = FacturasProveedor

@@ -1,0 +1,13 @@
+<td><%= @CodigoExterno %></td>
+<td><%= @Tipo_de_Documento %></td>
+<td><%= @Plazo %></td>
+<td><%= @Total.toMoney() %></td>
+<td><%= @Saldo.toMoney() %></td>
+<td><small><%= @Restricciones %></small></td>
+<td><input data-type="<%= @id %>" data-positive="false" data-id="<%= @id %>" value="<%= @Monto %>" data-numeric="true" data-min-value="<%= @minValue %>" data-max-value="<%= @maxValue %>" value="<%= @Monto %>" class="span2 txt_saldo_pendiente_monto validatable"/></td>
+<td>
+  <div class="btn-group">
+    <a data-id="<%= @id %>" class="btn btn-success incluir">Incluir</a>
+    <a data-id="<%= @id %>" class="btn btn-danger excluir">Excluir</a>
+  </div>
+</td>

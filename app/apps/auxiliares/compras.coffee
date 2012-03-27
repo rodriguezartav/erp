@@ -51,13 +51,11 @@ class Compras extends Spine.Controller
     Spine.trigger "show_lightbox" , "sendMovimientos" , Movimiento.all() , @after_send   
 
   after_send: =>
-    @reset()
+    @reset(false)
 
-  reset: ->
+  customReset: ->
     @movimientos?.cancel()
     Movimiento.destroyAll()
     @documento.destroy() if @documento   
-    @inputs_to_validate.val ""
-    @navigate "/apps"
-
+  
 module.exports = Compras

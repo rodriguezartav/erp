@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Saldo extends Spine.Model
   @configure "Saldo" , "Total" , "Saldo" , "CodigoExterno" ,  "Cliente" , "Plazo" , "FechaFacturacion" , "FechaVencimiento" ,
-    "Tipo_de_Documento" , "PagoEnRecibos"
+    "Tipo_de_Documento" , "PagoEnRecibos" , "Restricciones"
 
   @extend Spine.Model.Salesforce
   @extend Spine.Model.NSyncModel

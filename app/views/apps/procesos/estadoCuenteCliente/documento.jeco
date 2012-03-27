@@ -1,0 +1,8 @@
+
+<tr>
+  <td><%= @Tipo_de_Documento %></td>
+  <td><%= @CodigoExterno %></td>
+  <td><%= @FechaFacturacion %></td>
+  <td><%= @Plazo %></td>
+  <td><%= @Saldo.toMoney() %></td>
+</tr>

@@ -1,5 +1,5 @@
-<h5>Departamento de Credito y Cobro</h5>
-<h1>Notas de Credito</h2>
+<h5><%= @departamento %></h5>
+<h1><%= @label %></h2>
 
 
 <div class="well">

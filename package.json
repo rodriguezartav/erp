@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "0.0.1",
-  engines: {
+  "engines": {
     "node": "~0.6.6",
     "npm" : "~1.0.106"
   },

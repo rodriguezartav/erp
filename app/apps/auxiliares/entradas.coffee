@@ -54,14 +54,12 @@ class Entradas extends Spine.Controller
 
 
   after_send: =>
-    @cancel()
+    @reset(false)
 
-  reset: ->
+  customReset: ->
     @movimientos?.reset()
     Movimiento.destroyAll()
     @documento.destroy() if @documento   
-    @inputs_to_validate.val ""
-    @navigate "/apps"
     
         
 module.exports = Entradas

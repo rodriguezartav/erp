@@ -6,151 +6,181 @@ Clientes = require("controllers/clientes")
 Producto = require("models/producto")
 Documento = require("models/documento")
 Recibo = require("models/recibo")
+ReciboItem = require("models/transitory/reciboItem")
 
-class EmitirRecibos extends Spine.Controller
+class ReciboItems extends Spine.Controller  
+  tag: "tr"
+
+  elements:
+    "input"  : "txt_monto"
+
+  events:
+    "click .incluir" : "add_saldo"
+    "click .excluir" : "remove_saldo"
+    "change .txt_saldo_pendiente_monto" : "on_monto_change"
+
+  constructor: ->
+    super
+    @render()
+  
+  render: =>
+    @html require("views/apps/auxiliares/emitirRecibo/reciboItem")(@reciboItem) 
+
+  add_saldo: (e) =>
+    @reciboItem.Monto = @reciboItem.Saldo
+    @reciboItem.save()
+    @render()
+    
+  remove_saldo: (e) =>
+    @reciboItem.Monto = 0
+    @reciboItem.save()
+    @render()
+
+  on_monto_change: (e) =>
+    @reciboItem.Monto = @txt_monto.val()
+    @reciboItem.save()
+    @render()
+
+class Recibos extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
 
-  @departamento = "Tesoreria"
-  @label = "Emitir Recibos"
-  
-  className: "row"
+  className: "row-fluid reciboItem"
 
   elements:
     ".error"                      : "error"
     ".validatable"                : "inputs_to_validate"
-    ".src_cliente"                : "src_cliente"
-    ".item_loader"                : "item_loader"
-    ".documentos_list"            : "documentos_list"
-    ".txt_saldo_pendiente_monto"  : "txt_saldo_pendiente_monto"
-    ".lbl_total" : "lbl_total"
-    ".txt_codigo" : "txt_codigo"
+    ".lbl_total"                  : "lbl_total"
+    ".well"                       : "well"
+    ".recibo_items_list"          : "recibo_items_list"
+    ".alert_box"                  : "alert_box"
 
   events:
-    "click .cancel"  : "reset"
-    "click .save"    : "send"
-    "click .incluir" : "add_saldo"
-    "click .excluir" : "remove_saldo"
-    "change .txt_saldo_pendiente_monto" : "on_saldo_change"
+    "click .send"    : "send"
+    "click .save"    : "save"
+    "click .print"   : "print"
+    "click .close"   : "reset"
+    "click .well"    : "toggleWellOn"
 
   constructor: ->
     super
-    @error.hide()
-    Cliente.reset()
-    Cliente.query({credito:true})      
-    @html require("views/apps/auxiliares/emitirRecibo/layout")(@documento)
-    @resetDates(@inputs_to_validate)
+    @html require("views/apps/auxiliares/emitirRecibo/recibo")(@recibo)
+    @refreshView(@recibo,@inputs_to_validate)
+    @reciboItems = []
+    @addReciboItems()
+   # @update_total()
+
+  addReciboItems: ->  
+    reciboItems = ReciboItem.findAllByAttribute("CodigoExterno", @recibo.CodigoExterno )    
+    @log reciboItems
+    for ri in reciboItems
+      reciboItem = new ReciboItems(reciboItem: ri)
+      @reciboItems.push reciboItem
+      @recibo_items_list.append reciboItem.el
+
+  ##
+  # View Functions
+  ##
+
+  toggleWellOn: (e) =>
+    return false if @well.hasClass "selected"
+    $(".reciboItem>.well").removeClass "selected"
+    @well.addClass "selected"
+
+  toggleWellOff: =>
+    return false if(!@well.hasClass("selected"))
+    $(".reciboItem>.well").removeClass "selected"
+
+  ##
+  # Persistance Functions
+  ##
+
+  save: (e) =>
+    @refreshElements()
+    @updateFromView(@recibo,@inputs_to_validate)
+    @recibo.save()
+    @alert_box.html require("views/alert")(message: "Listo! Se han guardado los cambios..")
+    window.setTimeout => 
+      @alert_box.empty()  
+    , 1400 
+
+
+  print: (e) =>    
+    $("body").html require("views/apps/procesos/documentosImpresion/docs/RECIBO")(@recibo)
     
-    new Clientes(el: @src_cliente)
-    @item_loader.hide()
-    
-    Documento.bind "query_success" , @onLoadDocumentos
-   
-    Cliente.bind 'current_set' , (cliente) =>
-      @codigo = parseInt(Math.random() * 10000)
-      @txt_codigo.html @codigo
-      Saldo.destroyAll()
-      Recibo.destroyAll()
-      Documento.query { cliente: cliente,saldo: true }
-      @item_loader.show()
-
-  onLoadDocumentos: =>
-    documentos = Documento.all() 
-    for documento in documentos
-      documento.maxValue = documento.Saldo
-      documento.minValue = 0
-      if documento.Tipo_de_Documento == "NC"
-        documento.maxValue = 0
-        documento.minValue = documento.Saldo
-    @documentos_list.html require("views/apps/auxiliares/emitirRecibo/saldo")(documentos) 
-    @update_total()
-    @item_loader.hide()
-
-  add_saldo: (e) =>
-    target = $(e.target)
-    documento = Documento.find(target.attr("data-id"))
-    target.parents('tr').find(".txt_saldo_pendiente_monto").val documento.Saldo
-    @update_total()
-
-  remove_saldo: (e) =>
-    target = $(e.target)
-    documento = Documento.find( target.attr("data-id") )
-    target.parents('tr').find(".txt_saldo_pendiente_monto").val "0"
-    target.val "0"
-    @update_total()
-
-  on_saldo_change: (e) =>
-    target = $(e.target)
-    @update_total()
-
-  update_total: =>
-    total = 0
-    for raw_input in $("input.txt_saldo_pendiente_monto")
-      input = $(raw_input)
-      total += parseFloat(input.val())
-    @lbl_total.html total.toMoney()
-
-  #####
-  # ACTIONS
-  #####
-
-  customValidation: =>
-    @validationErrors.push "Debe escoger un cliente" if Cliente.current == null
 
   beforeSend: (object) =>
-    documentos = []
-    documentosList = ""
-    montosList = ""
-    consecutivosList= ""
-    documentosLinks = ""
-    monto = 0
-    for index,value of object
-      src = Documento.exists(index)
-      if src
-        item = { Documento: src.id ,Consecutivo: src.CodigoExterno , Monto: parseFloat(value) }
-        documentos.push item
-        monto += item.Monto
-        documentosList += "#{src.id},"
-        montosList += "#{item.Monto},"
-        consecutivosList += "#{item.Consecutivo},"
-        documentosLinks += '<a href="/' + item.Documento + '">' + item.Consecutivo + '</a><br/>'
-        src.PagoEnRecibos = item.Monto
-        src.save()
-
-    montosList = montosList.substring(0,montosList.length-1)
-    documentosList = documentosList.substring(0,documentosList.length-1)
-    consecutivosList = consecutivosList.substring(0,consecutivosList.length-1)
-
-    object.FechaFormaPago = object.FechaFormaPago.to_salesforce_date()
-    object.Monto = monto
-    object.Cliente = Cliente.current.id
-    object.Documentos = JSON.stringify documentos
-    object.DocumentosList = documentosList
-    object.MontosList = montosList
-    object.ConsecutivosList = consecutivosList
-    object.DocumentosLinks = documentosLinks
 
   send: (e) =>
     @refreshElements()
-    
-    @recibo = { CodigoExterno: @codigo } if !@recibo
     @updateFromView(@recibo,@inputs_to_validate)
-    @reciboSend = Recibo.create @recibo
-    Spine.trigger "show_lightbox" , "sendRecibo" , @reciboSend , @after_send   
+    @recibo.save()
+    Spine.trigger "show_lightbox" , "sendRecibo" , @recibo , @after_send   
 
+
+   
+   
   after_send: =>
+    @destroyData()
+    @toggleWellOff()
     @reset()
+ 
+  destroyData: =>
+    for ri in ReciboItem.findAllByAttribute("CodigoExterno", @recibo.CodigoExterno )
+      ri.destroy()
+    @recibo.destroy()
+   
+  reset: () ->
+    if !@toggleWellOff()
+      @destroyData()
+      @release()
 
-  reset: ->
-    Documento.destroyAll()
-    Recibo.destroyAll()
-    @txt_codigo.empty()
-    Cliente.reset_current()
-    @recibo = null if @recibo
-    @inputs_to_validate.val("")
-    @resetDates(@inputs_to_validate)
-    @documentos_list.empty()
-    @lbl_total.empty()
-    @navigate "/apps"
+class EmitirRecibos extends Spine.Controller
+  @departamento = "Tesoreria"
+  @label = "Emitir Recibos"
+
+  elements:
+    ".src_cliente"      :  "src_cliente"
+    ".js_create_recibo"  :  "btn_create_recibo"
     
+  events:
+    "click .js_create_recibo" : "on_create_recibo_click"
+    "click .cancel" : "reset"
+
+  constructor: ->
+    super
+    @recibos = []
+    Cliente.reset()
+    @html require("views/apps/auxiliares/emitirRecibo/layout")(EmitirRecibos)
+    @btn_create_recibo.hide()
+    new Clientes(el: @src_cliente)
+    Cliente.bind 'current_set' , @on_cliente_set
+    @renderRecibos()
+
+  on_cliente_set: (cliente) =>
+    @btn_create_recibo.show()
+
+  on_create_recibo_click: =>
+    @createRecibo()
+    
+  renderRecibos: =>
+    for recibo in Recibo.all()
+      @createRecibo(recibo)
+  
+  createRecibo: (recibo=false) =>
+    if !recibo
+      codigo = parseInt(Math.random() * 10000)
+      recibo = Recibo.create { CodigoExterno: codigo, Cliente:  Cliente.current.id , FechaFormaPago: new Date() }
+      saldos = Saldo.findAllByAttribute("Cliente", recibo.Cliente )
+      ReciboItem.createFromSaldos( saldos , recibo )
+    
+    ri = new Recibos(recibo: recibo)
+    @recibos.push ri 
+    @append ri
+
+  reset: (redirect) ->
+    for recibo in @recibos
+      recibo.release()
+    Cliente.unbind 'current_set' , @on_cliente_set
+    @navigate "/apps"
 
 module.exports = EmitirRecibos

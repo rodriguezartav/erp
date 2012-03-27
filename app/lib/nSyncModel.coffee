@@ -10,6 +10,13 @@ Spine.Model.NSyncModel =
     Spine.nSync.push @
 
     @extend
+      
+      beforeSaveLocal: ->
+        return false;
+      
+      afterLoadLocal: ->
+        return false;
+    
       recordLastUpdate: =>
         Spine.session.setLastUpdate(@name)
         
@@ -18,12 +25,14 @@ Spine.Model.NSyncModel =
         
     
   saveLocal: ->
+    @beforeSaveLocal()
     result = JSON.stringify(@)
     localStorage[@className] = result
 
   loadLocal: ->
     result = localStorage[@className]
     @refresh(result or [], clear: true)
+    @afterLoadLocal()
     
     
 module?.exports = Spine.Model.NSyncModel

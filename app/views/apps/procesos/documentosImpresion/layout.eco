@@ -3,10 +3,6 @@
 
 <hr/>
 
-<div class="well">
-  
-</div>
-
 <table class="table table-striped table-bordered ">
 
   <thead>
@@ -20,3 +16,10 @@
 
   <tbody class="src_documentos"></tbody>
 </table>
+
+
+<div class="action_footer">
+  <div class="modal-footer">
+    <a class="btn btn-danger cancel">Cancel</a>
+  </div>
+</div>

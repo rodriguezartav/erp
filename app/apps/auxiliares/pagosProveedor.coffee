@@ -74,8 +74,6 @@ class PagosProveedor extends Spine.Controller
     @src_saldos.empty()
     Documento.destroyAll()
     @pago.destroy() if @pago   
-    @inputs_to_validate.val ""
-    @navigate "/apps"
     
   
 

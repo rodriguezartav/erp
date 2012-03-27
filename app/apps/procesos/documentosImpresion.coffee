@@ -10,6 +10,8 @@ class DocumentosImpresion extends Spine.Controller
 
   events:
     "click .print" : "print"
+    "click .cancel" : "reset"
+    
     
   elements: 
     ".src_documentos" : "list"
@@ -31,11 +33,6 @@ class DocumentosImpresion extends Spine.Controller
     @render(doc)
     
   render: (doc) =>
-    #layout = require("views/apps/procesos/documentosImpresion/docs/layout")(doc)
-    #jLayout = $(layout)
-    #jLayout.find(".body").html 
-    #jLayout.find(".movimientos").html require("views/apps/procesos/documentosImpresion/docs/movimientos/#{doc.Tipo_de_Documento}")(doc)
-    #@log jLayout
     @html require("views/apps/procesos/documentosImpresion/docs/" + doc.Tipo_de_Documento)(doc)
 
   reset: =>
