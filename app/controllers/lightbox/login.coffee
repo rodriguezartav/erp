@@ -38,6 +38,8 @@ class Login extends Spine.Controller
       @renderComplete()
       
     Session.bind "login_error" , (response) =>
+      @log response
+      alert response.errors.error
       @renderLogin(response.error)
 
     Session.bind "no_net" , ->
