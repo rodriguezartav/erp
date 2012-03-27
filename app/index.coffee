@@ -32,8 +32,8 @@ class App extends Spine.Controller
     super
     #Spine.server = if @test then "http://127.0.0.1:9393" else "http://rodco-api2.heroku.com"
     #Spine.server = if @test then "http://127.0.0.1:9393" else "http://api2s.heroku.com"
-    Spine.server = "http://127.0.0.1:9393"
-    #Spine.server = "http://api2s.heroku.com"
+    #Spine.server = "http://127.0.0.1:9393"
+    Spine.server = "http://api2s.heroku.com"
     
     @setup_plugins()
     @fetchLocalData()
