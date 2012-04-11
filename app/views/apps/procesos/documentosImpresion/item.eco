@@ -1,0 +1,18 @@
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@Cliente)  %>
+
+
+<tr>
+  <td><%= @Tipo_de_Documento %></td>
+ 
+  <% if cliente != false:  %>
+    <td><%= cliente.Name %></td>
+  <% else: %>
+    <td> Contado </td>
+  <% end %>  
+  
+  <td><%= @Total.toMoney() %></td>
+
+ <td><a data-id="<%= @id %>" class="print btn btn-info"><i class="icon-print icon-white"> </i> Imprimir</a></td>
+
+</tr>

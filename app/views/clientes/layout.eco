@@ -1,5 +1,8 @@
-<input type="text" placeholder="Busque Clientes"  class="js_cliente_search loadable">
+<input type="text" placeholder="Busque Clientes" style="display: inline;"  class="js_cliente_search nombre loadable">
+<% if @contado: %>
+  <h6 class="help-block"><a class="mostrar_credito">solo contado</a></h6>
+<% end %>
 
+<ul class="clientes_list block-grid two-up nav nav-tabs">
+</ul>
 
-
-<ul class="clientes_list block-grid two-up nav nav-tabs"></ul>

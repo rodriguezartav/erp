@@ -1,6 +1,5 @@
 require('lib/setup')
 Spine = require('spine')
-Movimientos = require("controllers/movimientos")
 Documento = require("models/documento")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
@@ -11,45 +10,60 @@ User = require("models/user")
 class PedidosAprobacion extends Spine.Controller
   className: "row"
 
+  @departamento = "Credito y Cobro"
+  @label = "Aprobacion de Pedidos"
+
   elements:
     ".error" : "error"
     ".src_pedidos" : "src_pedidos" 
+    ".content" : "content"
 
   events:
-    "click .cancel" : "cancel"
-    "click .save" : "send"
+    "click .cancel"   : "reset"
+    "click .aprobar"  : "on_action_click"
+    "click .archivar" : "on_action_click"
+    "click .reload" : "reload"
+    
 
   constructor: ->
     super
     @error.hide()
-    Pedido.fetch_from_sf(User.current, { estado: pendiente } )
-    Pedido.bind "ajax_complete" , @onLoadPedidos
-    @render()
+    @html require("views/apps/procesos/pedidosAprobacion/layout")(PedidosAprobacion)
+    @renderPedidos()
+    @reload()
+    Pedido.bind "query_success" , @renderPedidos
 
-  render: =>  
-    @html require("views/apps/procesos/pedidosAprobacion/layout")
+  renderPedidos: =>
+    @groups = Pedido.group_by_referencia()
+    @src_pedidos.html require("views/apps/procesos/pedidosAprobacion/item")(@groups)
 
-  onLoadPedidos: =>
-    @src_pedidos.html require("views/apps/procesos/pedidosAprobacion/item")(Pedido.group_by_referencia())
+  reload: =>
+    Spine.followPedidosPendientes()
 
-  cancel: ->
-    @render()
-    @onLoadPedidos()
-
-  #####
-  # ACTIONS
-  #####
-
-  send: (e) =>
+  on_action_click: (e) =>
     target = $(e.target)
-    referencia = target.parents('li').attr "data-referencia"
-    pedidos = Pedido.findAllByAttribute("Referencia", referencia)
-    for pedido in pedidos
-      pedido.estado = "Aprobado"
-    Spine.trigger "show_lightbox" , "sendPedidos" , pedidos , @after_send
+    referencia = target.attr "data-referencia"
+    aprobar = parseInt(target.attr("data-aprobar"))
+    group = null
+    for g in @groups
+      if g.Referencia == referencia
+        group = g
+    
+    return false if !group
+    @aprovedGroup = group if aprobar == 1
+    @aprobar = aprobar
+    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar} , @aprobarSuccess
 
-  after_send: =>
-    @cancel()
+  aprobarSuccess: =>
+    _kmq.push(['record', 'Aproved', {'Amount': @aprovedGroup.Total } ]) if @aprobar ==1
+    @aprovedGroup = null
+    @aprobar = null
+    @renderPedidos()
 
+  reset: ->
+    Pedido.unbind "query_success" , @onLoadPedidos
+    @release()
+    @customReset?()
+    @navigate "/apps"
 
 module.exports = PedidosAprobacion

@@ -43,7 +43,7 @@
     <div style="margin-top: 10px" class="btn span1">
         <h3>Codigo</h3>
         <h2><%= @CodigoExterno %></h2>
-      </div>
+    </div>
   </div>
 
   <hr/>

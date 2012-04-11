@@ -3,20 +3,16 @@
   <h3>Ingreso al Sistema</h3>
 </div>
 
-<div style="" class="alert-box error alert-error alert">
-  <p>No hay internet, puede continuar pero debe esperar ha que se restablezca para enviar y recibir informacion.</p>
-</div>
 
 <div class="modal-body">
 
   <p>Hola <%= @user.Name %></p>
+  <p>No hay internet, puede continuar pero debe esperar ha que se restablezca para enviar y recibir informacion.</p>
 
-  <p>Esta es su seccion de trabajo valida valida hasta el <p>Hola <%= @user.sessionExpires()  %></p></p>
 </div>
 
 <div class="modal-footer">
 
   <a href="#" class="btn btn-primary continue ">Continuar</a>
 </div>
-cion.</p>
 

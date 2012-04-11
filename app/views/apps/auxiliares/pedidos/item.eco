@@ -1,0 +1,14 @@
+<% Producto = require("models/producto")  %>
+<% producto = Producto.find(@Producto)  %>
+
+<td class="primary"><h4 class="popable" rel="popover" data-content="Descuentos y Ofertas" data-original-title="<%= producto.InventarioActual %>"> <%= producto.Name.capitalize() %> </h4></td>
+
+<td><h4><%= @Precio.toMoney() %></h4></td>
+
+<td><input class="span1 validatable" data-min-value="0" data-max-value="<%= @Descuento %>" data-type="Descuento" data-numeric="true" value="<%= @Descuento %>" /></td>
+
+<td class="numeric"><h4><%= @Impuesto %><h4></td>
+
+<td><input class="span1 validatable" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @Cantidad %>" /></td>
+
+<td><a class="btn btn-danger btn-small js_btn_remove"><i class="icon-remove icon-white"></i></a></td>

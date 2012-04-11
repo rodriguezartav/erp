@@ -47,7 +47,7 @@ class FacturasProveedor extends Spine.Controller
   #####
   
   customValidation: =>
-    @validationErrors.push "Ingrese el Nombre del Proveedor" if Proveedor.current == null
+    @validationErrors.push "Escoja el Proveedor" if Proveedor.current == null
     
   beforeSend: (object) ->
     object.Proveedor = Proveedor.current.id

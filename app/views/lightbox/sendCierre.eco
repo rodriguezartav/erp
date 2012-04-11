@@ -1,21 +1,15 @@
 
 <div class="modal-header">
-  <h3>Registrando Cierre Contable</h3>
-</div>
-
-<div style="display:none" class="alert-box error alert-error alert">
+  <h3>Bloqueo Automatico</h3>
 </div>
 
 <div class="modal-body">
-<h4>Espere mientras recibimos la confirmacion...</h4>
+<h4>Hemos bloqueado el App para que los inventarios y clientes esten actualizados.</h4>
 
 </div>
 
 <div class="modal-footer">
-<div class="progress progress-striped loader active">
-  <div class="bar" style="width: 100%;"></div>  
-</div>
-<a class="btn btn-primary show_on_error accept">Ok</a>
+<a class="btn btn-primary show_on_error accept">Desbloquear</a>
 </div>
 
 

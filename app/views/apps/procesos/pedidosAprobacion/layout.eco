@@ -1,16 +1,39 @@
-<h1>Aprobacion de Pedidos</h2>
 
-<br/>
+
+<div class="row-fluid">
+  
+  <div class="span6">
+    <h5><%= @departamento %></h5>
+    <h1><%= @label %></h2>
+  </div>
+  
+  <div class="span6">
+    <a class="btn btn-success btn-large reload pull-right"><i class="icon-refresh icon-white"></i> Actualizar</a><br/>
+  </div>
+  
+</div>
 
 <hr/>
 
-<ul class="src_pedidos nav nav-tabs nav-stacked"></ul>
+<div class="content well">
+  
+ <table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Referencia</th>
+        <th>Cliente</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody class="src_pedidos">
+    </tbody>
+  </table>
 
+ 
+</div>
 
 <div class="action_footer">
     <div class="modal-footer">
-      <a class="btn btn-primary save">Guardar</a>
-      <a class="btn btn-danger cancel">Cancel</a>
+      <a class="btn btn-danger cancel">Cancelar</a>
     </div>
 </div>
-

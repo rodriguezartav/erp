@@ -1,6 +1,5 @@
 require('lib/setup')
 Spine = require('spine')
-Movimientos = require("controllers/movimientos")
 Documento = require("models/documento")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
@@ -32,26 +31,26 @@ class CierresContable extends Spine.Controller
     ".loading" : "loading"
 
   events:
-    "click .save" : "send"
+    "click .cancel" : "reset"
 
   constructor: ->
     super
     @error.hide()
+    Cierre.destroyAll()
     Cierre.query(fecha: new Date().toSimple() )
     Cierre.bind "query_success" , @onCierreFetchComplete
+    Cierre.bind "query_error" , @onCierreError
     @html require("views/apps/contables/cierresContable/loading")(@documento)
-    Cierre.bind "query_error" , =>
+    
+
+  onCierreError: =>
       @loading.hide()
       @error.show()
       alert "Ocurrio un error, intente de nuevo dado refrescar."
 
   onCierreFetchComplete: =>
-    @cierre = Cierre.first()
-    if @cierre.ultimoCierre
-      @cierre.loadCierreAnteriorAndTest()
-      @renderCierre()
-    else
-      Spine.trigger "show_lightbox" , "cierreManual" , @cierre , @onCierreManualComplete
+    @cierre = Cierre.last()
+    @renderCierre()
       
   onCierreManualComplete: =>
     @cierre.loadCierreAnteriorAndTest()
@@ -61,45 +60,45 @@ class CierresContable extends Spine.Controller
     @html require("views/apps/contables/cierresContable/layout")(@documento)
 
     src ="views/apps/contables/cierresContable/item"
-    @ventas.append require(src)(label: "Contado" , value: @cierre.ventasContado)
-    @ventas.append require(src)(label: "Credito" , value: @cierre.ventasCredito)
-    @ventas.append require(src)(label: "Notas Credito" , value: @cierre.ventasNotaCredito)
-    @ventas.append require(src)(label: "Notas Debito" , value: @cierre.ventasNotaDebito)
-    @ventas.append require(src)(label: "Impuestos" , value: @cierre.ventasImpuesto)
-    @ventas.append require(src)(label: "Descuentos" , value: @cierre.ventasDescuento)
-    @ventas.append require(src)(label: "Periodo" , value: @cierre.ventasFinal)
-    @ventas.append require(src)(label: "Prueba" , value: @cierre.ventasValor)
+    @ventas.append require(src)(label: "Inicial" , value: @cierre.VentasInicial)
+    @ventas.append require(src)(label: "Contado" , value: @cierre.VentasContado)
+    @ventas.append require(src)(label: "Credito" , value: @cierre.VentasCredito)
+    @ventas.append require(src)(label: "Notas Credito" , value: @cierre.VentasNotaCredito)
+    @ventas.append require(src)(label: "Notas Debito" , value: @cierre.VentasNotaDebito)
+    @ventas.append require(src)(label: "Impuestos" , value: @cierre.VentasImpuesto)
+    @ventas.append require(src)(label: "Descuentos" , value: @cierre.VentasDescuento)
+    @ventas.append require(src)(label: "Periodo" , value: @cierre.VentasValor)
+    @ventas.append require(src)(label: "Final" , value: @cierre.VentasFinal)
 
+    @inventarios.append require(src)(label: "Inicial" , value: @cierre.InventariosInicial)
+    @inventarios.append require(src)(label: "Ventas" , value: @cierre.InventariosVenta)
+    @inventarios.append require(src)(label: "Entradas" , value: @cierre.InventariosEntrada)
+    @inventarios.append require(src)(label: "Compras" , value: @cierre.InventariosCompra)
+    @inventarios.append require(src)(label: "Salidas" , value: @cierre.InventariosSalida)
+    @inventarios.append require(src)(label: "Devol." , value: @cierre.InventariosDevolucion)
+    @inventarios.append require(src)(label: "Final" , value: @cierre.InventariosFinal)
+    @inventarios.append require(src)(label: "Comprobacion" , value: @cierre.InventariosValor)
 
-    @inventarios.append require(src)(label: "Inicial" , value: @cierre.inventariosInicial)
-    @inventarios.append require(src)(label: "Ventas" , value: @cierre.inventariosVenta)
-    @inventarios.append require(src)(label: "Entradas" , value: @cierre.inventariosEntrada)
-    @inventarios.append require(src)(label: "Compras" , value: @cierre.inventariosCompra)
-    @inventarios.append require(src)(label: "Salidas" , value: @cierre.inventariosSalida)
-    @inventarios.append require(src)(label: "Devol." , value: @cierre.inventariosDevolucion)
-    @inventarios.append require(src)(label: "Sistema" , value: @cierre.inventariosValor)
-    @inventarios.append require(src)(label: "Calculado" , value: @cierre.inventariosFinal)
     
-    @saldos.append require(src)(label: "Inicial" , value: @cierre.saldosInicial)
-    @saldos.append require(src)(label: "Facturas" , value: @cierre.saldosFactura)
-    @saldos.append require(src)(label: "Notas Credito" , value: @cierre.saldosNotaCredito)
-    @saldos.append require(src)(label: "Notas Debito" , value: @cierre.saldosNotaDebito)
-    @saldos.append require(src)(label: "Pagos" , value: @cierre.pagosValor)
-    @saldos.append require(src)(label: "Sistema" , value: @cierre.saldosValor)
-    @saldos.append require(src)(label: "Calculado" , value: @cierre.saldosFinal)
+    @saldos.append require(src)(label: "Inicial" , value: @cierre.SaldosInicial)
+    @saldos.append require(src)(label: "Facturas" , value: @cierre.SaldosFactura)
+    @saldos.append require(src)(label: "Notas Credito" , value: @cierre.SaldosNotaCredito)
+    @saldos.append require(src)(label: "Notas Debito" , value: @cierre.SaldosNotaDebito)
+    @saldos.append require(src)(label: "Final" , value: @cierre.SaldosFinal)
+    @saldos.append require(src)(label: "Comprobacion" , value: @cierre.SaldosValor)
+
+    @pagos.append require(src)(label: "Inicial" , value: @cierre.PagosInicial)
+    @pagos.append require(src)(label: "Facturas" , value: @cierre.PagosFactura)
+    @pagos.append require(src)(label: "Nota Credito" , value: @cierre.PagosNotaCredito)
+    @pagos.append require(src)(label: "Nota Debito" , value: @cierre.PagosNotaDebito)
+    @pagos.append require(src)(label: "Final" , value: @cierre.PagosFinal)
+    @pagos.append require(src)(label: "Comprobacion" , value: @cierre.PagosValor)
     
-    @pagos.append require(src)(label: "Inicial" , value: @cierre.pagosInicial)
-    @pagos.append require(src)(label: "Facturas" , value: @cierre.pagosFactura)
-    @pagos.append require(src)(label: "Nota Credito" , value: @cierre.pagosNotaCredito)
-    @pagos.append require(src)(label: "Nota Debito" , value: @cierre.pagosNotaDebito)
-    @pagos.append require(src)(label: "Sistema" , value: @cierre.pagosValor)
-    @pagos.append require(src)(label: "Calculado" , value: @cierre.pagosFinal)
-    
-    @proveedores.append require(src)(label: "Inicial" , value: @cierre.saldosProveedorInicial)
-    @proveedores.append require(src)(label: "Compras" , value: @cierre.ventasProveedor)
-    @proveedores.append require(src)(label: "Pagos" , value: @cierre.pagosProveedor)
-    @proveedores.append require(src)(label: "Sistema" , value: @cierre.saldosProveedor)
-    @proveedores.append require(src)(label: "Calculado" , value: @cierre.saldosProveedorFinal)
+    @proveedores.append require(src)(label: "Inicial" , value: @cierre.SaldosProveedorInicial)
+    @proveedores.append require(src)(label: "Compras" , value: @cierre.VentasProveedor)
+    @proveedores.append require(src)(label: "Pagos" , value: @cierre.PagosProveedor)
+    @proveedores.append require(src)(label: "Final" , value: @cierre.SaldosProveedorFinal)
+    @proveedores.append require(src)(label: "Comprobacion" , value: @cierre.SaldosProveedor)
     
     @cierre.save()
 
@@ -114,6 +113,9 @@ class CierresContable extends Spine.Controller
     @send.hide()
  
   reset: =>
+    Cierre.unbind "query_success" , @onCierreFetchComplete
+    Cierre.unbind "query_error" , @onCierreError
+    
     @release()
     @navigate "/apps"
    

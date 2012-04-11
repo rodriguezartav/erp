@@ -3,19 +3,25 @@
 <br/>
 
 <div class="row">
-  <div class="span4">
+  <div class="span4 ">
     <h3>Ventas</h3>
-    <table id="ventas" class="table table-striped table-bordered table-condensed"></table>
+    <div class="well">
+      <table id="ventas" class="table table-striped table-bordered table-condensed"></table>
+    </div>
   </div>
 
   <div class="span4">
     <h3>Inventarios</h3>
-    <table id="inventarios" class="table table-striped table-bordered table-condensed"></table>
+    <div class="well">
+      <table id="inventarios" class="table table-striped table-bordered table-condensed"></table>
+    </div>
   </div>
 
   <div class="span4 ">
     <h3>Saldos</h3>
-    <table id="saldos" class="table table-striped table-bordered table-condensed"></table>
+    <div class="well">
+      <table id="saldos" class="table table-striped table-bordered table-condensed"></table>
+    </div>
   </div>
 
 </div>
@@ -24,19 +30,24 @@
 
   <div class="span6">
     <h3>Pagos</h3>
-    <table id="pagos" class="table table-striped table-bordered table-condensed"></table>
+    <div class="well">
+      <table id="pagos" class="table table-striped table-bordered table-condensed"></table>
+    </div>
   </div>
 
   <div class="span6">
     <h3>Proveedores</h3>
+    <div class="well">
+    
     <table id="proveedores" class="table table-striped table-bordered table-condensed"></table>
+    </div>
   </div>
 
 </div>
 
 <div class="action_footer">
     <div class="modal-footer">
-      <a class="btn btn-primary save">Aplicar Cierre</a>
+      <a class="btn btn-primary cancel">Regresar</a>
     </div>
 </div>
 

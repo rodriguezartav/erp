@@ -5,7 +5,7 @@ Spine.Controller.ViewDelegation =
   extended: ->
 
     @include
-        
+
       validationErrors: []
     
       ##
@@ -15,10 +15,7 @@ Spine.Controller.ViewDelegation =
       reset: () ->
         @release()
         @customReset?()
-        @inputs_to_validate.val ""
-        @resetDates()
         @navigate "/apps"
-        @navigate "/apps/#{@name}"
 
       beforeSend: (object) ->
         return true
@@ -61,6 +58,9 @@ Spine.Controller.ViewDelegation =
           errors  = @validate options 
           @validationErrors = @validationErrors.concat(errors) if errors.length > 0
           
+          if options.numeric
+            options.val = parseFloat(options.val)
+          
           if options.dateName
             options.writable = false
             date = fechas[options.dateName] || {}
@@ -88,6 +88,10 @@ Spine.Controller.ViewDelegation =
         options.dateName = input.attr("date-name")
         options.datePart = input.attr("date-part")
 
+        options.maxValue = parseFloat(options.maxValue) if options.maxValue
+        options.minValue = parseFloat(options.minValue) if options.minValue
+
+
         options.writable = @toBool(input.attr("data-writable") || true)
         options.required = @toBool(input.attr("data-required") || true)
         options.numeric =  @toBool(input.attr("data-numeric") || false)
@@ -109,10 +113,10 @@ Spine.Controller.ViewDelegation =
           errors.push "El campo " +  options.type + " campo debe ser numerico" 
         else if options.val < 0  and options.positive 
           errors.push "El campo " +  options.type + " campo debe ser positivo"
-        else if options.val > options.maxValue and options.maxValue
-          errors.push "El campo " +  options.type + " tiene como maximo #{maxValue}"
-        else if options.val < options.minValue and options.minValue
-          errors.push "El campo " +  options.type + " tiene como minimo #{minValue}"
+        else if options.maxValue and options.val > options.maxValue
+          errors.push "El campo " +  options.type + " tiene como maximo #{options.maxValue}"
+        else if options.minValue and options.val < options.minValue
+          errors.push "El campo " +  options.type + " tiene como minimo #{options.minValue}"
         errors
       
     ##

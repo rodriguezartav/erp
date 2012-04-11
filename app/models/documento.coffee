@@ -3,13 +3,24 @@ Spine = require('spine')
 class Documento extends Spine.Model
   @configure "Documento", "Proveedor" , "Nombre_Contado" ,"Total" , "Saldo" , "CodigoExterno" , "Referencia" , "Observacion" , 
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo" , "FechaFacturacion","FechaVencimiento" ,
-  "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos"
+  "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos", "IsContado"
   
   @extend Spine.Model.Salesforce
 
   @avoidQueryList: [ "Referencia" , "Observacion" , "SubTotal" , "Descuento" , "Impuesto", "Fuente" ,
-    "FechaFacturacion","FechaVencimiento" ,"AplicarACuenta"]
+    "FechaFacturacion","FechaVencimiento" ,"AplicarACuenta","IsContado"]
 
+  updateFromMovimientos: (movimientos)  ->
+    @Total = 0
+    @Descuento =0
+    @Impuesto = 0
+    @SubTotal=0
+    for movimiento in movimientos
+      @SubTotal += movimiento.SubTotal
+      @Descuento += movimiento.Descuento
+      @Impuesto += movimiento.Impuesto
+      @Total += movimiento.Total
+    
   @queryFilter: (options ) =>
     return "" if !options
     filter =""

@@ -20,9 +20,8 @@ Spine.Model.Salesforce =
         for item in items
           object = {}
           for attr of item.attributes()
-            if @avoidInsertList.indexOf(attr) > -1
-              item[attr] = null
-            object[attr + "__c" ] = item[attr] if attr != "id"
+            if @avoidInsertList.indexOf(attr) == -1
+              object[attr + "__c" ] = item[attr] if attr != "id"
           objects.push object
         requests = JSON.stringify( objects )  
         requests
@@ -37,6 +36,8 @@ Spine.Model.Salesforce =
       insert: (documentos,url) =>
         @beforeInsert()
         className = @overrideName || @className 
+        ##KMQ  
+        _kmq.push(['record', 'Made API Call', {'Type':'Outbound', 'Class' : className }]);
         $.ajax
           url        : @sendUrl(documentos)
           type       : "POST"
@@ -97,6 +98,8 @@ Spine.Model.Salesforce =
         query += @queryFilter(options)
         query = @nSyncQueryFilter(query) if @nSyncQueryFilter
         Spine.trigger "query_start"
+        _kmq.push(['record', 'Made API Call', {'Type':'Inbound', 'Class' : @overrideName || @className  }]);
+        ##KMQ  
         $.ajax
           url: Spine.server + "/query"
           xhrFields: {withCredentials: true}
@@ -113,11 +116,14 @@ Spine.Model.Salesforce =
         raw_results = String.replaceAll(raw_results,'__c','') if !@standardObject
         raw_results = String.replaceAll(raw_results,'Id','id')
         results = JSON.parse(raw_results).results
-        @refresh(results)
+        @destroyAll() if @destroyBeforeRefresh
+        @refresh(results)        
         @trigger "query_success"
         @recordLastUpdate?()
 
       on_query_error: (error) =>
+        console.log error
+        #alert responseText  = error.responseText
         responseText  = error.responseText
         if responseText.length > 0
           if responseText.toLowerCase().indexOf("session expired") > -1

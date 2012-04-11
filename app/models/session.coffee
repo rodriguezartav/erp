@@ -11,21 +11,6 @@ class Session extends Spine.SingleModel
   
   constructor: ->
     super
-    Spine.status = navigator.onLine
-    window.setInterval Session.checkStatus , 250
-    
-  @checkStatus: ->
-    change = false
-    if navigator.onLine and Spine.status != "online"
-      Spine.status = "online"
-      change=true
-      
-    else if !navigator.onLine and Spine.status != "offline"
-      Spine.status = "offline"
-      change=true
-      
-    if change
-      Spine.trigger "status_changed" , Spine.status 
 
   resetLastUpdate: ->
     @lastUpdate = {}
@@ -37,7 +22,8 @@ class Session extends Spine.SingleModel
     @save()
   
   getLastUpdate: (className) =>
-    lastUpdate = @lastUpdate?[className] || new Date('1-1-1970').getTime()
+    lastUpdate = new Date('1/1/1970').getTime()
+    lastUpdate = @lastUpdate?[className] if @lastUpdate 
     lastUpdate = new Date(lastUpdate)
     return lastUpdate
 
@@ -71,7 +57,6 @@ class Session extends Spine.SingleModel
 
   on_login_success: (raw_results) =>
      results = JSON.parse raw_results 
-     console.log results
      @instance_url = results.instance_url
      @token = results.token
      @userId = results.userId

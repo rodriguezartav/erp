@@ -7,12 +7,14 @@ class Saldo extends Spine.Model
   @extend Spine.Model.Salesforce
   @extend Spine.Model.NSyncModel
 
+  @autoReQuery = true;
+
 
   @overrideName: "Documento"
 
   @queryFilter: (options ) =>
-    filter =""
-    filter = @queryFilterAddCondition(" Saldo__c   != 0"                               , filter)
+    filter = ""
+    filter = @queryFilterAddCondition(" IsContable__c = 'true' and IsContado__c = false" , filter)
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "         , filter) if options.cliente
     filter
 

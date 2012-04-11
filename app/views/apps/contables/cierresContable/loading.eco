@@ -1,5 +1,5 @@
-<h1>Cierre Diario</h2>
-
+<h5><%= @departamento %></h5>
+<h1><%= @label %></h2>
 <br/>
 
 <h3>Espere, cargando datos del servidor</h3>

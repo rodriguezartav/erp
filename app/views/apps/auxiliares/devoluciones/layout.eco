@@ -23,29 +23,36 @@
 
 <div class="well">
 
-  
-  <div class="progress progress-striped item_loader active">
-    <div class="bar" style="width: 100%">
-      Cargando...
-    </div>  
-  </div>
 
   <table class="table table-striped table-bordered table-condensed">
     <thead>
       <tr>
         <th>#</th>
         <th>…Producto</th>
-        <th>Cantidad</th>
         <th>Precio</th>
         <th>Descuento</th>
         <th>Impuesto</th>
-        <th>Devolucion</th>
+        <th>Cantidad</th>
       </tr>
     </thead>
     <tbody class="movimientos_list">
     </tbody>
   </table>
+
+
+  <div class="row-fluid">
+
+     <table class="table table-total  pull-right table-striped  table-bordered">
+         <tr><td><h4>SubTotal </h4></td><td><h4><span class="lbl_subTotal">0.00</span></td></h4></tr>
+         <tr><td><h4>SubTotal </h4></td><td><h4><span class="lbl_descuento">0.00</span></td></h4></tr>
+         <tr><td><h4>SubTotal </h4></td><td><h4><span class="lbl_impuesto">0.00</span></td></h4></tr>
+         <tr><td><h4>SubTotal </h4></td><td><h4><span class="lbl_total">0.00</span></td></h4></tr>
+         
+
+     </table>
+   </div>
 </div>
+
 
 <div class="action_footer">
     <div class="modal-footer">

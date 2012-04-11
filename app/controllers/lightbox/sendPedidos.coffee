@@ -1,6 +1,6 @@
 Spine   = require('spine')
 User = require('models/user')
-Pedido = require('models/movimiento')
+PedidoItem = require('models/transitory/pedidoItem')
 $       = Spine.$
 
 class SendPedidos extends Spine.Controller
@@ -18,13 +18,13 @@ class SendPedidos extends Spine.Controller
   constructor: ->
     super
     @html require('views/lightbox/sendPedidos')
-    Pedido.send_to_server(User.current)
-    Pedido.bind "ajax_error" , @on_error
-    Pedido.bind "ajax_complete" , @on_success
+    PedidoItem.insert(@data)
+    PedidoItem.bind "insert_error" , @on_error
+    PedidoItem.bind "insert_success" , @on_success
 
   on_success: (results) =>
-    Pedido.unbind "ajax_error" , @on_error
-    Pedido.unbind "ajax_complete" , @on_success    
+    PedidoItem.unbind "insert_error" , @on_error
+    PedidoItem.unbind "insert_success" , @on_success    
     @loader.hide()
     errors = []
     hasErrors = false
@@ -42,12 +42,13 @@ class SendPedidos extends Spine.Controller
       @callback.apply @, [true]
 
   on_error: (error_obj) =>
-    Pedido.unbind "ajax_error" , @on_error
-    Pedido.unbind "ajax_success" , @on_success
+    PedidoItem.unbind "insert_error" , @on_error
+    PedidoItem.unbind "insert_success" , @on_success
     @loader.hide()
     @el.addClass "error"
     @alert_box.show()
-    @alert_box.append "<p>#{error.errors}</p>" for error in error_obj
+    error = JSON.stringify(error_obj) || error_obj
+    @alert_box.append "<p>#{error}</p>"
   
   on_error_accept: =>
     @alert_box.empty()

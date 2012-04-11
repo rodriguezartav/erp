@@ -38,7 +38,7 @@ class InfoBar  extends Spine.Controller
   reset: ->
     for model in Spine.nSync
       model.destroyAll()
-      Spine.session.resetLastUpdate()
+    Spine.session.resetLastUpdate()
     window.location.reload()
 
   

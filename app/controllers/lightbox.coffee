@@ -10,17 +10,21 @@ SendDocumento = require("controllers/lightbox/sendDocumento")
 SendRecibo = require("controllers/lightbox/sendRecibo")
 SendCierre = require("controllers/lightbox/sendCierre")
 CierreManual = require("controllers/lightbox/cierreManual")
+SendPedidos = require("controllers/lightbox/sendPedidos")
+AprobarPedidos = require("controllers/lightbox/aprobarPedidos")
+Block = require("controllers/lightbox/block")
+
 
 class Lightbox extends Spine.Controller
   className: 'lightbox reveal-modal-bg'
 
   constructor: ->
     super
-    @items = [Login , SendDocumento , SendMovimientos , SendCierre,CierreManual,SendRecibo]
+    @items = [Login , SendDocumento , SendMovimientos , SendCierre,CierreManual,SendRecibo,SendPedidos , AprobarPedidos , Block]
     
     Spine.bind "hide_lightbox" , @hide
     
-    Spine.bind "show_lightbox" , ( type , data =null, callback=null ) =>
+    Spine.bind "show_lightbox" , ( type , data =null , callback=null ) =>
       @el.show()
       @current = null
       for item in @items

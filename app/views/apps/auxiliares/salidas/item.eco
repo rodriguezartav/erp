@@ -1,0 +1,7 @@
+<% Producto = require("models/producto")  %>
+<% producto = Producto.find(@Producto)  %>
+
+
+<td><h4><%= producto.Name.capitalize() %></h4></td>
+<td><input class="editable validatable" data-numeric="true" data-max-value="<%= producto.InventarioDisponible %>" data-type="ProductoCantidad" value="<%= @ProductoCantidad %>" /></td>
+<td><a class="btn btn-danger btn-small js_btn_remove"><i class="icon-remove icon-white"></i></a></td>

@@ -1,0 +1,49 @@
+<% Spine   = require('spine') %>
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.find(@group.Cliente)  %>
+
+<div class="modal-header">
+  <% action = if @aprobar == 1 then "Aprobar" else "Archivar" %>
+  <h3><%= action %> Pedidos</h3>
+</div>
+
+<div style="display:none" class="alert-box error alert-error alert">
+</div>
+
+<div class="modal-body show_wait">
+  <h4>Espere mientras recibimos la confirmacion...</h4>
+</div>
+
+<div class="modal-body show_input">
+    <h4>Esta por aprobar un pedido de <a target="_blank" href="<%= Spine.session.instance_url %>/<%= cliente.id  %>"> <%= cliente.Name  %> </a> por un monto de  <%= @group.Total.toMoney()  %></h4>
+
+
+  <div class="alert">
+    <p>El cliente tiene un saldo de <%= cliente.Saldo  %> y un Limite de credito de xxxxxx</p>
+    <textarea class="span5" placeholder="Indique la razon para aprobar el pedido"></textarea>
+  </div>
+
+</div>
+
+<div class="modal-footer show_input">
+
+  <a class="btn btn-primary send">Aprobar</a>
+  
+  <a class="btn btn-danger cancel">Regresar</a>
+  
+</div>
+
+
+<div class="modal-footer show_wait">
+
+  <div class="progress progress-striped loader active">
+    <div class="bar" style="width: 100%;"></div>  
+  </div>
+
+  <a class="btn btn-primary show_on_error accept">Ok</a>
+</div>
+
+
+
+
+

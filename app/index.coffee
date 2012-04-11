@@ -3,6 +3,9 @@ Spine = require('spine')
 
 Lightbox = require("controllers/lightbox")
 InfoBar = require("controllers/infoBar")
+ToolBar = require("controllers/toolBar")
+
+Timer = require("timer")
 
 User = require("models/user")
 Cliente = require("models/cliente")
@@ -23,7 +26,10 @@ ConvertirRecibo = require("apps/auxiliares/convertirRecibo")
 CierresContable = require("apps/contables/cierresContable")
 DocumentosImpresion = require("apps/procesos/documentosImpresion")
 EstadoCuentaCliente = require("apps/procesos/estadoCuentaCliente")
+Pedidos = require("apps/auxiliares/pedidos")
+PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
 
+PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
 
 class App extends Spine.Controller
   className: "app"
@@ -32,8 +38,12 @@ class App extends Spine.Controller
     super
     #Spine.server = if @test then "http://127.0.0.1:9393" else "http://rodco-api2.heroku.com"
     #Spine.server = if @test then "http://127.0.0.1:9393" else "http://api2s.heroku.com"
-    #Spine.server = "http://127.0.0.1:9393"
-    Spine.server = "http://api2s.heroku.com"
+    Spine.server = "http://127.0.0.1:9393"
+    #Spine.server = "http://api2s.heroku.com"
+    
+    Timer.registerTimers()
+    Spine.followNavigatorStatus()
+    Spine.status = navigator.onLine
     
     @setup_plugins()
     @fetchLocalData()
@@ -41,6 +51,7 @@ class App extends Spine.Controller
     
     new Lightbox(el: $(".lightboxCanvas"))
     new InfoBar(el: $(".infoBar"))
+    new ToolBar(el: ".toolbar" )
     
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 
@@ -54,6 +65,9 @@ class App extends Spine.Controller
         @currentApp?.reset()
         for app in @apps
           @currentApp = app if app.name == params.name
+       
+        ##KMQ    
+        _kmq.push(['record', 'App ' + @currentApp.name + ' Started' ]);
         @currentApp = new @currentApp
         @html @currentApp
      
@@ -72,10 +86,10 @@ class App extends Spine.Controller
     for model in Spine.transitoryModels
       model.fetch()
 
-
   fetchServerData: =>
     for model in Spine.nSync
-      model.query()
+      if model.autoQuery
+        model.query()
 
   loginComplete: =>
     @registerStatusHandler()
@@ -86,6 +100,7 @@ class App extends Spine.Controller
 
   registerApps: =>
     profile = Spine.session.user.Perfil__c
+    Spine.session.type = if profile == "Vendedor" then "Ruta" else "Planta" 
     @apps = Spine.profiles[profile]
 
   setup_plugins: =>
@@ -96,12 +111,10 @@ class App extends Spine.Controller
 
   buildProfiles: =>
     profiles = {}
-    apps = [Entradas,Salidas,Devoluciones,Compras,FacturasProveedor,PagosProveedor, NotasCredito,NotasDebito,EmitirRecibo,CierresContable , DocumentosImpresion, EstadoCuentaCliente ]
+    apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , NotasDebito , CierresContable , DocumentosImpresion , PedidosAprobacion ]
     profiles["Platform System Admin"] = apps
     profiles["Gerencia"] = apps
     Spine.profiles = profiles
-    
-    
 
 module.exports = App
     

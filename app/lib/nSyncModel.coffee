@@ -11,6 +11,8 @@ Spine.Model.NSyncModel =
 
     @extend
       
+      autoQuery: true
+      
       beforeSaveLocal: ->
         return false;
       
@@ -21,7 +23,10 @@ Spine.Model.NSyncModel =
         Spine.session.setLastUpdate(@name)
         
       nSyncQueryFilter: (filter) =>
-        return @queryFilterAddCondition(" LastModifiedDate >= #{Spine.session.getLastUpdate(@name).to_salesforce() }" , filter)
+        date = Spine.session.getLastUpdate(@name)
+        if typeof date != "Date"
+          date = new Date('1970/1/1')
+        return @queryFilterAddCondition(" LastModifiedDate >= #{date.to_salesforce() }" , filter)
         
     
   saveLocal: ->

@@ -26,16 +26,17 @@ class Login extends Spine.Controller
     Spine.session = Session.record || Session.create()
     @data = {} if !@data
     Spine.session.loadFromSalesforce(@data.salesforceSession) if @data.salesforceSession
+    
     if Spine.session.token and !Spine.session.isExpired()
       if navigator.onLine
         @renderComplete()
       else
-        @renderOffline()
+        @renderOffLine()
     else
       @renderLogin()
 
     Session.bind "login_success" , =>
-      @renderComplete()
+      @onLoginSuccess()
       
     Session.bind "login_error" , (response) =>
       @log response
@@ -47,8 +48,8 @@ class Login extends Spine.Controller
 
 
   askForNotificationPermision: ->
-    if window.webkitNotifications.checkPermission() != 0
-      window.webkitNotifications.requestPermission();
+    #if window.webkitNotifications?.checkPermission?() != 0
+     # window.webkitNotifications?.requestPermission?();
 
   login: =>
     @askForNotificationPermision()
@@ -62,8 +63,19 @@ class Login extends Spine.Controller
     @alert_box.hide()
     @login.hide()
 
+  onLoginSuccess: =>
+
+    ##KMQ
+    _kmq.push(['identify', Spine.session.user.Email]);
+    _kmq.push(['record', 'Login' , {Profile: Spine.session.user.Profile__c }]);
+    @renderComplete()
+
   on_continue: =>
     @askForNotificationPermision()
+
+    ##KMQ
+    _kmq.push(['identify', Spine.session.user.Email]);
+    _kmq.push(['record', 'Session Reload']);
     Spine.trigger "hide_lightbox"
     @callback?.apply @, [true]    
 
@@ -73,11 +85,13 @@ class Login extends Spine.Controller
       @alert_box.show()
       @alert_box.html error
   
-  renderOffLine: ->
+  renderOffLine: =>
     @html require("views/lightbox/login/noNet")(Spine.session)
 
   renderComplete: =>
     @html require("views/lightbox/login/complete")(Spine.session)
 
+  cancel: =>
+    @renderOffLine()
 
 module.exports = Login

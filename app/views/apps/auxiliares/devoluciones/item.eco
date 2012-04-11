@@ -1,0 +1,10 @@
+<% Producto = require("models/producto")  %>
+<% producto = Producto.find(@Producto)  %>
+
+<td><h4><%= @CodigoExterno %></h4></td>
+<td><p><%= producto.Name.capitalize() %></p></td>
+<td><h4><%= @ProductoPrecio.toMoney() %></h4></td>
+<td><h4><%= @Descuento_Unitario %></h4></td>
+<td><h4><%= @Impuesto_Unitario %></h4></td>
+<td><input class="span2 validatable" data-min-value="1" data-max-value="<%= @ProductoCantidad %>" data-type="ProductoCantidad" data-numeric="true" value="<%= @ProductoCantidad %>" /></td>
+<td><a class="btn btn-danger btn-small js_btn_remove"><i class="icon-remove icon-white"></i></a></td>

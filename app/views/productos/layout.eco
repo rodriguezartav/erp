@@ -1,6 +1,26 @@
-<input type="text" placeholder="Busque Productos" class="js_search_productos loadable">
+<ul class="nav nav-pills">
+  <li><h3 class="label">Productos</h3></li>
+  
+  <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hilco <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li class=""><a href="#buttonGroups">Button groups</a></li>
+            <li class=""><a href="#buttonDropdowns">Button dropdowns</a></li>
+          </ul>
+  </li>
+  
+  <li><a>Yale</a></li>
+  <li><a>Cable THHN</a></li>
+  <li><a>Plywood</a></li>
+  <li><a>Llavines</a></li>
+  <li   class="active"><a>En Oferta</a></li>
+
+</ul>
+
+<div class="row-fluid input_wrapper">
+  <input type="text" placeholder="OJO: Escribe lo que buscas aqui!" class="js_search_productos loadable search-query">
+</div>
 
 
-
-<ul style="width: 100%" class="nav nav-tabs productos_list block-grid two-up" >
+<ul class="nav nav-tabs productos_list block-grid two-up" >
 </ul>

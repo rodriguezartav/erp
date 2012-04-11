@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class Cliente extends Spine.Model
-  @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo"
+  @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo" , "DiasCredito"
   @extend Spine.Model.NSyncModel
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SelectableModel
@@ -21,6 +21,8 @@ class Cliente extends Spine.Model
     for cliente in clientes
       names.push cliente.Name
     return names
+
+
 
         
 module.exports = Cliente

@@ -2,11 +2,12 @@ Spine = require('spine')
 
 class Movimiento extends Spine.Model
   @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "Impuesto" , 
-  "Descuento" , "SubTotal" , "Total" , "ProductoCosto" , "Referencia","Observacion","Cliente","CodigoExterno"
+  "Descuento" , "SubTotal" , "Total" , "ProductoCosto" , "Referencia","Observacion","Cliente",
+  "CodigoExterno","Descuento_Unitario","Impuesto_Unitario" , "Proveedor"
   
   @extend Spine.Model.Salesforce
    
-  @avoidInsertList = ["Total"] 
+  @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario"] 
    
   @queryFilter: (options ) =>
     return "" if !options
@@ -16,22 +17,8 @@ class Movimiento extends Spine.Model
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "        , filter) if options.cliente
     filter
  
-   
-  @descuento_monto: (movimiento) =>
-    subtotal = (Math.round movimiento.ProductoPrecio * movimiento.ProductoCantidad * 100 )
-    monto = (Math.round subtotal * movimiento.Descuento / 100) / 100
-    
-  @impuesto_monto: (movimiento) =>
-    subtotal = ( Math.round movimiento.ProductoPrecio * movimiento.ProductoCantidad * 100 )
-    subtotal = subtotal - ( @descuento_monto(movimiento) * 100 )
-    monto    = ( Math.round subtotal * movimiento.Impuesto / 100 ) / 100
-
-  @update_total: (movimiento) =>
-    movimiento.SubTotal = Math.round(movimiento.ProductoPrecio * movimiento.ProductoCantidad * 100 ) / 100
-    movimiento.Total = movimiento.SubTotal - Movimiento.descuento_monto(movimiento) + Movimiento.impuesto_monto(movimiento)
-
   @create_from_producto: (producto ) ->
-    Movimiento.create
+    movimiento = Movimiento.create
       Producto: producto.id
       Name: producto.Name
       Cantidad: 1
@@ -39,12 +26,24 @@ class Movimiento extends Spine.Model
       Impuesto: producto.Impuesto
       ProductoPrecio: producto.Precio
       Descuento: producto.Descuento
+    movimiento.updateSubTotal()
+    movimiento.applyDescuento()
+    movimiento.applyImpuesto()
+    movimiento.updateTotal()
+    movimiento.save()
 
-  @total: (movimientos) ->
-    total = 0
-    for movimiento in movimientos
-      Movimiento.update_total(movimiento)
-      total += movimiento.Total
-    parseInt(total*100)/100
+  updateSubTotal: ->
+    @SubTotal = Math.round(@ProductoPrecio * @ProductoCantidad * 100 ) / 100
+
+  applyDescuento:  ->
+    @Descuento = Math.round( @Descuento_Unitario * @SubTotal) / 100
+
+  applyImpuesto:  ->
+    @Impuesto = Math.round( @Impuesto_Unitario * (@SubTotal- @Descuento) ) / 100
+
+  updateTotal:  =>
+    @updateSubTotal()
+    @Total = @SubTotal - @Descuento + @Impuesto
+
 
 module.exports = Movimiento

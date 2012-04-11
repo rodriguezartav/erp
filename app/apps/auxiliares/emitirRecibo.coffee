@@ -170,7 +170,10 @@ class EmitirRecibos extends Spine.Controller
     if !recibo
       codigo = parseInt(Math.random() * 10000)
       recibo = Recibo.create { CodigoExterno: codigo, Cliente:  Cliente.current.id , FechaFormaPago: new Date() }
-      saldos = Saldo.findAllByAttribute("Cliente", recibo.Cliente )
+      saldosAll = Saldo.All()
+      saldos = []
+      for saldo in saldos
+        saldos.push saldo if saldo.Cliente == recibo.Cliente and saldo.Saldo != 0
       ReciboItem.createFromSaldos( saldos , recibo )
     
     ri = new Recibos(recibo: recibo)

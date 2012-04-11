@@ -34,6 +34,8 @@ class Recibo extends Spine.Model
   @extend Spine.Model.Salesforce
   @extend Spine.Model.NSyncModel
 
+  @autoQuery = false;
+
   createLists: ->
     #montosList = montosList.substring(0,montosList.length-1)
     #documentosList = documentosList.substring(0,documentosList.length-1)

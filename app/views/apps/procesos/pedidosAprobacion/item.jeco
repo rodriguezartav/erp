@@ -1,11 +1,10 @@
-<li data-referencia="<%= @Referencia %>">
-  <div class="row">
-    <h4 class="columns four"><%= @Referencia %></h3>
-    <h3 class="columns two"><%= @NombreCliente %></h3>
-    <h3 class="columns two"><%= @Total %></h3>
-    <div class="buttons columns two pull-right">
-      <a class="btn btn-primary">Aprobar</a>
-      <a class="btn btn-danger">Archivar</a>
-    </div>
-  </div>
-<li>
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.find(@Cliente)  %>
+
+<tr>
+<td><p><%= @Referencia %><p></td>
+<td><p><%= cliente.Name %><p></td>
+<td><p><%= @Total.toMoney() %><p></td>
+<td><a data-referencia="<%= @Referencia %>" data-aprobar="1"  class="btn btn-primary aprobar">Aprobar</a></td>
+<td><a data-referencia="<%= @Referencia %>" data-aprobar="0"  class="btn btn-danger archivar">Archivar</a></td>
+</tr>

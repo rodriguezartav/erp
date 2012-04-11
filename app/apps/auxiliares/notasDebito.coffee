@@ -26,13 +26,12 @@ class NotasDebito extends Spine.Controller
     super
     @error.hide()
     Cliente.reset_current()
-
+    @documento = Documento.create {Tipo_de_Documento: "ND"}
     @html require("views/apps/auxiliares/notasDebito/layout")(@documento)
     @clientes = new Clientes(el: @src_cliente)
-
-  #####
-  # ACTIONS
-  #####
+    Cliente.bind "current_set" , =>
+      @documento.Cliente = Cliente.current.id
+      @documento.save()
 
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if Cliente.current == null
@@ -43,18 +42,13 @@ class NotasDebito extends Spine.Controller
     object.SubTotal = object.Total
     
   send: (e) =>
-    @documento = Documento.create {Tipo_de_Documento: "ND"} if !@documento
     @updateFromView(@documento,@inputs_to_validate)
-    return alert @validationErrors.join(" , ") if @validationErrors.length > 0
-    
-    @documento.Cliente = Cliente.current.id
-    @documento.save()
     Spine.trigger "show_lightbox" , "sendDocumento" , @documento , @after_send
     
   after_send: =>
     @reset(false)
     
-  reset: =>
+  customReset: =>
     Cliente.reset_current()
     @documento.destroy() if @documento
     

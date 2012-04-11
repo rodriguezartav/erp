@@ -6,12 +6,15 @@ class Producto extends Spine.Model
   @extend Spine.Model.SelectableModel
   @extend Spine.Model.NSyncModel
 
+  @autoReQuery = true;
+
   @queryFilter: (options ) =>
     return "" if !options
     filter =""
     @queryFilterAddCondition(" Precio_Distribuidor__c > 0 ", filter) if options.withPrecio
+    filter += " order by CodigoExterno__c "
     filter
-
+    
   Ratio: ->
     r = (@Venta / @Meta)
     r = 1 if r >= 1

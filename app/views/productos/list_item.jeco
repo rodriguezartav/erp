@@ -1,3 +1,20 @@
-<li style="width: 50%" data-id="<%= @id %>">
-  <a><%= @Name.capitalize() %></a>
+<li    data-id="<%= @id %>">
+  
+  
+  
+  <a class="popable" rel="popover" data-content="<ul><li>Inventario <%= @InventarioActual.toMoney() %></li><li>Precio <%= @Precio_Distribuidor.toMoney() %></li><li>Descuento <%= @DescuentoMaximo %></li><ul>" data-original-title="<%= @Name.capitalize() %>">
+  
+    <p><%= @Name.capitalize() %>
+    <% if @InventarioActual == 0: %>
+      <span class="label label-warning">
+      <i class="icon-ban-circle icon-white"></i>
+      </span>
+    <% end %>
+    </p>
+    
+
+  
+
+  
+  </a>
 </li>

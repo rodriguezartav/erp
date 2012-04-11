@@ -3,13 +3,14 @@ html
 
 body
   background-image: url("images/furley_bg.png");
-  padding-bottom: 250px
-  height: 100%
+  height: 92%
   font-familiy: "Helvetica Neue", Helvetica, Arial, sans-serif
 
-  .table-total
-    width: 200px
+  .appCanvas
+    padding-bottom: 70px
+    
 
+  .table-total
     font-size: 15px
     td
       text-align: right
@@ -26,10 +27,9 @@ body
   .span12
     input,textarea
       width: 95%
-    
+
   h1
     color: #006391
-    
 
   h5.preHeader
     color: #333
@@ -47,7 +47,6 @@ body
     &.bottom
       margin: 0px 0px 13px 0px
       border-color: #eee
-    
 
   .well,.hero-unit
     margin-top: 10px
@@ -61,7 +60,28 @@ body
       color: #006391
       border-color: #333
       text-transform: capitalize
-    
+
+    td.primary  
+      width: 60%
+      
+    td.numeric
+      text-align: center
+     
+    .validatable,.editable,.loadable
+      width: none;
+      margin-bottom: 2px;
+
+
+    &table-contable
+      thead>tr>th
+        text-align: center
+      tr
+        td
+          text-align: center
+        td:first-child
+          text-align: left
+        td:last-child
+          text-align: right
 
   .btn.save
     padding: 8px 30px
@@ -70,6 +90,58 @@ body
     padding: 8px 30px
     float: left
 
+
+.toolbar
+  width: 100%;
+  height: 45px;
+  border-radius: 4px;
+  border-color: #d5d5d5;
+  border-width: 0 0 1px; /* drop the border on the fixed edges */
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  background-color: #dfdfdf
+  -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+  -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+  position: fixed
+  top: 40px
+  left: 0
+  right: 0
+  z-index: 900
+
+  .nav
+    margin-bottom: 0px
+
+  .label
+    line-height: 30px
+
+  .input_wrapper
+    padding-left: 70px
+  
+  .productos_list
+    vbg-gradient(#fff, #efefef,#fff)
+    border-radius(8px)
+    box-shadow(0, 1px, 2px, #333)
+    margin-top: 2px
+    margin-left: 70px
+    max-height: 390px
+    overflow-y: scroll
+    background-color: #fff
+    border: 2px solid #049cdb
+    z-index: 0
+    li
+      cursor: pointer
+      border: 1px solid #dee
+      width: 270px
+      a
+        text-transform: capitalize
+        height: 35px
+        
+      &.active
+        background-color: #08C
+        a
+          color: #fff
 
 .action_footer
   .modal-footer
@@ -109,34 +181,7 @@ body
           color: #fff
       a
         text-transform: capitalize
-  
-.productos
-  position: relative
 
-  .productos_list
-    max-height: 290px
-    overflow-y: scroll
-    background-color: #fff
-
-    position: absolute
-    top: 27px
-    left: 4px
-    z-index: 66
-    width: 90%
-    li
-      cursor: pointer
-      height: 40px
-      border-bottom: 1px solid #dee
-      width: 50%
-      
-      &.active
-        background-color: #08C
-        a
-          color: #fff
-      a
-        text-transform: capitalize
-  
-  
 .proveedores
   position: relative
 
@@ -164,16 +209,14 @@ body
       a
         text-transform: capitalize
 
-.table-contable
-  thead>tr>th
-    text-align: center
-  tr
-    td
-      text-align: center
-    td:first-child
-      text-align: left
-    td:last-child
-      text-align: right
+
+
+
+.listable
+  .list_item
+    opacity: 0.3
+    &.active
+      opacity: 1
 
 .lightbox
   position: fixed; 
@@ -190,6 +233,17 @@ body
       display: none
     .show_on_error
       display: none
+    .show_on_loading
+      display: none
+    .show_on_input
+      display: block
+    
+     &.loading
+      .show_on_loading
+        display: none
+      .show_on_input
+        display: none
+
      &.error
       border: 2px solid red
       .show_on_error
@@ -199,7 +253,7 @@ body
 
 @media (min-width: 900px)
   body
-    padding-top: 60px
+    padding-top: 120px
 
 
 @media print

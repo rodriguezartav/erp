@@ -3,12 +3,12 @@
   <h3>Enviando Movimientos</h3>
 </div>
 
-<div style="display:none" class="alert-box error alert-error alert">
-</div>
+
 
 <div class="modal-body">
-<h4>Espere mientras recibimos la confirmacion...</h4>
-
+  <h4>Espere mientras recibimos la confirmacion...</h4>
+  <div style="display:none" class="alert-box error alert-error alert">
+  </div>
 </div>
 
 <div class="modal-footer">

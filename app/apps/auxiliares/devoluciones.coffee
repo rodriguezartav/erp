@@ -6,6 +6,34 @@ Clientes = require("controllers/clientes")
 Producto = require("models/producto")
 Movimiento = require("models/movimiento")
 
+class Movimientos extends Spine.Controller
+  @extend Spine.Controller.ViewDelegation
+  
+  tag: "tr"
+
+  elements:
+    ".validatable" : "inputs_to_validate"
+
+  events:
+    "click .js_btn_remove" : "reset"
+    "change input" : "on_change"
+    
+  constructor: ->
+    super 
+    @html require("views/apps/auxiliares/devoluciones/item")(@movimiento) 
+
+  on_change: (e) =>
+    @updateFromView(@movimiento,@inputs_to_validate)
+    @movimiento.updateSubTotal()
+    @movimiento.applyDescuento()
+    @movimiento.applyImpuesto()
+    @movimiento.updateTotal()
+    @movimiento.save()
+    
+  reset: ->
+    @movimiento.destroy()
+    @release()
+
 class Devoluciones extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
   
@@ -19,48 +47,46 @@ class Devoluciones extends Spine.Controller
     ".error" : "error"
     ".validatable" : "inputs_to_validate"
     ".src_cliente" : "src_cliente"
-    ".cantidadADevolver" : "cantidadADevolver"
-    ".item_loader" : "item_loader"
-    ".btn" : "buttons"
+    ".lbl_subTotal" : "lbl_subTotal"
+    ".lbl_descuento" : "lbl_descuento"
+    ".lbl_impuesto" : "lbl_impuesto"
+    ".lbl_total" : "lbl_total"
+
 
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
-    "click .cantidadADevolver" : "on_cantidadADevolver_click"
-
-  @type = "compras"
-  @departamento = "Inventarios"
 
   constructor: ->
     super
-    @error.hide()
-    Cliente.cancel_current()
+    Cliente.reset_current()
+    @movimientos = []
+    @documento = Documento.create {Tipo_de_Documento: "NC"}     
+    Movimiento.bind "query_success" , @onLoadMovimientos
+    Movimiento.bind "change update" , @onMovimientoChange
     
     Cliente.bind 'current_set' , (cliente) =>
       Movimiento.destroyAll()
       Movimiento.query {cliente: cliente, tipos: ["'FA'"] }
-      @item_loader.show()
       
-    Movimiento.bind "query_success" , @onLoadMovimientos
-    @render()
-  
-  render: =>  
     @html require("views/apps/auxiliares/devoluciones/layout")()
     @clientes = new Clientes(el: @src_cliente)
-    @item_loader.hide()
 
   onLoadMovimientos: =>
-    @item_loader.hide()
     movimientos = Movimiento.all()
     for movimiento in movimientos
-      movimiento.ProductoName = Producto.find(movimiento.Producto).Name
-    @movimientos_list.html require("views/apps/auxiliares/devoluciones/itemToReturn")(movimientos) 
+      movimientosRow = new Movimientos(movimiento: movimiento)
+      @movimientos.push movimientosRow
+      @movimientos_list.append movimientosRow.el
 
-  on_cantidadADevolver_click: (e) =>
-    target = $(e.target)
-    movimiento = Movimiento.find( target.attr("data-type") )
-    if target.val() == "" or target.val() == "0"
-      target.val movimiento.ProductoCantidad
+  onMovimientoChange: =>
+    @documento.updateFromMovimientos(Movimiento.all())
+    @documento.save()
+    @lbl_subTotal.html @documento.SubTotal
+    @lbl_descuento.html @documento.Descuento
+    @lbl_impuesto.html @documento.Impuesto
+    @lbl_total.html @documento.Total
+
 
   #####
   # ACTIONS
@@ -71,41 +97,30 @@ class Devoluciones extends Spine.Controller
     @validationErrors.push "Debe escoger un cliente" if Cliente.current == null
     
   beforeSend: (object) =>
-    movimientos = []
-    for index,value of object
-      src = Movimiento.exists(index)
-      if src
-        movimiento = {}
-        movimiento.Tipo               = "NC"
-        movimiento.Cliente            = src.Cliente
-        movimiento.ProductoPrecio     = src.ProductoPrecio
-        movimiento.ProductoCantidad   = value
-        movimiento.ProductoCosto      = src.ProductoCosto
-        movimiento.Impuesto           = src.Impuesto
-        movimiento.Descuento          = src.Descuento
-        movimiento.Observacion        = object.Observacion
-        movimiento.Referencia         = "#{src.CodigoExterno}-src.Id"
-        movimientos.push movimiento if value != 0
-        Movimiento.update_total(movimiento)
-    Movimiento.refresh movimientos , clear: true
-
+    for movimiento in Movimiento.all()
+      movimiento.Tipo             = object.Tipo_de_Documento
+      movimiento.Observacion      = object.Observacion
+      movimiento.Referencia       = movimiento.CodigoExterno
+      movimiento.CodigoExterno    = null
+      movimiento.id               = null
+      Movimiento.update_total(movimiento)
+      movimiento.save()
+      
+      
   send: (e) =>
-    @documento = {Tipo_de_Documento: "NC"} if !@documento
     @refreshElements()
     @updateFromView(@documento,@inputs_to_validate)
     Spine.trigger "show_lightbox" , "sendMovimientos" , Movimiento.all() , @after_send   
-    @buttons.hide()
-    Spine.one "hide_lightbox" , =>
-      @buttons.show()
 
   after_send: =>
     @reset(false)
 
   customReset: ->
-    Cliente.cancel_current()
-    @documento=null 
-    Movimiento.destroyAll()
-    @movimientos_list.empty()
+    for items in @movimientos
+       items.reset()
+    @documento.destroy()
+    Movimiento.unbind "query_success" , @onLoadMovimientos
+    Movimiento.unbind "change update" , @onMovimientoChange
     
 
 module.exports = Devoluciones
