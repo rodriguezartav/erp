@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class DocumentoPreparado extends Spine.Model
-  @configure "Documento", "Proveedor" , "Nombre_Contado" ,"Total" , "Saldo" , "CodigoExterno" , "Referencia" , "Observacion" , 
+  @configure "Documento","Total" , "Saldo" , "CodigoExterno" , "Referencia" , "Observacion" , 
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo" , "FechaFacturacion","FechaVencimiento" ,
   "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos", "IsContado"
   
