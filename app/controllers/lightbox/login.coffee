@@ -25,15 +25,18 @@ class Login extends Spine.Controller
     super
     Spine.session = Session.record || Session.create()
     @data = {} if !@data
-    Spine.session.loadFromSalesforce(@data.salesforceSession) if @data.salesforceSession
-    
-    if Spine.session.token and !Spine.session.isExpired()
-      if navigator.onLine
-        @renderComplete()
-      else
-        @renderOffLine()
+    if @data.salesforceSession
+      Spine.session.loadFromSalesforce(@data.salesforceSession) 
+      Spine.session.salesforceLogin({user_id: @data.salesforceSession.user_id })
+      @login_effect()
     else
-      @renderLogin()
+      if Spine.session.token and !Spine.session.isExpired()
+        if navigator.onLine
+          @renderComplete()
+        else
+          @renderOffLine()
+      else
+        @renderLogin()
 
     Session.bind "login_success" , =>
       @onLoginSuccess()
@@ -46,19 +49,20 @@ class Login extends Spine.Controller
     Session.bind "no_net" , ->
       @renderNoNet()
 
-
   askForNotificationPermision: ->
     #if window.webkitNotifications?.checkPermission?() != 0
      # window.webkitNotifications?.requestPermission?();
 
   login: =>
-    @askForNotificationPermision()
     Spine.session.username = @txt_email.val()
     Spine.session.passwordToken = @txt_token.val()
     Spine.session.password = @txt_password.val()
-    Spine.session.save()
-    
+    Spine.session.save()  
     Spine.session.login()
+    @login_effect()
+
+  login_effect: =>
+    @askForNotificationPermision()
     @loader.show()
     @alert_box.hide()
     @login.hide()

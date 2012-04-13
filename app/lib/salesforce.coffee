@@ -68,14 +68,14 @@ Spine.Model.Salesforce =
         else
           filter += " and "
         filter += " #{condition} "
-
+      
       queryFilter: (options) =>
         return "" if !options
         filter = ""
-        
+      
       queryString: =>
         className = @overrideName || @className 
-        
+      
         query = "select "
         for attribute in @attributes
           if @avoidQueryList?.indexOf(attribute) == -1
@@ -86,7 +86,7 @@ Spine.Model.Salesforce =
         query +=  "__c"  if !@standardObject 
         query += " "
         query
-
+      
       ajaxParameters: (params) ->
          params.instance_url= Spine.session.instance_url
          params.token= Spine.session.token

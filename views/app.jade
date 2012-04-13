@@ -3,7 +3,8 @@ script(type='text/javascript', charset='utf-8')
   var exports = this;
   jQuery(function(){
     var App = require("index");
-    exports.app =  new App({ el: $(".appCanvas") , options: {app: '!{app}' , salesforceSession: null }});
+    var instance_url = "https://cs11.salesforce.com";
+    exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null } });
   });
   
 .toolbar
@@ -11,3 +12,5 @@ script(type='text/javascript', charset='utf-8')
 .appCanvas.container
 
 .lightboxCanvas
+
+//{user_id: "005A0000000f4mEIAQ" , instance_url: "https://cs11.salesforce.com" , token: "00DZ00000006AH5!ARUAQGAU1dKO7hLiUR8Rov2Ug2.BiueFZ6l22Cp0OwumzUJsafwdujhS.vrT28xzkSS2QpUwko7AioAdaOUr.fDlHJgMztTy"}

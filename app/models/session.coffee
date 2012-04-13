@@ -42,6 +42,7 @@ class Session extends Spine.SingleModel
     @save()
 
   isExpired: () =>
+    return true if !@lastLogin
     expireDate = new Date(@lastLogin.getTime() + 1000 * 60 * 60 * 2)
     res = false
     res= true if expireDate.getTime()  < new Date().getTime() 
@@ -52,6 +53,14 @@ class Session extends Spine.SingleModel
       url: Spine.server + "/login"
       type: "POST"
       data: {username: @username, password: @password + @passwordToken}
+      success: @on_login_success
+      error: @on_login_error
+
+  salesforceLogin: (options)  =>
+    $.ajax
+      url: Spine.server + "/login"
+      type: "POST"
+      data: Session.ajaxParameters(options)
       success: @on_login_success
       error: @on_login_error
 
