@@ -113,6 +113,13 @@ class App extends Spine.Controller
     apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , NotasDebito , CierresContable , EmitirRecibo ,DocumentosImpresion , RecibosAprobacion ,PedidosAprobacion ]
     profiles["Platform System Admin"] = apps
     profiles["Gerencia"] = apps
+    profiles["Ejecutivo Ventas"] = apps
+    profiles["Ejecutivo Credito"] = apps
+    profiles["Presidencia"] = apps
+    profiles["Vendedor"] = apps
+    profiles["Contabilidad"] = apps
+    profiles["Facturacion"] = apps
+    
     Spine.profiles = profiles
 
 module.exports = App
