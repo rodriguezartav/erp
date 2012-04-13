@@ -1,3 +1,8 @@
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.find(@Cliente)  %>
+
+
+<h2><%= cliente.Name %></h2>
 
 <div class="well ">
 

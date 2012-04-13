@@ -67,11 +67,9 @@ class Recibos extends Spine.Controller
     @refreshView(@recibo,@inputs_to_validate)
     @reciboItems = []
     @addReciboItems()
-   # @update_total()
 
   addReciboItems: ->  
     reciboItems = ReciboItem.findAllByAttribute("CodigoExterno", @recibo.CodigoExterno )    
-    @log reciboItems
     for ri in reciboItems
       reciboItem = new ReciboItems(reciboItem: ri)
       @reciboItems.push reciboItem
@@ -103,21 +101,28 @@ class Recibos extends Spine.Controller
       @alert_box.empty()  
     , 1400 
 
-
-  print: (e) =>    
-    $("body").html require("views/apps/procesos/documentosImpresion/docs/RECIBO")(@recibo)
-    
-
   beforeSend: (object) =>
-
+    reciboItems = ReciboItem.findAllByAttribute("CodigoExterno", object.CodigoExterno )
+    object.MontosList = ""
+    object.DocumentosList = ""
+    object.ConsecutivosList = ""
+    object.Monto = 0;
+    for item in reciboItems
+      object.DocumentosList += "#{item.SaldoId},"
+      object.MontosList += "#{item.Monto},"
+      object.ConsecutivosList += "#{item.Consecutivo},"
+      object.DocumentosLinks += '<a href="/' + item.Documento + '">' + item.Consecutivo + '</a><br/>'
+      object.Monto += item.Monto
+    object.MontosList = object.MontosList.substring(0,object.MontosList.length-1)
+    object.DocumentosList = object.DocumentosList.substring(0,object.DocumentosList.length-1)
+    object.ConsecutivosList = object.ConsecutivosList.substring(0,object.ConsecutivosList.length-1)
+    object.save()
+    
   send: (e) =>
     @refreshElements()
     @updateFromView(@recibo,@inputs_to_validate)
     @recibo.save()
     Spine.trigger "show_lightbox" , "sendRecibo" , @recibo , @after_send   
-
-
-   
    
   after_send: =>
     @destroyData()
@@ -161,21 +166,21 @@ class EmitirRecibos extends Spine.Controller
 
   on_create_recibo_click: =>
     @createRecibo()
-    
+
   renderRecibos: =>
     for recibo in Recibo.all()
       @createRecibo(recibo)
-  
+
   createRecibo: (recibo=false) =>
     if !recibo
       codigo = parseInt(Math.random() * 10000)
       recibo = Recibo.create { CodigoExterno: codigo, Cliente:  Cliente.current.id , FechaFormaPago: new Date() }
-      saldosAll = Saldo.All()
+      saldosAll = Saldo.all()
       saldos = []
-      for saldo in saldos
+      for saldo in saldosAll
         saldos.push saldo if saldo.Cliente == recibo.Cliente and saldo.Saldo != 0
       ReciboItem.createFromSaldos( saldos , recibo )
-    
+
     ri = new Recibos(recibo: recibo)
     @recibos.push ri 
     @append ri

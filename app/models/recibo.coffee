@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Recibo extends Spine.Model
   @configure "Recibo" , "Cliente" , "Monto", "FormaPago" ,"FechaFormaPago" , "Observacion", "Referencia" , "CodigoExterno", 
-    "DocumentosList","MontosList","ConsecutivosList","DocumentosLinks" 
+    "DocumentosList" , "MontosList" , "ConsecutivosList" , "DocumentosLinks" 
   
   
   # "CodigoUnico" ,"Cliente" , "Documentos" , "Encargado" ,  "Monto" , "FormaPago" , "FechaFormaPago" , "ReferenciaFormaPago" , "Observacion" , 
@@ -36,6 +36,12 @@ class Recibo extends Spine.Model
 
   @autoQuery = false;
 
+  @queryFilter: (options ) =>
+    return "" if !options
+    filter =""
+    filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"              , filter) if options.estado
+    filter
+
   createLists: ->
     #montosList = montosList.substring(0,montosList.length-1)
     #documentosList = documentosList.substring(0,documentosList.length-1)
@@ -50,8 +56,7 @@ class Recibo extends Spine.Model
     #object.MontosList = montosList
     #object.ConsecutivosList = consecutivosList
     #object.DocumentosLinks = documentosLinks
-    
-    
+
   beforeInsert: ->
     @createLists()
     @ReciboItems = JSON.stringify @ReciboItems

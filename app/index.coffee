@@ -22,14 +22,13 @@ PagosProveedor = require("apps/auxiliares/pagosProveedor")
 NotasCredito = require("apps/auxiliares/notasCredito")
 NotasDebito = require("apps/auxiliares/notasDebito")
 EmitirRecibo = require("apps/auxiliares/emitirRecibo")
-ConvertirRecibo = require("apps/auxiliares/convertirRecibo")
-CierresContable = require("apps/contables/cierresContable")
-DocumentosImpresion = require("apps/procesos/documentosImpresion")
-EstadoCuentaCliente = require("apps/procesos/estadoCuentaCliente")
 Pedidos = require("apps/auxiliares/pedidos")
 PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
 
 PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
+RecibosAprobacion = require("apps/procesos/recibosAprobacion")
+CierresContable = require("apps/contables/cierresContable")
+DocumentosImpresion = require("apps/procesos/documentosImpresion")
 
 class App extends Spine.Controller
   className: "app"
@@ -38,8 +37,8 @@ class App extends Spine.Controller
     super
     #Spine.server = if @test then "http://127.0.0.1:9393" else "http://rodco-api2.heroku.com"
     #Spine.server = if @test then "http://127.0.0.1:9393" else "http://api2s.heroku.com"
-    Spine.server = "http://127.0.0.1:9393"
-    #Spine.server = "http://api2s.heroku.com"
+    #Spine.server = "http://127.0.0.1:9393"
+    Spine.server = "http://api2s.heroku.com"
     
     Timer.registerTimers()
     Spine.followNavigatorStatus()
@@ -111,7 +110,7 @@ class App extends Spine.Controller
 
   buildProfiles: =>
     profiles = {}
-    apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , NotasDebito , CierresContable , DocumentosImpresion , PedidosAprobacion ]
+    apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , NotasDebito , CierresContable , EmitirRecibo ,DocumentosImpresion , RecibosAprobacion ,PedidosAprobacion ]
     profiles["Platform System Admin"] = apps
     profiles["Gerencia"] = apps
     Spine.profiles = profiles
