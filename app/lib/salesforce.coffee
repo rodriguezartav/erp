@@ -37,7 +37,7 @@ Spine.Model.Salesforce =
         @beforeInsert()
         className = @overrideName || @className 
         ##KMQ  
-        #_kmq.push(['record', 'Made API Call', {'Type':'Outbound', 'Class' : className }]);
+        _kmq.push(['record', 'Made API Call', {'Type':'Outbound', 'Class' : className }]);
         $.ajax
           url        : @sendUrl(documentos)
           type       : "POST"
@@ -99,7 +99,7 @@ Spine.Model.Salesforce =
         query = @nSyncQueryFilter(query) if @nSyncQueryFilter
         Spine.trigger "query_start"
         ##KMQ
-        #_kmq.push(['record', 'Made API Call', {'Type':'Inbound', 'Class' : @overrideName || @className  }]);
+        _kmq.push(['record', 'Made API Call', {'Type':'Inbound', 'Class' : @overrideName || @className  }]);
         $.ajax
           url: Spine.server + "/query"
           xhrFields: {withCredentials: true}
