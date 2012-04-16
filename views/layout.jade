@@ -17,7 +17,6 @@ html(lang="en")
     
     link(rel='stylesheet', href='/bootstrap.css', type='text/css', charset='utf-8')
 
-    link(rel='stylesheet', href='/application.css', type='text/css', charset='utf-8')
     title Rodco S.A. || ERP
     link(rel='apple-touch-icon', href='apple-touch-icon.png')
     //link(rel='icon', type='image/ico', href='favicon.ico')
@@ -31,9 +30,7 @@ html(lang="en")
    
     block scripts
       script(src='/application.js', type='text/javascript', charset='utf-8')
-
-    block.
-      <script type="text/javascript">
+      script(type='text/javascript', charset='utf-8').
         var _kmq = _kmq || [];
         function _kms(u){
           setTimeout(function(){
@@ -42,8 +39,6 @@ html(lang="en")
           }, 1);
         }
         _kms('//i.kissmetrics.com/i.js');_kms('//doug1izaerwt3.cloudfront.net/b0b576ce3460c968aed2e8552a157956ef979f63.1.js');
-      </script>
 
   body()
-    include header
     != body

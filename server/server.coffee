@@ -17,7 +17,7 @@ app.use express.cookieParser()
 if process.env.NODE_ENV != "production"
   Hem = require("hem")
   hem = new Hem()
-  app.get(hem.options.cssPath, hem.cssPackage().createServer())
+  #app.get(hem.options.cssPath, hem.cssPackage().createServer())
   app.get(hem.options.jsPath, hem.hemPackage().createServer())
   
 app.set 'views' , './views'

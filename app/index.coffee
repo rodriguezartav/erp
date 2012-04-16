@@ -2,7 +2,7 @@ require('lib/setup')
 Spine = require('spine')
 
 Lightbox = require("controllers/lightbox")
-InfoBar = require("controllers/infoBar")
+Header = require("controllers/header")
 ToolBar = require("controllers/toolBar")
 
 Timer = require("timer")
@@ -50,9 +50,9 @@ class App extends Spine.Controller
     @setup_plugins()
     @fetchLocalData()
     @buildProfiles()
-    
+
+    new Header(el: $("header"))
     new Lightbox(el: $(".lightboxCanvas"))
-    new InfoBar(el: $(".infoBar"))
     new ToolBar(el: ".toolbar" )
     
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete

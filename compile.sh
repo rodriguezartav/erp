@@ -1,1 +1,5 @@
-lessc ./cssLess/index.less > ./public/bootstrap.css
+while sleep 2; do
+ # jade  --out ./public/ ./src/views
+  lessc ./css/index.less > ./public/bootstrap.css
+  echo 'compiled'
+done

@@ -1,0 +1,52 @@
+.toolbar {
+  width: 100%;
+  height: 45px;
+  border-radius: 4px;
+  border-color: #d5d5d5;
+  border-width: 0 0 1px;
+/* drop the border on the fixed edges */
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,0.10);
+  -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,0.10);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,0.10);
+  position: fixed;
+  top: 40px;
+  left: 0;
+  right: 0;
+  z-index: 900;
+}
+.toolbar .nav {
+  margin-bottom: 0px;
+}
+.toolbar .label {
+  line-height: 30px;
+}
+.toolbar .input_wrapper {
+  padding-left: 70px;
+}
+.toolbar .productos_list {
+  margin-top: 2px;
+  margin-left: 70px;
+  max-height: 390px;
+  overflow-y: scroll;
+  background-color: #fff;
+  border: 2px solid #049cdb;
+  z-index: 0;
+}
+.toolbar .productos_list li {
+  cursor: pointer;
+  border: 1px solid #dee;
+  width: 270px;
+}
+.toolbar .productos_list li a {
+  text-transform: capitalize;
+  height: 35px;
+}
+.toolbar .productos_list li.active {
+  background-color: #08c;
+}
+.toolbar .productos_list li.active a {
+  color: #fff;
+}

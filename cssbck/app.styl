@@ -1,0 +1,293 @@
+html
+  height: 100%
+
+body
+  background-image: url("images/furley_bg.png");
+  height: 92%
+  font-familiy: "Helvetica Neue", Helvetica, Arial, sans-serif
+
+  .appCanvas
+    padding-bottom: 70px
+    
+
+  .table-total
+    font-size: 15px
+    td
+      text-align: right
+      padding-right: 8px
+      &:last-child
+        font-weight: bold
+
+  a
+    cursor: pointer
+
+  .validatable,.editable,.loadable
+    width: 90%
+    
+  .span12
+    input,textarea
+      width: 95%
+
+  h1
+    color: #006391
+
+  h5.preHeader
+    color: #333
+    font-size: 17px
+    line-height: 12px
+    
+
+  hr.double
+    &.top
+      margin: 13px 0px 0px 0px
+      border-color: #fff
+    
+    &.bottom
+      margin: 0px 0px 13px 0px
+      border-color: #eee
+
+  .well,.hero-unit
+    margin-top: 10px
+    background-color: rgba(255,255,255,0.33)
+    border: rgba(99,99,99,0.20) 1px dotted
+    &.selected
+      border-color: red
+
+  table
+    thead
+      color: #006391
+      border-color: #333
+      text-transform: capitalize
+
+    td.primary  
+      width: 60%
+      
+    td.numeric
+      text-align: center
+     
+    .validatable,.editable,.loadable
+      width: none;
+      margin-bottom: 2px;
+
+
+    &table-contable
+      thead>tr>th
+        text-align: center
+      tr
+        td
+          text-align: center
+        td:first-child
+          text-align: left
+        td:last-child
+          text-align: right
+
+  .btn.save
+    padding: 8px 30px
+
+  .btn.cancel
+    padding: 8px 30px
+    float: left
+
+
+.toolbar
+  width: 100%;
+  height: 45px;
+  border-radius: 4px;
+  border-color: #d5d5d5;
+  border-width: 0 0 1px; /* drop the border on the fixed edges */
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+
+  -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+  -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+  position: fixed
+  top: 40px
+  left: 0
+  right: 0
+  z-index: 900
+
+  .nav
+    margin-bottom: 0px
+
+  .label
+    line-height: 30px
+
+  .input_wrapper
+    padding-left: 70px
+  
+  .productos_list
+    //vbg-gradient(#fff, #efefef,#fff)
+    //border-radius(8px)
+    //box-shadow(0, 1px, 2px, #333)
+    margin-top: 2px
+    margin-left: 70px
+    max-height: 390px
+    overflow-y: scroll
+    background-color: #fff
+    border: 2px solid #049cdb
+    z-index: 0
+    li
+      cursor: pointer
+      border: 1px solid #dee
+      width: 270px
+      a
+        text-transform: capitalize
+        height: 35px
+        
+      &.active
+        background-color: #08C
+        a
+          color: #fff
+
+.action_footer
+  .modal-footer
+    position: fixed
+    bottom: 0px
+    left: 0px
+    right: 0px
+    .btn.last
+      float: left
+    .btn.next
+      float: right
+
+.clientes
+  position: relative
+  
+  .clientes_list
+    max-height: 150px
+    overflow-y: scroll
+    background-color: #fff
+    
+    position: absolute
+    top: 27px
+    left: 4px
+    z-index: 66
+    border: 1px solid #ccc
+    width: 90%
+    li
+      cursor: pointer
+      height: 50px
+      border-bottom: 1px solid #ded
+      width: 50%
+      
+      &.active
+        background-color: #08C
+        
+        a
+          color: #fff
+      a
+        text-transform: capitalize
+
+.proveedores
+  position: relative
+
+  .proveedores_list
+    max-height: 290px
+    overflow-y: scroll
+    background-color: #fff
+
+    position: absolute
+    top: 27px
+    left: 4px
+    z-index: 66
+    border: 1px solid #ccc
+    width: 100%
+    li
+      cursor: pointer
+      height: 40px
+      border-bottom: 1px solid #dee
+
+      &.active
+        background-color: #08C
+
+        a
+          color: #fff
+      a
+        text-transform: capitalize
+
+
+
+
+.listable
+  .list_item
+    opacity: 0.3
+    &.active
+      opacity: 1
+
+.lightbox
+  position: fixed; 
+  
+  height: 100%;
+  width: 100%;
+  background: rgba(33,33,33,0.2)
+  z-index: 2000;
+  display: none;
+  top: 0;
+  left: 0;
+  .modal
+    .alert-box
+      display: none
+    .show_on_error
+      display: none
+    .show_on_loading
+      display: none
+    .show_on_input
+      display: block
+    
+     &.loading
+      .show_on_loading
+        display: none
+      .show_on_input
+        display: none
+
+     &.error
+      border: 2px solid red
+      .show_on_error
+        display: block
+      .alert-box
+        display: block
+
+@media (min-width: 900px)
+  body
+    padding-top: 120px
+
+@media (max-width: 940px)
+  .appCanvas
+    padding-top: 40px
+
+  .toolbar
+    width: 100%;
+    height: 45px;
+    position: absolute;
+    border-radius: 4px;
+    border-color: #d5d5d5;
+    border-width: 0 0 1px; /* drop the border on the fixed edges */
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    background-color: #dfdfdf
+    -webkit-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+    -moz-box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+    box-shadow: inset 0 1px 0 #fff, 0 1px 5px rgba(0,0,0,.1);
+    z-index: 900
+    .input_wrapper
+      margin-top: 2px
+      padding-left: 10px
+      width: 95%
+
+
+@media print
+  body
+    padding-top: 0px
+    background: none
+    background-color: #fff
+
+    .navbar , .action_footer
+      display: none
+      
+    
+    
+    
+    
