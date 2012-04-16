@@ -14,43 +14,87 @@ class RecibosAprobacion extends Spine.Controller
     ".src_recibos" : "src_recibos" 
     ".content" : "content"
 
+
   events:
-    "click .cancel"   : "reset"
-    "click .aprobar"  : "on_action_click"
-    "click .reload" : "reload"
+    "click .cancel"                   : "reset"
+    "click .aprobar"                  : "onAprobar"
+    "click .archivar"                 : "onArchivar"
+    "click .reload"                   : "loadRecibos"
+    "click .select_all"               : "selectAll"
+    "change input.search_vendedores"  : "filterVendedor"
+    "change input.search_referencia"  : "filterReferencia"
+
 
   constructor: ->
     super
     @error.hide()
     @html require("views/apps/procesos/recibosAprobacion/layout")(RecibosAprobacion)
-    Recibo.query({})
     Recibo.bind "query_success" , @renderRecibos
+    @loadRecibos()
 
-  renderRecibos: =>
-    @src_recibos.html require("views/apps/procesos/recibosAprobacion/item")(Recibo.all())
+  loadRecibos: =>
+    Recibo.destroyAll()
+    Recibo.query({estado: "Nuevo"})
 
-  on_action_click: (e) =>
-    target = $(e.target)
-    referencia = target.attr "data-referencia"
-    aprobar = parseInt(target.attr("data-aprobar"))
-    group = null
-    for g in @groups
-      if g.Referencia == referencia
-        group = g
+  renderRecibos: (options = {}) =>
+    if options.vendedor 
+      recibos = Recibo.filterVendedor(options.vendedor)
+    else if options.referencia
+      recibos = Recibo.filterReferencia(options.referencia)
+    else  
+     recibos = Recibo.all()  
     
-    return false if !group
-    @aprovedGroup = group if aprobar == 1
-    @aprobar = aprobar
-    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar} , @aprobarSuccess
+    @src_recibos.html require("views/apps/procesos/recibosAprobacion/item")(recibos)
+    $(".popable").popover({})
+
+  selectAll: (e) =>
+    target = $(e.target)
+    checkboxes = @el.find(".recibo_checkbox")
+    if target.is(':checked')
+      checkboxes.attr('checked', true);
+    else
+      checkboxes.attr('checked', false);
+
+  filterVendedor: (e) =>
+    target = $(e.target)
+    if Recibo.count() > 0
+      @renderRecibos( {vendedor: target.val() } )
+    else
+      target.val ""
+      return false
+
+  filterReferencia: (e) =>
+    target = $(e.target)
+    if Recibo.count() > 0
+      @renderRecibos( { referencia: target.val() } )
+    else
+      target.val ""
+      return false
+
+  getCheckboxesIds: =>
+    ids = []
+    checkboxes = @el.find(".recibo_checkbox")
+    for rawCheck in checkboxes
+      check =$(rawCheck)
+      if check.is(':checked')
+        ids.push check.attr "data-id"
+    ids
+
+  onAprobar: (e) =>
+    ids = @getCheckboxesIds()
+    estado =  "Aprobado"
+    Spine.trigger "show_lightbox" , "aprobarRecibos" , { ids: ids , estado: estado } , @aprobarSuccess
+
+  onArchivar: (e) =>
+    ids = @getCheckboxesIds()
+    estado =  "Archivado"
+    Spine.trigger "show_lightbox" , "aprobarRecibos" , { ids: ids , estado: estado } , @aprobarSuccess
 
   aprobarSuccess: =>
-    _kmq.push(['record', 'Aproved', {'Amount': @aprovedGroup.Total } ]) if @aprobar ==1
-    @aprovedGroup = null
-    @aprobar = null
-    @renderPedidos()
+    @loadRecibos()
 
   reset: ->
-    Pedido.unbind "query_success" , @onLoadPedidos
+    Recibo.unbind "query_success" , @renderRecibos
     @release()
     @customReset?()
     @navigate "/apps"

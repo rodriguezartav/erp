@@ -2,9 +2,9 @@ require('lib/setup')
 Spine = require('spine')
 DocumentoPreparado = require("models/sobjects/documentoPreparado")
 
-class DocumentosImpresion extends Spine.Controller
+class NotasImpresion extends Spine.Controller
   @departamento = "Facturacion"
-  @label = "Impresion de Facturas"
+  @label = "Impresion de Notas"
   
   className: "row"
 
@@ -23,21 +23,25 @@ class DocumentosImpresion extends Spine.Controller
     @renderDocumentos()
     @reload()
 
-  reload: =>
-    Spine.followDocumentosPreparados()
-
-
   renderDocumentos: =>
     @list.empty()
-    for doc in DocumentoPreparado.findAllByAttribute "Tipo_de_Documento" , "FA"
+    for doc in DocumentoPreparado.filterNotas()
       @list.append require("views/apps/procesos/documentosImpresion/item")(doc)
 
+  reload: =>
+    DocumentoPreparado.query({})
+
   print: (e) =>
+    @body = $("body")
     target = $(e.target)
     id = target.attr "data-id"
     doc = DocumentoPreparado.find(id)
+    html = require("views/apps/procesos/documentosImpresion/docs/NC")(doc)
+    form = $('<form method="POST" action="printNota"><input type="hidden" name="hidden" value="' + html + '"/></form>')
+    @el.append form
+    form.submit()
+    
     doc.destroy()
-    url = Spine.session.instance_url + "/apex/invoice_topdf?Documento__c_id=" + id
     window.open(url)
     @renderDocumentos()
 
@@ -46,4 +50,4 @@ class DocumentosImpresion extends Spine.Controller
     DocumentoPreparado.unbind "query_success" , @renderDocumentos
     @navigate "/apps"
 
-module.exports = DocumentosImpresion
+module.exports = NotasImpresion

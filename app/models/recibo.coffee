@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Recibo extends Spine.Model
   @configure "Recibo" , "Cliente" , "Monto", "FormaPago" ,"FechaFormaPago" , "Observacion", "Referencia" , "CodigoExterno", 
-    "DocumentosList" , "MontosList" , "ConsecutivosList" , "DocumentosLinks" 
+    "DocumentosList" , "MontosList" , "ConsecutivosList" , "DocumentosLinks" , "Estado" , "Vendedor"
   
   
   # "CodigoUnico" ,"Cliente" , "Documentos" , "Encargado" ,  "Monto" , "FormaPago" , "FechaFormaPago" , "ReferenciaFormaPago" , "Observacion" , 
@@ -42,24 +42,27 @@ class Recibo extends Spine.Model
     filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"              , filter) if options.estado
     filter
 
-  createLists: ->
-    #montosList = montosList.substring(0,montosList.length-1)
-    #documentosList = documentosList.substring(0,documentosList.length-1)
-    #consecutivosList = consecutivosList.substring(0,consecutivosList.length-1)
-    #object.DocumentosList = documentosList
-    #documentosList += "#{src.id},"
-    #montosList += "#{item.Monto},"
-    #consecutivosList += "#{item.Consecutivo},"
-  #  documentosLinks += '<a href="/' + item.Documento + '">' + item.Consecutivo + '</a><br/>'
-    
-    
-    #object.MontosList = montosList
-    #object.ConsecutivosList = consecutivosList
-    #object.DocumentosLinks = documentosLinks
+  @filterVendedor: (namePart) =>
+    results = []
+    for recibo in Recibo.all()
+      results.push recibo if recibo.Vendedor.toLowerCase().indexOf(namePart.toLowerCase()) > -1
+    results
 
-  beforeInsert: ->
-    @createLists()
-    @ReciboItems = JSON.stringify @ReciboItems
+  @filterReferencia: (referencia) =>
+    results = []
+    for recibo in Recibo.all()
+      results.push recibo if recibo.Referencia.toLowerCase().indexOf(referencia.toLowerCase()) > -1
+    results
+
+  @actualizar: ( ids , estado ) ->
+    $.ajax
+      url        : Spine.server + "/rest"
+      xhrFields  : {withCredentials: true}
+      type       : "POST"
+      data       : @ajaxParameters( { name: "Recibo" , data: JSON.stringify( { ids: ids , estado: estado } ) } )
+      success    : @on_send_success
+      error      : @on_send_error
+
 
 module.exports = Recibo
 

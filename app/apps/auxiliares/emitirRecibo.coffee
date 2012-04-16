@@ -5,7 +5,7 @@ Cliente = require("models/cliente")
 Clientes = require("controllers/clientes")
 Producto = require("models/producto")
 Documento = require("models/documento")
-Recibo = require("models/recibo")
+Recibo = require("models/transitory/recibo")
 ReciboItem = require("models/transitory/reciboItem")
 
 class ReciboItems extends Spine.Controller  
@@ -108,15 +108,15 @@ class Recibos extends Spine.Controller
     object.ConsecutivosList = ""
     object.Monto = 0;
     for item in reciboItems
+      @log item
       object.DocumentosList += "#{item.SaldoId},"
       object.MontosList += "#{item.Monto},"
-      object.ConsecutivosList += "#{item.Consecutivo},"
-      object.DocumentosLinks += '<a href="/' + item.Documento + '">' + item.Consecutivo + '</a><br/>'
+      object.ConsecutivosList += "#{item.CodigoExterno},"
+      object.DocumentosLinks += '<a href="/' + item.SaldoId + '">' + item.CodigoExterno + '</a><br/>'
       object.Monto += item.Monto
     object.MontosList = object.MontosList.substring(0,object.MontosList.length-1)
     object.DocumentosList = object.DocumentosList.substring(0,object.DocumentosList.length-1)
     object.ConsecutivosList = object.ConsecutivosList.substring(0,object.ConsecutivosList.length-1)
-    object.save()
     
   send: (e) =>
     @refreshElements()

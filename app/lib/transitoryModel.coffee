@@ -12,10 +12,10 @@ Spine.Model.TransitoryModel =
     
   saveLocal: ->
     result = JSON.stringify(@)
-    localStorage[@className] = result
+    localStorage["Transitory_" + @className] = result
 
   loadLocal: ->
-    result = localStorage[@className]
+    result = localStorage["Transitory_" + @className]
     @refresh(result or [], clear: true)
     
 module?.exports = Spine.Model.TransitoryModel

@@ -3,11 +3,10 @@
 
 <tr>
 <td><a class="badge popable" rel="popup" data-original-title="Observacion" data-content="<%= @Observacion %>"> <%= @Observacion?.length || 0  %></a></td>
-<td><input class="recibo_checkbox" type="checkbox" data-id="<%= @id %>" /></td>
 <td><p><%= @FechaFormaPago %><p></td>
-<td><p><%= @FormaPago %><p></td>
-<td><p><%= @Referencia %><p></td>
+<td><p><%= @CodigoExterno %><p></td>
 <td><p><%= cliente.Name %><p></td>
 <td><p><%= @Vendedor %><p></td>
 <td><p><%= @Monto.toMoney() %><p></td>
+<td><a data-id="<%= @id %>" class="btn btn-primary convertir">Convertir en Pago</a></td>
 </tr>

@@ -14,7 +14,7 @@
 </div>
 
 <hr/>
-<div class="row-fluid">
+<div class="row-fluid visible-desktop">
   
   <div class="span6">
     <h3 class="">Filtrar por Vendedor</h2>
@@ -23,14 +23,11 @@
   
   <div class="span6">
     <div class="pull-right">
-      <h3 class="">Filtrar por Referencia</h2>
-      <input class="search_referencia " />
+      <h3 class="">Filtrar por Recibo</h2>
+      <input class="search_codigoExterno " />
     </div>
   </div>
-
 </div>
-
-
 
 <div class="content well">
   
@@ -38,13 +35,12 @@
     <thead>
       <tr>
         <th style="width:30px"></th>
-        <th style="width:30px"><input type="checkbox" class="select_all" /></th>
         <th>Fecha</th>
-        <th>Forma Pago</th>
-        <th>Referencia</th>
+        <th>Consecutivo</th>
         <th>Cliente</th>
         <th>Vendedor</th>
         <th>Total</th>
+        <th></th>
       </tr>
     </thead>
     <tbody class="src_recibos">
@@ -57,7 +53,5 @@
 <div class="action_footer">
     <div class="modal-footer">
       <a class="btn btn-danger cancel">Cancelar</a>
-      <a class="btn btn-primary save aprobar">Aprobar</a>
-      <a class="btn btn-danger save archivar">Archivar</a>
     </div>
 </div>

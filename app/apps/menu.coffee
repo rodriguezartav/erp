@@ -5,7 +5,8 @@ class Menu extends Spine.Controller
 
   elements:
     "ul" : "list"
-
+    "li" : "items"
+ 
   events:
     "click ul>li>a" : "on_click"
   
@@ -29,6 +30,8 @@ class Menu extends Spine.Controller
    on_click: (e) =>
      target = $(e.target)
      name = target.attr("data-type")
+     @items.removeClass "active"
+     target.parent().addClass "active"
      @navigate "/apps/" + name
 
    reset: =>

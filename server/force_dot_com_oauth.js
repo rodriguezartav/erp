@@ -23,7 +23,7 @@ function getOAuthResponse() { return oauthResponse; }
 function login(callback) {
 
 	//Construct the post data for the OAuth callout
-	var post_data = 'grant_type=password&client_id='+process.env.FORCE_DOT_COM_CLIENT_ID+'&client_secret='+
+	var post_data = 'grant_type=password&client_id=' + process.env.FORCE_DOT_COM_CLIENT_ID+'&client_secret='+
 					process.env.FORCE_DOT_COM_CLIENT_SECRET+'&username='+process.env.FORCE_DOT_COM_USERNAME+
 					'&password='+process.env.FORCE_DOT_COM_PASSWORD;
 

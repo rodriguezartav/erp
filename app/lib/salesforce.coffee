@@ -80,7 +80,7 @@ Spine.Model.Salesforce =
         for attribute in @attributes
           if @avoidQueryList?.indexOf(attribute) == -1
             query += attribute
-            if attribute != "Name" || @standardObject then query += "__c,"  else query += ","
+            if attribute.indexOf("Name") == -1 || @standardObject then query += "__c,"  else query += ","
         query += "Id "
         query +=  "from #{className}" 
         query +=  "__c"  if !@standardObject 
