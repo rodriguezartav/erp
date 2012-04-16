@@ -37,10 +37,7 @@ class NotasImpresion extends Spine.Controller
     id = target.attr "data-id"
     doc = DocumentoPreparado.find(id)
     html = require("views/apps/procesos/documentosImpresion/docs/NC")(doc)
-    form = $('<form method="POST" action="printNota"><input type="hidden" name="hidden" value="' + html + '"/></form>')
-    @el.append form
-    form.submit()
-    
+    url = "/print/#{doc.id}"    
     doc.destroy()
     window.open(url)
     @renderDocumentos()

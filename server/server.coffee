@@ -2,7 +2,8 @@
 port =  process.env.PORT || 9294
 
 express = require('express')
-forceOAuth = require('./server/force_dot_com_oauth');
+forceOAuth = require('./force_dot_com_oauth');
+forceQuery = require('./force_dot_com_query');
 faye = require 'faye'
 
 
@@ -50,8 +51,9 @@ app.get '/' , (req, res) ->
 app.get '/app/:app',(req,res)->
   res.render "app" , {app: req.params.app}
 
-app.get '/print/:id' , (req,res)->
-  res.render "print" , {layout: "layoutPrint", doc: doc}
+app.get '/print/:id' , (req,res) ->
+  forceQuery.queryDoc(forceOAuth,"select name from client__c limit 1")
+  return "ok"
 
 app.listen(port)
 console.log "Listening on port " + port

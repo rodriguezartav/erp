@@ -1,17 +1,16 @@
-queryDoc: =>
 
+queryDoc: (forceOAuth,query) =>
+  
   options = 
-  	host: hostname,
-  	path: '/services/oauth2/token',
-  	method: 'POST',
+  	host: forceOAuth.getOAuthResponse().instance_url,
+  	path: '/services/data/v20.0/query/?q=' + query,
+  	method: 'GET',
   	headers:
   		'host': hostname,
-  		'Content-Length': post_data.length,
-  		'Content-Type': 'application/x-www-form-urlencoded',
-  		'Accept':'application/jsonrequest',
-  		'Cache-Control':'no-cache,no-store,must-revalidate'
+  		'Authorization': "OAuth #{forceOAuth.getOAuthResponse().access_token}"
   	
 
   req = http.request(options, res) =>
-  	  console.log("statusCode: ", res.statusCode);
-  	  console.log("headers: ", res.headers);
+    console.log("statusCode: ", res.statusCode);
+    console.log("headers: ", res.headers);
+    console.log("bidy: ", res.body);
