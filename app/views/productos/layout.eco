@@ -1,12 +1,9 @@
 <ul class="nav nav-pills">
   <li><h3 class="label">Productos</h3></li>
-  
- 
- 
 </ul>
 
 <div class="row-fluid input_wrapper">
-  <input type="text" placeholder="OJO: Escribe lo que buscas aqui!" class="js_search_productos loadable search-query">
+  <input type="text" placeholder="OJO: Escribe los productos que buscas aqui!" class="js_search_productos loadable search-query">
 </div>
 
 

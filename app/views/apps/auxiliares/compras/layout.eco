@@ -44,7 +44,6 @@
     <div class="modal-footer">
       <a class="btn btn-primary save">Guardar</a>
       <a class="btn btn-danger cancel">Cancel</a>
-
     </div>
 </div>
 
