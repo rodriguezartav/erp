@@ -57,6 +57,10 @@ class AprobarPedidos extends Spine.Controller
     @el.addClass "error"
     @alert_box.show()
     error = JSON.stringify(error_obj) || error_obj
+    index = error.indexOf "InventarioException:"
+    if index > -1
+      indexEnd = error.indexOf "Trigger.Apply_Update_Producto"
+      error = error.substring(index,indexEnd)
     @alert_box.append "<p>#{error}</p>"
   
   on_error_accept: =>
