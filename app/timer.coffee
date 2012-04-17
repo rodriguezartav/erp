@@ -9,12 +9,14 @@ class Timer
 
   @registerTimers: =>
     
+    ##This is called when apps that require updated inventories and balances are started
     Spine.followTimeoutUI= =>
-      if !Spine.timeoutUI
-        Spine.timeoutUI =  window.setInterval(Spine.blockUI , 1000*60*5) 
+      window.clearInterval(Spine.timeoutUI) if Spine.timeoutUI
+      Spine.timeoutUI =  window.setInterval(Spine.blockUI , 1000*60*5) 
 
     Spine.blockUI= =>
-      Spine.trigger "show_lightbox" , "block"
+      if Spine.status == "online"
+        Spine.trigger "show_lightbox" , "block"
 
     #Sets Timmer and Makes First Call
     Spine.followPedidosPendientes= =>

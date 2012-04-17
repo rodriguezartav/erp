@@ -32,7 +32,7 @@
      <tr>
        <th>Producto</th>
        <th>Cantidad</th>
-       <th>Accion</th>
+       <th></th>
      </tr>
    </thead>
    <tbody class="movimientos_list">

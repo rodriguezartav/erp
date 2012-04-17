@@ -24,6 +24,7 @@ class Items extends Spine.Controller
     super
     @createItem(@producto,@referencia) if @producto
     @html require("views/apps/auxiliares/pedidos/item")(@pedidoItem) 
+    Spine.followTimeoutUI()
 
   createItem: (producto,referencia) =>
     @pedidoItem = PedidoItem.createFromProducto(@producto)
