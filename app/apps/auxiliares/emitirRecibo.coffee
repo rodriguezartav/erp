@@ -108,7 +108,6 @@ class Recibos extends Spine.Controller
     object.ConsecutivosList = ""
     object.Monto = 0;
     for item in reciboItems
-      @log item
       object.DocumentosList += "#{item.SaldoId},"
       object.MontosList += "#{item.Monto},"
       object.ConsecutivosList += "#{item.CodigoExterno},"

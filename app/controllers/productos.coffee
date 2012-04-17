@@ -36,7 +36,6 @@ class Productos  extends Spine.Controller
     $('a.popable').popover('hide')    
 
   open: (e) =>
-    @log e
     $(e.target).select()
     @productos_list.show()
 

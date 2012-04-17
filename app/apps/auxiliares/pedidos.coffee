@@ -161,7 +161,6 @@ class Credito extends Spine.Controller
 
   send: (e) =>
     @save()
-    @log PedidoItem.itemsInPedido(@pedido)
     Spine.trigger "show_lightbox" , "sendPedidos" , PedidoItem.itemsInPedido(@pedido) , @after_send   
 
   after_send: =>

@@ -42,7 +42,6 @@ class Login extends Spine.Controller
       @onLoginSuccess()
       
     Session.bind "login_error" , (response) =>
-      @log response
       alert response.errors.error
       @renderLogin(response.error)
 

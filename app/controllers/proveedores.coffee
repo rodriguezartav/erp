@@ -50,4 +50,14 @@ class Proveedores  extends Spine.Controller
     result = Proveedor.filter txt
     @render result
 
+  reset: =>
+    Proveedor.unbind "query_success" , =>
+      @loadable.show()
+      @loader.hide()
+
+    Proveedor.unbind "current_reset" , =>
+      @js_proveedor_search.val ""
+      
+    @release()
+
 module.exports = Proveedores
