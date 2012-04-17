@@ -12,6 +12,7 @@ class AprobarPedidos extends Spine.Controller
     ".show_wait"   : "show_wait" 
     ".show_input"  : "show_input"
     "textarea"     : "observacion"
+    ".list_info"   : "list_info"
 
   events:
     "click .accept" : "on_error_accept"
@@ -39,7 +40,7 @@ class AprobarPedidos extends Spine.Controller
     for pedido in @data.group.Pedidos
       ids.push pedido.id
 
-    Pedido.aprobar( ids , @observacion.val() || " Sin razon de Aprobacion de Pedidos." , @data.aprobar)
+    Pedido.aprobar( ids , @observacion.val() + @list_info.html() , @data.aprobar)
 
   on_success: (results) =>
     Pedido.unbind "insert_error" , @on_error

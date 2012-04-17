@@ -24,8 +24,11 @@ Spine.Model.NSyncModel =
         
       nSyncQueryFilter: (filter) =>
         date = Spine.session.getLastUpdate(@name)
-        if typeof date != "Date"
+        try
+          date.getTime()
+        catch error
           date = new Date('1970/1/1')
+
         return @queryFilterAddCondition(" LastModifiedDate >= #{date.to_salesforce() }" , filter)
         
     

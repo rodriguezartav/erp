@@ -18,7 +18,7 @@
 
 <div class="modal-body show_input">
     
- <ul>
+ <ul class="list_info">
     <li>
        <strong>Saldo Actual:   </strong> <%= cliente.Saldo?.toMoney()  %>
      </li>
@@ -33,18 +33,18 @@
       <strong>Limite de Credito: </strong>  <%= cliente.CreditoAsignado?.toMoney()  %>
     </li>
     <li>
-      <strong>Rating: </strong> <%= cliente.Rating_Crediticio || "No Asignado"  %>
+      <strong>Rating Crediticio: </strong> <%= cliente.Rating_Crediticio || "No Asignado"  %>
     </li>
   </ul>
 
   <h4>Indique las razones para aprobar el pedido</h4>
-  <h6>Si es necesario copie los valores anteriores</h6>
+  <h6>Los valores se adjuntan automaticamente</h6>
   <% color = if @aprobar == 1 then "alert-success" else "alert-danger" %>
   <div class="alert <%= color %>">
     <textarea style="height: 100px;" class="span5" placeholder="Indique la razon para aprobar el pedido"></textarea>
   </div>
 
-  <h5><span class="badge badge-warning"><i class="icon-flag icon-white icon-large"></i></span> El argumento para aplicar un pedido es vinculante a la emision correcta del pago.</h5>
+  <h5><span class="badge badge-warning"><i class="icon-flag icon-white icon-large"></i></span> En caso de retraso, se revisa esta razon de aprobacion.</h5>
 
 </div>
 
