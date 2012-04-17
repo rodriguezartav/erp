@@ -11,9 +11,9 @@ class FacturasProveedor extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
   
   @departamento = "Tesoreria"  
-  @label = "Compras a Proveedores"
+  @label = "Ingreso de Facturas"
   
-  className: "row"
+  className: "row-fluid"
 
   elements:
     ".error" : "error"
@@ -38,7 +38,7 @@ class FacturasProveedor extends Spine.Controller
     @cuentas.html require("views/apps/auxiliares/facturasProveedor/itemCuentaGasto")(Cuenta.all())
     
   render: =>  
-    @html require("views/apps/auxiliares/facturasProveedor/layout")(@documento)
+    @html require("views/apps/auxiliares/facturasProveedor/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
     
 

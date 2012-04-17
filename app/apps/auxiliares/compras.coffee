@@ -37,7 +37,7 @@ class Movimientos extends Spine.Controller
 class Compras extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
   
-  className: "row"
+  className: "row-fluid"
 
   @departamento = "Inventarios"
   @label = "Compra de Mercaderia"
@@ -61,7 +61,7 @@ class Compras extends Spine.Controller
     Movimiento.destroyAll()
     @movimientos = []
 
-    @html require("views/apps/auxiliares/compras/layout")(@documento)
+    @html require("views/apps/auxiliares/compras/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
 
   addMovimiento: =>

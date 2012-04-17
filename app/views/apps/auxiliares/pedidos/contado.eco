@@ -1,29 +1,33 @@
 <div class="well">
 
-<span class="label label-inverse">Contado</span>
 
 <a class="close">&times;</a>
 
+
+
   <div class=" row-fluid">
+
+  <span class="label label-inverse span">Contado</span>
+
     <div class="span5">
-      <h3>Cliente</h3>
+      <h4>Cliente</h4>
     <div class="src_cliente"></div>
   </div>
 
 
-  <div class="span2">
-    <h3>Cedula</h3>
-    <input class="validatable" data-numeric="false" data-required="false" data-type="Identificacion" placeholder="Identificacion" />
+  <div class="span1">
+    <h4>Cedula</h4>
+    <input class="validatable" style="font-size:10px;width: 100%" data-numeric="false" data-required="false" data-type="Identificacion" placeholder="Identificacion" />
   </div>
 
 
   <div class="span2">
-    <h3>Telefono</h3>
+    <h4>Telefono</h4>
     <input class="validatable" data-numeric="false" data-required="false" data-type="Telefono" placeholder="Telefono" />
   </div>
   
   <div class="span2">
-    <h3>Email</h3>
+    <h4>Email</h4>
     <input class="validatable" data-numeric="false" data-required="false" data-type="Email" placeholder="Email" />
   </div>
   
@@ -38,9 +42,9 @@
        <tr>
          <th>Producto</th>
          <th>Precio</th>
+         <th>Cantidad</th>
          <th>Descuento</th>
          <th>Impuesto</th>
-         <th>Cantidad</th>
        </tr>
      </thead>
      <tbody class="items_list">
@@ -50,12 +54,12 @@
 
 <div class="row-fluid">
 
-  <div class="span3">
+  <div class="span6">
     <textarea class="validatable" data-required="false" data-type="Observacion" placeholder="Observacion" />
   </div>
 
   <div class="span6">
-    <table class=" table table-total  pull-right table-striped  table-bordered">
+    <table class=" table table-total  pull-right table-striped  table-bordered table-condensed">
         <thead>
            <tr>
              <th>Subtotal</th>
@@ -73,14 +77,13 @@
         </tr>
     </table>
   </div>
+</div>
 
-  <div class="span3">
-    <div class="pull-right">
-      <a class="btn btn-info send">Enviar</a>
-      <a class="btn btn-info save">Guardar</a>
-    </div>
+<div class="row-fluid">
+  <div class="pull-right">
+    <a class="btn btn-info send">Enviar</a>
+    <a class="btn btn-info save">Guardar</a>
   </div>
-  
 </div>
 
 

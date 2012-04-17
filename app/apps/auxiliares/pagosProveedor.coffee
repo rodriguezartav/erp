@@ -7,7 +7,7 @@ Proveedor = require("models/proveedor")
 
 
 class PagosProveedor extends Spine.Controller
-  className: "row"
+  className: "row-fluid"
 
   @departamento = "Tesoreria"
   @label = "Pagos a Proveedores"
@@ -35,7 +35,7 @@ class PagosProveedor extends Spine.Controller
     
     Proveedor.bind "current_set", @onProveedorSet
     
-    @html require("views/apps/auxiliares/pagosProveedor/layout")(@documento)
+    @html require("views/apps/auxiliares/pagosProveedor/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
     
     

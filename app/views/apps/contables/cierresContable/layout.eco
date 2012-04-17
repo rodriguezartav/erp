@@ -1,4 +1,5 @@
-<h1>Cierre Diario</h2>
+<h5 class="preHeader"><%= @departamento %></h2>
+<h1><%= @label %></h2>
 
 <br/>
 

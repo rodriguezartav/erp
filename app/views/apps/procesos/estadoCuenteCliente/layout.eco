@@ -1,5 +1,5 @@
-<h5>Departamento de Credito y Cobro</h5>
-<h1>Estado de Cuenta</h2>
+<h5 class="preHeader"><%= @departamento %></h2>
+<h1><%= @label %></h2>
 
 
 <div class="well">
@@ -31,7 +31,7 @@
 <div class="action_footer">
     <div class="modal-footer">
       <a class="btn btn-primary btn-large print">Print</a>
-      <a class="btn btn-danger cancel">Cancel</a>
+      <a class="btn btn-danger cancel">Regresar</a>
     </div>
 </div>
 

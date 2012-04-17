@@ -1,5 +1,5 @@
-<h5 class="preHeader">Administracion de Inventarios</h2>
-<h1>Devolucion de Mercaderia</h2>
+<h5 class="preHeader"><%= @departamento %></h2>
+<h1><%= @label %></h2>
 
 
 <div class="well">
@@ -18,8 +18,6 @@
   </div>
 
 </div>
-
-<hr/>
 
 <div class="well">
 
@@ -44,9 +42,9 @@
 
      <table class="table table-total  pull-right table-striped  table-bordered">
          <tr><td><h4>SubTotal </h4></td><td><h4><span class="lbl_subTotal">0.00</span></td></h4></tr>
-         <tr><td><h4>SubTotal </h4></td><td><h4><span class="lbl_descuento">0.00</span></td></h4></tr>
-         <tr><td><h4>SubTotal </h4></td><td><h4><span class="lbl_impuesto">0.00</span></td></h4></tr>
-         <tr><td><h4>SubTotal </h4></td><td><h4><span class="lbl_total">0.00</span></td></h4></tr>
+         <tr><td><h4>Descuento </h4></td><td><h4><span class="lbl_descuento">0.00</span></td></h4></tr>
+         <tr><td><h4>Impuesto </h4></td><td><h4><span class="lbl_impuesto">0.00</span></td></h4></tr>
+         <tr><td><h4>Total </h4></td><td><h4><span class="lbl_total">0.00</span></td></h4></tr>
          
 
      </table>
@@ -57,7 +55,7 @@
 <div class="action_footer">
     <div class="modal-footer">
       <a class="btn btn-primary save">Guardar</a>
-      <a class="btn btn-danger cancel">Cancel</a>
+      <a class="btn btn-danger cancel">Regresar</a>
 
     </div>
 </div>

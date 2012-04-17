@@ -9,7 +9,7 @@ User = require("models/user")
 
 
 class CierresContable extends Spine.Controller
-  className: "row"
+  className: "row-fluid"
 
   @departamento = "Contabilidad"
   @label = "Cierre Contable"
@@ -57,7 +57,7 @@ class CierresContable extends Spine.Controller
     @renderCierre()
 
   renderCierre: =>
-    @html require("views/apps/contables/cierresContable/layout")(@documento)
+    @html require("views/apps/contables/cierresContable/layout")(@constructor)
 
     src ="views/apps/contables/cierresContable/item"
     @ventas.append require(src)(label: "Inicial" , value: @cierre.VentasInicial)

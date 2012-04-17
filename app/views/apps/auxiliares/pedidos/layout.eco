@@ -2,8 +2,8 @@
 
 <div class="row-fluid">
   <div class="span9">
-    <h5 class="preHeader">Departamento de Ventas</h5>
-    <h3>Pedidos de Credito</h3>
+  <h5 class="preHeader"><%= @departamento %></h2>
+  <h1><%= @label %></h2>
   </div>
 
   <div class="span3">
@@ -23,7 +23,7 @@
 
 <div class="action_footer">
     <div class="modal-footer">
-      <a class="btn btn-danger cancel">Cancel</a>
+      <a class="btn btn-danger cancel">Regresar</a>
     </div>
 </div>
 

@@ -1,7 +1,8 @@
 Spine = require('spine')
+Productos = require("controllers/productos")
+
   
 class Header  extends Spine.Controller
-  className: "header"
   
   elements:
     ".loader"  : "loader"
@@ -9,7 +10,7 @@ class Header  extends Spine.Controller
     ".offline" : "offline"
     ".status_button" : "status_button"
     ".status_button_label" : "status_button_label"
-  
+
   events:
     "click .reset" : "reset"
   
@@ -17,6 +18,7 @@ class Header  extends Spine.Controller
     super
     @html require('views/header/layout')
     @loader.hide()
+    new Productos( el: @el )
     
     Spine.bind "query_start",=>
       @loader.show()

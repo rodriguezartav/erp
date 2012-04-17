@@ -11,7 +11,7 @@ class NotasDebito extends Spine.Controller
   @departamento = "Credito y Cobro"
   @label = "Notas de Debito"
   
-  className: "row"
+  className: "row-fluid"
 
   elements:
     ".error" : "error"
@@ -27,7 +27,7 @@ class NotasDebito extends Spine.Controller
     @error.hide()
     Cliente.reset_current()
     @documento = Documento.create {Tipo_de_Documento: "ND"}
-    @html require("views/apps/auxiliares/notasDebito/layout")(@documento)
+    @html require("views/apps/auxiliares/notasDebito/layout")(@constructor)
     @clientes = new Clientes(el: @src_cliente)
     Cliente.bind "current_set" , =>
       @documento.Cliente = Cliente.current.id

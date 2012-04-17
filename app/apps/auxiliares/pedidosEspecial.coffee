@@ -42,7 +42,7 @@ class Items extends Spine.Controller
 class PedidosEspecial extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
   
-  className: "row"
+  className: "row-fluid"
 
   @departamento = "Ventas"
   @label = "Pedidos Especiales"

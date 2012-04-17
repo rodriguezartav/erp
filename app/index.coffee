@@ -3,7 +3,6 @@ Spine = require('spine')
 
 Lightbox = require("controllers/lightbox")
 Header = require("controllers/header")
-ToolBar = require("controllers/toolBar")
 
 Timer = require("timer")
 
@@ -53,7 +52,6 @@ class App extends Spine.Controller
 
     new Header(el: $("header"))
     new Lightbox(el: $(".lightboxCanvas"))
-    new ToolBar(el: ".toolbar" )
     
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 

@@ -1,5 +1,5 @@
-<h2>Departamento de Tesoreria</h2>
-<h1>Registro de Facturas por Pagar</h2>
+<h5 class="preHeader"><%= @departamento %></h2>
+<h1><%= @label %></h2>
 
 <br/>
 
@@ -62,7 +62,7 @@
 
 <div class="action_footer">
     <div class="modal-footer">
-    <a class="btn btn-danger cancel">Cancel</a>
+    <a class="btn btn-danger cancel">Regresar</a>
 
       <a class="btn btn-primary save">Guardar</a>
 

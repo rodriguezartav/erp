@@ -41,7 +41,7 @@ class Movimiento extends Spine.Model
   applyImpuesto:  ->
     @Impuesto = Math.round( @Impuesto_Unitario * (@SubTotal- @Descuento) ) / 100
 
-  updateTotal:  =>
+  updateTotal:  ->
     @updateSubTotal()
     @Total = @SubTotal - @Descuento + @Impuesto
 

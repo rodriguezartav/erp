@@ -8,7 +8,7 @@ Cuenta = require("models/cuenta")
 User = require("models/user")
 
 class PedidosAprobacion extends Spine.Controller
-  className: "row"
+  className: "row-fluid"
 
   @departamento = "Credito y Cobro"
   @label = "Aprobacion de Pedidos"

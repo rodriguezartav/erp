@@ -1,6 +1,5 @@
-<h5>Departamento de Credito y Cobro</h5>
-
-<h1>Notas de Debito</h2>
+<h5 class="preHeader"><%= @departamento %></h2>
+<h1><%= @label %></h2>
 
 
 <div class="well">

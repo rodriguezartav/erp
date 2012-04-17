@@ -6,7 +6,7 @@ class DocumentosImpresion extends Spine.Controller
   @departamento = "Facturacion"
   @label = "Impresion de Facturas"
   
-  className: "row"
+  className: "row-fluid"
 
   events:
     "click .cancel" : "reset"
@@ -18,7 +18,7 @@ class DocumentosImpresion extends Spine.Controller
 
   constructor: ->
     super
-    @html require("views/apps/procesos/documentosImpresion/layout")
+    @html require("views/apps/procesos/documentosImpresion/layout")(@constructor)
     DocumentoPreparado.bind "query_success" , @renderDocumentos
     @renderDocumentos()
     @reload()

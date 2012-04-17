@@ -32,11 +32,12 @@ class Movimientos extends Spine.Controller
 
 class Entradas extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
+  className: "row-fluid"
 
   @departamento = "Inventarios"
   @label = "Entradas de Mercaderia"
 
-  className: "row"
+  className: "row-fluid"
 
   elements:
     ".error"              :  "error"
@@ -55,7 +56,7 @@ class Entradas extends Spine.Controller
     @movimientos = []
 
     @documento = Documento.create {Tipo_de_Documento: "EN"}
-    @html require("views/apps/auxiliares/entradas/layout")(@documento)
+    @html require("views/apps/auxiliares/entradas/layout")(@constructor)
     @error.hide()
 
   addMovimiento: =>

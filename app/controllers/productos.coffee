@@ -2,12 +2,13 @@ Spine = require('spine')
 Producto = require("models/producto")
 
 class Productos  extends Spine.Controller
-  className: "search_productos"
 
   events: 
-    "change input" : "on_filter"
-    "click input" : "open"
-    "click .productos_list>li>a" : "on_item_click"
+    "change .js_search_productos" : "on_filter"
+    "click .js_search_productos" : "open"
+    "click .thumbnail" : "on_item_click"
+    "click a.predefined" : "onPredefinedClick"
+
 
   elements:
     ".productos_list" : "productos_list"
@@ -15,11 +16,10 @@ class Productos  extends Spine.Controller
     ".js_search_productos" : "js_search_productos"
     "a.popable"           : "popovers"
     
+    
   constructor: ->
     super
-    @html require("views/productos/layout")(size: @size)
-    @productos_list.hide() 
-
+    @productos_list.hide()
     Producto.bind "current_reset" , @productoSet
   
   productoSet: =>
@@ -36,6 +36,7 @@ class Productos  extends Spine.Controller
     $('a.popable').popover('hide')    
 
   open: (e) =>
+    @log e
     $(e.target).select()
     @productos_list.show()
 
@@ -48,10 +49,15 @@ class Productos  extends Spine.Controller
     @productos_list.hide()
     @hidePopOvers()
     
-  on_filter: (e) =>
+  onPredefinedClick: (e) ->
+    t = $(e.target)
+    txt = t.attr "data-txt"
+    @on_filter(false,txt)
+    
+  on_filter: (e=false,txt = false) =>    
     return false if Producto.locked 
     @hidePopOvers()
-    txt = $(e.target).val()
+    txt = $(e.target).val() if e
     result = Producto.filter txt
     @render result
     

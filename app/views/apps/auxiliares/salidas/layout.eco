@@ -1,6 +1,5 @@
-<h5 class="preHeader">Administracion de Inventarios</h2>
-
-<h1>Salida de Mercaderia</h2>
+<h5 class="preHeader"><%= @departamento %></h2>
+<h1><%= @label %></h2>
 
 
 <div class="well">

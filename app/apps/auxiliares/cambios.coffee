@@ -7,11 +7,10 @@ Movimiento = require("models/movimiento")
 
 class Cambios extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
- 
+  className: "row-fluid"
+
   @departamento = "Inventarios"  
-  @label = "Entrada de Mercaderia"
- 
-  className: "row"
+  @label = "Cambios de Mercaderia"
 
   elements:
     ".error" : "error"
@@ -28,7 +27,7 @@ class Cambios extends Spine.Controller
     @render()
     
   render: =>  
-    @html require("views/apps/auxiliares/entradas/layout")(@documento)
+    @html require("views/apps/auxiliares/entradas/layout")(@constructor)
     @movimientos = new Movimientos(el: @src_movimientos , layout: "movimientos")
 
   #####

@@ -140,6 +140,9 @@ class Recibos extends Spine.Controller
       @release()
 
 class EmitirRecibos extends Spine.Controller
+  
+  className: "row-fluid"
+  
   @departamento = "Tesoreria"
   @label = "Emitir Recibos"
 

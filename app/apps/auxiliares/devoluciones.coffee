@@ -15,21 +15,39 @@ class Movimientos extends Spine.Controller
     ".validatable" : "inputs_to_validate"
 
   events:
-    "click .js_btn_remove" : "reset"
+    "click .js_btn_remove" : "remove"
+    "click .js_btn_add" : "add"
     "change input" : "on_change"
     
   constructor: ->
     super 
     @html require("views/apps/auxiliares/devoluciones/item")(@movimiento) 
+    @movimiento.ProductoCantidad = 0
+    @on_change()
+    
 
-  on_change: (e) =>
+  on_change: (e=false) =>
     @updateFromView(@movimiento,@inputs_to_validate)
     @movimiento.updateSubTotal()
     @movimiento.applyDescuento()
     @movimiento.applyImpuesto()
     @movimiento.updateTotal()
     @movimiento.save()
-    
+  
+  remove: (e) =>
+    t = $(e.target)
+    parent = t.parents('tr')
+    input = parent.find('input')
+    input.val(0)
+    @on_change()
+  
+  add: (e) =>
+    t = $(e.target)
+    parent = t.parents('tr')
+    input = parent.find('input')
+    input.val(input.attr("data-max-value"))
+    @on_change()
+
   reset: ->
     @movimiento.destroy()
     @release()
@@ -40,7 +58,7 @@ class Devoluciones extends Spine.Controller
   @departamento = "Inventarios"
   @label = "Devolucion de Mercaderia"
   
-  className: "row"
+  className: "row-fluid"
 
   elements:
     ".movimientos_list" :"movimientos_list"
@@ -69,7 +87,7 @@ class Devoluciones extends Spine.Controller
       Movimiento.destroyAll()
       Movimiento.query {cliente: cliente, tipos: ["'FA'"] }
       
-    @html require("views/apps/auxiliares/devoluciones/layout")()
+    @html require("views/apps/auxiliares/devoluciones/layout")(@constructor)
     @clientes = new Clientes(el: @src_cliente)
 
   onLoadMovimientos: =>
@@ -78,14 +96,15 @@ class Devoluciones extends Spine.Controller
       movimientosRow = new Movimientos(movimiento: movimiento)
       @movimientos.push movimientosRow
       @movimientos_list.append movimientosRow.el
+      
 
   onMovimientoChange: =>
     @documento.updateFromMovimientos(Movimiento.all())
     @documento.save()
-    @lbl_subTotal.html @documento.SubTotal
-    @lbl_descuento.html @documento.Descuento
-    @lbl_impuesto.html @documento.Impuesto
-    @lbl_total.html @documento.Total
+    @lbl_subTotal.html @documento.SubTotal.toMoney()
+    @lbl_descuento.html @documento.Descuento.toMoney()
+    @lbl_impuesto.html @documento.Impuesto.toMoney()
+    @lbl_total.html @documento.Total.toMoney()
 
 
   #####
@@ -105,8 +124,7 @@ class Devoluciones extends Spine.Controller
       movimiento.id               = null
       Movimiento.update_total(movimiento)
       movimiento.save()
-      
-      
+
   send: (e) =>
     @refreshElements()
     @updateFromView(@documento,@inputs_to_validate)

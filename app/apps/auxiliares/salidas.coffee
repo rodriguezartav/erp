@@ -36,7 +36,7 @@ class Salidas extends Spine.Controller
   @departamento = "Inventarios"
   @label = "Salida de Mercaderia"
 
-  className: "row"
+  className: "row-fluid"
 
   elements:
     ".error"              :  "error"
@@ -55,7 +55,7 @@ class Salidas extends Spine.Controller
     @movimientos = []
 
     @documento = Documento.create {Tipo_de_Documento: "SA"}
-    @html require("views/apps/auxiliares/salidas/layout")(@documento)
+    @html require("views/apps/auxiliares/salidas/layout")(@constructor)
     @error.hide()
 
   addMovimiento: =>

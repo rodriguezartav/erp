@@ -56,7 +56,7 @@
 
 <div class="action_footer">
     <div class="modal-footer">
-      <a class="btn btn-danger cancel">Cancelar</a>
+      <a class="btn btn-danger cancel">Regresar</a>
       <a class="btn btn-primary save aprobar">Aprobar</a>
       <a class="btn btn-danger save archivar">Archivar</a>
     </div>

@@ -191,7 +191,7 @@ class Pedidos extends Spine.Controller
   className: "row-fluid listable"
 
   @departamento = "Ventas"
-  @label = "Pedidos"
+  @label = "Digitar Pedidos"
 
   elements:
     ".list_item" : "list_item"
