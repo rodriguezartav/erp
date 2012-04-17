@@ -73,6 +73,7 @@ class Salidas extends Spine.Controller
       movimiento.Precio           = 0
       movimiento.Impuesto         = 0
       movimiento.Descuento        = 0
+      movimiento.SubTotal         = 0
       movimiento.Observacion      = object.Observacion
       movimiento.Referencia       = object.Referencia
       movimiento.save()
