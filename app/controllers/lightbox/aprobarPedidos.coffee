@@ -39,8 +39,8 @@ class AprobarPedidos extends Spine.Controller
 
     for pedido in @data.group.Pedidos
       ids.push pedido.id
-
-    Pedido.aprobar( ids , @observacion.val() + @list_info.html() , @data.aprobar)
+#@list_info.html()
+    Pedido.aprobar( ids , @observacion.val()  , @data.aprobar)
 
   on_success: (results) =>
     Pedido.unbind "insert_error" , @on_error
