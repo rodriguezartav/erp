@@ -1,0 +1,38 @@
+Spine = require('spine')
+
+class PagoItem extends Spine.Model
+  @configure "PagoItem" , "Cliente" , "Total" , "Saldo" , "Consecutivo" , "Documento" , "Tipo_de_Documento" , "Fecha" , "Monto"
+ 
+  @extend Spine.Model.Salesforce
+
+  @avoidInsertList = ["Saldo","Total"] 
+  @overrideName: "Pago"
+  
+  
+
+  @createFromSaldo: (saldo) ->
+    PagoItem.create
+      Total: saldo.Total
+      Saldo : saldo.Saldo
+      Consecutivo: saldo.CodigoExterno
+      Cliente : saldo.Cliente
+      Documento: saldo.id
+      Fecha : Date.now()
+      Tipo_de_Documento : saldo.Tipo_de_Documento
+      Monto : 0
+
+
+  @createFromDocumento: (saldo) ->
+    PagoItem.create
+      Total: saldo.Total
+      Saldo : saldo.Saldo
+      Consecutivo: saldo.CodigoExterno
+      Cliente : saldo.Cliente
+      Documento: saldo.id
+      Fecha : Date.now()
+      Tipo_de_Documento : saldo.Tipo_de_Documento
+      Monto : 0
+
+
+module.exports = PagoItem
+

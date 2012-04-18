@@ -113,9 +113,9 @@ Spine.Controller.ViewDelegation =
           errors.push "El campo " +  options.type + " campo debe ser numerico" 
         else if options.val < 0  and options.positive 
           errors.push "El campo " +  options.type + " campo debe ser positivo"
-        else if options.maxValue and options.val > options.maxValue
+        else if options.maxValue != null and options.val > options.maxValue
           errors.push "El campo " +  options.type + " tiene como maximo #{options.maxValue}"
-        else if options.minValue and options.val < options.minValue
+        else if options.minValue  != null and options.val < options.minValue
           errors.push "El campo " +  options.type + " tiene como minimo #{options.minValue}"
         errors
       
@@ -142,7 +142,8 @@ Spine.Controller.ViewDelegation =
       parseDates: (object,fechas) ->
         errors = []
         for index,fecha of fechas
-          object[index] = new Date(fecha['year'],parseInt(fecha['month'])-1,fecha['date'])
+          dateNum = new Date(fecha['year'],parseInt(fecha['month'])-1,fecha['date'])
+          object[index] = dateNum
         return object
 
 module?.exports = Spine.Controller.ViewDelegation

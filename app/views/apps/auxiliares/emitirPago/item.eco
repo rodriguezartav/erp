@@ -1,0 +1,11 @@
+<td><%= @Consecutivo %></td>
+<td><%= @Tipo_de_Documento %></td>
+<td><%= @Total.toMoney() %></td>
+<td><%= @Saldo.toMoney() %></td>
+<td><input data-type="Monto" data-positive="false" data-id="<%= @id %>" data-numeric="true" data-min-value="<%= if @Saldo > 0 then 0 else @Saldo %>" data-max-value="<%= if @Saldo > 0 then @Saldo else 0 %>" value="<%= @Monto %>" class="span2 validatable"/></td>
+<td>
+  <div class="btn-group">
+    <a data-id="<%= @id %>" class="btn btn-success incluir">Incluir</a>
+    <a data-id="<%= @id %>" class="btn btn-danger excluir">Excluir</a>
+  </div>
+</td>

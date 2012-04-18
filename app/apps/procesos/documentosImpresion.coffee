@@ -26,7 +26,6 @@ class DocumentosImpresion extends Spine.Controller
   reload: =>
     Spine.followDocumentosPreparados()
 
-
   renderDocumentos: =>
     @list.empty()
     for doc in DocumentoPreparado.findAllByAttribute "Tipo_de_Documento" , "FA"

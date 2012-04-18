@@ -6,7 +6,7 @@
   <div class="row-fluid">
 
     <div class="span3 ">
-      <h3>Nombre del Responsable</h3>
+      <h3>Quien Retira?</h3>
       <input class=" validatable" data-type="Nombre_Contado" data-length="3" placeholder="Quien Retira?" />
     </div>
 

@@ -26,6 +26,7 @@ class PagosProveedor extends Spine.Controller
   constructor: ->
     super
     @error.hide()
+    Documento.destroyAll()
     
     Cuenta.query({tipos: ["'Bancaria'"] } )
     Proveedor.query()

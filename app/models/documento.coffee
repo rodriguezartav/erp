@@ -28,8 +28,19 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" Proveedor__c = '#{options.proveedor}'"           , filter) if options.proveedor
     filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) "   , filter) if options.tipos
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "         , filter) if options.cliente
+    filter = @queryFilterAddCondition(" FechaFacturacion__c = #{options.fecha} "         , filter) if options.fecha
     filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"              , filter) if options.estado
     filter
+
+  @anular: (documento) ->
+    $.ajax
+      url        : Spine.server + "/rest"
+      xhrFields  : {withCredentials: true}
+      type       : "POST"
+      data       : @ajaxParameters( { name: "Anular" , data: JSON.stringify( { id: documento.id , tipo: "Documento__c" } ) } )
+      success    : @on_send_success
+      error      : @on_send_error
+
 
 module.exports = Documento
 

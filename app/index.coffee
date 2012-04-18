@@ -21,6 +21,9 @@ PagosProveedor = require("apps/auxiliares/pagosProveedor")
 NotasCredito = require("apps/auxiliares/notasCredito")
 NotasDebito = require("apps/auxiliares/notasDebito")
 EmitirRecibo = require("apps/auxiliares/emitirRecibo")
+EmitirPago = require("apps/auxiliares/emitirPago")
+
+
 Pedidos = require("apps/auxiliares/pedidos")
 PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
 
@@ -31,6 +34,10 @@ RecibosConversion = require("apps/procesos/recibosConversion")
 CierresContable = require("apps/contables/cierresContable")
 DocumentosImpresion = require("apps/procesos/documentosImpresion")
 NotasImpresion = require("apps/procesos/notasImpresion")
+
+DocumentosAnular = require("apps/procesos/documentosAnular")
+
+
 
 class App extends Spine.Controller
   className: "app"
@@ -111,7 +118,7 @@ class App extends Spine.Controller
 
   buildProfiles: =>
     profiles = {}
-    apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , NotasDebito , CierresContable  ,DocumentosImpresion  ,PedidosAprobacion  , NotasImpresion ]
+    apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , NotasDebito , CierresContable ,EmitirPago ,DocumentosImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     profiles["Platform System Admin"] = apps
     profiles["Gerencia"] = apps
     profiles["Ejecutivo Ventas"] = apps
