@@ -49,6 +49,8 @@ class EmitirPago extends Spine.Controller
   
   @departamento = "Credito y Cobro"
   @label = "Crear Pagos"
+  @icon = "icon-inbox"
+
 
   elements:
     ".src_cliente"       :  "src_cliente"
@@ -106,6 +108,12 @@ class EmitirPago extends Spine.Controller
       total+= item.Monto
     @lbl_total.html total.toMoney()
 
+  customValidation: =>
+    @validationErrors.push "Ingrese el Nombre del Cliente" if @pago.Cliente == null
+    @validationErrors.push "El pago debe tener al menos 1 pago" if PagoItem.count() == 0
+    @validationErrors.push "El monto del pago debe ser mayor o igual a 0" if @pago.Monto < 0
+
+
   beforeSend: (object) =>
     for item in PagoItem.all()
       if item.Monto == 0
@@ -113,10 +121,10 @@ class EmitirPago extends Spine.Controller
       else
         item.Recibo = object.Recibo
         item.Cliente = object.Cliente
-        item.Tipo = if item.Monto == item.Saldo then "PA" else "AB"
         item.FormaPago = object.FormaPago
         item.Fecha = object.Fecha.to_salesforce_date()
         item.Referencia = object.Referencia
+        item.setTipo()
         item.save()
         @log item
 

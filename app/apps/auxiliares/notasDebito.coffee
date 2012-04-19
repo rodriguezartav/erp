@@ -10,6 +10,8 @@ class NotasDebito extends Spine.Controller
 
   @departamento = "Credito y Cobro"
   @label = "Notas de Debito"
+  @icon = "icon-download-alt"
+  
   
   className: "row-fluid"
 

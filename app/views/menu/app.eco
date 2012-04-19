@@ -1,1 +1,1 @@
-<li><a data-type="<%= @name %>"><i class="<%= @label || 'icon-book' %>"></i><%= @label %></a></li>
+<li><a data-type="<%= @name %>"><i class="<%= @icon || 'icon-book' %>"></i><%= @label %></a></li>

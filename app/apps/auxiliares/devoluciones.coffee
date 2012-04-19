@@ -57,6 +57,8 @@ class Devoluciones extends Spine.Controller
   
   @departamento = "Inventarios"
   @label = "Devolucion de Mercaderia"
+  @icon = "icon-refresh"
+  
   
   className: "row-fluid"
 

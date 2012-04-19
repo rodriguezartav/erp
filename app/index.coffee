@@ -118,14 +118,14 @@ class App extends Spine.Controller
 
   buildProfiles: =>
     profiles = {}
-    apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , NotasDebito , CierresContable ,EmitirPago ,DocumentosImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
+    apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito , CierresContable ,EmitirPago ,DocumentosImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     profiles["Platform System Admin"] = apps
-    profiles["Gerencia"] = apps
-    profiles["Ejecutivo Ventas"] = apps
-    profiles["Ejecutivo Credito"] = apps
     profiles["Presidencia"] = apps
-    profiles["Vendedor"] = apps
-    profiles["Contabilidad"] = apps
+    profiles["Gerencia"] = apps
+    profiles["Ejecutivo Ventas"] = [Pedidos,DocumentosImpresion]
+    profiles["Ejecutivo Credito"] = [Entradas,Salidas,Compras,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
+    profiles["Vendedor"] = [Pedidos]
+    profiles["Contabilidad"] = [CierresContable]
     profiles["Facturacion"] = apps
     
     Spine.profiles = profiles

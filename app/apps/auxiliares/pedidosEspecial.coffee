@@ -46,6 +46,7 @@ class PedidosEspecial extends Spine.Controller
 
   @departamento = "Ventas"
   @label = "Pedidos Especiales"
+  @icon = "icon-key"
 
   elements:
     ".items_list" : "items_list"

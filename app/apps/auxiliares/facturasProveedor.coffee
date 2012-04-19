@@ -6,12 +6,13 @@ Documento = require("models/documento")
 Movimiento = require("models/movimiento")
 Cuenta = require("models/cuenta")
 
-
 class FacturasProveedor extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
   
   @departamento = "Tesoreria"  
   @label = "Ingreso de Facturas"
+  @icon = "icon-edit"
+  
   
   className: "row-fluid"
 
@@ -40,7 +41,6 @@ class FacturasProveedor extends Spine.Controller
   render: =>  
     @html require("views/apps/auxiliares/facturasProveedor/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
-    
 
   #####
   # ACTIONS

@@ -36,6 +36,8 @@ class Entradas extends Spine.Controller
 
   @departamento = "Inventarios"
   @label = "Entradas de Mercaderia"
+  @icon = "icon-arrow-right"
+  
 
   className: "row-fluid"
 

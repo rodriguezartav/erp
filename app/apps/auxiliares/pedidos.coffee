@@ -192,6 +192,7 @@ class Pedidos extends Spine.Controller
 
   @departamento = "Ventas"
   @label = "Digitar Pedidos"
+  @icon = "icon-shopping-cart"
 
   elements:
     ".list_item" : "list_item"

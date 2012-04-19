@@ -41,6 +41,7 @@ class Compras extends Spine.Controller
 
   @departamento = "Inventarios"
   @label = "Compra de Mercaderia"
+  @icon = "icon-shopping-cart"
 
   elements:
     ".movimientos_list" : "movimientos_list"

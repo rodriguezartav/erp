@@ -5,6 +5,8 @@ Documento = require("models/documento")
 class DocumentosAnular extends Spine.Controller
   @departamento = "Facturacion"
   @label = "Anulacion de Facturas"
+  @icon = "icon-ban-circle"
+  
   
   className: "row-fluid"
 

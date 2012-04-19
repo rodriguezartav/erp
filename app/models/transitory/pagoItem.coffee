@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class PagoItem extends Spine.Model
-  @configure "PagoItem" , "Cliente" , "Total" , "Saldo" , "Consecutivo" , "Documento" , "Tipo_de_Documento" , "Fecha" , "Monto"
+  @configure "PagoItem" , "Cliente" , "Total" , "Tipo" , "Saldo" , "Consecutivo" , "Documento" , "Tipo_de_Documento" , "Fecha" , "Monto"
  
   @extend Spine.Model.Salesforce
 
@@ -9,6 +9,11 @@ class PagoItem extends Spine.Model
   @overrideName: "Pago"
   
   
+  setTipo: ->
+    if @Monto == @Saldo
+      @Tipo = "PA"
+    else
+      @Tipo = "AB"
 
   @createFromSaldo: (saldo) ->
     PagoItem.create

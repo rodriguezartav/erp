@@ -12,6 +12,7 @@ class PedidosAprobacion extends Spine.Controller
 
   @departamento = "Credito y Cobro"
   @label = "Aprobacion de Pedidos"
+  @icon = "icon-ok-sign"
 
   elements:
     ".error" : "error"

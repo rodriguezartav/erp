@@ -3,8 +3,9 @@ Spine = require('spine')
 DocumentoPreparado = require("models/sobjects/documentoPreparado")
 
 class DocumentosImpresion extends Spine.Controller
-  @departamento = "Facturacion"
+  @departamento = "Ventas"
   @label = "Impresion de Facturas"
+  @icon = "icon-print"
   
   className: "row-fluid"
 

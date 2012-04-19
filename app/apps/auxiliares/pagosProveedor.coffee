@@ -7,10 +7,14 @@ Proveedor = require("models/proveedor")
 
 
 class PagosProveedor extends Spine.Controller
+  @extend Spine.Controller.ViewDelegation
+
   className: "row-fluid"
 
   @departamento = "Tesoreria"
   @label = "Pagos a Proveedores"
+  @icon = "icon-inbox"
+  
 
   elements:
     ".error" : "error"
@@ -71,7 +75,7 @@ class PagosProveedor extends Spine.Controller
   after_send: =>
     @reset()
 
-  reset: ->
+  customReset: ->
     @src_saldos.empty()
     Documento.destroyAll()
     @pago.destroy() if @pago   
