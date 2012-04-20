@@ -49,8 +49,10 @@
         <input class="validatable" data-type="Referencia" placeholder="# forma de pago"/>
       </div>
 
-     
-  
+     <div class="span3">
+        <h3>Monto</h3>
+        <input placeholder="Monto del Recibo"/>
+      </div>
 
   </div>
 

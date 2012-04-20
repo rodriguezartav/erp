@@ -120,6 +120,7 @@ class App extends Spine.Controller
     profiles = {}
     apps = [ Pedidos , Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito , CierresContable ,EmitirPago ,DocumentosImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     profiles["Platform System Admin"] = apps
+    profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor  , CierresContable  ]
     profiles["Presidencia"] = apps
     profiles["Gerencia"] = apps
     profiles["Ejecutivo Ventas"] = [Pedidos,DocumentosImpresion]

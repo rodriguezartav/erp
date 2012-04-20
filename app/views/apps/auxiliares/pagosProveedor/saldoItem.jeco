@@ -2,4 +2,5 @@
     <td><h3 class=""><%= @CodigoExterno %></h3></td>
     <td><h3 class=""><%= @Saldo.toMoney() %></h3></td>
     <td><input  data-id="<%= @id %>"  data-saldo="<%= @Saldo %>" class="txt_saldo" /></td>
+    <td><a data-id="<%= @id %>" class="btn btn-success incluir">Incluir</a></td>
 <tr>

@@ -8,12 +8,11 @@ Cuenta = require("models/cuenta")
 
 class FacturasProveedor extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
-  
+
   @departamento = "Tesoreria"  
   @label = "Ingreso de Facturas"
   @icon = "icon-edit"
-  
-  
+
   className: "row-fluid"
 
   elements:
@@ -26,38 +25,37 @@ class FacturasProveedor extends Spine.Controller
     "click .cancel" : "reset"
     "click .save" : "send"
 
+  setVariables: ->
+    @documento = Documento.create { FechaFacturacion: new Date() , Tipo_de_Documento: "FP" }
+
+  preset: ->
+    Proveedor.query()
+    
   constructor: ->
     super
-    @error.hide()
-    Cuenta.query {tipos: ["'Gasto'","'Activo'"]}
-    Proveedor.query()
-    Cuenta.bind "query_success" , @onLoadCuenta
-    Cuenta.create { Codigo: '2000' , Name: 'Compra de Mercaderia', Id: 'n/d' }
+    @setVariables()
+    @preset()
     @render()
     
-  onLoadCuenta: =>
-    @cuentas.html require("views/apps/auxiliares/facturasProveedor/itemCuentaGasto")(Cuenta.all())
     
   render: =>  
     @html require("views/apps/auxiliares/facturasProveedor/layout")(@constructor)
+    @refreshView(@documento,@inputs_to_validate)    
     @proveedores = new Proveedores(el: @src_proveedor)
 
   #####
   # ACTIONS
   #####
-  
+
   customValidation: =>
     @validationErrors.push "Escoja el Proveedor" if Proveedor.current == null
-    
+
   beforeSend: (object) ->
     object.Proveedor = Proveedor.current.id
 
   send: (e) =>
-    @documento = Documento.create {Tipo_de_Documento: "FP"} if !@documento
-    @inputs_to_validate.push @cuentas
     @updateFromView(@documento,@inputs_to_validate)
     Spine.trigger "show_lightbox" , "sendDocumento" , @documento , @after_send
- 
 
   after_send: =>
     @reset(false)

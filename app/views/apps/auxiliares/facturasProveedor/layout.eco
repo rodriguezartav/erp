@@ -15,20 +15,31 @@
       <h3>Referencia (#)</h3>
       <input class="validatable" data-type="Referencia" date-length="3"  placeholder="# documento" />
     </div>
-    
-    <div class="span3">
-      <h3>Categoria</h3>
-      <select class="validatable" data-type="AplicarACuenta" >
-       
-      </select>
-    </div>
-    
+
+    <div class="span3  ">
+        <h3>Fecha Factura</h3>
+        <div class="row-fluid">
+          <div class="span4">
+           <input class="validatable " data-writable="false" data-type="FechaFacturacion" date-part="date" date-name="FechaFacturacion" placeholder="Dia"/>
+         </div>
+
+          <div class="span4">
+           <input class="validatable "   data-writable="false" data-type="FechaFacturacion"  date-part="month" date-name="FechaFacturacion" placeholder="Mes"/>
+         </div>
+
+          <div class="span4">
+           <input class="validatable "   data-writable="false" data-type="FechaFacturacion"  date-part="year" date-name="FechaFacturacion"  placeholder="Año"/>
+          </div>
+        </div>
+     </div>
+
     <div class="span2">
       <h3>Plazo</h3>
-      <input class=" validatable"  data-type="Plazo" data-numeric="true" placeholder="Dias desde Hoy" />
+      <input class=" validatable"  data-type="Plazo" data-numeric="true" placeholder="Dias desde la Emision" />
     </div>
+    
+      
 </div>
-
 
     <div class="row-fluid">
       <h3>Contenido de la Factura</h3>
@@ -37,25 +48,34 @@
 
   <div class="row-fluid">
 
+    <div class="span11">
+      <div class="row-fluid">
+  
+        <div class="span3">
+          <h3>Subtotal</h3>
+          <input data-type="SubTotal" data-numeric="true" data-positive="true"  class=" validatable" />
+        </div>
 
-    <div class="span3">
-      <h3>Subtotal</h3>
-      <input data-type="SubTotal" data-numeric="true" data-positive="true"  class=" validatable" />
-    </div>
+       <div class="span3">
+          <h3>Descuento</h3>
+          <input data-type="Descuento"  data-numeric="true" data-positive="true"  value="0"  class=" validatable" placeholder=""  />
+        </div>
 
-   <div class="span3 ">
-      <h3>Descuento</h3>
-      <input data-type="Descuento"  data-numeric="true" data-positive="true"  value="0"  class=" validatable" placeholder=""  />
-    </div>
-
-    <div class="span3 ">
-      <h3>Impuesto</h3>
-      <input data-type="Impuesto" data-numeric="true" data-positive="true" class=" validatable" value="0" placeholder="" />
+        <div class="span3">
+          <h3>Impuesto</h3>
+          <input data-type="Impuesto" data-numeric="true" data-positive="true" class=" validatable" value="0" placeholder="" />
+        </div>
+    
+        <div class="span3">
+          <h3>Total</h3>
+          <input data-type="Total" data-numeric="true" data-positive="true" class=" validatable"  placeholder="" />
+        </div>
+      </div>
     </div>
     
-    <div class="span3 ">
-      <h3>Total</h3>
-      <input data-type="Total" data-numeric="true" data-positive="true" class=" validatable"  placeholder="" />
+    <div class="span1 ">
+      <h3>TC</h3>
+      <input data-type="TipoCambio" data-numeric="true" value="1" data-positive="true" class=" validatable"  placeholder="Tipo Cambio" />
     </div>
   
 </div>

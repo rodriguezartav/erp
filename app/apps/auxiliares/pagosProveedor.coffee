@@ -45,7 +45,7 @@ class PagosProveedor extends Spine.Controller
     
     
   onProveedorSet: =>
-    Documento.query({ proveedor: Proveedor.current.id , tipos: ["'FP'"] , saldo: true })
+    Documento.query({ proveedor: Proveedor.current.id , tipos: ["'FP'"] , saldo: true , aprobadoParaPagar: true})
     
   onLoadCuenta: =>
     @cuentas.html require("views/apps/auxiliares/pagosProveedor/itemCuentaGasto")(Cuenta.all())
@@ -65,12 +65,11 @@ class PagosProveedor extends Spine.Controller
 
     
   send: (e) =>
-    @pago = Pago.create {} if !@pago
-    @inputs_to_validate.push @cuentas   
-    @updateFromView(@documento,@inputs_to_validate)
+ #   @inputs_to_validate.push @cuentas   
+#    @updateFromView(@documento,@inputs_to_validate)
     
-    @documento.save()
-    Spine.trigger "show_lightbox" , "sendPago" , @pago , @after_send
+    alert "Todavia no esta desarrollado el metodo de pago"
+    #Spine.trigger "show_lightbox" , "sendPago" , @pago , @after_send
  
   after_send: =>
     @reset()

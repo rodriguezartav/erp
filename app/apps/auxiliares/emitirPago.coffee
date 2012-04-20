@@ -9,12 +9,10 @@ PagoItem = require("models/transitory/pagoItem")
 
 class Items extends Spine.Controller  
   @extend Spine.Controller.ViewDelegation
-  
   tag: "tr"
 
   elements:
     ".validatable" : "inputs_to_validate"
-    
 
   events:
     "click .incluir" : "add_saldo"

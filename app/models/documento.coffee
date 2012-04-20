@@ -3,12 +3,12 @@ Spine = require('spine')
 class Documento extends Spine.Model
   @configure "Documento", "Proveedor" , "Nombre_Contado" ,"Total" , "Saldo" , "CodigoExterno" , "Referencia" , "Observacion" , 
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo" , "FechaFacturacion","FechaVencimiento" ,
-  "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos", "IsContado"
+  "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos", "IsContado" , "TipoCambio" , "AprobadoParaPagar"
   
   @extend Spine.Model.Salesforce
 
   @avoidQueryList: [ "Referencia" , "Observacion" , "SubTotal" , "Descuento" , "Impuesto", "Fuente" ,
-    "FechaFacturacion","FechaVencimiento" ,"AplicarACuenta","IsContado"]
+    "FechaFacturacion","FechaVencimiento" ,"AplicarACuenta","IsContado","TipoCambio"]
 
   updateFromMovimientos: (movimientos)  ->
     @Total = 0
@@ -30,6 +30,10 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "         , filter) if options.cliente
     filter = @queryFilterAddCondition(" FechaFacturacion__c = #{options.fecha} "         , filter) if options.fecha
     filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"              , filter) if options.estado
+    filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"              , filter) if options.aprobadoParaPagar
+    
+    
+    
     filter
 
   @anular: (documento) ->
