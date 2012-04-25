@@ -1,52 +1,35 @@
 Spine   = require('spine')
 User = require('models/user')
 Pedido = require("models/pedido")
+PagoProveedor = require("models/transitory/pagoProveedor")
+
 $       = Spine.$
 
-class AprobarPedidos extends Spine.Controller
-  className: 'aprobarPedidos modal'
+class SendPagoProveedor extends Spine.Controller
+  className: 'sendPagoProveedor modal'
+  @type = "sendPagoProveedor"
 
   elements:
     ".alert-box"   : "alert_box"
     ".loader"      : "loader"
     ".show_wait"   : "show_wait" 
-    ".show_input"  : "show_input"
-    "textarea"     : "observacion"
-    ".list_info"   : "list_info"
 
   events:
     "click .accept" : "on_error_accept"
     "click .send" : "on_send_pedido"
     "click .cancel" : "on_cancel_pedido"
 
-  @type = "aprobarPedidos"
 
   constructor: ->
     super
-    @html require('views/lightbox/aprobarPedidos')(@data)
-    @show_input.show()
-    @show_wait.hide() 
-
-  on_cancel_pedido: =>
-    Spine.trigger "hide_lightbox"
-
-  on_send_pedido: =>
+    @html require('views/lightbox/sendPagoProveedor')
     Pedido.bind "insert_error" , @on_error
     Pedido.bind "insert_success" , @on_success
-    ids = []
-    @show_input.hide()
-    @show_wait.show() 
-
-    for pedido in @data.group.Pedidos
-      ids.push pedido.id
-
-    Pedido.aprobar( ids , @observacion.val()  , @data.aprobar)
+    PagoProveedor.insert(@data)
 
   on_success: (results) =>
     Pedido.unbind "insert_error" , @on_error
     Pedido.unbind "insert_success" , @on_success  
-    for pedido in @data.group.Pedidos
-      pedido.destroy()
     Spine.trigger "hide_lightbox"
     @callback.apply @, [true]
 
@@ -57,10 +40,6 @@ class AprobarPedidos extends Spine.Controller
     @el.addClass "error"
     @alert_box.show()
     error = JSON.stringify(error_obj) || error_obj
-    index = error.lastIndexOf "caused by: "
-    if index > -1
-      indexEnd = error.indexOf "Trigger"
-      error = error.substring(index + 11 ,indexEnd)
     @alert_box.append "<p>#{error}</p>"
   
   on_error_accept: =>
@@ -68,4 +47,4 @@ class AprobarPedidos extends Spine.Controller
     @alert_box.hide()
     Spine.trigger "hide_lightbox"
     
-module.exports = AprobarPedidos
+module.exports = SendPagoProveedor

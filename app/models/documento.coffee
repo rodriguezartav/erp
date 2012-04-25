@@ -3,7 +3,7 @@ Spine = require('spine')
 class Documento extends Spine.Model
   @configure "Documento", "Proveedor" , "Nombre_Contado" ,"Total" , "Saldo" , "CodigoExterno" , "Referencia" , "Observacion" , 
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo" , "FechaFacturacion","FechaVencimiento" ,
-  "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos", "IsContado" , "TipoCambio" , "AprobadoParaPagar"
+  "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos", "IsContado" , "TipoCambio" , "AprobadoParaPagar","Estado"
   
   @extend Spine.Model.Salesforce
 

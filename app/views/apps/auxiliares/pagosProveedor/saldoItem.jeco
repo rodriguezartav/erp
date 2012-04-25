@@ -1,6 +1,9 @@
 <tr data-id="<%= @id %>">
     <td><h3 class=""><%= @CodigoExterno %></h3></td>
     <td><h3 class=""><%= @Saldo.toMoney() %></h3></td>
-    <td><input  data-id="<%= @id %>"  data-saldo="<%= @Saldo %>" class="txt_saldo" /></td>
-    <td><a data-id="<%= @id %>" class="btn btn-success incluir">Incluir</a></td>
+    <td><h3 data-id="<%= @id %>" data-documento="<%= @id %>" data-saldo="0" class="txt_saldo">0.00</h3></td>
+    <td>
+      <a data-id="<%= @id %>" class="btn btn-success incluir">Incluir</a>
+      <a data-id="<%= @id %>" class="btn btn-danger excluir">Excluir</a>
+    </td>
 <tr>

@@ -52,6 +52,7 @@ class FacturasProveedor extends Spine.Controller
 
   beforeSend: (object) ->
     object.Proveedor = Proveedor.current.id
+    object.Estado = ""
 
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)

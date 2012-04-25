@@ -58,7 +58,7 @@
 
 <div class="row">
   <div class="pull-right">
-    <span>Total</span>
+    <h3>Total: <span class="lblTotal">0.00<span></h3>
   </div>
 </div>
 
