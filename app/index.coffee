@@ -123,7 +123,7 @@ class App extends Spine.Controller
     profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor  , CierresContable  ]
     profiles["Presidencia"] = apps
     profiles["Gerencia"] = apps
-    profiles["Ejecutivo Ventas"] = [Pedidos,DocumentosImpresion]
+    profiles["Ejecutivo Ventas"] = [Pedidos,PedidosEspecial,DocumentosImpresion]
     profiles["Ejecutivo Credito"] = [Entradas,Salidas,Compras,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
     profiles["Vendedor"] = [Pedidos]
     profiles["Contabilidad"] = [CierresContable]
