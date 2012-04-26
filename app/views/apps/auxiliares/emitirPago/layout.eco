@@ -50,8 +50,9 @@
       </div>
 
      <div class="span3">
-        <h3>Monto</h3>
-        <input id="txt_monto" placeholder="Monto del Recibo"/>
+        <h3>Monto <span class="badge badge-warning">opcional</span></h3>
+        <input id="txt_monto" placeholder="Monto para Calculos"/><br/>
+        
       </div>
 
   </div>

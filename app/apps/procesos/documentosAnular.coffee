@@ -3,7 +3,7 @@ Spine = require('spine')
 Documento = require("models/documento")
 
 class DocumentosAnular extends Spine.Controller
-  @departamento = "Facturacion"
+  @departamento = "Ventas"
   @label = "Anulacion de Facturas"
   @icon = "icon-ban-circle"
   
