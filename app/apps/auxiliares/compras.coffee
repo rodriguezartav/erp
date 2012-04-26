@@ -85,7 +85,7 @@ class Compras extends Spine.Controller
       movimiento.Observacion      = object.Observacion
       movimiento.Referencia       = object.Referencia
       movimiento.Proveedor        = Proveedor.current.id
-      movimiento.Subtotal         = 0
+      movimiento.SubTotal         = 0
       movimiento.save()
    
   send: (e) =>
