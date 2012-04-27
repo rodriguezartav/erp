@@ -4,4 +4,5 @@
 <td><p><%= producto.Name.capitalize() %><p></td>
 <td><input class="validatable" data-type="ProductoCantidad" data-numeric="true" value="" /></td>
 <td><input class="validatable" data-type="ProductoCosto" data-numeric="true" value="<%= @ProductoCosto %>"  /></td>
+<td><p><%= producto.CostoAnterior %><p></td>
 <td><a class="btn btn-danger btn-small btn_remove"><i class="icon-remove icon-white"></i></a></td>

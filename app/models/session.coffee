@@ -23,9 +23,13 @@ class Session extends Spine.SingleModel
   
   getLastUpdate: (className) =>
     lastUpdate = new Date('1/1/1970').getTime()
-    lastUpdate = @lastUpdate?[className] if @lastUpdate 
+    lastUpdate = @lastUpdate?[className] if @lastUpdate[className]
     lastUpdate = new Date(lastUpdate)
     return lastUpdate
+
+
+    console.log "Session: " + lastUpdate
+
 
   sessionExpires: =>
     expire = new Date(@lastLogin.getTime() + 1000 * 60 * 60)

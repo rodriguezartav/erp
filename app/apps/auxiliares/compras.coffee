@@ -17,14 +17,13 @@ class Movimientos extends Spine.Controller
     ".validatable" : "inputs_to_validate"
 
   events:
-    "click .js_btn_remove" : "reset"
+    "click .btn_remove" : "reset"
     "change input" : "on_change"
     
   constructor: ->
     super 
     @movimiento = Movimiento.create_from_producto(@producto)
-    @html require("views/apps/auxiliares/compras/item")(@movimiento) 
-    
+    @html require("views/apps/auxiliares/compras/item")(@movimiento)
 
   on_change: (e) =>
     @updateFromView(@movimiento,@inputs_to_validate)

@@ -16,9 +16,9 @@
         <input class="validatable" data-type="Referencia" data-length="3"  id="txt_referencia" placeholder="# documento" />
       </div>
 
-      <div class="span6">
-        <h3>Observacion</h3>
-        <textarea class="validatable " data-required="false" data-type="Observacion" placeholder="Observacion" />
+      <div class="span3">
+        <h3>Detalles de la Factura</h3>
+        <textarea class="validatable " data-required="true" data-type="Observacion" placeholder="# de Factura" />
       </div>
   </div>
 
@@ -31,6 +31,7 @@
          <th>Producto</th>
          <th>Cantidad</th>
          <th>Costo</th>
+         <th>Costo Anterior</th>
          <th>Action</th>
        </tr>
      </thead>
