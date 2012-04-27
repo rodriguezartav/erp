@@ -1,8 +1,0 @@
-<% Cliente = require("models/cliente")  %>
-
-<tr>
-  <td><%= @CodigoExterno %></td>
-  <td><%= @Tipo_de_Documento %></td>
-  <td><%= Cliente.exists(@Cliente)?.Name %></td>
-  <td><a data-id="<%= @id %>" class="print btn btn-success">Imprimir</a></td>
-</tr>

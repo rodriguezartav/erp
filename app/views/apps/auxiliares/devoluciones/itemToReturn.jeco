@@ -1,9 +1,0 @@
-<tr>
-    <td><h4><%= @CodigoExterno %></h4></td>
-    <td><p><%= @ProductoName.capitalize() %></p></td>
-    <td><h4><%= @ProductoCantidad.toMoney() %></h4></td>
-    <td><h4><%= @ProductoPrecio.toMoney() %></h4></td>
-    <td><h4><%= @Descuento.toMoney() %></h4></td>
-    <td><h4><%= @Impuesto.toMoney() %></h4></td>
-    <td><input class="span2 validatable cantidadADevolver" data-max-value="<%= @ProductoCantidad %>" data-type="<%= @id %>" data-numeric="true"  value="0" /></td>
-  <tr>
