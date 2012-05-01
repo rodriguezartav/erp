@@ -17,7 +17,7 @@ class Items extends Spine.Controller
   events:
     "click .incluir" : "add_saldo"
     "click .excluir" : "remove_saldo"
-    "change input" : "on_monto_change"
+    "change input" : "checkItem"
 
   constructor: ->
     super
@@ -37,7 +37,7 @@ class Items extends Spine.Controller
     @pagoItem.save()
     @render()
 
-  on_monto_change: (e) =>
+  checkItem: (e) =>
     @updateFromView(@pagoItem,@inputs_to_validate)
 
 class EmitirPago extends Spine.Controller
@@ -110,6 +110,7 @@ class EmitirPago extends Spine.Controller
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pago.Cliente == null
     @validationErrors.push "El pago debe tener al menos 1 pago" if PagoItem.count() == 0
     @validationErrors.push "El monto del pago debe ser mayor o igual a 0" if @pago.Monto < 0
+    item.checkItem() for item in @items
 
 
   beforeSend: (object) =>

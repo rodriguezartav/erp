@@ -72,8 +72,8 @@ Spine.Controller.ViewDelegation =
         object = @parseDates(object,fechas)
         @customValidation(object)
         if @validationErrors.length > 0
-          alert @validationErrors.join(" , ") 
-          throw "Error de Validacion"
+          Spine.trigger "show_lightbox" , "showWarning" , error: @validationErrors.join(" , ") 
+          throw "Error de Validacion "
         
         @beforeSend(object)
         object.save?()

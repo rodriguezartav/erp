@@ -17,7 +17,7 @@ class Items extends Spine.Controller
 
   events:
     "click .js_btn_remove" : "reset"
-    "change input" : "on_change"
+    "change input" : "checkItem"
     "click input" : "on_click"
 
   constructor: ->
@@ -28,14 +28,14 @@ class Items extends Spine.Controller
   on_click: (e) =>
     $(e).select()
 
-  on_change: (e) =>
+  checkItem: (e) =>
     @updateFromView(@pedidoItem,@inputs_to_validate)
     @pedidoItem.updateSubTotal()
     @pedidoItem.applyDescuento()
     @pedidoItem.applyImpuesto()
     @pedidoItem.updateTotal()
 
-  reset: ->
+  reset: =>
     @pedidoItem.destroy()
     @release()
 
@@ -67,15 +67,31 @@ class PedidosEspecial extends Spine.Controller
     Producto.reset()
     Cliente.reset()
 
-    Producto.bind "current_set" , @addItem
-    Cliente.bind "current_set" , @addCliente
 
     @pedido = Pedido.create( { Referencia: parseInt(Math.random() * 10000) })
     @items = []
+    @itemToControllerMap = {}
+    
     @html require("views/apps/auxiliares/pedidosEspecial/layout")(@pedido)
     @clientes = new Clientes(el: @src_cliente)
 
+    @setBindings()
+
+  setBindings: =>
+    Producto.bind "current_set" , @addItem
+    Cliente.bind "current_set" , @addCliente
+    
+    PedidoItem.bind "beforeDestroy" , @removeItem
     PedidoItem.bind "update" , @onPedidoItemChange
+    
+
+  resetBindings: =>
+    PedidoItem.unbind "beforeDestroy" , @removeItem
+    PedidoItem.unbind "change" , @onPedidoItemChange
+    Cliente.unbind "current_set" , @addCliente
+    
+    Producto.unbind "current_set" , @addMovimiento
+    
 
   addCliente: =>
     @pedido.Cliente = Cliente.current.id
@@ -86,9 +102,16 @@ class PedidosEspecial extends Spine.Controller
     return false if Producto.current.InventarioActual == 0
     item = new Items(producto: Producto.current)
     @items.push item
+    @itemToControllerMap[item.pedidoItem.id] = item
     @items_list.append item.el
     @onPedidoItemChange()
     $('a.popable').popover(placement: "bottom")    
+
+  removeItem: (item) =>
+    item = @itemToControllerMap[item.id]
+    index = @items.indexOf(item)
+    @items.splice(index,1)
+    @itemToControllerMap[item.id] = null
 
   onPedidoItemChange: =>
     @pedido.updateFromPedidoItems(PedidoItem.all())
@@ -101,6 +124,7 @@ class PedidosEspecial extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if Cliente.current == null
     @validationErrors.push "Ingrese al menos un producto" if PedidoItem.count() == 0
+    item.checkItem() for item in @items
     
   beforeSend: (object) ->
     for pi in PedidoItem.all()
@@ -118,15 +142,13 @@ class PedidosEspecial extends Spine.Controller
   after_send: =>
     @reset(false)
 
-  customReset: ->
+  customReset: =>
     @clientes.reset()
-    PedidoItem.unbind "change update" , @onPedidoItemChange
-    
-    Producto.unbind "current_set" , @addMovimiento
     for items in @items
-      items.reset()
+      items?.reset()
     Producto.reset()
     Cliente.reset()
+    @resetBindings()
     @pedido.destroy()
     
   

@@ -21,6 +21,7 @@ AnularDocumento = require("controllers/lightbox/anularDocumento")
 
 PagoProveedor = require("controllers/lightbox/sendPagoProveedor")
 
+ShowWarning = require("controllers/lightbox/showWarning")
 
 Block = require("controllers/lightbox/block")
 
@@ -30,12 +31,15 @@ class Lightbox extends Spine.Controller
 
   constructor: ->
     super
-    @items = [Login ,PagoProveedor, SendDocumento , SendPagos , SendMovimientos , SendCierre,CierreManual,SendRecibo,SendPedidos , AprobarPedidos ,AprobarRecibos, ConvertirRecibos,Block,AnularDocumento]
+    @items = [ShowWarning,Login ,PagoProveedor, SendDocumento , SendPagos , SendMovimientos , SendCierre,CierreManual,SendRecibo,SendPedidos , AprobarPedidos ,AprobarRecibos, ConvertirRecibos,Block,AnularDocumento]
     
     Spine.bind "hide_lightbox" , @hide
     
     Spine.bind "show_lightbox" , ( type , data =null , callback=null ) =>
       @el.show()
+      
+      @log type
+      
       @current = null
       for item in @items
         @current = item if item.type == type

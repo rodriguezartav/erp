@@ -18,14 +18,14 @@ class Movimientos extends Spine.Controller
 
   events:
     "click .btn_remove" : "reset"
-    "change input" : "on_change"
+    "change input" : "checkItem"
     
   constructor: ->
     super 
     @movimiento = Movimiento.create_from_producto(@producto)
     @html require("views/apps/auxiliares/compras/item")(@movimiento)
 
-  on_change: (e) =>
+  checkItem: (e) =>
     @updateFromView(@movimiento,@inputs_to_validate)
     
   reset: ->
@@ -51,29 +51,47 @@ class Compras extends Spine.Controller
     "click .cancel" : "reset"
     "click .save" : "send"
 
+
+
   constructor: ->
     super
     Producto.reset_current()
-    Producto.bind "current_set" , @addMovimiento
     Proveedor.query()
     
     @documento = Documento.create {Tipo_de_Documento: "CO"}    
     Movimiento.destroyAll()
     @movimientos = []
+    @itemToControllerMap = {}
 
     @html require("views/apps/auxiliares/compras/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
+    @setBindings()
+
+  setBindings: =>
+    Producto.bind "current_set" , @addMovimiento
+    Movimiento.bind "beforeDestroy" , @removeMovimiento
+
+  resetBindings: =>
+    Producto.unbind "current_set" , @addMovimiento
+    Movimiento.unbind "beforeDestroy" , @removeMovimiento
 
   addMovimiento: =>
     item = new Movimientos(producto: Producto.current)
+    @itemToControllerMap[item.movimiento.id] = item
     @movimientos.push item
     @movimientos_list.append item.el
+
+  removeMovimiento: (item) =>
+    item = @itemToControllerMap[item.id]
+    index = @movimientos.indexOf(item)
+    @movimientos.splice(index,1)
+    @itemToControllerMap[item.id] = null
 
   customValidation: =>
     @validationErrors.push "Ingrese al menos un producto" if Movimiento.count() == 0
     @validationErrors.push "Escoja el Proveedor" if Proveedor.current == null
-    
-    
+    item.checkItem() for item in @movimientos
+
   beforeSend: (object) ->
     for movimiento in Movimiento.all()
       movimiento.Tipo             = object.Tipo_de_Documento
@@ -94,9 +112,9 @@ class Compras extends Spine.Controller
   after_send: =>
     @reset(false)
 
-  customReset: ->
+  customReset: =>
     @proveedores.reset()
-    Producto.unbind "current_set" , @addMovimiento
+    @resetBindings()
     for items in @movimientos
       items.reset()
     @documento.destroy()

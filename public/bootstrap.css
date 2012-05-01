@@ -7484,6 +7484,12 @@ h5.preHeader {
 table input {
   margin-bottom: 0px;
 }
+.pedidos .list_item {
+  opacity: 0.5;
+}
+.pedidos .list_item.active {
+  opacity: 1;
+}
 @media (max-width: 2100px) {
   body {
     padding-top: 70px;

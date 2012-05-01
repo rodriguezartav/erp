@@ -1,6 +1,8 @@
 require('lib/setup')
 Spine = require('spine')
 
+FayeManager = require("managers/fayeManager")
+
 Lightbox = require("controllers/lightbox")
 Header = require("controllers/header")
 
@@ -36,7 +38,6 @@ DocumentosImpresion = require("apps/procesos/documentosImpresion")
 NotasImpresion = require("apps/procesos/notasImpresion")
 
 DocumentosAnular = require("apps/procesos/documentosAnular")
-
 
 
 class App extends Spine.Controller
@@ -99,6 +100,8 @@ class App extends Spine.Controller
         model.query()
 
   loginComplete: =>
+    Spine.fayeManager = new FayeManager()
+    
     @registerStatusHandler()
     @registerApps()   
     @fetchServerData()
@@ -114,7 +117,6 @@ class App extends Spine.Controller
     $('.dropdown-toggle').dropdown()
     $('a.tipable').tooltip()
     $('a.popable').popover()
-    $('#subnav').scrollspy(offset: -100)
 
   buildProfiles: =>
     profiles = {}

@@ -1,20 +1,17 @@
 
 <div class="modal-header">
-  <h3>Error en <%= @header %></h3>
+  <h3>Error sin Detectar</h3>
 </div>
 
-<div style="display:none" class="alert-box error alert-error alert">
-</div>
+
 
 <div class="modal-body">
-<%= @warning %>
+  <h4>Favor reporte este error si no comprende su causa!</h4>
+  <%- @error.replace(",","<br/>") %>
 </div>
 
 <div class="modal-footer">
-<div class="progress progress-striped loader active">
-  <div class="bar" style="width: 100%;"></div>  
-</div>
-<a class="btn btn-primary show_on_error accept">Ok</a>
+<a class="btn btn-primary  accept">Ok</a>
 </div>
 
 

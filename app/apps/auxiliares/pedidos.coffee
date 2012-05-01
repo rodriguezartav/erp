@@ -17,7 +17,7 @@ class Items extends Spine.Controller
 
   events:
     "click .js_btn_remove" : "reset"
-    "change input" : "on_change"
+    "change input" : "checkItem"
     "click input" : "on_click"
 
   constructor: ()->
@@ -34,19 +34,19 @@ class Items extends Spine.Controller
   on_click: (e) =>
     $(e).select()
 
-  on_change: (e) =>
+  checkItem: (e) =>
     @updateFromView(@pedidoItem,@inputs_to_validate)
     @pedidoItem.updateSubTotal()
     @pedidoItem.applyDescuento()
     @pedidoItem.applyImpuesto()
     @pedidoItem.updateTotal()
 
-  reset: ->
+  reset: =>
     @pedidoItem.destroy()
     @release()
 
 #################
-## CONTADO
+## PEDIDO
 ################
 
 class Credito extends Spine.Controller
@@ -73,6 +73,8 @@ class Credito extends Spine.Controller
 
   setVariables: =>
     @pedidoItemToControllerMap = {}
+    @movimientos = []
+    
 
   setBindings: =>
     PedidoItem.bind "beforeDestroy" , @onPedidoItemDestroy
@@ -107,6 +109,7 @@ class Credito extends Spine.Controller
   addItem: =>
     return false if PedidoItem.isProductoInPedido(Producto.current,@pedido.Referencia)
     return false if Producto.current.InventarioActual == 0
+    return false if PedidoItem.findAllByAttribute( "Referencia" , @pedido.Referencia ).length > 11
 
     ##KMQ REVENUE
     _kmq.push(['record', 'Added to Cart', {'Producto': Producto.current.Name }] ) ;
@@ -115,11 +118,15 @@ class Credito extends Spine.Controller
     
   registerItem: (item) =>
     @items_list.append item.el
-    @onPedidoItemChange()
+    @movimientos.push item
     @pedidoItemToControllerMap[item.pedidoItem.id] =  item
+    @onPedidoItemChange()
     $('a.popable').popover(placement: "bottom")    
     
   onPedidoItemDestroy: (pedidoItem) =>
+    item = @pedidoItemToControllerMap[pedidoItem.id]
+    index = @movimientos.indexOf(item)
+    @movimientos.splice(index,1)
     @pedidoItemToControllerMap[pedidoItem.id] = null
     
   onPedidoItemChange: =>
@@ -133,6 +140,8 @@ class Credito extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pedido.Cliente == null and !@pedido.IsContado
     @validationErrors.push "Ingrese al menos un producto" if PedidoItem.itemsInPedido(@pedido).length == 0
+    item.checkItem() for item in @movimientos
+    
     
   beforeSend: (object) ->
     nombre = @el.find('.nombre').val()
@@ -188,7 +197,7 @@ class Credito extends Spine.Controller
 ################
     
 class Pedidos extends Spine.Controller
-  className: "row-fluid listable"
+  className: "row-fluid listable pedidos"
 
   @departamento = "Ventas"
   @label = "Digitar Pedidos"

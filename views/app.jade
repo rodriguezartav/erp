@@ -3,8 +3,16 @@ script(type='text/javascript', charset='utf-8')
   var exports = this;
   jQuery(function(){
     var App = require("index");
+    var ErrorManager = require("managers/errorManager");
+
     var instance_url = "https://cs11.salesforce.com";
     exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null } });
+
+    window.onerror = function (msg, url, num) {
+      ErrorManager.logError(msg) 
+    }
+    
+    
   });
   
 header

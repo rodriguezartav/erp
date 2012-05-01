@@ -1,0 +1,37 @@
+.lightbox {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(33,33,33,0.20);
+  z-index: 2000;
+  display: none;
+  top: 0;
+  left: 0;
+}
+.lightbox .modal .alert-box {
+  display: none;
+}
+.lightbox .modal .show_on_error {
+  display: none;
+}
+.lightbox .modal .show_on_loading {
+  display: none;
+}
+.lightbox .modal .show_on_input {
+  display: block;
+}
+.lightbox .modal.loading .show_on_loading {
+  display: none;
+}
+.lightbox .modal.loading .show_on_input {
+  display: none;
+}
+.lightbox .modal.error {
+  border: 2px solid #f00;
+}
+.lightbox .modal.error .show_on_error {
+  display: block;
+}
+.lightbox .modal.error .alert-box {
+  display: block;
+}

@@ -15,14 +15,14 @@ class Movimientos extends Spine.Controller
 
   events:
     "click .js_btn_remove" : "reset"
-    "change input" : "on_change"
+    "change input" : "checkItem"
     
   constructor: ->
     super
     @movimiento = Movimiento.create_from_producto(@producto)
     @html require("views/apps/auxiliares/salidas/item")(@movimiento)
   
-  on_change: (e) =>
+  checkItem: (e) =>
     @updateFromView(@movimiento,@inputs_to_validate)
     
   reset: ->
@@ -52,21 +52,39 @@ class Salidas extends Spine.Controller
   constructor: ->
     super
     Producto.reset_current()
-    Producto.bind "current_set" , @addMovimiento
     Movimiento.destroyAll()
     @movimientos = []
+    @itemToControllerMap= []
 
     @documento = Documento.create {Tipo_de_Documento: "SA"}
     @html require("views/apps/auxiliares/salidas/layout")(@constructor)
     @error.hide()
+    @setBindings()
+
+  setBindings: =>
+    Producto.bind "current_set" , @addMovimiento
+    Movimiento.bind "beforeDestroy" , @removeItem
+
+  resetBindings: =>
+    Movimiento.unbind "beforeDestroy" , @removeItem
+    Producto.unbind "current_set" , @addMovimiento
+
 
   addMovimiento: =>
     item = new Movimientos(producto: Producto.current)
     @movimientos.push item
     @movimientos_list.append item.el
+    @itemToControllerMap[item.movimiento.id] = item
+
+  removeItem: (item) =>
+    item = @itemToControllerMap[item.id]
+    index = @movimientos.indexOf(item)
+    @movimientos.splice(index,1)
+    @itemToControllerMap[item.id] = null
 
   customValidation: =>
     @validationErrors.push "Ingrese al menos un producto" if Movimiento.count() == 0
+    item.checkItem() for item in @movimientos
     
   beforeSend: (object) ->
     for movimiento in Movimiento.all()
@@ -87,12 +105,12 @@ class Salidas extends Spine.Controller
   after_send: =>
     @reset()
 
-  customReset: ->
+  customReset: =>
+    @log @movimientos
     for items in @movimientos
       items.reset()
     @documento.destroy()
-    Producto.unbind "current_set" , @addMovimiento
-    
+    @resetBindings()
   
 
 module.exports = Salidas

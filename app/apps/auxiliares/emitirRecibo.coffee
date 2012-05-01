@@ -68,12 +68,14 @@ class Recibos extends Spine.Controller
     @reciboItems = []
     @addReciboItems()
 
+
   addReciboItems: ->  
     reciboItems = ReciboItem.findAllByAttribute("CodigoExterno", @recibo.CodigoExterno )    
     for ri in reciboItems
       reciboItem = new ReciboItems(reciboItem: ri)
       @reciboItems.push reciboItem
       @recibo_items_list.append reciboItem.el
+
 
   ##
   # View Functions
@@ -190,7 +192,6 @@ class EmitirRecibos extends Spine.Controller
   reset: (redirect) ->
     for recibo in @recibos
       recibo.release()
-    Cliente.unbind 'current_set' , @on_cliente_set
     @navigate "/apps"
 
 module.exports = EmitirRecibos

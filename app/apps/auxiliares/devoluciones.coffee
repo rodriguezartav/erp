@@ -17,7 +17,7 @@ class Movimientos extends Spine.Controller
   events:
     "click .js_btn_remove" : "remove"
     "click .js_btn_add" : "add"
-    "change input" : "on_change"
+    "change input" : "checkItem"
     
   constructor: ->
     super 
@@ -26,7 +26,7 @@ class Movimientos extends Spine.Controller
     @on_change()
     
 
-  on_change: (e=false) =>
+  checkItem: (e=false) =>
     @updateFromView(@movimiento,@inputs_to_validate)
     @movimiento.updateSubTotal()
     @movimiento.applyDescuento()
@@ -81,6 +81,7 @@ class Devoluciones extends Spine.Controller
     super
     Cliente.reset_current()
     @movimientos = []
+    
     @documento = Documento.create {Tipo_de_Documento: "NC"}     
     Movimiento.bind "query_success" , @onLoadMovimientos
     Movimiento.bind "change update" , @onMovimientoChange
@@ -98,7 +99,6 @@ class Devoluciones extends Spine.Controller
       movimientosRow = new Movimientos(movimiento: movimiento)
       @movimientos.push movimientosRow
       @movimientos_list.append movimientosRow.el
-      
 
   onMovimientoChange: =>
     @documento.updateFromMovimientos(Movimiento.all())
@@ -116,6 +116,8 @@ class Devoluciones extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Escoja al menos un producto" if Movimiento.count() == 0
     @validationErrors.push "Debe escoger un cliente" if Cliente.current == null
+    item.checkItem() for item in @movimientos
+    
     
   beforeSend: (object) =>
     for movimiento in Movimiento.all()

@@ -15,14 +15,14 @@ class Movimientos extends Spine.Controller
 
   events:
     "click .js_btn_remove" : "reset"
-    "change input" : "on_change"
+    "change input" : "checkItem"
     
   constructor: ->
     super
     @movimiento = Movimiento.create_from_producto(@producto)
     @html require("views/apps/auxiliares/entradas/item")(@movimiento)
   
-  on_change: (e) =>
+  checkItem: (e) =>
     @updateFromView(@movimiento,@inputs_to_validate)
     
   reset: ->
@@ -53,22 +53,40 @@ class Entradas extends Spine.Controller
   constructor: ->
     super
     Producto.reset_current()
-    Producto.bind "current_set" , @addMovimiento
     Movimiento.destroyAll()
     @movimientos = []
+    @itemToControllerMap = {}
 
     @documento = Documento.create {Tipo_de_Documento: "EN"}
     @html require("views/apps/auxiliares/entradas/layout")(@constructor)
     @error.hide()
+    @setBindings()
 
+  setBindings: =>
+    Producto.bind "current_set" , @addMovimiento
+    Movimiento.bind "beforeDestroy" , @removeMovimiento
+
+  resetBindings: =>
+    Movimiento.unbind "beforeDestroy" , @removeMovimiento
+    Producto.unbind "current_set" , @addMovimiento
+    
+    
   addMovimiento: =>
     item = new Movimientos(producto: Producto.current)
     @movimientos.push item
+    @itemToControllerMap[item.movimiento.id] = item
     @movimientos_list.append item.el
+
+  removeMovimiento: (item) =>
+    item = @itemToControllerMap[item.id]
+    index = @movimientos.indexOf(item)
+    @movimientos.splice(index,1)
+    @itemToControllerMap[item.id] = null
 
   customValidation: =>
     @validationErrors.push "Ingrese al menos un producto" if Movimiento.count() == 0
-    
+    item.checkItem() for item in @movimientos
+
   beforeSend: (object) ->
     for movimiento in Movimiento.all()
       movimiento.Tipo             = object.Tipo_de_Documento
@@ -88,11 +106,11 @@ class Entradas extends Spine.Controller
   after_send: =>
     @reset()
 
-  customReset: ->
-   for items in @movimientos
+  customReset: =>
+    for items in @movimientos
       items.reset()
     @documento.destroy()
-    Producto.unbind "current_set" , @addMovimiento
+    @resetBindings()
     
   
 

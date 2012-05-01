@@ -19,7 +19,7 @@
    
 
     <label>Password</label>
-      <input class="input-text"  type="password" id="txt_password" value="monomono1"/>
+      <input class="input-text"  type="password" id="txt_password" value=""/>
 
 </form>
 
