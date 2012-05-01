@@ -2,7 +2,7 @@
 port =  process.env.PORT || 9294
 
 express = require('express')
-OPF = require("opf")
+OPF = require("OPF")
 SalesforceStreaming = require ("./salesforceStreaming")
 OPF.debug= true
 
