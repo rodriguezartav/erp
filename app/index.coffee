@@ -28,9 +28,9 @@ class App extends Spine.Controller
     new Header(el: $("header"))
     new Lightbox(el: $(".lightboxCanvas"))
  
-    new ConnectionManager()
-    new SecurityManager()
-    new NotificationManager()
+    Spine.connection     =  new ConnectionManager()
+    Spine.security       =  new SecurityManager()
+    Spine.notifications  =  new NotificationManager()
     
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 
