@@ -10,7 +10,7 @@ class FayeManager
 
   connect: =>
     @fayeClient = new Faye.Client '/faye' , timeout: 300 , retry: 20
-    @subscribe()
+    Spine.bind "login_complete" , @subscribe
 
   subscribe: =>
     @clienteSubscription = @fayeClient.subscribe '/topic/Cliente__c' , (message) ->
@@ -18,5 +18,14 @@ class FayeManager
 
     @productoSubscription = @fayeClient.subscribe '/topic/Producto__c' , (message) ->
       Producto.updateFromSocket(message)
+
+    if Spine.options.aprobacion
+       @productoSubscription = @fayeClient.subscribe '/topic/Producto__c' , (message) ->
+          Producto.updateFromSocket(message)
+    
+    if Spine.options.aprobacion
+       @productoSubscription = @fayeClient.subscribe '/topic/Producto__c' , (message) ->
+          Producto.updateFromSocket(message)
+
 
 module.exports = FayeManager

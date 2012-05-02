@@ -7,7 +7,7 @@ class Saldo extends Spine.Model
   @extend Spine.Model.Salesforce
   @extend Spine.Model.NSyncModel
 
-  @autoReQuery = true;
+  @autoReQuery = false;
 
 
   @overrideName: "Documento"

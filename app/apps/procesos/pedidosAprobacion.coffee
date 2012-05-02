@@ -3,7 +3,7 @@ Spine = require('spine')
 Documento = require("models/documento")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
-Pedido = require("models/pedido")
+Pedido = require("models/sobjects/pedidoPreparado")
 Cuenta = require("models/cuenta")
 User = require("models/user")
 
@@ -44,7 +44,7 @@ class PedidosAprobacion extends Spine.Controller
     for g in @groups
       if g.Referencia == referencia
         group = g
-    
+
     return false if !group
     @aprovedGroup = group if aprobar == 1
     @aprobar = aprobar

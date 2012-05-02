@@ -38,10 +38,6 @@
           
           <ul class="nav pull-right">
           
-            <li class="loader pull-right progress progress-striped loader active">
-                  <div style="width: 100%;padding-top: 4px;padding-bottom: 4px;height: 26px" class="bar">Cargando...</div>
-            </li>
-          
             <li>
               <a target="_blank" href="https://cs11.salesforce.com/_ui/core/chatter/ui/ChatterPage">
               <i class="icon-external-link"></i>
@@ -49,9 +45,22 @@
               </a>
             </li>
             <li class="divider-vertical"></li>
+            <li>
+              <div class="btn-group">
+                <a  class="btn btn_icon rotate loader">
+                  <i class="icon-refresh"></i>
+                </a>
+                <a  class="btn btn_icon jump ">
+                  <i class="icon-print"></i>
+                </a>
+              </div>
+            </li>
+            <li class="divider-vertical"></li>
             <li class="dropdown status_button btn-success">
               <a class="dropdown-toggle" data-toggle="dropdown">
-                <span class="status_button_label">ONLINE</span>
+                <span class="status_button_label">
+                  <i class="icon-ok"></i>
+                </span>
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">

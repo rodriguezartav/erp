@@ -2,7 +2,8 @@ Spine = require('spine')
 Productos = require("controllers/productos")
 
   
-class Header  extends Spine.Controller
+class Footer  extends Spine.Controller
+  className: "navbar navbar-fixed-left"
   
   elements:
     ".loader"  : "loader"
@@ -16,28 +17,32 @@ class Header  extends Spine.Controller
   
   constructor: ->
     super
-    @html require('views/header/layout')
+    @html require('views/footer/layout')
     $('.dropdown-toggle').dropdown()
+    @loader.hide()
     
     new Productos( el: @el )
     
     Spine.bind "query_start",=>
-      @loader.addClass "animate"
+      @loader.show()
 
     Spine.bind "query_complete",=>
-      @loader.removeClass "animate" if Spine.salesforceQueryQueue == 0
+      @loader.hide()
       
     Spine.bind "status_changed" , =>
       if navigator.onLine
         @status_button.addClass "btn-success" 
         @status_button.removeClass "btn-danger"
         @status_button.removeClass "btn-warning"
-        @status_button_label.html '<i class="icon-ok"></i>'
+        @status_button_label.html "ONLINE"
       else 
         @status_button.addClass "btn-danger" 
         @status_button.removeClass "btn-success"
         @status_button.removeClass "btn-warning"
-        @status_button_label.html '<i class="icon-remove"></i>'
+        @status_button_label.html "OFFLINE"
+        
+    
+
 
   reset: ->
     for model in Spine.nSync
@@ -46,4 +51,4 @@ class Header  extends Spine.Controller
     window.location.reload()
 
   
-module.exports = Header
+module.exports = Footer

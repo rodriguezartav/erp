@@ -1,13 +1,11 @@
 Spine = require('spine')
 Session = require('models/session')
 Lightbox = require("controllers/lightbox")
-FayeManager = require("managers/fayeManager")
 
 
 class ConnectionManager
 
   constructor: ->
-    @fayeManager = new FayeManager()
 
     @connectionStatus= "online"
     @startupSequence()
@@ -29,7 +27,7 @@ class ConnectionManager
     else
       Spine.trigger "show_lightbox" , "showWarning" , error: "Informacion: Regreso el Internet, Continue Normalmente"
       @updateSequence()
-      @fayeManager.connect() if !@fayeManager.fayeClient
+      Spine.notifications.fayeManager.connect()
 
   goOfflineSequence: ->
     Spine.trigger "show_lightbox" , "showWarning" , error: "Informacion: Esta trabajando sin internet,No podra enviar ni recibir informacion,Cuando se reconecte el sistema se actualizara solo"
@@ -53,8 +51,9 @@ class ConnectionManager
       @refreshSession()
 
   refreshSession: =>
-    Spine.trigger "show_lightbox" , "showWarning" , "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
-      window.location.reload();
+    if Spine.loggedIn
+      Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
+        window.location.reload();
     
   fetchServerData: =>
     for model in Spine.nSync

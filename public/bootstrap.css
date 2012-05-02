@@ -7160,10 +7160,38 @@ a.thumbnail:hover {
 header .status_button_label {
   color: #fff;
 }
-header .loader {
-  width: 100px;
-  margin: 7px;
-  height: 25px;
+header .btn_icon i {
+  font-size: 15px;
+}
+header .btn_icon.rotate.animate i {
+  -webkit-animation-name: rotateThis;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  color: #f89406;
+}
+header .btn_icon.jump.animate i {
+  -webkit-animation-name: jumpThis;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  color: #f89406;
+}
+@-webkit-keyframes jumpThis {
+  from {
+    -webkit-transform: scale(1) rotate(0deg);
+  }
+  to {
+    -webkit-transform: scale(1.2) rotate(2deg);
+  }
+}
+@-webkit-keyframes rotateThis {
+  from {
+    -webkit-transform: scale(1.2) rotate(0deg);
+  }
+  to {
+    -webkit-transform: scale(1.2) rotate(360deg);
+  }
 }
 header .productos_list {
   max-height: 390px;
@@ -7443,6 +7471,49 @@ header .productos_list .thumbnail.disable a {
 .action_footer .cancel {
   float: left;
   padding: 8px 11px;
+}
+footer {
+  position: fixed;
+  top: 40px;
+  left: 0;
+  z-index: 1030;
+  margin-bottom: 0;
+}
+footer .navbar-inner {
+  padding: 8px 0px 0px 0px;
+  margin-bottom: 0;
+  text-align: right;
+  background: none;
+  background-color: #f5f5f5;
+  border-right: 1px solid #ddd;
+  -webkit-box-shadow: inset 1px 1px 0 #000000;
+  -moz-box-shadow: inset 1px 1px 0 #000000;
+  box-shadow: inset 1px 1px 0 #000000;
+  -webkit-box-shadow: inset 1px 1px 0 #000000;
+  -moz-box-shadow: inset 1px 1px 0 #000000;
+  box-shadow: inset 1px 1px 0 #000000;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+footer .navbar .container {
+  width: 20px;
+  overflow: hidden;
+  height: 100%;
+}
+footer ul {
+  margin: 0px;
+}
+footer ul li {
+  display: block;
+  margin: 15px 8px;
+}
+footer ul li i {
+  color: #f89406;
+  font-size: 15px;
 }
 html {
   height: 100%;

@@ -1,9 +1,10 @@
 Spine = require('spine')
-
+FayeManager = require("managers/fayeManager")
 
 class NotificationManager
   
   constructor: ->
+    @fayeManager = new FayeManager()
     @checkPermision()
     
     #window.setInterval( @checkOverallStatus , 60000 )

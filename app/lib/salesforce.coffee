@@ -3,6 +3,8 @@
 
 Spine ?= require('spine')
 
+Spine.salesforceQueryQueue = 0
+
 Spine.Model.Salesforce =
 
   extended: ->
@@ -12,7 +14,7 @@ Spine.Model.Salesforce =
       avoidInsertList: []
       standardObject: false
       overrideName: null
-    
+      
     
     ##SOCKETS ***************************
     
@@ -104,6 +106,7 @@ Spine.Model.Salesforce =
          params
 
       query: (options = false ) =>
+        Spine.salesforceQueryQueue +=1
         query = @queryString()
         query += @queryFilter(options)
         query = @nSyncQueryFilter(query) if @nSyncQueryFilter
@@ -120,6 +123,7 @@ Spine.Model.Salesforce =
           complete: @on_query_complete
 
       on_query_complete:  ->
+        Spine.salesforceQueryQueue -=1
         Spine.trigger "query_complete"
 
       parseSalesforceJSON: (raw_results) ->

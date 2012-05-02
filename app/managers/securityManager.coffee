@@ -23,7 +23,6 @@ RecibosConversion = require("apps/procesos/recibosConversion")
 
 CierresContable = require("apps/contables/cierresContable")
 
-
 FacturasImpresion = require("apps/print/facturas")
 NotasImpresion = require("apps/print/notas")
 
@@ -48,7 +47,12 @@ class SecurityManager
 
   onLoginComplete: =>
     profile = Spine.session.user.Perfil__c
-    Spine.session.type = if profile == "Vendedor" then "Ruta" else "Planta" 
+    Spine.status = "loggedIn"
+    Spine.options =
+      locationType : if profile == "Vendedor" then "Ruta" else "Planta" 
+      aprobacion   : if profile.indexOf("Credito") > -1 then true else false
+      facturacion  : if profile == "Recepcion" or profile.indexOf("Ventas") then true else false
+
     Spine.apps= @profiles[profile]
 
 module.exports = SecurityManager

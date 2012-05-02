@@ -30,18 +30,34 @@ html(lang="en")
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   
    
-    block scripts
-      script(src='/application.js', type='text/javascript', charset='utf-8')
+    script(src='/application.js', type='text/javascript', charset='utf-8')
 
-      script(type='text/javascript', charset='utf-8').
-        var _kmq = _kmq || [];
-        function _kms(u){
-          setTimeout(function(){
-          var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
-          s.src = u; f.parentNode.insertBefore(s, f);
-          }, 1);
+    script(type='text/javascript', charset='utf-8')
+      var jQuery  = require("jqueryify");
+      var exports = this;
+      jQuery(function(){
+        var App = require("index");
+        var ErrorManager = require("managers/errorManager");
+
+        var instance_url = "https://cs11.salesforce.com";
+        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null } });
+
+        window.onerror = function (msg, url, num) {
+          ErrorManager.logError(msg) 
         }
-        _kms('//i.kissmetrics.com/i.js');_kms('//doug1izaerwt3.cloudfront.net/b0b576ce3460c968aed2e8552a157956ef979f63.1.js');
+
+
+      });
+
+    script(type='text/javascript', charset='utf-8').
+      var _kmq = _kmq || [];
+      function _kms(u){
+        setTimeout(function(){
+        var s = document.createElement('script'); var f = document.getElementsByTagName('script')[0]; s.type = 'text/javascript'; s.async = true;
+        s.src = u; f.parentNode.insertBefore(s, f);
+        }, 1);
+      }
+      _kms('//i.kissmetrics.com/i.js');_kms('//doug1izaerwt3.cloudfront.net/b0b576ce3460c968aed2e8552a157956ef979f63.1.js');
 
   body.nice
     != body

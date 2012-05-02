@@ -148,7 +148,7 @@ class Credito extends Spine.Controller
       pi.Cliente = object.Cliente if object.Cliente
       pi.Referencia = object.Referencia
       pi.Orden = object.Orden
-      pi.Fuente = Spine.session.type
+      pi.Fuente = Spine.options.locationType
       pi.Observacion = object.Observacion
       pi.IsContado = object.IsContado
       pi.Transporte = object.Transporte

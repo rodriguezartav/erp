@@ -4,10 +4,41 @@ header{
     color: #fff;
   }
 
-  .loader{
-    width: 100px;
-    margin: 7px;
-    height: 25px;
+  .btn_icon{    
+
+    i{
+      font-size: 15px;
+    }
+
+    &.rotate.animate{
+      i{
+        -webkit-animation-name: rotateThis;
+        -webkit-animation-duration:2s;
+        -webkit-animation-iteration-count:infinite;
+        -webkit-animation-timing-function:linear;
+        color: @orange;
+      }
+    }
+
+    &.jump.animate{
+      i{
+        -webkit-animation-name: jumpThis;
+        -webkit-animation-duration:0.5s;
+        -webkit-animation-iteration-count:infinite;
+        -webkit-animation-timing-function: ease-in-out ;
+        color: @orange;
+      }
+    }
+
+    @-webkit-keyframes jumpThis {
+    from {-webkit-transform:scale(1) rotate(0deg);}
+    to {-webkit-transform:scale(1.2) rotate(2deg);}
+    }
+
+    @-webkit-keyframes rotateThis {
+      from {-webkit-transform: scale(1.2) rotate(0deg);}
+      to {-webkit-transform: scale(1.2) rotate(360deg);}
+    }
   }
 
   .productos_list {

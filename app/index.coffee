@@ -7,7 +7,10 @@ NotificationManager = require("managers/notificationManager")
 
 
 Header = require("controllers/header")
+Footer = require("controllers/footer")
+
 Lightbox = require("controllers/lightbox")
+
 
 User = require("models/user")
 Cliente = require("models/cliente")
@@ -28,8 +31,8 @@ class App extends Spine.Controller
     new Header(el: $("header"))
     new Lightbox(el: $(".lightboxCanvas"))
  
-    Spine.connection     =  new ConnectionManager()
     Spine.security       =  new SecurityManager()
+    Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()
     
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete

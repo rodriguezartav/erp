@@ -24,7 +24,7 @@ class Session extends Spine.SingleModel
   
   getLastUpdate: (className) =>
     lastUpdate = new Date('1/1/1970').getTime()
-    lastUpdate = @lastUpdate?[className] if @lastUpdate[className]
+    lastUpdate = @lastUpdate[className] if @lastUpdate && @lastUpdate[className]
     lastUpdate = new Date(lastUpdate)
     return lastUpdate
 
