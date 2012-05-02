@@ -24,22 +24,17 @@ class PedidosAprobacion extends Spine.Controller
     "click .aprobar"  : "on_action_click"
     "click .archivar" : "on_action_click"
     "click .reload" : "reload"
-    
 
   constructor: ->
     super
     @error.hide()
     @html require("views/apps/procesos/pedidosAprobacion/layout")(PedidosAprobacion)
     @renderPedidos()
-    @reload()
     Pedido.bind "query_success" , @renderPedidos
 
   renderPedidos: =>
     @groups = Pedido.group_by_referencia()
     @src_pedidos.html require("views/apps/procesos/pedidosAprobacion/item")(@groups)
-
-  reload: =>
-    Spine.followPedidosPendientes()
 
   on_action_click: (e) =>
     target = $(e.target)

@@ -49,10 +49,9 @@
 </div>
 
 <div class="modal-footer show_input">
-
-  <a class="btn btn-primary send">Enviar</a>
   
-  <a class="btn btn-danger cancel">Cancelar</a>
+  <a class="btn btn-danger pull-left cancel">Cancelar</a>
+  <a class="btn btn-primary send">Enviar</a>
   
 </div>
 

@@ -42,15 +42,10 @@ class Login extends Spine.Controller
       @onLoginSuccess()
       
     Session.bind "login_error" , (response) =>
-      alert response.errors.error
       @renderLogin(response.error)
 
     Session.bind "no_net" , ->
       @renderNoNet()
-
-  askForNotificationPermision: ->
-    #if window.webkitNotifications?.checkPermission?() != 0
-     # window.webkitNotifications?.requestPermission?();
 
   login: =>
     Spine.session.username = @txt_email.val()
@@ -61,26 +56,24 @@ class Login extends Spine.Controller
     @login_effect()
 
   login_effect: =>
-    @askForNotificationPermision()
     @loader.show()
     @alert_box.hide()
     @login.hide()
 
   onLoginSuccess: =>
-
     ##KMQ
     _kmq.push(['identify', Spine.session.user.Email]);
     _kmq.push(['record', 'Login' , {Profile: Spine.session.user.Profile__c }]);
     @renderComplete()
 
   on_continue: =>
-    @askForNotificationPermision()
-
     ##KMQ
     _kmq.push(['identify', Spine.session.user.Email]);
     _kmq.push(['record', 'Session Reload']);
     Spine.trigger "hide_lightbox"
-    @callback?.apply @, [true]    
+    Spine.trigger "login_complete"
+    @callback?.apply @, [true]
+
 
   renderLogin: (error = false ) =>
     @html require("views/lightbox/login/login")(Spine.session)

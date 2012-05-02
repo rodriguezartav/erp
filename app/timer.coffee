@@ -7,7 +7,7 @@ Lightbox = require("controllers/lightbox")
 
 class Timer
 
-  @registerTimers: =>
+  constructor: ->
     
     ##This is called when apps that require updated inventories and balances are started
     Spine.followTimeoutUI= =>

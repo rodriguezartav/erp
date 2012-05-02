@@ -49,9 +49,9 @@
               </a>
             </li>
             <li class="divider-vertical"></li>
-            <li class="dropdown status_button btn-warning">
+            <li class="dropdown status_button btn-success">
               <a class="dropdown-toggle" data-toggle="dropdown">
-                <span class="status_button_label"></span>
+                <span class="status_button_label">ONLINE</span>
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">

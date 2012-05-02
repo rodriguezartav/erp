@@ -14,10 +14,12 @@ class ShowWarning extends Spine.Controller
 
   constructor: ->
     super
-    @error = @data
-    @html require('views/lightbox/showWarning')(@error)
+    @html require('views/lightbox/showWarning')(@data)
+    
 
   accept: =>
     Spine.trigger "hide_lightbox"
+    @callback?.apply @, [true]
+    
     
 module.exports = ShowWarning

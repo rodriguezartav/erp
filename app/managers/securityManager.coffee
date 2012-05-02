@@ -1,0 +1,54 @@
+Spine = require('spine')
+
+Entradas = require("apps/auxiliares/entradas")
+Salidas = require("apps/auxiliares/salidas")
+Devoluciones = require("apps/auxiliares/devoluciones")
+Compras = require("apps/auxiliares/compras")
+FacturasProveedor = require("apps/auxiliares/facturasProveedor")
+PagosProveedor = require("apps/auxiliares/pagosProveedor")
+NotasCredito = require("apps/auxiliares/notasCredito")
+NotasDebito = require("apps/auxiliares/notasDebito")
+EmitirRecibo = require("apps/auxiliares/emitirRecibo")
+EmitirPago = require("apps/auxiliares/emitirPago")
+
+VerSaldos = require("apps/vistas/verSaldos")
+
+
+Pedidos = require("apps/auxiliares/pedidos")
+PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
+
+PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
+RecibosAprobacion = require("apps/procesos/recibosAprobacion")
+RecibosConversion = require("apps/procesos/recibosConversion")
+
+CierresContable = require("apps/contables/cierresContable")
+
+
+FacturasImpresion = require("apps/print/facturas")
+NotasImpresion = require("apps/print/notas")
+
+DocumentosAnular = require("apps/procesos/documentosAnular")
+
+
+class SecurityManager
+  
+  constructor: ->
+    @profiles = {}
+    apps = [ Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito , CierresContable ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
+    @profiles["Platform System Admin"] = apps
+    @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor  , CierresContable  ]
+    @profiles["Presidencia"] = apps
+    @profiles["Gerencia"] = apps
+    @profiles["Ejecutivo Ventas"] = [Pedidos,PedidosEspecial,FacturasImpresion]
+    @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Compras,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
+    @profiles["Vendedor"] = [Pedidos]
+    @profiles["Contabilidad"] = [CierresContable]
+    @profiles["Facturacion"] = apps
+    Spine.bind "login_complete" , @onLoginComplete
+
+  onLoginComplete: =>
+    profile = Spine.session.user.Perfil__c
+    Spine.session.type = if profile == "Vendedor" then "Ruta" else "Planta" 
+    Spine.apps= @profiles[profile]
+
+module.exports = SecurityManager

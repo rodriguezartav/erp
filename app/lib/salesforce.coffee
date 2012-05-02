@@ -13,6 +13,16 @@ Spine.Model.Salesforce =
       standardObject: false
       overrideName: null
     
+    
+    ##SOCKETS ***************************
+    
+      updateFromSocket: (message) ->
+        jsonLoop = JSON.stringify [message.sobject]
+        results = @parseSalesforceJSON jsonLoop
+        @refresh results
+        Spine.trigger "s"
+        console.log "Actualizacion de " + @className 
+
     ##INSERT ***************************
       
       salesforceFormat: (items) =>  
@@ -112,10 +122,15 @@ Spine.Model.Salesforce =
       on_query_complete:  ->
         Spine.trigger "query_complete"
 
-      on_query_success: (raw_results) =>
+      parseSalesforceJSON: (raw_results) ->
         raw_results = String.replaceAll(raw_results,'__c','') if !@standardObject
         raw_results = String.replaceAll(raw_results,'Id','id')
-        results = JSON.parse(raw_results).results
+        objects = JSON.parse(raw_results)
+        results = if objects.results then objects.results else objects
+        results
+
+      on_query_success: (raw_results) =>
+        results = @parseSalesforceJSON(raw_results)
         @destroyAll() if @destroyBeforeRefresh
         @refresh(results)        
         @trigger "query_success"

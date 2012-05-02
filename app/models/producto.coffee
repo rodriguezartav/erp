@@ -9,8 +9,6 @@ class Producto extends Spine.Model
 
   @autoReQuery = true;
 
-  @updateFromSocket: (message) ->
-   # alert message
 
   @queryFilter: (options ) =>
     return "" if !options

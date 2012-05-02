@@ -17,7 +17,9 @@ class Header  extends Spine.Controller
   constructor: ->
     super
     @html require('views/header/layout')
+    $('.dropdown-toggle').dropdown()
     @loader.hide()
+    
     new Productos( el: @el )
     
     Spine.bind "query_start",=>
@@ -27,15 +29,18 @@ class Header  extends Spine.Controller
       @loader.hide()
       
     Spine.bind "status_changed" , =>
-      if Spine.status == "offline"
-        @status_button.addClass "btn-danger" 
-        @status_button.removeClass "btn-success"
-        @status_button_label.html "Off Line"
-        
-      else if Spine.status == "online"
+      if navigator.onLine
         @status_button.addClass "btn-success" 
         @status_button.removeClass "btn-danger"
-        @status_button_label.html "On Line"
+        @status_button.removeClass "btn-warning"
+        @status_button_label.html "ONLINE"
+      else 
+        @status_button.addClass "btn-danger" 
+        @status_button.removeClass "btn-success"
+        @status_button.removeClass "btn-warning"
+        @status_button_label.html "OFFLINE"
+        
+    
 
 
   reset: ->

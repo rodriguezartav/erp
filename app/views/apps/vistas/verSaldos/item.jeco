@@ -1,0 +1,16 @@
+<% Cliente = require("models/cliente") %>
+<% cliente = Cliente.find(@Cliente) %>
+
+<tr>
+<td><%= cliente?.Name?.capitalize() %></td>
+  <td><%= @CodigoExterno %></td>
+  <td><%= @Tipo_de_Documento %></td>
+  <td><%= @Total.toMoney() %></td>
+  <td><%= @Saldo.toMoney() %></td>
+  <td>
+    <div class="btn-group">
+      <a data-id="<%= @id %>" class="btn btn-success incluir">Incluir</a>
+      <a data-id="<%= @id %>" class="btn btn-danger excluir">Excluir</a>
+    </div>
+  </td>
+</tr>

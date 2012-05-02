@@ -95,6 +95,7 @@ class PedidosEspecial extends Spine.Controller
 
   addCliente: =>
     @pedido.Cliente = Cliente.current.id
+    @pedido.save()
 
   addItem: =>
     pedidos = PedidoItem.findAllByAttribute( "Producto" , Producto.current.id )

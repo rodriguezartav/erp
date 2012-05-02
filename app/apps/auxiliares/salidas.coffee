@@ -25,7 +25,7 @@ class Movimientos extends Spine.Controller
   checkItem: (e) =>
     @updateFromView(@movimiento,@inputs_to_validate)
     
-  reset: ->
+  customReset: ->
     @movimiento.destroy()
     @release()
     
@@ -106,9 +106,9 @@ class Salidas extends Spine.Controller
     @reset()
 
   customReset: =>
-    @log @movimientos
+
     for items in @movimientos
-      items.reset()
+      items.customReset()
     @documento.destroy()
     @resetBindings()
   

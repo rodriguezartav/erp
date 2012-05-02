@@ -6,9 +6,6 @@ class Cliente extends Spine.Model
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SelectableModel
 
-  @updateFromSocket: (message) ->
-    #alert message
-
   @queryFilter: (options) =>
     return "" if !options
     filter = ""

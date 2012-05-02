@@ -36,10 +36,7 @@ class Lightbox extends Spine.Controller
     Spine.bind "hide_lightbox" , @hide
     
     Spine.bind "show_lightbox" , ( type , data =null , callback=null ) =>
-      @el.show()
-      
-      @log type
-      
+      @el.show()      
       @current = null
       for item in @items
         @current = item if item.type == type

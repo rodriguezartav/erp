@@ -5,12 +5,13 @@ class Session extends Spine.SingleModel
     "username" , "password" ,"passwordToken" ,
     "user"
     "lastLogin","lastUpdate"
-    "error" , "isOnline"
+    "error" , "isOnline","isSalesforce"
   
   @extend Spine.Model.Salesforce
   
   constructor: ->
     super
+    @isSalesforce=false
 
   resetLastUpdate: ->
     @lastUpdate = {}
@@ -43,6 +44,7 @@ class Session extends Spine.SingleModel
   loadFromSalesforce: (params) =>
     @instance_url = params.instance_url
     @token        = params.token
+    @isSalesforce = true
     @save()
 
   isExpired: () =>
