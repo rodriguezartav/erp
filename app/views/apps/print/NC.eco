@@ -9,7 +9,7 @@
       </tr>
 </table>
 
-<h2>Nota de Credito</h2>
+<h2><%= if @Tipo_de_Documento == "NC" then "Nota de Credito" else "Nota de Debito" %></h2>
 
 <table class="table table-striped table-bordered table-condensed">
   <thead>

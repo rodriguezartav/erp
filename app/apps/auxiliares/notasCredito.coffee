@@ -10,8 +10,7 @@ class NotasCredito extends Spine.Controller
   @departamento = "Credito y Cobro" 
   @label = "Notas de Credito" 
   @icon = "icon-envelope"
-  
-  
+
   className: "row-fluid"
 
   elements:
