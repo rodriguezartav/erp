@@ -10,14 +10,12 @@ require('spine/lib/route')
 require('spine/lib/tmpl')
 
 
-require("./nSyncModel")
-
+require("./socketModel")
 require('./salesforce')
 require('./singleModel')
 require('./viewDelegation')
 require('./selectableModel')
 require('./transitoryModel')
-
 
 require('./bootstrap/bootstrap-dropdown')
 require('./bootstrap/bootstrap-tooltip')
@@ -28,7 +26,6 @@ require('./bootstrap/bootstrap-modal')
 require('./bootstrap/bootstrap-type-ahead')
 require('./bootstrap/bootstrap-button')
 require('./bootstrap/bootstrap-collapse')
-
 require('./faye')
 
 require('./format')

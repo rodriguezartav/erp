@@ -1,6 +1,6 @@
 Spine   = require('spine')
 User = require('models/user')
-Pedido = require("models/pedido")
+PedidoPreparado = require("models/socketModels/pedidoPreparado")
 $       = Spine.$
 
 class AprobarPedidos extends Spine.Controller
@@ -31,8 +31,8 @@ class AprobarPedidos extends Spine.Controller
     Spine.trigger "hide_lightbox"
 
   on_send_pedido: =>
-    Pedido.bind "insert_error" , @on_error
-    Pedido.bind "insert_success" , @on_success
+    PedidoPreparado.bind "insert_error" , @on_error
+    PedidoPreparado.bind "insert_success" , @on_success
     ids = []
     @show_input.hide()
     @show_wait.show() 
@@ -40,19 +40,19 @@ class AprobarPedidos extends Spine.Controller
     for pedido in @data.group.Pedidos
       ids.push pedido.id
 
-    Pedido.aprobar( ids , @observacion.val()  , @data.aprobar)
+    PedidoPreparado.aprobar( ids , @observacion.val()  , @data.aprobar)
 
   on_success: (results) =>
-    Pedido.unbind "insert_error" , @on_error
-    Pedido.unbind "insert_success" , @on_success  
+    PedidoPreparado.unbind "insert_error" , @on_error
+    PedidoPreparado.unbind "insert_success" , @on_success  
     for pedido in @data.group.Pedidos
       pedido.destroy()
     Spine.trigger "hide_lightbox"
     @callback.apply @, [true]
 
   on_error: (error_obj) =>
-    Pedido.unbind "insert_error" , @on_error
-    Pedido.unbind "insert_success" , @on_success
+    PedidoPreparado.unbind "insert_error" , @on_error
+    PedidoPreparado.unbind "insert_success" , @on_success
     @loader.hide()
     @el.addClass "error"
     @alert_box.show()

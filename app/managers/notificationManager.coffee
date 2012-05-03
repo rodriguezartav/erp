@@ -1,22 +1,20 @@
 Spine = require('spine')
-FayeManager = require("managers/fayeManager")
 
 class NotificationManager
   
   constructor: ->
-    @fayeManager = new FayeManager()
-    @checkPermision()
-    
-    #window.setInterval( @checkOverallStatus , 60000 )
-    
 
   checkPermision: ->
     if window.webkitNotifications?.checkPermission?() != 0
-      window.webkitNotifications?.requestPermission?();
+      window.webkitNotifications?.requestPermission?()
 
+  showNotification: (title,message) =>
+    @notification =  {title: title,message:message}
+    @notificationTimer = window.setTimeout @showNotifications , 4000 if !@notificationTimer
 
-  checkOverallStatus: ->
-    
+  showNotifications: =>
+    notificacion = window.webkitNotifications.createNotification "" , @notification.title , @notification.message
+    notificacion.show()
+    @notificationTimer = null
 
-  
 module.exports = NotificationManager

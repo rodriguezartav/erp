@@ -1,6 +1,7 @@
 Spine   = require('spine')
 Session = require('models/session')
 $       = Spine.$
+NotificationManager = require("managers/notificationManager")
 
 class Login extends Spine.Controller
   className: 'login modal'
@@ -72,6 +73,7 @@ class Login extends Spine.Controller
     _kmq.push(['record', 'Session Reload']);
     Spine.trigger "hide_lightbox"
     Spine.trigger "login_complete"
+    Spine.notifications.checkPermision()
     @callback?.apply @, [true]
 
 

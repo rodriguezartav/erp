@@ -2,9 +2,13 @@ Spine = require('spine')
 
 class Cliente extends Spine.Model
   @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo" , "DiasCredito" , "CreditoAsignado","Rating_Crediticio"
-  @extend Spine.Model.NSyncModel
+
   @extend Spine.Model.Salesforce
+  @extend Spine.Model.SocketModel
   @extend Spine.Model.SelectableModel
+
+  @autoPush= true
+  @autoQueryTimeBased = true
 
   @queryFilter: (options) =>
     return "" if !options

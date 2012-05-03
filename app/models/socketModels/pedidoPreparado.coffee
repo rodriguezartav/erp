@@ -5,6 +5,9 @@ class PedidoPreparado extends Spine.Model
   "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia"
   
   @extend Spine.Model.Salesforce
+  @extend Spine.Model.SocketModel
+
+  @autoReQuery = true;
 
   @overrideName = "Oportunidad"
 
@@ -14,13 +17,13 @@ class PedidoPreparado extends Spine.Model
     $.ajax
       url        : Spine.server + "/rest"
       xhrFields  : {withCredentials: true}
-      type       : "POST"
+      type       : "PUT"
       data       : @ajaxParameters( { name: "Oportunidad" , data: JSON.stringify( { ids: ids , observacion: observacion , aprobar: aprobar } ) } )
       success    : @on_send_success
       error      : @on_send_error
 
   @group_by_referencia: () ->
-    pedidos = Pedido.all()
+    pedidos = PedidoPreparado.all()
     referencias = (pedido.Referencia for pedido in pedidos).unique()
     groups  = []
     for referencia in referencias
@@ -33,9 +36,8 @@ class PedidoPreparado extends Spine.Model
     groups
 
   @queryFilter: (options ) =>
-    return "" if !options
     filter =""
-    filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"              , filter) if options.estado
+    filter = @queryFilterAddCondition(" Estado__c  = 'Pendiente'" , filter)
     filter
 
 module.exports = PedidoPreparado

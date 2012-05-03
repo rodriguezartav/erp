@@ -3,7 +3,7 @@ Spine = require('spine')
 Documento = require("models/documento")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
-Pedido = require("models/sobjects/pedidoPreparado")
+PedidoPreparado = require("models/socketModels/pedidoPreparado")
 Cuenta = require("models/cuenta")
 User = require("models/user")
 
@@ -30,10 +30,14 @@ class PedidosAprobacion extends Spine.Controller
     @error.hide()
     @html require("views/apps/procesos/pedidosAprobacion/layout")(PedidosAprobacion)
     @renderPedidos()
-    Pedido.bind "query_success" , @renderPedidos
+    PedidoPreparado.bind "query_success" , @renderPedidos
+    PedidoPreparado.bind "push_success" , @renderPedidos
+
+  reload: ->
+    PedidoPreparado.query()    
 
   renderPedidos: =>
-    @groups = Pedido.group_by_referencia()
+    @groups = PedidoPreparado.group_by_referencia()
     @src_pedidos.html require("views/apps/procesos/pedidosAprobacion/item")(@groups)
 
   on_action_click: (e) =>
@@ -57,7 +61,7 @@ class PedidosAprobacion extends Spine.Controller
     @renderPedidos()
 
   reset: ->
-    Pedido.unbind "query_success" , @onLoadPedidos
+    PedidoPreparado.unbind "query_success" , @onLoadPedidos
     @release()
     @customReset?()
     @navigate "/apps"

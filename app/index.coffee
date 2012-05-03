@@ -4,6 +4,8 @@ Spine = require('spine')
 SecurityManager = require("managers/securityManager")
 ConnectionManager = require("managers/connectionManager")
 NotificationManager = require("managers/notificationManager")
+FayeManager = require("managers/fayeManager")
+
 
 
 Header = require("controllers/header")
@@ -34,6 +36,8 @@ class App extends Spine.Controller
     Spine.security       =  new SecurityManager()
     Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()
+    Spine.fayeManager    =  new FayeManager()
+    
     
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 

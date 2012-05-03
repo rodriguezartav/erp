@@ -11,6 +11,7 @@ class ConnectionManager
     @startupSequence()
     Spine.bind "login_complete" , @loginSequence
     window.setInterval( @checkOverallStatus , 10000 )
+    @cyclesCount = 0
 
   startupSequence: ->
     @fetchLocalData()
@@ -22,18 +23,33 @@ class ConnectionManager
     @updateSequence()
 
   goOnlineSequence: ->
+    Spine.trigger "status_changed" , @connectionStatus
+    
     if Spine.session.isExpired()
       @refreshSession()
     else
       Spine.trigger "show_lightbox" , "showWarning" , error: "Informacion: Regreso el Internet, Continue Normalmente"
       @updateSequence()
-      Spine.notifications.fayeManager.connect()
-
+      @resetSocketSequence()
+ 
   goOfflineSequence: ->
+    Spine.trigger "status_changed" , @connectionStatus
     Spine.trigger "show_lightbox" , "showWarning" , error: "Informacion: Esta trabajando sin internet,No podra enviar ni recibir informacion,Cuando se reconecte el sistema se actualizara solo"
+
+  resetSocketSequence: ->
+    console.log "Conection Manager Rest " + ciclesCount
+    ciclesCount = 0
+    Spine.fayeManager.handshanke()
+    Spine.fayeManager.subscribe()
+
 
   checkOverallStatus: =>
     statusChanged = false
+    @ciclesCount++
+ 
+    #A little over an Hour Salesforce Session Expires
+    #if @cyclesCount > 380
+      #@resetSocketSequence()
  
     if navigator.onLine and @connectionStatus != "online"
       @connectionStatus = "online"
@@ -44,7 +60,6 @@ class ConnectionManager
       statusChanged=true
 
     if statusChanged
-      Spine.trigger "status_changed" , @connectionStatus
       if navigator.onLine then @goOnlineSequence() else @goOfflineSequence()
     
     else if Spine.session?.isExpired() and navigator.onLine
@@ -56,17 +71,15 @@ class ConnectionManager
         window.location.reload();
     
   fetchServerData: =>
-    for model in Spine.nSync
-      if model.autoQuery
-        model.query()
+    for model in Spine.socketModels
+      model.query() if model.autoQuery
 
   fetchLocalData: =>
     Session.fetch()    
-    for model in Spine.nSync
+    for model in Spine.socketModels
       model.fetch()
 
     for model in Spine.transitoryModels
       model.fetch()
-  
 
 module.exports = ConnectionManager

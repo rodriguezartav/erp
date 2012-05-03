@@ -13,7 +13,6 @@ class Pedido extends Spine.Model
   @aprobar: (ids,observacion,aprobar) ->
     $.ajax
       url        : Spine.server + "/rest"
-      xhrFields  : {withCredentials: true}
       type       : "POST"
       data       : @ajaxParameters( { name: "Oportunidad" , data: JSON.stringify( { ids: ids , observacion: observacion , aprobar: aprobar } ) } )
       success    : @on_send_success

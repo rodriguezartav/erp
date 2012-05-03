@@ -53,6 +53,9 @@ class SecurityManager
       aprobacion   : if profile.indexOf("Credito") > -1 then true else false
       facturacion  : if profile == "Recepcion" or profile.indexOf("Ventas") then true else false
 
+    Spine.options.aprobacion = true if profile == "Platform System Admin"
+    Spine.options.facturacion = true if profile == "Platform System Admin"
+
     Spine.apps= @profiles[profile]
 
 module.exports = SecurityManager

@@ -14,16 +14,13 @@ Spine.Model.Salesforce =
       avoidInsertList: []
       standardObject: false
       overrideName: null
-      
-    
-    ##SOCKETS ***************************
-    
-      updateFromSocket: (message) ->
-        jsonLoop = JSON.stringify [message.sobject]
-        results = @parseSalesforceJSON jsonLoop
-        @refresh results
-        Spine.trigger "s"
-        console.log "Actualizacion de " + @className 
+
+      ajaxParameters: (params) ->
+         params.instance_url= Spine.session.instance_url
+         params.token= Spine.session.token
+         params.host= Spine.session.host
+         params
+
 
     ##INSERT ***************************
       
@@ -73,7 +70,7 @@ Spine.Model.Salesforce =
     
     
     ##QUERY ***************************
-    
+
       queryFilterAddCondition: (condition,filter) ->
         if filter.indexOf("where") == -1
           filter += " where " 
@@ -98,18 +95,12 @@ Spine.Model.Salesforce =
         query +=  "__c"  if !@standardObject 
         query += " "
         query
-      
-      ajaxParameters: (params) ->
-         params.instance_url= Spine.session.instance_url
-         params.token= Spine.session.token
-         params.host= Spine.session.host
-         params
 
       query: (options = false ) =>
         Spine.salesforceQueryQueue +=1
         query = @queryString()
         query += @queryFilter(options)
-        query = @nSyncQueryFilter(query) if @nSyncQueryFilter
+        query += @addLastUpdateFilter() if @addLastUpdateFilter
         Spine.trigger "query_start"
         ##KMQ
         _kmq.push(['record', 'Made API Call', {'Type':'Inbound', 'Class' : @overrideName || @className  }]);

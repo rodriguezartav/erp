@@ -32,7 +32,7 @@ OPF.bind "web_login_complete" , =>
 #will change for customers
 app.get '/' , (req, res) ->
   
-  
+  res.end("Go To /ERP")
   res.end()
 
 #internal use

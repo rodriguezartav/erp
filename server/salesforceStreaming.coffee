@@ -9,6 +9,10 @@ class SalesforceStreaming
     @bayeux.attach(@app);
 
   whenLoggedIn: (oauth) =>
+    @connectToStreaminApi(oauth)
+    #window.setInterval( @connectToStreaminApi , 3600000 )
+
+  connectToStreaminApi: (oauth) =>
     url = oauth.instance_url + '/cometd/24.0/'
     auth = oauth.access_token
     client = new faye.Client(url , {retry: 30, timeout: 300 });
@@ -17,15 +21,11 @@ class SalesforceStreaming
     @subscribe(client,'Producto__c')
     @subscribe(client,'Pedido__c')
 
-
   subscribe: (client,channel) =>
     subscription = client.subscribe "/topic/#{channel}", (message) =>
       @bayeux.getClient().publish "/topic/#{channel}" , message
-      
 
     subscription.errback (error) ->
       console.log error.message
-  
-  
 
 module.exports = SalesforceStreaming

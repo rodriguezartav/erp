@@ -5,9 +5,7 @@ class Saldo extends Spine.Model
     "Tipo_de_Documento" , "PagoEnRecibos" , "Restricciones"
 
   @extend Spine.Model.Salesforce
-  @extend Spine.Model.NSyncModel
-
-  @autoReQuery = false;
+  @extend Spine.Model.SocketModel
 
 
   @overrideName: "Documento"
