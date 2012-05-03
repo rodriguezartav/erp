@@ -7160,6 +7160,25 @@ a.thumbnail:hover {
 header .status_button_label {
   color: #fff;
 }
+header .navbar .brand {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+header .predefined_options {
+  padding-top: 10px;
+  font-size: 13px;
+}
+header .header_menu > li {
+  padding-top: 5px;
+}
+header .status_button {
+  height: 45px;
+}
+header input {
+  margin-top: 8px;
+  height: 19px;
+  color: #fff;
+}
 header .btn_icon i {
   font-size: 15px;
 }

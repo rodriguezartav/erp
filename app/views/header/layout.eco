@@ -8,12 +8,14 @@
           <span class="icon-bar"></span>
         </a>
        
-        <a class="brand" href="/">Rodco S.A.</a>
+        <a class="brand" href="/">
+          <img src="images/logo_horizontal_white_on_black.png" />
+        </a>
        
        
         <div class="nav-collapse">
-          <ul class="nav">
-            <li class="active"><a>Productos</a></li>
+          
+          <ul class="nav predefined_options">
            
             <li><a  class="predefined" data-txt="yale">Yale</a></li>
            
@@ -36,7 +38,7 @@
           
           
           
-          <ul class="nav pull-right">
+          <ul class="nav pull-right header_menu">
           
             <li>
               <a target="_blank" href="https://cs11.salesforce.com/_ui/core/chatter/ui/ChatterPage">

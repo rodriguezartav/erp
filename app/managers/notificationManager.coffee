@@ -13,7 +13,7 @@ class NotificationManager
     @notificationTimer = window.setTimeout @showNotifications , 4000 if !@notificationTimer
 
   showNotifications: =>
-    notificacion = window.webkitNotifications.createNotification "" , @notification.title , @notification.message
+    notificacion = window.webkitNotifications.createNotification "/images/logo_icon.png" , @notification.title , @notification.message
     notificacion.show()
     @notificationTimer = null
 
