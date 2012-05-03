@@ -30,7 +30,7 @@
 </table>
 
   <div class="well">
-    <p><%= @Description %></p>
+    <p><%= @Observacion %></p>
   </div>
   
     <table class="table table-striped table-bordered table-condensed table-total pull-right">

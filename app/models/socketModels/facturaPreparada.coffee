@@ -1,17 +1,12 @@
 Spine = require('spine')
 
 class FacturaPreparada extends Spine.Model
-  @configure "Documento","Total" , "Saldo" , "CodigoExterno" , "Referencia" , "Observacion" , 
-  "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo" , "FechaFacturacion" , "FechaVencimiento" ,
-  "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos", "IsContado"
+  @configure "Documento", "Total" , "CodigoExterno" , "Referencia" , "Observacion" , 
+   "Cliente" ,  "FechaFacturacion"  , "Tipo_de_Documento" , "IsContado"
   
   
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
-
-
-  @avoidQueryList: [ "Referencia" , "Observacion" , "SubTotal" , "Descuento" , "Impuesto", "Fuente" ,
-    "FechaFacturacion","FechaVencimiento" ,"AplicarACuenta","IsContado"]
 
   @filterNotas: =>
     results = []

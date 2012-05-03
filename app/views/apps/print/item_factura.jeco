@@ -3,9 +3,14 @@
 
 
 <tr>
-  <td><%= @Tipo_de_Documento %></td>
   <td><%= @FechaFacturacion %></td>
-  <td><%= cliente.Name %></td>
+  <td>
+    <%= if @IsContado then "CONTADO" else @Tipo_de_Documento  %> 
+  </td>
+  
+  <td>
+    <%= cliente.Name %> 
+  </td>
   
   <td><%= @Total.toMoney() %></td>
 

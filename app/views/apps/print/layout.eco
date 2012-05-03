@@ -21,6 +21,7 @@
 
     <thead>
         <tr>
+          <th>Fecha</th>
           <th>Tipo</th>
           <th>Cliente</th>
           <th>Total</th>

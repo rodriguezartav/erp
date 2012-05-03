@@ -4,7 +4,7 @@ Documento = require("models/documento")
 
 class DocumentosAnular extends Spine.Controller
   @departamento = "Ventas"
-  @label = "Anulacion de Facturas"
+  @label = "Anular Facturas"
   @icon = "icon-ban-circle"
   
   
@@ -23,7 +23,10 @@ class DocumentosAnular extends Spine.Controller
     @html require("views/apps/procesos/documentosAnular/layout")(@constructor)
     Documento.destroyAll()
     Documento.bind "query_success" , @renderDocumentos
-    Documento.query({ tipos: ["'FA'"] , fecha: "TODAY" , estado: "Impreso" })
+    @reload()
+    
+  reload: ->
+    Documento.query( { tipos: ["'FA'"] , fecha: "TODAY" } )
 
   renderDocumentos: =>
     @list.empty()

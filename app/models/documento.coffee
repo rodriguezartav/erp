@@ -7,7 +7,7 @@ class Documento extends Spine.Model
   
   @extend Spine.Model.Salesforce
 
-  @avoidQueryList: [ "Referencia" , "Observacion" , "SubTotal" , "Descuento" , "Impuesto", "Fuente" ,
+  @avoidQueryList: [ "Referencia" , "Fuente" ,
     "FechaFacturacion","FechaVencimiento" ,"AplicarACuenta","IsContado","TipoCambio"]
 
   updateFromMovimientos: (movimientos)  ->
@@ -24,16 +24,13 @@ class Documento extends Spine.Model
   @queryFilter: (options ) =>
     return "" if !options
     filter =""
-    filter = @queryFilterAddCondition(" Saldo__c   != 0"                               , filter) if options.saldo
-    filter = @queryFilterAddCondition(" Proveedor__c = '#{options.proveedor}'"           , filter) if options.proveedor
-    filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) "   , filter) if options.tipos
-    filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "         , filter) if options.cliente
-    filter = @queryFilterAddCondition(" FechaFacturacion__c = #{options.fecha} "         , filter) if options.fecha
-    filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"              , filter) if options.estado
-    filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"              , filter) if options.aprobadoParaPagar
-    
-    
-    
+    filter = @queryFilterAddCondition(" Saldo__c   != 0"                             ,  filter)  if options.saldo
+    filter = @queryFilterAddCondition(" Proveedor__c = '#{options.proveedor}'"       ,  filter)  if options.proveedor
+    filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) " ,  filter)  if options.tipos
+    filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
+    filter = @queryFilterAddCondition(" FechaFacturacion__c = #{options.fecha} "     ,  filter)  if options.fecha
+    filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"            ,  filter)  if options.estado
+    filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter
 
   @anular: (documento) ->
@@ -47,4 +44,3 @@ class Documento extends Spine.Model
 
 
 module.exports = Documento
-

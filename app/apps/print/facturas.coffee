@@ -25,7 +25,7 @@ class Facturas extends Spine.Controller
 
   renderDocumentos: =>
     docs= FacturaPreparada.findAllByAttribute "Tipo_de_Documento" , "FA"
-    @list.html require("views/apps/print/item")(docs)
+    @list.html require("views/apps/print/item_factura")(docs)
 
   print: (e) =>
     target = $(e.target)
