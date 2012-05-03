@@ -1,6 +1,6 @@
 <% Cliente = require("models/cliente") %>
 
-<a class="btn goBack">Atras</a>
+<a class="btn goBack hide_print">Atras</a>
 
 <table class="table">
       <tr>
@@ -34,8 +34,8 @@
   </div>
   
     <table class="table table-striped table-bordered table-condensed table-total pull-right">
-      <tr><td>SubTotal: </td><td>3232322</td></tr>
-      <tr><td>Descuento:</td><td>3232322</td></tr>
-      <tr><td>Impuesto: </td><td>3232322</td></tr>
-      <tr><td>Total: </td><td>3232322</td></tr>
+      <tr><td>SubTotal: </td><td><%= @SubTotal %></td></tr>
+      <tr><td>Descuento:</td><td><%= @Descuento %></td></tr>
+      <tr><td>Impuesto: </td><td><%= @Impuesto %></td></tr>
+      <tr><td>Total: </td><td><%= @Total %></td></tr>
     </table>

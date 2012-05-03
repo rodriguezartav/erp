@@ -16,12 +16,19 @@ Spine.Model.SocketModel =
       
       ##SOCKETS ***************************
 
+      beforeSocketUpdate: (results) ->
+        return true
+
       updateFromSocket: (message) =>
         jsonLoop = JSON.stringify [message.sobject]
         results = @parseSalesforceJSON jsonLoop
-        @refresh results
-        @trigger "push_success"
-        console.log "Actualizacion de " + @className + " " + jsonLoop
+        showNotification = false
+        if @beforeSocketUpdate(results)
+          @refresh results
+          @trigger "push_success"
+          console.log "Actualizacion de " + @className + " " + jsonLoop
+          showNotification=true
+        return showNotification
 
       beforeSaveLocal: ->
         return false;

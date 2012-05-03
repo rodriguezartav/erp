@@ -11,7 +11,7 @@ class Notas extends Spine.Controller
 
   events:
     "click .cancel" : "reset"
-    "click .print"  : "print"
+    "click .print"  : "on_print"
     "click .reload" : "reload"
     
   elements: 
@@ -33,7 +33,7 @@ class Notas extends Spine.Controller
     Documento.destroyAll()
     Documento.query( { tipos: "'NC','ND'"  } )
 
-  print: (e) =>
+  on_print: (e) =>
     target = $(e.target)
     id = target.attr "data-id"
     doc = Documento.find(id)
@@ -43,22 +43,20 @@ class Notas extends Spine.Controller
     $("body").append @canvas
     $(".goBack").one "click",   @goBack
     doc.destroy()
+    print()
 
   goBack: =>
     @restoreUIState()
 
   saveUIState: =>
-    $("header").hide()
     @appCanvas = $(".app")
     @appBack = $(@appCanvas).hide()
-    $("body").removeClass "nice"
     
 
   restoreUIState: =>
     @appBack.show()
     @canvas.remove()
     @renderDocumentos()
-    $("body").addClass "nice"
 
   reset: =>
     Documento.unbind "query_success" , @renderDocumentos

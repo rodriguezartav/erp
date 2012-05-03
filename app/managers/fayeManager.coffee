@@ -17,8 +17,8 @@ class FayeManager
 
   subscribe: =>
     @fayeClient.subscribe "/topic/Pedido__c" , (message) =>
-      PedidoPreparado.updateFromSocket(message)
-      Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar" )
+      if PedidoPreparado.updateFromSocket(message)
+        Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar" )
 
     for m in Spine.socketModels   
       if m.autoPush

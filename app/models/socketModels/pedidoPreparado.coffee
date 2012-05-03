@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class PedidoPreparado extends Spine.Model
   @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , 
-  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia"
+  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia","Estado"
   
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
@@ -12,6 +12,13 @@ class PedidoPreparado extends Spine.Model
   @overrideName = "Oportunidad"
 
   @destroyBeforeRefresh = true;
+
+  @beforeSocketUpdate: (results) ->
+    acceptResults = true
+    for result in results
+      acceptResults = false if result['Estado'] != "Pendiente"
+    return acceptResults;
+      
 
   @aprobar: (ids,observacion,aprobar) ->
     $.ajax
