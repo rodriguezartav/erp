@@ -88,7 +88,7 @@ class Devoluciones extends Spine.Controller
     
     Cliente.bind 'current_set' , (cliente) =>
       Movimiento.destroyAll()
-      Movimiento.query {cliente: cliente, tipos: ["'FA'"] }
+      Movimiento.query {cliente: cliente, tipos: ["'FA'"] , estado: "Impreso" }
       
     @html require("views/apps/auxiliares/devoluciones/layout")(@constructor)
     @clientes = new Clientes(el: @src_cliente)
@@ -126,7 +126,7 @@ class Devoluciones extends Spine.Controller
       movimiento.Referencia       = movimiento.CodigoExterno
       movimiento.CodigoExterno    = null
       movimiento.id               = null
-      Movimiento.update_total(movimiento)
+      movimiento.update_total()
       movimiento.save()
 
   send: (e) =>
