@@ -39,14 +39,14 @@ class Movimientos extends Spine.Controller
     parent = t.parents('tr')
     input = parent.find('input')
     input.val(0)
-    @on_change()
+    @checkItem()
   
   add: (e) =>
     t = $(e.target)
     parent = t.parents('tr')
     input = parent.find('input')
     input.val(input.attr("data-max-value"))
-    @on_change()
+    @checkItem()
 
   reset: ->
     @movimiento.destroy()
