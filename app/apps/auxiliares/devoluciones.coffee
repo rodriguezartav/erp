@@ -23,7 +23,7 @@ class Movimientos extends Spine.Controller
     super 
     @html require("views/apps/auxiliares/devoluciones/item")(@movimiento) 
     @movimiento.ProductoCantidad = 0
-    @on_change()
+    @checkItem()
     
 
   checkItem: (e=false) =>
