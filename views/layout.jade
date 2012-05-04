@@ -40,7 +40,7 @@ html(lang="en")
         var ErrorManager = require("managers/errorManager");
 
         var instance_url = "https://cs11.salesforce.com";
-        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null } });
+        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null , frontEndServer: '' , server: "http://api2s.heroku.com" } });
 
         window.onerror = function (msg, url, num) {
           ErrorManager.logError(msg) 

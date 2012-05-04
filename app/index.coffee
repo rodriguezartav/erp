@@ -27,8 +27,9 @@ class App extends Spine.Controller
 
   constructor: ->
     super
-    #Spine.server = "http://127.0.0.1:9393"
-    Spine.server = "http://api2s.heroku.com"
+
+    Spine.server = @options.server
+    Spine.frontEndServer = @options.frontEndServer
 
     new Header(el: $("header"))
     new Lightbox(el: $(".lightboxCanvas"))

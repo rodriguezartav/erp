@@ -13,7 +13,7 @@ class FayeManager
     Spine.bind "login_complete" , @subscribe
 
   handshake: =>
-    @fayeClient = new Faye.Client '/faye' , timeout: 300 , retry: 20
+    @fayeClient = new Faye.Client "#{spine.frontEndServer}/faye" , timeout: 300 , retry: 20
 
   subscribe: =>
     @fayeClient.subscribe "/topic/Pedido__c" , (message) =>
