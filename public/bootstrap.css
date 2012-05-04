@@ -7163,6 +7163,9 @@ header .status_button_label {
 header .navbar .brand {
   padding-top: 0px;
   padding-bottom: 0px;
+  background-image: url("./images/logo_horizontal_white_on_black.png");
+  height: 50px;
+  width: 80px;
 }
 header .predefined_options {
   padding-top: 10px;
@@ -7518,7 +7521,7 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 body.nice {
-  background-image: url("images/furley_bg.png");
+  background-image: url("./images/furley_bg.png");
 }
 .app {
   padding-bottom: 100px;
