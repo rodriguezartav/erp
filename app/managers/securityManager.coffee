@@ -35,7 +35,7 @@ class SecurityManager
     @profiles = {}
     apps = [ Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito , CierresContable ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor  , CierresContable  ]
+    @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor  ]
    # @profiles["Presidencia"] = apps
   #  @profiles["Gerencia"] = apps
   #  @profiles["Ejecutivo Ventas"] = [Pedidos,PedidosEspecial,FacturasImpresion]
