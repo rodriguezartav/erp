@@ -39,17 +39,21 @@ class ConnectionManager
   resetSocketSequence: ->
     console.log "Conection Manager Rest " + ciclesCount
     ciclesCount = 0
-    Spine.fayeManager.handshanke()
-    Spine.fayeManager.subscribe()
-
+    Spine.socketManager.handshanke()
+    Spine.socketManager.subscribe()
 
   checkOverallStatus: =>
     statusChanged = false
-    @ciclesCount++
+    @cyclesCount++
  
     #A little over an Hour Salesforce Session Expires
     #if @cyclesCount > 380
       #@resetSocketSequence()
+ 
+    if @cyclesCount > 60
+      @cyclesCount = 0
+      @fetchServerData()
+      console.log "CONNECTION MANAGER UPDATE FETCH"
  
     if navigator.onLine and @connectionStatus != "online"
       @connectionStatus = "online"

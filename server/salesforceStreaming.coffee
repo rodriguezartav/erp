@@ -1,46 +1,34 @@
 OPF = require("opf")
-SocketIO = require('socket.io')
-faye = require 'faye'
+#SocketIO = require('socket.io')
+Faye = require 'faye'
+Pusher = require('node-pusher');
 
 
 class SalesforceStreaming
 
   constructor: (@app) ->
-      
-    @socketIO = SocketIO.listen(@app);
-
-    @socketIO.configure =>
-      @socketIO.set("transports", ["xhr-polling"]); 
-      @socketIO.set("polling duration", 10);
-
-
-    @socketIO.sockets.on 'connection', (socket) -> 
-      socket.emit('connectionInfo', { hello: 'world' });
-
-  #  @bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 80 });
-  #  @bayeux.attach(@app);
+    @pusher = new Pusher
+      appId: '19854',
+      key: 'a8cfc9203fbabab7e67f',
+      secret: 'dac21dde46d73add4aa3'
 
   whenLoggedIn: (oauth) =>
-    @connectToStreaminApi(oauth)
-    #window.setInterval( @connectToStreaminApi , 3600000 )
-
-  connectToStreaminApi: (oauth) =>
+    @pusher.trigger "salesforce_connection_information" , 'connect' , {"message": "Connection Established with Server"}
+    
     url = oauth.instance_url + '/cometd/24.0/'
     auth = oauth.access_token
-    client = new faye.Client(url , {retry: 30, timeout: 300 });
-    client.setHeader('Authorization', "OAuth #{auth}");
-    @subscribe(client,'Cliente__c')
-    @subscribe(client,'Producto__c')
-    @subscribe(client,'Pedido__c')
+    @fayeClient = new Faye.Client(url , {retry: 60, timeout: 300 });
+    @fayeClient.setHeader('Authorization', "OAuth #{auth}");
+    @subscribe('Cliente__c')
+    @subscribe('Producto__c')
+    @subscribe('Pedido__c')
+    @subscribe('Docmento__c')
 
-  subscribe: (client,channel) =>
-    subscription = client.subscribe "/topic/#{channel}", (message) =>
-      @socketIO.sockets.emit( "/topic/#{channel}" , message );
-      
-      #@bayeux.getClient().publish "/topic/#{channel}" , message
+  subscribe: (channel) =>
+    subscription = @fayeClient.subscribe "/topic/#{channel}", (message) =>      
+      @pusher.trigger "salesforce_data_push" , channel , message
 
     subscription.errback (error) =>
-      @socketIO.sockets.emit( "connectionInfo" , error );
-
+      @pusher.trigger "salesforce_connection_information" , 'error', {"message": "There was an error in the Server- Salesforce Connection " , "error": "#{error}"}
 
 module.exports = SalesforceStreaming

@@ -11,26 +11,27 @@ class SocketManager
     Spine.bind "login_complete" , @subscribe
 
   handshake: =>
-    console.log @url
-    @socket = io.connect(@url);
-    @socket.on "connectionInfo" , (message) ->
-      console.log message
-      
-  #  @fayeClient = new Faye.Client "/faye" , timeout: 300 , retry: 20
-  #  console.log @fayeClient
+    @pusher = new Pusher('a8cfc9203fbabab7e67f') 
+    
+    @salesforceConnectionChannel  = @pusher.subscribe('salesforce_connection_information')
+    
+    @salesforceConnectionChannel.bind 'connect', (data) ->
+      Spine.trigger "show_lightbox" , "showWarning" , error : "Se conecto al servicio de actualizacion"
+
+    @salesforceConnectionChannel.bind 'error', (data) ->
+      Spine.trigger "show_lightbox" , "showWarning" , error : "Se desconecto al servicio de actualizacion, no recibira actualizaciones"
 
   subscribe: =>
-    
-    @socket.on "/topic/Pedido__c" , (message) =>
+    @channel = @pusher.subscribe('salesforce_data_push')
+
+    @channel.bind "Pedido__c" , (message) =>
       if PedidoPreparado.updateFromSocket(message)
         Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar" )
 
     for m in Spine.socketModels   
       if m.autoPush
         className = m.className 
-
-        @socket.on "/topic/#{className}__c" , m.updateFromSocket
-
+        @channel.bind "#{className}__c" , m.updateFromSocket
 
 
 module.exports = SocketManager
