@@ -1,5 +1,4 @@
 Spine = require('spine')
-Saldo = require("models/socketModels/saldo")
 Cliente = require("models/cliente")
 Clientes = require("controllers/clientes")
 Documento = require("models/documento")

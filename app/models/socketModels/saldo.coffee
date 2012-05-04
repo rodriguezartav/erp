@@ -7,7 +7,7 @@ class Saldo extends Spine.Model
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
 
-
+  @autoQuery = false
   @overrideName: "Documento"
 
   @queryFilter: (options ) =>
