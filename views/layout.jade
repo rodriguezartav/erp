@@ -29,7 +29,20 @@ html(lang="en")
     //if lt IE 9
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   
-   
+    script(type='text/javascript', charset='utf-8')
+      var frontEndServer = 'http://rodcoerp.herokuapp.com';
+      //var frontEndServer = 'http://localhost:9294';
+
+  
+    script(type="text/javascript")
+      //script=document.createElement('script');
+      //script.src= frontEndServer + '/faye/client.js'
+      //script.type = "text/javascript";
+      //document.getElementsByTagName('head')[0].appendChild(script);
+      //alert(script.src);
+
+    <script src="http://rodcoerp.herokuapp.com/socket.io/socket.io.js"></script>
+    
     script(src='/application.js', type='text/javascript', charset='utf-8')
 
     script(type='text/javascript', charset='utf-8')
@@ -40,12 +53,11 @@ html(lang="en")
         var ErrorManager = require("managers/errorManager");
 
         var instance_url = "https://cs11.salesforce.com";
-        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null , frontEndServer: '' , server: "http://api2s.heroku.com" } });
+        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null , frontEndServer: frontEndServer , server: "http://api2s.heroku.com" } });
 
         window.onerror = function (msg, url, num) {
           ErrorManager.logError(msg) 
         }
-
 
       });
 

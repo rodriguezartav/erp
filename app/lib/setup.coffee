@@ -26,6 +26,7 @@ require('./bootstrap/bootstrap-modal')
 require('./bootstrap/bootstrap-type-ahead')
 require('./bootstrap/bootstrap-button')
 require('./bootstrap/bootstrap-collapse')
-require('./faye')
+
+#require('./faye')
 
 require('./format')

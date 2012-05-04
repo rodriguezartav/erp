@@ -1,12 +1,24 @@
-faye = require 'faye'
 OPF = require("opf")
+SocketIO = require('socket.io')
+faye = require 'faye'
 
 
 class SalesforceStreaming
 
   constructor: (@app) ->
-    @bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 80 });
-    @bayeux.attach(@app);
+      
+    @socketIO = SocketIO.listen(@app);
+
+    @socketIO.configure =>
+      @socketIO.set("transports", ["xhr-polling"]); 
+      @socketIO.set("polling duration", 10);
+
+
+    @socketIO.sockets.on 'connection', (socket) -> 
+      socket.emit('connectionInfo', { hello: 'world' });
+
+  #  @bayeux = new faye.NodeAdapter({mount: '/faye', timeout: 80 });
+  #  @bayeux.attach(@app);
 
   whenLoggedIn: (oauth) =>
     @connectToStreaminApi(oauth)
@@ -23,9 +35,12 @@ class SalesforceStreaming
 
   subscribe: (client,channel) =>
     subscription = client.subscribe "/topic/#{channel}", (message) =>
-      @bayeux.getClient().publish "/topic/#{channel}" , message
+      @socketIO.sockets.emit( "/topic/#{channel}" , message );
+      
+      #@bayeux.getClient().publish "/topic/#{channel}" , message
 
-    subscription.errback (error) ->
-      console.log error.message
+    subscription.errback (error) =>
+      @socketIO.sockets.emit( "connectionInfo" , error );
+
 
 module.exports = SalesforceStreaming
