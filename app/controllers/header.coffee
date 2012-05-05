@@ -40,8 +40,11 @@ class Header  extends Spine.Controller
         @status_button_label.html '<i class="icon-remove"></i>'
 
   reset: ->
-    for model in Spine.nSync
+    for model in Spine.socketModels
       model.destroyAll()
+    for model in Spine.transitoryModels
+      model.destroyAll()
+      
     Spine.session.resetLastUpdate()
     window.location.reload()
 

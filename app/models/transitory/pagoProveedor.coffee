@@ -10,7 +10,7 @@ class PagoProveedor extends Spine.Model
     $.ajax
       url        : Spine.server + "/rest"
       xhrFields  : {withCredentials: true}
-      type       : "POST"
+      type       : "PUT"
       data       : @ajaxParameters( { name: "Tesoreria" , data: JSON.stringify( pagos: pagoProveedor ) } )
       success    : @on_send_success
       error      : @on_send_error
