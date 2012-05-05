@@ -11,7 +11,7 @@
 
     <div class="span3">
       <h3>Cuenta</h3>
-      <select class="validatable cuentas" data-type="DebitarDe">
+      <select class="validatable cuentas" data-type="Cuenta">
       </select>
     </div>
 
@@ -25,11 +25,9 @@
 
     <div class="span2 ">
       <h3>Referencia </h3>
-      <input class=" validatable" data-type="ReferenciaFormaPago__c" data-length="3" placeholder="Forma de Pago" />
+      <input class=" validatable" data-type="Referencia" data-length="3" placeholder="Forma de Pago" />
     </div>
-    
 
-        
   </div>
 
   <div class="row-fluid">

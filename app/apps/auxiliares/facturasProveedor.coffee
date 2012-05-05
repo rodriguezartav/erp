@@ -2,9 +2,7 @@ require('lib/setup')
 Spine = require('spine')
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
-Documento = require("models/documento")
-Movimiento = require("models/movimiento")
-Cuenta = require("models/cuenta")
+CuentaPorPagar = require("models/cuentaPorPagar")
 
 class FacturasProveedor extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
@@ -26,7 +24,7 @@ class FacturasProveedor extends Spine.Controller
     "click .save" : "send"
 
   setVariables: ->
-    @documento = Documento.create { FechaFacturacion: new Date() , Tipo_de_Documento: "FP" }
+    @cuentaPorPagar = CuentaPorPagar.create { FechaFacturacion: new Date()  }
 
   preset: ->
     Proveedor.query()
@@ -36,11 +34,10 @@ class FacturasProveedor extends Spine.Controller
     @setVariables()
     @preset()
     @render()
-    
-    
+
   render: =>  
     @html require("views/apps/auxiliares/facturasProveedor/layout")(@constructor)
-    @refreshView(@documento,@inputs_to_validate)    
+    @refreshView(@cuentaPorPagar,@inputs_to_validate)    
     @proveedores = new Proveedores(el: @src_proveedor)
 
   #####
@@ -52,18 +49,17 @@ class FacturasProveedor extends Spine.Controller
 
   beforeSend: (object) ->
     object.Proveedor = Proveedor.current.id
-    object.Estado = ""
 
   send: (e) =>
-    @updateFromView(@documento,@inputs_to_validate)
-    Spine.trigger "show_lightbox" , "sendDocumento" , @documento , @after_send
+    @updateFromView(@cuentaPorPagar,@inputs_to_validate)
+    Spine.trigger "show_lightbox" , "sendCuentaPorPagar" , @cuentaPorPagar , @after_send
 
   after_send: =>
     @reset(false)
  
   customReset: ->
     Proveedor.reset_current()
-    @documento.destroy() if @documento 
+    @cuentaPorPagar.destroy() if @cuentaPorPagar
       
 
 module.exports = FacturasProveedor

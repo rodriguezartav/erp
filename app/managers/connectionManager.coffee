@@ -39,7 +39,7 @@ class ConnectionManager
   resetSocketSequence: ->
     console.log "Conection Manager Rest " + ciclesCount
     ciclesCount = 0
-    Spine.socketManager.handshanke()
+    Spine.socketManager.handshake()
     Spine.socketManager.subscribe()
 
   checkOverallStatus: =>

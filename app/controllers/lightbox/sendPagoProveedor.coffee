@@ -23,19 +23,19 @@ class SendPagoProveedor extends Spine.Controller
   constructor: ->
     super
     @html require('views/lightbox/sendPagoProveedor')
-    Pedido.bind "insert_error" , @on_error
-    Pedido.bind "insert_success" , @on_success
+    PagoProveedor.bind "insert_error" , @on_error
+    PagoProveedor.bind "insert_success" , @on_success
     PagoProveedor.insert(@data)
 
   on_success: (results) =>
-    Pedido.unbind "insert_error" , @on_error
-    Pedido.unbind "insert_success" , @on_success  
+    PagoProveedor.unbind "insert_error" , @on_error
+    PagoProveedor.unbind "insert_success" , @on_success  
     Spine.trigger "hide_lightbox"
     @callback.apply @, [true]
 
   on_error: (error_obj) =>
-    Pedido.unbind "insert_error" , @on_error
-    Pedido.unbind "insert_success" , @on_success
+    PagoProveedor.unbind "insert_error" , @on_error
+    PagoProveedor.unbind "insert_success" , @on_success
     @loader.hide()
     @el.addClass "error"
     @alert_box.show()

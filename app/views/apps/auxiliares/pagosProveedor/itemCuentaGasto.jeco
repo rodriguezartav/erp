@@ -1,1 +1,1 @@
-<option value="<%= @Codigo  %>"><%= @Name %></option>
+<option value="<%= @id  %>"><%= @Name %></option>

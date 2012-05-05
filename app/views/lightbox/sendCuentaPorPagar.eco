@@ -1,6 +1,5 @@
-
 <div class="modal-header">
-  <h3>Registrando en Documentos</h3>
+  <h3>Registrando en Cuentas por Pagar</h3>
 </div>
 
 <div style="display:none" class="alert-box error alert-error alert">

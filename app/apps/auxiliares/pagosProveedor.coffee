@@ -1,6 +1,6 @@
 require('lib/setup')
 Spine = require('spine')
-Documento = require("models/documento")
+CuentaPorPagar = require("models/cuentaPorPagar")
 Cuenta = require("models/cuenta")
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
@@ -34,13 +34,13 @@ class PagosProveedor extends Spine.Controller
   constructor: ->
     super
     @error.hide()
-    Documento.destroyAll()
+    CuentaPorPagar.destroyAll()
     
     Cuenta.query({tipos: ["'Bancaria'"] } )
     Proveedor.query()
     
     Cuenta.bind "query_success" , @onLoadCuenta
-    Documento.bind "query_success" , @onLoadSaldos
+    CuentaPorPagar.bind "query_success" , @onLoadSaldos
     
     Proveedor.bind "current_set", @onProveedorSet
     
@@ -49,19 +49,19 @@ class PagosProveedor extends Spine.Controller
     
     
   onProveedorSet: =>
-    Documento.query({ proveedor: Proveedor.current.id , tipos: ["'FP'"] , saldo: true , aprobadoParaPagar: true})
+    CuentaPorPagar.query({ proveedor: Proveedor.current.id ,  saldo: true , aprobadoParaPagar: true})
     
   onLoadCuenta: =>
     @cuentas.html require("views/apps/auxiliares/pagosProveedor/itemCuentaGasto")(Cuenta.all())
     
   onLoadSaldos: =>
-    @src_saldos.html require("views/apps/auxiliares/pagosProveedor/saldoItem")(Documento.all())
+    @src_saldos.html require("views/apps/auxiliares/pagosProveedor/saldoItem")(CuentaPorPagar.all())
     @refreshElements()
 
   onIncluir: (e) =>
     target = $(e.target)
     id = target.attr "data-id"
-    doc = Documento.find id
+    doc = CuentaPorPagar.find id
     tr = target.parents("tr")
     input = tr.find(".txt_saldo")
     input.html doc.Saldo.toMoney()
@@ -71,7 +71,7 @@ class PagosProveedor extends Spine.Controller
   onExcluir: (e) =>
     target = $(e.target)
     id = target.attr "data-id"
-    doc = Documento.find id
+    doc = CuentaPorPagar.find id
     tr = target.parents("tr")
     input = tr.find(".txt_saldo")
     input.attr "data-saldo" , 0
@@ -97,15 +97,15 @@ class PagosProveedor extends Spine.Controller
     for saldo in @saldos
       saldo =  $(saldo)
       monto = parseFloat(saldo.attr("data-saldo"))
-      documento = saldo.attr("data-saldo")
+      documento = saldo.attr("data-id")
       if monto > 0
-        object.Items.push {Monto: monto , Documento: documento }
+        object.Documentos.push documento
+        object.Montos.push monto
   
   send: (e) =>
     @inputs_to_validate.push @cuentas   
-    @pagoProveedor = PagoProveedor.create({})
+    @pagoProveedor = PagoProveedor.create({Documentos: [], Montos: [] })
     @updateFromView(@pagoProveedor,@inputs_to_validate)
-    
     Spine.trigger "show_lightbox" , "sendPagoProveedor" , @pagoProveedor , @after_send
  
   after_send: =>
@@ -114,8 +114,6 @@ class PagosProveedor extends Spine.Controller
 
   customReset: ->
     @src_saldos.empty()
-    Documento.destroyAll()
-    
-  
+    CuentaPorPagar.destroyAll()
 
 module.exports = PagosProveedor

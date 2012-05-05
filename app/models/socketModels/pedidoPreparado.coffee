@@ -18,7 +18,6 @@ class PedidoPreparado extends Spine.Model
     for result in results
       acceptResults = false if result['Estado'] != "Pendiente"
     return acceptResults;
-      
 
   @aprobar: (ids,observacion,aprobar) ->
     $.ajax

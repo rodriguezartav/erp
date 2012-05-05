@@ -42,8 +42,11 @@ html(lang="en")
         var App = require("index");
         var ErrorManager = require("managers/errorManager");
 
+        var server= "http://api2s.heroku.com";
+       // var server= "http://localhost:9393";
+        
         var instance_url = "https://cs11.salesforce.com";
-        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null , server: "http://api2s.heroku.com" } });
+        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null , server: server } });
 
         window.onerror = function (msg, url, num) {
           ErrorManager.logError(msg) 
