@@ -7,7 +7,8 @@ class PedidoPreparado extends Spine.Model
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
 
-  @autoReQuery = true;
+  @autoQuery = true;
+  @autoQueryTimeBased   :   false
 
   @overrideName = "Oportunidad"
 

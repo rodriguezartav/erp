@@ -42,9 +42,10 @@ class Header  extends Spine.Controller
   reset: ->
     for model in Spine.socketModels
       model.destroyAll()
+
     for model in Spine.transitoryModels
       model.destroyAll()
-      
+
     Spine.session.resetLastUpdate()
     window.location.reload()
 

@@ -72,10 +72,13 @@ class Entradas extends Spine.Controller
     
     
   addMovimiento: =>
-    item = new Movimientos(producto: Producto.current)
-    @movimientos.push item
-    @itemToControllerMap[item.movimiento.id] = item
-    @movimientos_list.append item.el
+    movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
+    if(movimiento.length == 0)
+      item = new Movimientos(producto: Producto.current)
+      @movimientos.push item
+      @itemToControllerMap[item.movimiento.id] = item
+      @movimientos_list.append item.el
+
 
   removeMovimiento: (item) =>
     item = @itemToControllerMap[item.id]
@@ -108,7 +111,7 @@ class Entradas extends Spine.Controller
 
   customReset: =>
     for items in @movimientos
-      items.reset()
+      items?.reset()
     @documento.destroy()
     @resetBindings()
     

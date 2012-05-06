@@ -3,6 +3,7 @@
 
 
 <tr>
+  <td><%= @Consecutivo %></td>
   <td><%= @Tipo_de_Documento %></td>
   <td><%= @FechaFacturacion %></td>
   <td><%= cliente.Name %></td>

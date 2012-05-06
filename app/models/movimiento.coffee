@@ -7,7 +7,7 @@ class Movimiento extends Spine.Model
   
   @extend Spine.Model.Salesforce
    
-  @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario"] 
+  @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario", "CodigoExterno"] 
    
   @queryFilter: (options ) =>
     return "" if !options

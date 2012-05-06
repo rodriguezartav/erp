@@ -19,7 +19,7 @@ class PagoItem extends Spine.Model
     PagoItem.create
       Total: saldo.Total
       Saldo : saldo.Saldo
-      Consecutivo: saldo.CodigoExterno
+      Consecutivo: saldo.Consecutivo
       Cliente : saldo.Cliente
       Documento: saldo.id
       Fecha : Date.now()
@@ -31,7 +31,7 @@ class PagoItem extends Spine.Model
     PagoItem.create
       Total: saldo.Total
       Saldo : saldo.Saldo
-      Consecutivo: saldo.CodigoExterno
+      Consecutivo: saldo.Consecutivo
       Cliente : saldo.Cliente
       Documento: saldo.id
       Fecha : Date.now()

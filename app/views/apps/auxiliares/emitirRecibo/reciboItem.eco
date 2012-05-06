@@ -1,4 +1,4 @@
-<td><%= @CodigoExterno %></td>
+<td><%= @Consecutivo %></td>
 <td><%= @Tipo_de_Documento %></td>
 <td><%= @Plazo %></td>
 <td><%= @Total.toMoney() %></td>

@@ -76,10 +76,12 @@ class Compras extends Spine.Controller
     Movimiento.unbind "beforeDestroy" , @removeMovimiento
 
   addMovimiento: =>
-    item = new Movimientos(producto: Producto.current)
-    @itemToControllerMap[item.movimiento.id] = item
-    @movimientos.push item
-    @movimientos_list.append item.el
+    movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
+    if(movimiento.length == 0)
+      item = new Movimientos(producto: Producto.current)
+      @itemToControllerMap[item.movimiento.id] = item
+      @movimientos.push item
+      @movimientos_list.append item.el
 
   removeMovimiento: (item) =>
     item = @itemToControllerMap[item.id]

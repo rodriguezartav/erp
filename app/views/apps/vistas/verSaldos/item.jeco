@@ -3,7 +3,7 @@
 
 <tr>
 <td><%= cliente?.Name?.capitalize() %></td>
-  <td><%= @CodigoExterno %></td>
+  <td><%= @Consecutivo %></td>
   <td><%= @Tipo_de_Documento %></td>
   <td><%= @Total.toMoney() %></td>
   <td><%= @Saldo.toMoney() %></td>

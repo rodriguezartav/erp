@@ -23,6 +23,9 @@ class Facturas extends Spine.Controller
     FacturaPreparada.bind "query_success" , @renderDocumentos
     @renderDocumentos()
 
+  reload: ->
+    FacturaPreparada.query({})
+
   renderDocumentos: =>
     docs= FacturaPreparada.findAllByAttribute "Tipo_de_Documento" , "FA"
     @list.html require("views/apps/print/item_factura")(docs)

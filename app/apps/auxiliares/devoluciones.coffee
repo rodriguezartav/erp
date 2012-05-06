@@ -126,13 +126,16 @@ class Devoluciones extends Spine.Controller
       movimiento.Referencia       = movimiento.CodigoExterno
       movimiento.CodigoExterno    = null
       movimiento.id               = null
-      movimiento.update_total()
+      movimiento.updateTotal()
       movimiento.save()
 
   send: (e) =>
     @refreshElements()
     @updateFromView(@documento,@inputs_to_validate)
-    Spine.trigger "show_lightbox" , "sendMovimientos" , Movimiento.all() , @after_send   
+    changedMovimientos = []
+    for movimiento in Movimiento.all()
+      changedMovimientos.push(movimiento) if(movimiento.ProductoCantidad) > 0    
+    Spine.trigger "show_lightbox" , "sendDevoluciones" , changedMovimientos , @after_send   
 
   after_send: =>
     @reset(false)

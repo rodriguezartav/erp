@@ -2,7 +2,7 @@
 <% cliente = Cliente.exists(@Cliente)  %>
 
 <tr>
-  <td><%= @CodigoExterno %></td>
+  <td><%= @Consecutivo %></td>
  
   <% if cliente != false:  %>
     <td><%= cliente.Name %></td>

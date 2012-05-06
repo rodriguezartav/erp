@@ -12,8 +12,8 @@
 
 
     <div class="span3 ">
-      <h3>#Boleta</h3>
-      <input class=" validatable" data-type="Referencia" data-length="3" placeholder="#" />
+      <h3>Referencia</h3>
+      <input class=" validatable" data-type="Referencia" data-length="3" placeholder="# boleta" />
     </div>
   
   </div>

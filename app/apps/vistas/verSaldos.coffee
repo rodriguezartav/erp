@@ -4,8 +4,6 @@ Cliente = require("models/cliente")
 Clientes = require("controllers/clientes")
 Documento = require("models/documento")
 
-
-
 class VerSaldos extends Spine.Controller
   
   className: "row-fluid verSaldos"

@@ -39,8 +39,6 @@ class NotasDebito extends Spine.Controller
     @validationErrors.push "Ingrese el Nombre del Cliente" if Cliente.current == null
     
   beforeSend: (object) ->
-    object.Impuesto= 0
-    object.Descuento= 0
     object.SubTotal = object.Total
     
   send: (e) =>

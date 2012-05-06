@@ -1,12 +1,15 @@
 Spine = require('spine')
 
 class FacturaPreparada extends Spine.Model
-  @configure "Documento", "Total" , "CodigoExterno" , "Referencia" , "Observacion" , 
+  @configure "Documento", "Total" , "Consecutivo" , "Referencia" , "Observacion" , 
    "Cliente" ,  "FechaFacturacion"  , "Tipo_de_Documento" , "IsContado"
   
   
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
+
+  @autoQueryTimeBased   :   false
+  @autoPush : true
 
   @filterNotas: =>
     results = []
