@@ -1,6 +1,7 @@
 require('lib/setup')
 Spine = require('spine')
 Producto = require("models/producto")
+ProductoCosto = require("models/productoCosto")
 Movimiento = require("models/movimiento")
 Documento = require("models/documento")
 Proveedores = require("controllers/proveedores")
@@ -23,7 +24,7 @@ class Movimientos extends Spine.Controller
   constructor: ->
     super 
     @movimiento = Movimiento.create_from_producto(@producto)
-    @html require("views/apps/auxiliares/compras/item")(@movimiento)
+    @html require("views/apps/auxiliares/compras/item")(movimiento: @movimiento , productoCosto: @productoCosto)
 
   checkItem: (e) =>
     @updateFromView(@movimiento,@inputs_to_validate)
@@ -56,9 +57,12 @@ class Compras extends Spine.Controller
   constructor: ->
     super
     Producto.reset_current()
+    ProductoCosto.destroyAll()
     Proveedor.query()
+    ProductoCosto.query()
     
-    @documento = Documento.create {Tipo_de_Documento: "CO"}    
+    @documento = Documento.create {Tipo_de_Documento: "CO"}   
+ 
     Movimiento.destroyAll()
     @movimientos = []
     @itemToControllerMap = {}
@@ -70,18 +74,24 @@ class Compras extends Spine.Controller
   setBindings: =>
     Producto.bind "current_set" , @addMovimiento
     Movimiento.bind "beforeDestroy" , @removeMovimiento
+    ProductoCosto.bind "query_success" , @onProductoCostoSuccess
 
   resetBindings: =>
     Producto.unbind "current_set" , @addMovimiento
     Movimiento.unbind "beforeDestroy" , @removeMovimiento
 
   addMovimiento: =>
-    movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
-    if(movimiento.length == 0)
-      item = new Movimientos(producto: Producto.current)
-      @itemToControllerMap[item.movimiento.id] = item
-      @movimientos.push item
-      @movimientos_list.append item.el
+    if ProductoCosto.count() > 0
+      movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
+      productoCosto = ProductoCosto.find Producto.current.id
+    
+      if(movimiento.length == 0)
+        item = new Movimientos(producto: Producto.current, productoCosto: productoCosto)
+        @itemToControllerMap[item.movimiento.id] = item
+        @movimientos.push item
+        @movimientos_list.append item.el
+    else
+      Spine.trigger "show_lightbox" , "showWarning" , error: "Cargando Costos, espere hasta que el cargador de la barra superior a la derecha se detenga"
 
   removeMovimiento: (item) =>
     item = @itemToControllerMap[item.id]
