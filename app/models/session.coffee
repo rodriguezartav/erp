@@ -34,7 +34,6 @@ class Session extends Spine.SingleModel
     lastUpdate = new Date(lastUpdate)
     return lastUpdate
 
-
     console.log "Session: " + lastUpdate
 
 

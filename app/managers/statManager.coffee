@@ -37,13 +37,14 @@ class StatManager
   @identify: (user) =>
     mixpanel.identify(user.Email);
     mixpanel.name_tag(user.Email);
+    mixpanel.register({"Perfil": "#{user.Perfil__c}" });
 
 
   #  @kmq.push(['identify', user.Email]);
     
     
   @sendEvent: (name,properties) =>
-   mixpanel.track(name,properties)
+   mixpanel.track(name, properties)
    # @kmq.push(['record', name , properties]);
   
 

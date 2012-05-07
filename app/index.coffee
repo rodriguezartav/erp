@@ -57,7 +57,7 @@ class App extends Spine.Controller
           @currentApp = app if app.name == params.name
        
         ##STAT    
-        StatManager.sendEvent "App" , {name: @currentApp.name}    
+        StatManager.sendEvent "Used #{@currentApp.name}"
         @currentApp = new @currentApp
         @html @currentApp
 

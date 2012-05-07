@@ -66,7 +66,7 @@ Spine.Model.Salesforce =
         @beforeInsert()
         className = @overrideName || @className 
         ##STAT  
-        StatManager.sendEvent 'Action' , { type: "Save" , class: className }
+        StatManager.sendEvent "Saved #{className}" , { count : documentos.length }
         
         $.ajax
           url        : @sendUrl(documentos)
