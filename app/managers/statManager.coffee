@@ -36,6 +36,9 @@ class StatManager
   
   @identify: (user) =>
     mixpanel.identify(user.Email);
+    mixpanel.name_tag(user.Email);
+
+
   #  @kmq.push(['identify', user.Email]);
     
     
