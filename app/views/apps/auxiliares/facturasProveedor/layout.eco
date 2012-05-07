@@ -36,7 +36,7 @@
 
     <div class="span2">
       <h3>Plazo</h3>
-      <input class=" validatable"  data-type="Plazo" data-numeric="true" placeholder="Dias desde la Emision" />
+      <input class=" validatable txtPlazo"  data-type="Plazo" data-numeric="true" placeholder="Dias desde la Emision" />
     </div>
     
       

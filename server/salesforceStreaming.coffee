@@ -25,10 +25,13 @@ class SalesforceStreaming
     @subscribe('Docmento__c')
 
   subscribe: (channel) =>
-    subscription = @fayeClient.subscribe "/topic/#{channel}", (message) =>      
+    subscription = @fayeClient.subscribe "/topic/#{channel}", (message) =>  
+      console.log message
       @pusher.trigger "salesforce_data_push" , channel , message
 
     subscription.errback (error) =>
+      console.log error
+      
       @pusher.trigger "salesforce_connection_information" , 'error', {"message": "There was an error in the Server- Salesforce Connection " , "error": "#{error}"}
 
 module.exports = SalesforceStreaming

@@ -20,6 +20,7 @@ class FacturasProveedor extends Spine.Controller
     ".validatable" : "inputs_to_validate"
     "select" : "cuentas"
     ".src_proveedor" : "src_proveedor"
+    ".txtPlazo" : "txtPlazo"
 
   events:
     "click .cancel" : "reset"
@@ -37,9 +38,13 @@ class FacturasProveedor extends Spine.Controller
     @setVariables()
     @preset()
     #Cuenta.bind "query_success" , @onLoadCuenta
+    Proveedor.bind "current_set" , @onProveedorSet
     
     @render()
     
+    
+  onProveedorSet: =>
+    @txtPlazo.val(Proveedor.current.Plazo || 0)
 
   onLoadCuenta: =>
     @cuentas.html require("views/apps/auxiliares/pagosProveedor/itemCuentaGasto")(Cuenta.all())

@@ -14,10 +14,13 @@ class PedidoPreparado extends Spine.Model
 
   @destroyBeforeRefresh = true;
 
-  @beforeSocketUpdate: (results) ->
+  @beforeSocketUpdate: (results) =>
     acceptResults = true
+    @lastNotificationState = ''
     for result in results
-      acceptResults = false if result['Estado'] != "Pendiente"
+      @lastNotificationEstado = result['Estado']
+      @lastNotificationCliente = result['Cliente']
+      #acceptResults = false if result['Estado'] != "Pendiente"
     return acceptResults;
 
   @aprobar: (ids,observacion,aprobar) ->

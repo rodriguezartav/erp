@@ -1,5 +1,6 @@
 Spine = require('spine')
 PedidoPreparado  =  require("models/socketModels/pedidoPreparado")
+Cliente = require("models/cliente")
 
 class SocketManager
   
@@ -25,8 +26,12 @@ class SocketManager
     @channel = @pusher.subscribe('salesforce_data_push')
 
     @channel.bind "Pedido__c" , (message) =>
-      if PedidoPreparado.updateFromSocket(message)
-        Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar" )
+      results = PedidoPreparado.updateFromSocket(message)
+      if results  != false
+        if Spine.session.user.Perfil__c == 'Venededor' or Spine.session.user.Perfil__c == 'Platform System Admin' and ( PedidoPreparado.lastNotificationState == 'Facturado' or   PedidoPreparado.lastNotificationEstado == 'Aprobado' )
+          Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Aprobado Pedido de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
+        else if Spine.session.user.Perfil__c == 'Ejecutivo Credito'  or Spine.session.user.Perfil__c == 'Platform System Admin' and PedidoPreparado.lastNotificationEstado == 'Pendiente'
+          Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
 
     for m in Spine.socketModels   
       if m.autoPush

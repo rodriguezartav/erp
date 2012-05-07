@@ -28,7 +28,8 @@ Spine.Model.SocketModel =
           @trigger "push_success"
           console.log "Actualizacion de " + @className + " " + jsonLoop
           showNotification=true
-        return showNotification
+          return results
+        return false
 
       beforeSaveLocal: ->
         return false;
