@@ -73,7 +73,7 @@ Spine.Controller.ViewDelegation =
         @customValidation(object)
         if @validationErrors.length > 0
           Spine.trigger "show_lightbox" , "showWarning" , error: @validationErrors.join(" , ") 
-          throw "Error de Validacion "
+          throw "Error de Validacion"
         
         @beforeSend(object)
         object.save?()
