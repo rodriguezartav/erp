@@ -5,6 +5,7 @@ SecurityManager = require("managers/securityManager")
 ConnectionManager = require("managers/connectionManager")
 NotificationManager = require("managers/notificationManager")
 SocketManager = require("managers/socketManager")
+StatManager = require("managers/statManager")
 
 
 
@@ -19,7 +20,7 @@ Cliente = require("models/cliente")
 Producto = require("models/producto")
 Session = require('models/session')
 
-Menu = require("apps/menu")
+Menu = require("controllers/menu")
 
 
 class App extends Spine.Controller
@@ -27,6 +28,8 @@ class App extends Spine.Controller
 
   constructor: ->
     super
+    
+    StatManager.registerManager()
 
     Spine.server = @options.server
     Spine.frontEndServer = @options.frontEndServer
@@ -53,8 +56,8 @@ class App extends Spine.Controller
         for app in Spine.apps
           @currentApp = app if app.name == params.name
        
-        ##KMQ    
-        _kmq.push(['record', 'App ' + @currentApp.name + ' Started' ]);
+        ##STAT    
+        StatManager.sendEvent "App" , {name: @currentApp.name}    
         @currentApp = new @currentApp
         @html @currentApp
 

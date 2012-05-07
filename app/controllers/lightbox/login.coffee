@@ -1,7 +1,7 @@
 Spine   = require('spine')
 Session = require('models/session')
 $       = Spine.$
-NotificationManager = require("managers/notificationManager")
+StatManager = require("managers/statManager")
 
 class Login extends Spine.Controller
   className: 'login modal'
@@ -62,15 +62,16 @@ class Login extends Spine.Controller
     @login.hide()
 
   onLoginSuccess: =>
-    ##KMQ
-    _kmq.push(['identify', Spine.session.user.Email]);
-    _kmq.push(['record', 'Login' , {Profile: Spine.session.user.Profile__c }]);
+    ##STAT
+    StatManager.identify Spine.session.user
+    StatManager.sendEvent 'Login' , {Profile: Spine.session.user.Profile__c }
     @renderComplete()
 
   on_continue: =>
-    ##KMQ
-    _kmq.push(['identify', Spine.session.user.Email]);
-    _kmq.push(['record', 'Session Reload']);
+    ##STAT
+    StatManager.identify Spine.session.user
+    StatManager.sendEvent 'Session Reload'
+
     Spine.trigger "hide_lightbox"
     Spine.trigger "login_complete"
     Spine.notifications.checkPermision()

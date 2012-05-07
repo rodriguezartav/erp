@@ -56,7 +56,6 @@ class PedidosAprobacion extends Spine.Controller
     Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar} , @aprobarSuccess
 
   aprobarSuccess: =>
-    _kmq.push(['record', 'Aproved', {'Amount': @aprovedGroup.Total } ]) if @aprobar ==1
     @aprovedGroup = null
     @aprobar = null
     @renderPedidos()

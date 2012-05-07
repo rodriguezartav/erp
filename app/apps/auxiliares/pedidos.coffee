@@ -110,8 +110,6 @@ class Credito extends Spine.Controller
     return false if Producto.current.InventarioActual == 0
     return false if PedidoItem.findAllByAttribute( "Referencia" , @pedido.Referencia ).length > 11
 
-    ##KMQ REVENUE
-    _kmq.push(['record', 'Added to Cart', {'Producto': Producto.current.Name }] ) ;
     item = new Items(producto: Producto.current , referencia: @pedido.Referencia)
     @registerItem(item)
     
@@ -173,12 +171,9 @@ class Credito extends Spine.Controller
     Spine.trigger "show_lightbox" , "sendPedidos" , PedidoItem.itemsInPedido(@pedido) , @after_send   
 
   after_send: =>
-    _kmq.push(['record', 'Purchased', {'Amount': @pedido.Total } ]);
     @customReset()
 
   close: =>
-    ##KMQ REVENUEW
-    _kmq.push(['record', 'Canceled', {'Amount': @pedido.Total } ]);
     @customReset()
 
   customReset: =>
@@ -287,8 +282,6 @@ class Pedidos extends Spine.Controller
     @setCurrentController(controller)
 
   createPedidoController: (pedido) =>
-    ##KMQ REVENUE
-    _kmq.push(['record', 'Started Purchase', {'Contado': pedido.IsContado } ]);
     controller = new Credito(pedido: pedido)
     controller.bind ""
     @pedidoToControllerMap[pedido.Referencia] = controller

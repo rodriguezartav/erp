@@ -3,6 +3,8 @@
 
 Spine ?= require('spine')
 
+StatManager = require("managers/statManager")
+
 Spine.salesforceQueryQueue = 0
 
 Spine.Model.Salesforce =
@@ -42,11 +44,30 @@ Spine.Model.Salesforce =
       beforeInsert: () ->
         return false
 
+
+      beforeRest: () ->
+        return false
+
+
+      rest: (name,method,jsonObject) ->
+        @beforeRest
+        StatManager.sendEvent 'Action' , { type: "Rest" , class: name }
+        
+        $.ajax
+          url        : Spine.server + "/rest"
+          xhrFields  : {withCredentials: true}
+          type       : method
+          data       : @ajaxParameters( { name: "Oportunidad" , data: jsonObject } )
+          success    : @on_send_success
+          error      : @on_send_error
+        
+        
       insert: (documentos,url) =>
         @beforeInsert()
         className = @overrideName || @className 
-        ##KMQ  
-        _kmq.push(['record', 'Made API Call', {'Type':'Outbound', 'Class' : className }]);
+        ##STAT  
+        StatManager.sendEvent 'Action' , { type: "Save" , class: className }
+        
         $.ajax
           url        : @sendUrl(documentos)
           type       : "POST"
@@ -102,8 +123,6 @@ Spine.Model.Salesforce =
         query += @queryFilter(options)
         query += @addLastUpdateFilter() if @addLastUpdateFilter
         Spine.trigger "query_start"
-        ##KMQ
-        _kmq.push(['record', 'Made API Call', {'Type':'Inbound', 'Class' : @overrideName || @className  }]);
         $.ajax
           url: Spine.server + "/query"
           xhrFields: {withCredentials: true}
