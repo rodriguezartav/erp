@@ -36,13 +36,12 @@ class SecurityManager
     apps = [ Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito , CierresContable ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor ]
-   # @profiles["Presidencia"] = apps
-  #  @profiles["Gerencia"] = apps
-  #  @profiles["Ejecutivo Ventas"] = [Pedidos,PedidosEspecial,FacturasImpresion]
-  #  @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Compras,Devoluciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
-  #  @profiles["Vendedor"] = [Pedidos]
-  #  @profiles["Contabilidad"] = [CierresContable]
-  #  @profiles["Facturacion"] = apps
+    @profiles["Presidencia"] = apps
+    @profiles["Gerencia"] = apps
+    @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , DocumentosAnular]
+    @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Devoluciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
+    @profiles["Vendedor"] = [Pedidos]
+    @profiles["Contabilidad"] = [CierresContable]
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>
