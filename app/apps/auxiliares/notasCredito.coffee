@@ -37,7 +37,7 @@ class NotasCredito extends Spine.Controller
     @validationErrors.push "Ingrese el Nombre del Cliente" if Cliente.current == null
     
   beforeSend: (documento) ->
-    documento.SubTotal = documento.Total
+    documento.Plazo = 30
     
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)    

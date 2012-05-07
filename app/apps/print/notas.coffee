@@ -45,6 +45,9 @@ class Notas extends Spine.Controller
     doc.destroy()
     print()
 
+  sendPrintCommand: =>
+    
+
   goBack: =>
     @restoreUIState()
 

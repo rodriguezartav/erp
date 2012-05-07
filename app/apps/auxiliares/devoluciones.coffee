@@ -126,6 +126,7 @@ class Devoluciones extends Spine.Controller
       movimiento.Referencia       = movimiento.CodigoExterno
       movimiento.CodigoExterno    = null
       movimiento.id               = null
+      movimiento.Plazo            = 30
       movimiento.updateTotal()
       movimiento.save()
 

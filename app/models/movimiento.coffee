@@ -3,11 +3,12 @@ Spine = require('spine')
 class Movimiento extends Spine.Model
   @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "Impuesto" , 
   "Descuento" , "SubTotal" , "Total" , "ProductoCosto" , "Referencia","Observacion","Cliente",
-  "CodigoExterno","Descuento_Unitario","Impuesto_Unitario" , "Proveedor"
+  "CodigoExterno","Descuento_Unitario","Impuesto_Unitario" , "Proveedor","Plazo"
   
   @extend Spine.Model.Salesforce
    
   @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario", "CodigoExterno"] 
+  @avoidQueryList = ["Plazo"]
    
   @queryFilter: (options ) =>
     return "" if !options

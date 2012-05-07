@@ -42,4 +42,12 @@ class Documento extends Spine.Model
       error      : @on_send_error
 
 
+  @markedPrinted: (documento) ->
+    $.ajax
+      url        : Spine.server + "/rest"
+      xhrFields  : {withCredentials: true}
+      type       : "POST"
+      data       : @ajaxParameters( { name: "Print" , data: JSON.stringify( { documentoId: documento.id } ) } )
+
+
 module.exports = Documento
