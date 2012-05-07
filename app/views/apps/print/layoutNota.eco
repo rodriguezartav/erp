@@ -21,7 +21,7 @@
 
     <thead>
         <tr>
-          <th>Fecha</th>
+          <th>Consecutivo</th>
           <th>Tipo</th>
           <th>Cliente</th>
           <th>Total</th>

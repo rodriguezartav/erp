@@ -49,12 +49,6 @@
         <input class="validatable" data-type="Referencia" placeholder="# forma de pago"/>
       </div>
 
-     <div class="span3">
-        <h3>Monto <span class="badge badge-warning">opcional</span></h3>
-        <input id="txt_monto" placeholder="Monto para Calculos"/><br/>
-        
-      </div>
-
   </div>
 
   <hr/>

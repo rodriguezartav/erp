@@ -2,6 +2,8 @@ require('lib/setup')
 Spine = require('spine')
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
+Cuenta = require("models/cuenta")
+
 CuentaPorPagar = require("models/cuentaPorPagar")
 
 class FacturasProveedor extends Spine.Controller
@@ -28,12 +30,20 @@ class FacturasProveedor extends Spine.Controller
 
   preset: ->
     Proveedor.query()
+    Cuenta.query({tipos: ["'Bancaria'"] } )
     
   constructor: ->
     super
     @setVariables()
     @preset()
+    Cuenta.bind "query_success" , @onLoadCuenta
+    
     @render()
+    
+
+  onLoadCuenta: =>
+    @cuentas.html require("views/apps/auxiliares/pagosProveedor/itemCuentaGasto")(Cuenta.all())
+
 
   render: =>  
     @html require("views/apps/auxiliares/facturasProveedor/layout")(@constructor)
@@ -52,6 +62,7 @@ class FacturasProveedor extends Spine.Controller
     object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
 
   send: (e) =>
+    @inputs_to_validate.push @cuentas
     @updateFromView(@cuentaPorPagar,@inputs_to_validate)
     Spine.trigger "show_lightbox" , "sendCuentaPorPagar" , @cuentaPorPagar , @after_send
 

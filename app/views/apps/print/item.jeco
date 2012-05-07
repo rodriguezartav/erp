@@ -5,11 +5,8 @@
 <tr>
   <td><%= @Consecutivo %></td>
   <td><%= @Tipo_de_Documento %></td>
-  <td><%= @FechaFacturacion %></td>
-  <td><%= cliente.Name %></td>
-  
+  <td><%= cliente.Name %></td>  
   <td><%= @Total.toMoney() %></td>
-
  <td><a data-id="<%= @id %>" class="print btn btn-info"><i class="icon-print icon-white"> </i> Imprimir</a></td>
 
 </tr>

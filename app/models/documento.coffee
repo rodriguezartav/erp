@@ -1,14 +1,13 @@
 Spine = require('spine')
 
 class Documento extends Spine.Model
-  @configure "Documento", "Proveedor" , "Nombre_Contado" ,"Total" , "Saldo" , "Consecutivo" , "Referencia" , "Observacion" , 
+  @configure "Documento" , "Nombre_Contado" ,"Total" , "Saldo" , "Consecutivo" , "Referencia" , "Observacion" , 
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo" , "FechaFacturacion","FechaVencimiento" ,
-  "AplicarACuenta" , "Tipo_de_Documento" , "PagoEnRecibos", "IsContado" , "TipoCambio" , "AprobadoParaPagar","Estado"
+   "Tipo_de_Documento" ,  "IsContado" ,"Estado"
   
   @extend Spine.Model.Salesforce
 
-  @avoidQueryList: [ "Referencia" , "Fuente" ,
-    "FechaFacturacion","FechaVencimiento" ,"AplicarACuenta","IsContado","TipoCambio"]
+  @avoidQueryList: [ "Referencia" , "Fuente" ,"IsContado"]
 
   updateFromMovimientos: (movimientos)  ->
     @Total = 0

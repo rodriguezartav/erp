@@ -1,7 +1,8 @@
 Spine = require('spine')
 
 class PagoItem extends Spine.Model
-  @configure "PagoItem" , "Cliente" , "Total" , "Tipo" , "Saldo" , "Consecutivo" , "Documento" , "Tipo_de_Documento" , "Fecha" , "Monto"
+  @configure "PagoItem" , "Cliente" , "Total" , "Tipo" , "Saldo" , "Consecutivo" , 
+  "Documento" , "Tipo_de_Documento" , "Fecha" , "Monto","Recibo"
  
   @extend Spine.Model.Salesforce
 

@@ -13,7 +13,7 @@
 
     <div class="span3 ">
       <h3>Referencia</h3>
-      <input class=" validatable" data-type="Referencia" data-length="3" placeholder="# boleta" />
+      <input class=" validatable"  data-numeric="true"  data-type="Referencia" data-length="3" placeholder="# boleta" />
     </div>
   
   </div>

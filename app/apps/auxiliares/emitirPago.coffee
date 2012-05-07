@@ -89,7 +89,7 @@ class EmitirPago extends Spine.Controller
   onClienteSet: (cliente) =>
     @reset() if @pago.Cliente
     Documento.destroyAll()
-    Documento.query({ saldo: true , cliente: cliente , estado: "Impreso" })
+    Documento.query({ saldo: true , cliente: cliente  })
     @pago.Cliente = Cliente.current.id
     
 
@@ -108,9 +108,7 @@ class EmitirPago extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pago.Cliente == null
     @validationErrors.push "El pago debe tener al menos 1 pago" if PagoItem.count() == 0
-    @validationErrors.push "El monto del pago debe ser mayor o igual a 0" if @pago.Monto < 0
     item.checkItem() for item in @items
-
 
   beforeSend: (object) =>
     for item in PagoItem.all()

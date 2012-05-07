@@ -7,7 +7,7 @@
 
     <div class="span3">
       <h3>Referencia</h3>
-      <input class="span3 validatable" date-type="Referencia" date-length="3"  id="txt_referencia" placeholder="# boleta" />
+      <input class="span3 validatable" data-numeric="true" date-type="Referencia" date-length="3"  id="txt_referencia" placeholder="# boleta" />
     </div>
 
   <div class="span9">

@@ -19,7 +19,7 @@ class Notas extends Spine.Controller
 
   constructor: ->
     super
-    @html require("views/apps/print/layout")(@constructor)
+    @html require("views/apps/print/layoutNota")(@constructor)
     Documento.destroyAll()
     Documento.bind "query_success" , @renderDocumentos
     @renderDocumentos()
@@ -60,6 +60,7 @@ class Notas extends Spine.Controller
 
   reset: =>
     Documento.unbind "query_success" , @renderDocumentos
-    window.location.reload()
+    @navigate "/apps"
+    
 
 module.exports = Notas
