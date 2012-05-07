@@ -4,7 +4,7 @@ $       = Spine.$
 NotificationManager = require("managers/notificationManager")
 
 class Login extends Spine.Controller
-  className: 'login modal'
+  className: 'login modal fade'
 
   elements:
     "#txt_email" : "txt_email"

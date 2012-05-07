@@ -4,7 +4,7 @@ Documento = require('models/documento')
 $       = Spine.$
 
 class AnularDocumento extends Spine.Controller
-  className: 'anukarDocumento modal'
+  className: 'anularDocumento modal'
 
   elements:
     ".alert-box" : "alert_box"

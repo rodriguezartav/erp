@@ -13,6 +13,7 @@ class Header  extends Spine.Controller
 
   events:
     "click .reset" : "reset"
+    "click .toSalesforce" : "onClickSalesforce"
   
   constructor: ->
     super
@@ -38,6 +39,9 @@ class Header  extends Spine.Controller
         @status_button.removeClass "btn-success"
         @status_button.removeClass "btn-warning"
         @status_button_label.html '<i class="icon-remove"></i>'
+
+  onClickSalesforce: =>
+    window.open Spine.session.instance_url + "/home/home.jsp"
 
   reset: ->
     for model in Spine.socketModels

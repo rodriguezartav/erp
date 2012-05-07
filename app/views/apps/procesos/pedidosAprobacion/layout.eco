@@ -23,6 +23,7 @@
         <th>Referencia</th>
         <th>Cliente</th>
         <th>Total</th>
+        <th>Saldo</th>
       </tr>
     </thead>
     <tbody class="src_pedidos">

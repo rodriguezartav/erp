@@ -40,8 +40,8 @@
           <ul class="nav pull-right header_menu">
           
             <li>
-              <a target="_blank" href="https://cs11.salesforce.com/_ui/core/chatter/ui/ChatterPage">
-              <i class="icon-external-link"></i>
+              <a class="toSalesforce">
+                <i class="icon-external-link"></i>
                 Salesforce
               </a>
             </li>
