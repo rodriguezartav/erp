@@ -13,6 +13,12 @@ class Session extends Spine.SingleModel
     super
     @isSalesforce=false
 
+  hasPerfiles: (perfiles) ->
+    has = false
+    for perfil in perfiles
+      has = true if perfil == @user.Perfil__c
+    return has
+
   resetLastUpdate: ->
     @lastUpdate = {}
     @save()
