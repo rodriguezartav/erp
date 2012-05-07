@@ -7,8 +7,11 @@
   
 //if IE 8
   <html class="no-js lt-ie9" lang="en">
-  
-html(lang="en")
+
+if useManifest
+  html(lang="en", manifest="manifest")  
+else
+    html(lang="en")
   
   head
     meta(charset='utf-8')
@@ -49,7 +52,7 @@ html(lang="en")
         exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null , server: server } });
 
         window.onerror = function (msg, url, num) {
-          ErrorManager.logError(msg) 
+          ErrorManager.logError(msg)
         }
 
       });

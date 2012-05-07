@@ -37,7 +37,6 @@ class ConnectionManager
     Spine.trigger "show_lightbox" , "showWarning" , error: "Informacion: Esta trabajando sin internet,No podra enviar ni recibir informacion,Cuando se reconecte el sistema se actualizara solo"
 
   resetSocketSequence: ->
-    console.log "Conection Manager Rest " + ciclesCount
     ciclesCount = 0
     Spine.socketManager.handshake()
     Spine.socketManager.subscribe()
@@ -53,7 +52,6 @@ class ConnectionManager
     if @cyclesCount > 60
       @cyclesCount = 0
       @fetchServerData()
-      console.log "CONNECTION MANAGER UPDATE FETCH"
  
     if navigator.onLine and @connectionStatus != "online"
       @connectionStatus = "online"
@@ -75,8 +73,9 @@ class ConnectionManager
         window.location.reload();
     
   fetchServerData: =>
-    for model in Spine.socketModels
-      model.query() if model.autoQuery
+    if navigator.onLine 
+      for model in Spine.socketModels
+        model.query() if model.autoQuery
 
   fetchLocalData: =>
     Session.fetch()    

@@ -1,0 +1,16 @@
+CACHE MANIFEST
+# v 0.0.2
+
+CACHE:
+/application.js
+/bootstrap.css
+/images/ajax_loader.gif
+/images/logo_horizontal_white_on_black.png
+/images/logo_icon.png
+/images/furley_bg.png
+/images/logo.png
+/font/fontawesome-webfont.woff
+http://js.pusher.com/1.11/pusher.min.js
+
+NETWORK:
+*

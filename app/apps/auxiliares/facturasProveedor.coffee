@@ -30,13 +30,13 @@ class FacturasProveedor extends Spine.Controller
 
   preset: ->
     Proveedor.query()
-    Cuenta.query({tipos: ["'Bancaria'"] } )
+    #Cuenta.query({tipos: ["'Bancaria'"] } )
     
   constructor: ->
     super
     @setVariables()
     @preset()
-    Cuenta.bind "query_success" , @onLoadCuenta
+    #Cuenta.bind "query_success" , @onLoadCuenta
     
     @render()
     
@@ -62,7 +62,7 @@ class FacturasProveedor extends Spine.Controller
     object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
 
   send: (e) =>
-    @inputs_to_validate.push @cuentas
+    #@inputs_to_validate.push @cuentas
     @updateFromView(@cuentaPorPagar,@inputs_to_validate)
     Spine.trigger "show_lightbox" , "sendCuentaPorPagar" , @cuentaPorPagar , @after_send
 

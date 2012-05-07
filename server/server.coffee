@@ -29,19 +29,12 @@ OPF.bind "web_login_complete" , =>
 
 ##Setup Routes
 
-#will change for customers
 app.get '/' , (req, res) ->
+  res.render "app" , {useManifest: false, app: ""}
   
-  res.end("Go To /ERP")
-  res.end()
+app.get '/remote' , (req, res) ->
+  res.render "app" , {useManifest: true,  app: ""}
 
-#internal use
-app.get '/erp' , (req, res) ->
-  res.render "app" , { app: ""}
-  
-#update URL
-# we wont use sockets for now
-app.get "/update/"
 
 app.listen(port)
 console.log "Listening on port " + port

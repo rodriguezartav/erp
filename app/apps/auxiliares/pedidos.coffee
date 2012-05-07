@@ -250,7 +250,7 @@ class Pedidos extends Spine.Controller
     @currentController.addCliente()
     
   addItem: =>
-    @currentController.addItem()
+    @currentController?.addItem()
     
   onPedidoItemChange: =>
     @currentController?.onPedidoItemChange()

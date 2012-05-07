@@ -6,7 +6,7 @@
 <div class="well">
   <div class="row-fluid">
 
-    <div class="span2">
+    <div class="span4">
       <h3>Proveedor</h3>
       <div class="src_proveedor"></div>
     </div>
@@ -14,12 +14,6 @@
     <div class="span2">
       <h3>Referencia (#)</h3>
       <input class="validatable" data-type="Referencia" date-length="3"  placeholder="# documento" />
-    </div>
-
-    <div class="span3">
-      <h3>Cuenta</h3>
-      <select class="validatable cuentas" data-type="CuentaGasto">
-      </select>
     </div>
 
 
@@ -40,7 +34,7 @@
         </div>
      </div>
 
-    <div class="span1">
+    <div class="span2">
       <h3>Plazo</h3>
       <input class=" validatable"  data-type="Plazo" data-numeric="true" placeholder="Dias desde la Emision" />
     </div>
