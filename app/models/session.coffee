@@ -21,6 +21,8 @@ class Session extends Spine.SingleModel
 
   resetLastUpdate: ->
     @lastUpdate = {}
+    @token = null;
+    @lastLogin = null;
     @save()
 
   setLastUpdate: (className) ->
@@ -33,9 +35,6 @@ class Session extends Spine.SingleModel
     lastUpdate = @lastUpdate[className] if @lastUpdate && @lastUpdate[className]
     lastUpdate = new Date(lastUpdate)
     return lastUpdate
-
-    console.log "Session: " + lastUpdate
-
 
   sessionExpires: =>
     expire = new Date(@lastLogin.getTime() + 1000 * 60 * 60)
@@ -97,7 +96,5 @@ class Session extends Spine.SingleModel
   noNetError: ->
     @errors = {type:"LOCAL" , error: "No hay conexion a internet", source: "Session" }
     Spine.trigger "no_net_error" , @ 
-    
-    
-module.exports = Session
 
+module.exports = Session

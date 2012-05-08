@@ -37,7 +37,11 @@ class PedidosAprobacion extends Spine.Controller
     PedidoPreparado.query()    
 
   renderPedidos: =>
+    
+    
+    
     @groups = PedidoPreparado.group_by_referencia()
+    @log @groups
     @src_pedidos.html require("views/apps/procesos/pedidosAprobacion/item")(@groups)
 
   on_action_click: (e) =>

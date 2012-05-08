@@ -151,7 +151,7 @@ class Devoluciones extends Spine.Controller
 
   customReset: ->
     for items in @movimientos
-       items.reset()
+       items?.reset()
     @documento.destroy()
     Movimiento.unbind "query_success" , @onLoadMovimientos
     Movimiento.unbind "change update" , @onMovimientoChange

@@ -12,7 +12,6 @@ class Cliente extends Spine.Model
   @autoQueryTimeBased = true
 
   @avoidInsertList = ["Name","Rating_Crediticio","CodigoExterno","Activo","Saldo","DiasCredito","CreditoAsignado"]
-  
 
   @queryFilter: (options) =>
     return "" if !options

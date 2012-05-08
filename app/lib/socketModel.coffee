@@ -24,7 +24,10 @@ Spine.Model.SocketModel =
         results = @parseSalesforceJSON jsonLoop
         showNotification = false
         if @beforeSocketUpdate(results)
-          @refresh results
+          for result in results
+            item = @exists(result)
+            item.updateAttributes(result) if item
+          #@refresh results
           @trigger "push_success"
           console.log "Actualizacion de " + @className + " " + jsonLoop
           showNotification=true

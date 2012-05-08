@@ -128,11 +128,11 @@ Spine.Model.Salesforce =
         query += " "
         query
 
-      query: (options = false ) =>
+      query: (options = false , useDate=true ) =>
         Spine.salesforceQueryQueue +=1
         query = @queryString()
         query += @queryFilter(options)
-        query += @addLastUpdateFilter() if @addLastUpdateFilter
+        query += @addLastUpdateFilter() if @addLastUpdateFilter and useDate
         Spine.trigger "query_start"
         $.ajax
           url: Spine.server + "/query"

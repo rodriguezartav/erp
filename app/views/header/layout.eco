@@ -63,7 +63,7 @@
               </a>
               <ul class="dropdown-menu">
                   <li>
-                    <a class="actualizar">Actualizar Ahora</a>
+                    <a class="actualizar update">Actualizar Ahora</a>
                   </li>
                 <li class="divider"></li>
                  <li>

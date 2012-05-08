@@ -1,7 +1,9 @@
 Spine = require('spine')
 Productos = require("controllers/productos")
 
-  
+Cliente = require("models/cliente")
+Producto = require("models/producto")
+
 class Header  extends Spine.Controller
   
   elements:
@@ -14,6 +16,7 @@ class Header  extends Spine.Controller
   events:
     "click .reset" : "reset"
     "click .toSalesforce" : "onClickSalesforce"
+    "click .update" : "onUpdate"
   
   constructor: ->
     super
@@ -43,6 +46,10 @@ class Header  extends Spine.Controller
   onClickSalesforce: =>
     window.open Spine.session.instance_url + "/home/home.jsp"
 
+  onUpdate: ->
+    Cliente.query({credito: true},false)
+    Producto.query({},false)
+
   reset: ->
     for model in Spine.socketModels
       model.destroyAll()
@@ -51,6 +58,7 @@ class Header  extends Spine.Controller
       model.destroyAll()
 
     Spine.session.resetLastUpdate()
+
     window.location.reload()
 
   

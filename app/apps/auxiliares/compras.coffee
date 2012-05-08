@@ -7,8 +7,6 @@ Documento = require("models/documento")
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
 
-
-
 class Movimientos extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
   
@@ -135,7 +133,7 @@ class Compras extends Spine.Controller
     @proveedores.reset()
     @resetBindings()
     for items in @movimientos
-      items.reset()
+      items?.reset()
     @documento.destroy()
     
   
