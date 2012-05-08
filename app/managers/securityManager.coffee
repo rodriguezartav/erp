@@ -43,7 +43,7 @@ class SecurityManager
     @profiles["Presidencia"] = apps
     @profiles["Gerencia"] = apps
     @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , DocumentosAnular]
-    @profiles["SubGerencia"] = [Pedidos , FacturasImpresion , DocumentosAnular , PedidosEspecial , AjustarNegociacion ]
+    @profiles["SubGerencia"] = [Pedidos , FacturasImpresion , DocumentosAnular , AjustarNegociacion ]
 
     @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Devoluciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
     @profiles["Vendedor"] = [Pedidos]

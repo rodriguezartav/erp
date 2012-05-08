@@ -20,6 +20,7 @@ class Items extends Spine.Controller
     "click .js_btn_remove" : "reset"
     "change input" : "checkItem"
     "click input" : "on_click"
+    "click .precio" : "onPrecioClick"
 
   constructor: ()->
     super
@@ -37,6 +38,20 @@ class Items extends Spine.Controller
     @pedidoItem = PedidoItem.createFromProducto(@producto)
     @pedidoItem.Referencia = referencia
     @pedidoItem.save()
+
+  onPrecioClick: (e) =>
+    target = $(e.target)
+    precio2 = parseFloat(target.attr("data-precio2"))
+    precio1 = parseFloat(target.attr("data-precio1"))
+
+    if @pedidoItem.Precio == precio2
+      @pedidoItem.Precio = precio1
+    else
+      @pedidoItem.Precio = precio2
+
+      
+    target.html @pedidoItem.Precio.toMoney()
+    @checkItem()
 
   on_click: (e) =>
     $(e).select()

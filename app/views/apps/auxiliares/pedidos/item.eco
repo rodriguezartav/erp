@@ -3,7 +3,7 @@
 
 <td class="primary"><h4 class="popable" rel="popover" data-content="Descuentos y Ofertas" data-original-title="<%= producto.InventarioActual %>"> <%= producto.Name.capitalize() %> </h4></td>
 
-<td><h4><%= @Precio.toMoney() %></h4></td>
+<td><h4 class="precio" data-precio1="<%= producto.Precio_Distribuidor %>" data-precio2="<%= producto.Precio_Ferreteria %>" ><%= @Precio?.toMoney() %></h4></td>
 
 <td><input class="span1 validatable" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @Cantidad %>" /></td>
 
