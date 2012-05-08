@@ -58,8 +58,18 @@ class PagosAnular extends Spine.Controller
   anular: (e) ->
     target = $(e.target)
     reciboId = target.attr "data-recibo"
-    Spine.trigger "show_lightbox" , "anularPagos" , {reciboId: reciboId}  , @reset
+
+
+#    Pago.rest( "Pago" , "POST" , JSON.stringify({ reciboId: @data.reciboId }) )
     
+    data =
+      class: Pago
+      restRoute: "Pago"
+      restMethod: "POST"
+      restData: JSON.stringify({ reciboId: reciboId })
+
+    Spine.trigger "show_lightbox" , "rest" , data , @reset   
+  
     
   reset: () =>
     @resetBindings()

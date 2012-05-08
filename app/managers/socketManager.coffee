@@ -28,7 +28,7 @@ class SocketManager
     @channel.bind "Pedido__c" , (message) =>
       results = PedidoPreparado.updateFromSocket(message)
       if results  != false
-        if Spine.session.hasPerfiles(['Venededor','Platform System Admin','Ejecutivo Ventas' , 'SubGerencia']) and ( PedidoPreparado.lastNotificationState == 'Facturado' or   PedidoPreparado.lastNotificationEstado == 'Aprobado' )
+        if Spine.session.hasPerfiles(['Venededor','Platform System Admin','Ejecutivo Ventas' , 'SubGerencia']) and PedidoPreparado.lastNotificationState == 'Facturado'
           Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Aprobado Pedido de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
         else if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito' , 'SubGerencia']) and PedidoPreparado.lastNotificationEstado == 'Pendiente'
           Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )

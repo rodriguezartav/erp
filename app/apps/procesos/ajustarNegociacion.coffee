@@ -129,7 +129,7 @@ class AjustarNegociacion extends Spine.Controller
       restMethod: "PUT"
       restData: JSON.stringify({ cliente: Cliente.toSalesforce(Cliente.current) })
       
-    Spine.trigger "show_lightbox" , "update" , data , @after_send   
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send   
 
   after_send: =>
     @reset()

@@ -35,19 +35,18 @@ class PagosProveedor extends Spine.Controller
     super
     @error.hide()
     CuentaPorPagar.destroyAll()
-    
-    Cuenta.query({tipos: ["'Bancaria'"] } )
-    Proveedor.query()
-    
-    Cuenta.bind "query_success" , @onLoadCuenta
     CuentaPorPagar.bind "query_success" , @onLoadSaldos
     
+    Cuenta.query({tipos: ["'Bancaria'"] } )
+    Cuenta.bind "query_success" , @onLoadCuenta
+
+    Proveedor.query()
     Proveedor.bind "current_set", @onProveedorSet
     
     @html require("views/apps/auxiliares/pagosProveedor/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
     
-    
+
   onProveedorSet: =>
     CuentaPorPagar.query({ proveedor: Proveedor.current.id ,  saldo: true , aprobadoParaPagar: true})
     
@@ -106,8 +105,18 @@ class PagosProveedor extends Spine.Controller
     @inputs_to_validate.push @cuentas   
     @pagoProveedor = PagoProveedor.create({Documentos: [], Montos: [] })
     @updateFromView(@pagoProveedor,@inputs_to_validate)
-    Spine.trigger "show_lightbox" , "sendPagoProveedor" , @pagoProveedor , @after_send
- 
+    @pagoProveedor.id = null
+    pagos = JSON.stringify( pagos: @pagoProveedor )
+    
+    data =
+      class: PagoProveedor
+      restRoute: "Tesoreria"
+      restMethod: "PUT"
+      restData: pagos
+
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send   
+
+
   after_send: =>
     @pagoProveedor.destroy()
     @reset()

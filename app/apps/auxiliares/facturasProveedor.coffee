@@ -80,8 +80,16 @@ class FacturasProveedor extends Spine.Controller
   send: (e) =>
     #@inputs_to_validate.push @cuentas
     @updateFromView(@cuentaPorPagar,@inputs_to_validate)
-    Spine.trigger "show_lightbox" , "sendCuentaPorPagar" , @cuentaPorPagar , @after_send
+ 
+    data =
+      class: CuentaPorPagar
+      restData: [@cuentaPorPagar]
 
+    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    
+ 
+ 
+   
   after_send: =>
     @reset(false)
  

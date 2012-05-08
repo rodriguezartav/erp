@@ -6,10 +6,9 @@ class PagoItem extends Spine.Model
  
   @extend Spine.Model.Salesforce
 
-  @avoidInsertList = ["Saldo","Total"] 
+  @avoidInsertList = ["Saldo","Total","Consecutivo"] 
   @overrideName: "Pago"
-  
-  
+
   setTipo: ->
     if @Monto == @Saldo
       @Tipo = "PA"
@@ -38,7 +37,6 @@ class PagoItem extends Spine.Model
       Fecha : Date.now()
       Tipo_de_Documento : saldo.Tipo_de_Documento
       Monto : 0
-
 
 module.exports = PagoItem
 

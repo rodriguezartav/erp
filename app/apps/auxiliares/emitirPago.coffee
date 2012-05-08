@@ -127,8 +127,14 @@ class EmitirPago extends Spine.Controller
   send: (e) =>
     @refreshElements()
     @updateFromView(@pago,@inputs_to_validate)
-    @log PagoItem.all()
-    Spine.trigger "show_lightbox" , "sendPagos" , PagoItem.all() , @after_send   
+    
+    data =
+      class: PagoItem
+      restData: PagoItem.all()
+
+    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    
+    #Spine.trigger "show_lightbox" , "sendPagos" , PagoItem.all() , @after_send   
 
   after_send: =>
     @reset()

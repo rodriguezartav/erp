@@ -41,7 +41,14 @@ class NotasCredito extends Spine.Controller
     
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)    
-    Spine.trigger "show_lightbox" , "sendDocumento" , @documento , @after_send
+    
+    data =
+      class: Documento
+      restData: [@documento]
+
+    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    
+    #Spine.trigger "show_lightbox" , "sendDocumento" , @documento , @after_send
     
   after_send: =>
     @reset(false)

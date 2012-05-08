@@ -37,8 +37,14 @@ class DocumentosAnular extends Spine.Controller
     target = $(e.target)
     id = target.attr "data-id"
     @doc = Documento.find(id)
-    Spine.trigger "show_lightbox" , "anularDocumento" , @doc , @anularSuccess
-    @renderDocumentos()
+    
+    data =
+      class: Documento
+      restRoute: "Anular"
+      restMethod: "POST"
+      restData: JSON.stringify( { id: @doc.id , tipo: "Documento__c" } )
+
+    Spine.trigger "show_lightbox" , "rest" , data , @anularSuccess   
 
   anularSuccess: =>
     @doc.destroy()

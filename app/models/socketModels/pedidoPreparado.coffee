@@ -33,7 +33,8 @@ class PedidoPreparado extends Spine.Model
       error      : @on_send_error
 
   @group_by_referencia: () ->
-    pedidos = PedidoPreparado.all()
+    pedidos = PedidoPreparado.findAllByAttribute("Estado", "Pendiente" )
+    
     referencias = (pedido.Referencia for pedido in pedidos).unique()
     groups  = []
     for referencia in referencias

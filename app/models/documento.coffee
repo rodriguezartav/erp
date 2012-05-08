@@ -32,15 +32,7 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter
 
-  @anular: (documento) ->
-    $.ajax
-      url        : Spine.server + "/rest"
-      xhrFields  : {withCredentials: true}
-      type       : "POST"
-      data       : @ajaxParameters( { name: "Anular" , data: JSON.stringify( { id: documento.id , tipo: "Documento__c" } ) } )
-      success    : @on_send_success
-      error      : @on_send_error
-
+ 
 
   @markedPrinted: (documento) ->
     $.ajax

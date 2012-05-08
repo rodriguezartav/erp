@@ -38,7 +38,6 @@ class PedidosAprobacion extends Spine.Controller
 
   renderPedidos: =>
     @groups = PedidoPreparado.group_by_referencia()
-    @log @groups
     @src_pedidos.html require("views/apps/procesos/pedidosAprobacion/item")(@groups)
 
   on_action_click: (e) =>
@@ -56,6 +55,8 @@ class PedidosAprobacion extends Spine.Controller
     Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar} , @aprobarSuccess
 
   aprobarSuccess: =>
+    for pedido in @aprovedGroup.Pedidos
+      pedido.destroy()
     @aprovedGroup = null
     @aprobar = null
     @renderPedidos()

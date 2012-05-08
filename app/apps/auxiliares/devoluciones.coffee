@@ -136,7 +136,15 @@ class Devoluciones extends Spine.Controller
     changedMovimientos = []
     for movimiento in Movimiento.all()
       changedMovimientos.push(movimiento) if(movimiento.ProductoCantidad) > 0    
-    Spine.trigger "show_lightbox" , "sendDevoluciones" , changedMovimientos , @after_send   
+    
+      data =
+        class: Movimiento
+        restData: changedMovimientos
+
+      Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    
+    
+   # Spine.trigger "show_lightbox" , "sendDevoluciones" , changedMovimientos , @after_send   
 
   after_send: =>
     @reset(false)

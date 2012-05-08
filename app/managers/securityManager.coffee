@@ -24,7 +24,7 @@ PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
 RecibosAprobacion = require("apps/procesos/recibosAprobacion")
 RecibosConversion = require("apps/procesos/recibosConversion")
 
-CierresContable = require("apps/contables/cierresContable")
+#CierresContable = require("apps/contables/cierresContable")
 FacturasImpresion = require("apps/print/facturas")
 
 NotasImpresion = require("apps/print/notas")
@@ -37,7 +37,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito , CierresContable ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
+    apps = [ AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor ]
     @profiles["Presidencia"] = apps
@@ -47,7 +47,7 @@ class SecurityManager
 
     @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Devoluciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
     @profiles["Vendedor"] = [Pedidos]
-    @profiles["Contabilidad"] = [CierresContable]
+    @profiles["Contabilidad"] = []
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>
