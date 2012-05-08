@@ -3,6 +3,12 @@ Spine = require('spine')
 class Negociacion extends Spine.Model
   @configure 'Negociacion', "Familia" ,  "SubFamilia" , "Descuento" 
 
+  @getFromProducto: (producto,negociaciones = []) ->
+    negociacionProducto = null
+    for negociacion in negociaciones
+      negociacionProducto = negociacion if producto.Familia == negociacion.Familia and producto.SubFamilia == negociacion.SubFamilia
+    negociacionProducto
+
   @createFromProducto: (producto ) ->
     negociacion = Negociacion.create
       Familia: producto.Familiar
@@ -32,12 +38,5 @@ class Negociacion extends Spine.Model
     
   @toJson: ->
     JSON.stringify Negociacion.all()
-
-  @createFromProducto: (producto) ->
-    negociacion = Negociacion.create
-      Familia: producto.Familia
-      SubFamilia: producto.SubFamilia
-      Descuento: 0
-    negociacion
 
 module.exports = Negociacion

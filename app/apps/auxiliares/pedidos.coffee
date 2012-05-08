@@ -2,6 +2,7 @@ require('lib/setup')
 Spine = require('spine')
 Producto = require("models/producto")
 Cliente = require("models/cliente")
+Negociacion = require("models/transitory/negociacion")
 Pedido = require("models/transitory/pedido")
 PedidoItem = require("models/transitory/pedidoItem")
 
@@ -23,7 +24,14 @@ class Items extends Spine.Controller
   constructor: ()->
     super
     @createItem(@producto,@referencia) if @producto
-    @html require("views/apps/auxiliares/pedidos/item")(@pedidoItem) 
+    
+    @negociacion = Negociacion.getFromProducto(@producto,@negociaciones)
+    @log @negociacion
+    if @negociacion
+      @pedidoItem.Descuento = @negociacion.Descuento
+      @html require("views/apps/auxiliares/pedidos/itemNegociacion")(pedidoItem: @pedidoItem, negociacion: @negociacion )
+    else
+      @html require("views/apps/auxiliares/pedidos/item")(@pedidoItem)  
 
   createItem: (producto,referencia) =>
     @pedidoItem = PedidoItem.createFromProducto(@producto)
@@ -87,6 +95,8 @@ class Credito extends Spine.Controller
     @html require("views/apps/auxiliares/pedidos/credito")(@pedido) if !@pedido.IsContado
     @html require("views/apps/auxiliares/pedidos/contado")(@pedido) if @pedido.IsContado
     @clientes = new Clientes(el: @src_cliente , cliente: @pedido.Cliente , contado: @pedido.IsContado)
+    Negociacion.destroyAll()
+    @negociaciones = Negociacion.createFromCliente(@pedido.Cliente)
     
     @refreshView(@pedido,@inputs_to_validate)
     
@@ -103,6 +113,8 @@ class Credito extends Spine.Controller
   addCliente: =>
     return false if !@el.hasClass "active"
     @pedido.Cliente = Cliente.current.id
+    Negociacion.destroyAll()
+    @negociaciones = Negociacion.createFromCliente(Cliente.current)
     @pedido.save()
 
   addItem: =>
@@ -110,7 +122,7 @@ class Credito extends Spine.Controller
     return false if Producto.current.InventarioActual == 0
     return false if PedidoItem.findAllByAttribute( "Referencia" , @pedido.Referencia ).length > 11
 
-    item = new Items(producto: Producto.current , referencia: @pedido.Referencia)
+    item = new Items(producto: Producto.current , referencia: @pedido.Referencia, negociaciones: @negociaciones)
     @registerItem(item)
     
   registerItem: (item) =>
