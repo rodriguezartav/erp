@@ -48,6 +48,7 @@ class Header  extends Spine.Controller
 
   onUpdate: ->
     Cliente.query({credito: true},false)
+    Cliente.query({contado: true},false)
     Producto.query({},false)
 
   reset: ->

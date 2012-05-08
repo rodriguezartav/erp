@@ -18,6 +18,7 @@ class Cliente extends Spine.Model
     filter = ""
     filter = @queryFilterAddCondition(" Saldo__c != 0"                                 , filter) if options.saldo
     filter = @queryFilterAddCondition(" CreditoAsignado__c > 0 and DiasCredito__c > 0" , filter) if options.credito
+    filter = @queryFilterAddCondition(" CreditoAsignado__c = 0 and DiasCredito__c = 0" , filter) if options.contado
     filter
 
   @to_name_array: ->

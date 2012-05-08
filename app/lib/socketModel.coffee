@@ -26,7 +26,10 @@ Spine.Model.SocketModel =
         if @beforeSocketUpdate(results)
           for result in results
             item = @exists(result)
-            item.updateAttributes(result) if item
+            if item
+              item.updateAttributes(result)
+              console.log "Actualizacion de " + item.Name
+              
           #@refresh results
           @trigger "push_success"
           console.log "Actualizacion de " + @className + " " + jsonLoop
