@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class Cliente extends Spine.Model
-  @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo" , "DiasCredito" , "CreditoAsignado","Rating_Crediticio"
+  @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo" , "DiasCredito" , "CreditoAsignado","Rating_Crediticio","Negociacion"
 
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel

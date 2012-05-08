@@ -15,6 +15,7 @@ SendPagos = require("controllers/lightbox/sendPagos")
 
 SendDevoluciones = require("controllers/lightbox/sendDevoluciones")
 
+AnularPagos = require("controllers/lightbox/anularPagos")
 
 
 SendCuentaPorPagar = require("controllers/lightbox/sendCuentaPorPagar")
@@ -37,7 +38,7 @@ class Lightbox extends Spine.Controller
 
   constructor: ->
     super
-    @items = [ShowError,SendDevoluciones,SendCuentaPorPagar , ShowWarning , Login ,PagoProveedor, SendDocumento , SendPagos , SendMovimientos , SendCierre,CierreManual,SendRecibo,SendPedidos , AprobarPedidos ,AprobarRecibos, ConvertirRecibos,AnularDocumento]
+    @items = [AnularPagos,ShowError,SendDevoluciones,SendCuentaPorPagar , ShowWarning , Login ,PagoProveedor, SendDocumento , SendPagos , SendMovimientos , SendCierre,CierreManual,SendRecibo,SendPedidos , AprobarPedidos ,AprobarRecibos, ConvertirRecibos,AnularDocumento]
     
     Spine.bind "hide_lightbox" , @hide
     

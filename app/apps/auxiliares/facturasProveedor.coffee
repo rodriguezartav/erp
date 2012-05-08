@@ -21,10 +21,15 @@ class FacturasProveedor extends Spine.Controller
     "select" : "cuentas"
     ".src_proveedor" : "src_proveedor"
     ".txtPlazo" : "txtPlazo"
+    ".subtotal" : "subtotal"
+    ".descuento" : "descuento"
+    ".impuesto" : "impuesto"
+    ".total" : "total"
 
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
+    "change .totales" : "onTotalesChange"
 
   setVariables: ->
     @cuentaPorPagar = CuentaPorPagar.create { FechaFacturacion: new Date()  }
@@ -58,6 +63,12 @@ class FacturasProveedor extends Spine.Controller
   #####
   # ACTIONS
   #####
+
+  onTotalesChange: =>
+    sub = parseFloat(@subtotal.val()) || 0
+    desc = parseFloat(@descuento.val()) || 0
+    imp = parseFloat(@impuesto.val()) || 0
+    @total.val sub - desc + imp
 
   customValidation: =>
     @validationErrors.push "Escoja el Proveedor" if Proveedor.current == null

@@ -57,7 +57,7 @@ Spine.Model.Salesforce =
           url        : Spine.server + "/rest"
           xhrFields  : {withCredentials: true}
           type       : method
-          data       : @ajaxParameters( { name: "Oportunidad" , data: jsonObject } )
+          data       : @ajaxParameters( { name: name , data: jsonObject } )
           success    : @on_send_success
           error      : @on_send_error
         

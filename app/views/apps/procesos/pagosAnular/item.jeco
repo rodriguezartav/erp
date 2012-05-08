@@ -1,0 +1,9 @@
+<% Spine   = require('spine') %>
+
+<tr>
+<td><p><%= @Fecha %><p></td>
+<td><p><%= @Recibo %><p></td>
+<td><p><%= @Consecutivos.toString() %><p></td>
+<td><p><%= @Monto %><p></td>
+<td><a data-recibo="<%= @Recibo %>" class="btn btn-danger anular">Anular</a></td>
+</tr>

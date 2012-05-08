@@ -54,22 +54,22 @@
   
         <div class="span3">
           <h3>Subtotal</h3>
-          <input data-type="SubTotal" data-numeric="true" data-positive="true"  class=" validatable" />
+          <input data-type="SubTotal" data-numeric="true" data-positive="true"  class=" validatable totales subtotal" />
         </div>
 
        <div class="span3">
           <h3>Descuento</h3>
-          <input data-type="Descuento"  data-numeric="true" data-positive="true"  value="0"  class=" validatable" placeholder=""  />
+          <input data-type="Descuento"  data-numeric="true" data-positive="true"  value="0"  class=" validatable totales descuento" placeholder=""  />
         </div>
 
         <div class="span3">
           <h3>Impuesto</h3>
-          <input data-type="Impuesto" data-numeric="true" data-positive="true" class=" validatable" value="0" placeholder="" />
+          <input data-type="Impuesto" data-numeric="true" data-positive="true" class=" validatable totales impuesto" value="0" placeholder="" />
         </div>
     
         <div class="span3">
           <h3>Total</h3>
-          <input data-type="Total" data-numeric="true" data-positive="true" class=" validatable"  placeholder="" />
+          <input data-type="Total" data-numeric="true" data-positive="true" class=" validatable totales total"  placeholder="" />
         </div>
       </div>
     </div>
