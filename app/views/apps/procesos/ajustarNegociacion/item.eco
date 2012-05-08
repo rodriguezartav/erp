@@ -1,0 +1,13 @@
+
+<td><h4><%= @Familia %></h4></td>
+<td><h4><%= @SubFamilia %></h4></td>
+
+<td>
+  <input class="span2 validatable" data-min-value="0" data-type="Descuento" data-numeric="true" value="<%= @Descuento || 0 %>" />
+</td>
+
+
+<td>
+  <a class="btn btn-danger btn-small js_btn_remove"><i class="icon-remove icon-white"></i></a>
+</td>
+

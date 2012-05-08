@@ -1,7 +1,8 @@
 Spine = require('spine')
 
 class Cliente extends Spine.Model
-  @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo" , "DiasCredito" , "CreditoAsignado","Rating_Crediticio","Negociacion"
+  @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo" , "DiasCredito" , "CreditoAsignado","Rating_Crediticio",
+  "Negociacion"
 
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
@@ -9,6 +10,9 @@ class Cliente extends Spine.Model
 
   @autoPush= true
   @autoQueryTimeBased = true
+
+  @avoidInsertList = ["Name","Rating_Crediticio","CodigoExterno","Activo","Saldo","DiasCredito","CreditoAsignado"]
+  
 
   @queryFilter: (options) =>
     return "" if !options

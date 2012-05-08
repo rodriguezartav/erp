@@ -26,6 +26,17 @@ Spine.Model.Salesforce =
 
     ##INSERT ***************************
       
+      
+      toSalesforce: (item) =>
+        object = {}
+        for attr of item.attributes()
+          if @avoidInsertList.indexOf(attr) == -1
+            object[attr + "__c" ] = item[attr] if attr != "id" and attr != "Name"
+            object["Id"] = item[attr] if attr = "id"
+            object["Name"] = item[attr] if attr = "Name"
+
+        object
+
       salesforceFormat: (items) =>  
         objects = []
         for item in items

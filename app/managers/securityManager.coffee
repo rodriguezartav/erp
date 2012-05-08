@@ -2,17 +2,20 @@ Spine = require('spine')
 
 Entradas = require("apps/auxiliares/entradas")
 Salidas = require("apps/auxiliares/salidas")
+
 Devoluciones = require("apps/auxiliares/devoluciones")
 Compras = require("apps/auxiliares/compras")
+
 FacturasProveedor = require("apps/auxiliares/facturasProveedor")
 PagosProveedor = require("apps/auxiliares/pagosProveedor")
+
 NotasCredito = require("apps/auxiliares/notasCredito")
 NotasDebito = require("apps/auxiliares/notasDebito")
+
 EmitirRecibo = require("apps/auxiliares/emitirRecibo")
 EmitirPago = require("apps/auxiliares/emitirPago")
 
 VerSaldos = require("apps/vistas/verSaldos")
-
 
 Pedidos = require("apps/auxiliares/pedidos")
 PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
@@ -22,21 +25,19 @@ RecibosAprobacion = require("apps/procesos/recibosAprobacion")
 RecibosConversion = require("apps/procesos/recibosConversion")
 
 CierresContable = require("apps/contables/cierresContable")
-
 FacturasImpresion = require("apps/print/facturas")
+
 NotasImpresion = require("apps/print/notas")
-
 DocumentosAnular = require("apps/procesos/documentosAnular")
-
-
 PagosAnular = require("apps/procesos/pagosAnular")
 
+AjustarNegociacion = require("apps/procesos/ajustarNegociacion")
 
 class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito , CierresContable ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
+    apps = [ AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito , CierresContable ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor ]
     @profiles["Presidencia"] = apps

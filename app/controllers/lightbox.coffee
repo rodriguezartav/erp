@@ -32,13 +32,15 @@ PagoProveedor = require("controllers/lightbox/sendPagoProveedor")
 ShowWarning = require("controllers/lightbox/showWarning")
 ShowError = require("controllers/lightbox/showError")
 
+Update = require("controllers/lightbox/update")
+
 
 class Lightbox extends Spine.Controller
   className: 'lightbox reveal-modal-bg'
 
   constructor: ->
     super
-    @items = [AnularPagos,ShowError,SendDevoluciones,SendCuentaPorPagar , ShowWarning , Login ,PagoProveedor, SendDocumento , SendPagos , SendMovimientos , SendCierre,CierreManual,SendRecibo,SendPedidos , AprobarPedidos ,AprobarRecibos, ConvertirRecibos,AnularDocumento]
+    @items = [Update,AnularPagos,ShowError,SendDevoluciones,SendCuentaPorPagar , ShowWarning , Login ,PagoProveedor, SendDocumento , SendPagos , SendMovimientos , SendCierre,CierreManual,SendRecibo,SendPedidos , AprobarPedidos ,AprobarRecibos, ConvertirRecibos,AnularDocumento]
     
     Spine.bind "hide_lightbox" , @hide
     
