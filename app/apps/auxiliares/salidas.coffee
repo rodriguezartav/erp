@@ -119,7 +119,7 @@ class Salidas extends Spine.Controller
   customReset: =>
 
     for items in @movimientos
-      items.reset()
+      items?.reset()
     @documento.destroy()
     @resetBindings()
   
