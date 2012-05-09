@@ -26,9 +26,8 @@ class Insert extends Spine.Controller
   on_success: (results) =>
     @data.class.unbind "insert_error" , @on_error
     @data.class.unbind "insert_success" , @on_success   
-    @loader.hide()
-    @callback.apply @, [true]
     @html require('views/lightbox/success')
+    @callback.apply @, [true]
     Spine.trigger "hide_lightbox", true
 
   on_error: (error_obj) =>

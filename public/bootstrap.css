@@ -7093,6 +7093,10 @@ a.thumbnail:hover {
 .lightbox .modal.error .alert-box {
   display: block;
 }
+i.modal_success {
+  font-size: 40px;
+  color: #46a546;
+}
 .clientes {
   position: relative;
 }

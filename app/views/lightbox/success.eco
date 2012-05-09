@@ -1,11 +1,11 @@
 
 <div class="modal-header">
-  <h3>Se completo la operacion</h3>
+  <h2>Se completo la operacion</h2>
 </div>
 
 <div class="modal-body">
 
-<h4><i style="font-size: 33px;color: greeen" class="icon-check"></i> Esta pantalla desaparece en 5 segundos</h4>
+<h4><i class="icon-check modal_success"></i> Esta pantalla desaparece en 5 segundos</h4>
 
 </div>
 

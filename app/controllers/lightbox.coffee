@@ -35,6 +35,12 @@ class Lightbox extends Spine.Controller
         @html @current
 
   hide: (delay=false) =>
+    if delay
+      @el.fadeOut(1800,@doHide)
+    else
+      @doHide()
+ 
+  doHide: =>
     @current?.release?()
     @current = null
     @el.empty()
