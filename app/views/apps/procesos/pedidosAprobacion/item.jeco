@@ -6,7 +6,7 @@
 <td><p><%= @Referencia %><p></td>
 <td><a target="_blank" href="<%= Spine.session.instance_url %>/<%= cliente.id  %>"> <%= cliente?.Name?.capitalize()  %> </a> </td>
 <td><p><%= @Total?.toMoney() %><p></td>
-<td><p><%= cliente?.Saldo %><p></td>
+<td><p><%= cliente?.Saldo?.toMoney() %><p></td>
 <td><a data-referencia="<%= @Referencia %>" data-aprobar="1"  class="btn btn-primary aprobar">Aprobar</a></td>
 <td><a data-referencia="<%= @Referencia %>" data-aprobar="0"  class="btn btn-danger archivar">Archivar</a></td>
 </tr>

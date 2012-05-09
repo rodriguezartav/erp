@@ -32,10 +32,10 @@ Spine.Model.SocketModel =
         if @beforeSocketUpdate(results) and @allowAction(message.event.type)
           @refresh results
           @trigger "push_success"
-          console.log "Actualizacion de " + @className + " " + jsonLoop
+  #        console.log "Actualizacion de " + @className + " " + jsonLoop
           return results
-        else
-          console.log "No se actualizo por #{@allowedPushActions} y #{message.event}" 
+#        else
+ #         console.log "No se actualizo por #{@allowedPushActions} y #{message.event}" 
         return false
 
       beforeSaveLocal: ->

@@ -20,8 +20,6 @@ else
     
     link(rel='stylesheet', href='/bootstrap.css', type='text/css', charset='utf-8')
 
-
-
     title Rodco S.A. || ERP
     link(rel='apple-touch-icon', href='apple-touch-icon.png')
     //link(rel='icon', type='image/ico', href='favicon.ico')
@@ -36,7 +34,16 @@ else
     
     script(src='/application.js', type='text/javascript', charset='utf-8')
 
-
+    script(type='text/javascript', charset='utf-8')
+      window.addEventListener('load', function(e) {
+        window.applicationCache.addEventListener( 'updateready', function(e) {
+            if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+              window.applicationCache.swapCache();
+              window.location.reload();
+            }
+        });
+      });
+      
     script(type='text/javascript', charset='utf-8')
       var apiServer = "http://api2s.heroku.com";
       
