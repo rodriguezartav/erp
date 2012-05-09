@@ -23,6 +23,7 @@ class PagoItem extends Spine.Model
       Cliente : saldo.Cliente
       Documento: saldo.id
       Fecha : Date.now()
+      PlazoActual: saldo.PlazoActual
       Tipo_de_Documento : saldo.Tipo_de_Documento
       Monto : 0
 
@@ -35,6 +36,7 @@ class PagoItem extends Spine.Model
       Cliente : saldo.Cliente
       Documento: saldo.id
       Fecha : Date.now()
+      PlazoActual: saldo.PlazoActual
       Tipo_de_Documento : saldo.Tipo_de_Documento
       Monto : 0
 

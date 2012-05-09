@@ -54,6 +54,7 @@ class EmitirPago extends Spine.Controller
     ".saldos_list"       : "saldos_list"
     ".lbl_total"         : "lbl_total"
     ".validatable"       : "inputs_to_validate"
+    ".info_popover"      : "info_popover"
     
   events:
     "click .cancel" : "reset"
@@ -103,6 +104,8 @@ class EmitirPago extends Spine.Controller
       ri = new Items(documento: documento)
       @items.push ri
       @saldos_list.append ri.el
+    $('.info_popover').popover()
+    
 
   updateTotal: =>
     total =0
@@ -140,7 +143,7 @@ class EmitirPago extends Spine.Controller
 
 
   after_send: =>
-    @reset()
+    @minor_reset()
 
   reset: ->
     @minor_reset()

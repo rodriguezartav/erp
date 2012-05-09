@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Documento extends Spine.Model
   @configure "Documento" , "Nombre_Contado" ,"Total" , "Saldo" , "Consecutivo" , "Referencia" , "Observacion" , 
-  "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo" , "FechaFacturacion","FechaVencimiento" ,
+  "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo", "PlazoActual" , "FechaFacturacion","FechaVencimiento" ,
    "Tipo_de_Documento" ,  "IsContado" ,"Estado"
   
   @extend Spine.Model.Salesforce
@@ -31,8 +31,6 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"            ,  filter)  if options.estado
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter
-
- 
 
   @markedPrinted: (documento) ->
     $.ajax
