@@ -37,9 +37,9 @@ class SecurityManager
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor ]
     @profiles["Presidencia"] = apps
-    @profiles["Gerencia"] = apps 
+    @profiles["SubGerencia"] = apps 
     @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , DocumentosAnular]
-    @profiles["SubGerencia"] = [PedidosEspecial,AjustarNegociacion,Pedidos , FacturasImpresion , DocumentosAnular  ]
+    @profiles["Encargado de Ventas"] = [PedidosEspecial,AjustarNegociacion,Pedidos , FacturasImpresion , DocumentosAnular  ]
     @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Devoluciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
     @profiles["Vendedor"] = [Pedidos]
     @profiles["Contabilidad"] = []
