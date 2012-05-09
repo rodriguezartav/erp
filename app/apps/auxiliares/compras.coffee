@@ -72,8 +72,7 @@ class Compras extends Spine.Controller
   setBindings: =>
     Producto.bind "current_set" , @addMovimiento
     Movimiento.bind "beforeDestroy" , @removeMovimiento
-    ProductoCosto.bind "query_success" , @onProductoCostoSuccess
-
+    
   resetBindings: =>
     Producto.unbind "current_set" , @addMovimiento
     Movimiento.unbind "beforeDestroy" , @removeMovimiento
