@@ -17,10 +17,10 @@ class SocketManager
     @salesforceConnectionChannel  = @pusher.subscribe('salesforce_connection_information')
     
     @salesforceConnectionChannel.bind 'connect', (data) ->
-      Spine.trigger "show_lightbox" , "showWarning" , error : "Se conecto al servicio de actualizacion"
+      #Spine.trigger "show_lightbox" , "showWarning" , error : "Se conecto al servicio de actualizacion"
 
     @salesforceConnectionChannel.bind 'error', (data) ->
-      Spine.trigger "show_lightbox" , "showWarning" , error : "Se desconecto al servicio de actualizacion, no recibira actualizaciones"
+      #Spine.trigger "show_lightbox" , "showWarning" , error : "Se desconecto al servicio de actualizacion, no recibira actualizaciones"
 
   subscribe: =>
     @channel = @pusher.subscribe('salesforce_data_push')

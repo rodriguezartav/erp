@@ -48,7 +48,6 @@ class EmitirPago extends Spine.Controller
   @label = "Crear Pagos"
   @icon = "icon-inbox"
 
-
   elements:
     ".src_cliente"       :  "src_cliente"
     ".js_create_pago"    :  "btn_create_pago"
@@ -63,11 +62,16 @@ class EmitirPago extends Spine.Controller
   setVariables: ->
     @items = []
     @pago = Pago.create { Fecha: new Date() }
-    
+
   setBindings: ->
     Documento.bind 'query_success' , @onDocumentoLoaded
     PagoItem.bind "create update" , @updateTotal
     Cliente.bind 'current_set' , @onClienteSet
+  
+  resetBindings: ->
+    Documento.unbind 'query_success' , @onDocumentoLoaded
+    PagoItem.unbind "create update" , @updateTotal
+    Cliente.unbind 'current_set' , @onClienteSet
 
   preset: ->
     Cliente.reset()
@@ -76,6 +80,9 @@ class EmitirPago extends Spine.Controller
  
   constructor: ->
     super
+    @init()
+
+  init: ->
     @setVariables()
     @preset()
     @render()
@@ -84,14 +91,12 @@ class EmitirPago extends Spine.Controller
   render: ->
     @html require("views/apps/auxiliares/emitirPago/layout")(EmitirPago)
     @refreshView(@pago,@inputs_to_validate)    
-    new Clientes(el: @src_cliente)
+    @clientes = new Clientes(el: @src_cliente)
 
   onClienteSet: (cliente) =>
-    @reset() if @pago.Cliente
     Documento.destroyAll()
     Documento.query({ saldo: true , cliente: cliente  })
     @pago.Cliente = Cliente.current.id
-    
 
   onDocumentoLoaded: =>
     for documento in Documento.all()
@@ -122,7 +127,6 @@ class EmitirPago extends Spine.Controller
         item.Referencia = object.Referencia
         item.setTipo()
         item.save()
-        @log item
 
   send: (e) =>
     @refreshElements()
@@ -133,19 +137,24 @@ class EmitirPago extends Spine.Controller
       restData: PagoItem.all()
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
-    
-    #Spine.trigger "show_lightbox" , "sendPagos" , PagoItem.all() , @after_send   
+
 
   after_send: =>
     @reset()
 
-  reset: () ->
-    for item in @items
-      item.release()
-    Cliente.unbind 'current_set' , @on_cliente_set
-    for item in PagoItem.all()
-      item.destroy()
-    @pago.destroy()
+  reset: ->
+    @minor_reset()
+    @release()
     @navigate "/apps"
 
+  minor_reset: () ->
+    for item in @items
+      item?.release()
+    @resetBindings()
+    PagoItem.destroyAll()
+    Cliente.reset()
+    @clientes.reset()
+    @pago.destroy()
+    @init()
+    
 module.exports = EmitirPago

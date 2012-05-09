@@ -142,9 +142,6 @@ class Devoluciones extends Spine.Controller
         restData: changedMovimientos
 
       Spine.trigger "show_lightbox" , "insert" , data , @after_send
-    
-    
-   # Spine.trigger "show_lightbox" , "sendDevoluciones" , changedMovimientos , @after_send   
 
   after_send: =>
     @reset(false)

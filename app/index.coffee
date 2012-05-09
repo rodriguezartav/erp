@@ -50,7 +50,7 @@ class App extends Spine.Controller
          @currentApp?.reset()
          @currentApp = new Menu(apps: Spine.apps)
          @html @currentApp
-     
+
       "/apps/:name": (params) =>
         @currentApp?.reset()
         for app in Spine.apps

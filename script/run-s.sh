@@ -1,0 +1,1 @@
+foreman start --env .env-s --port 9293

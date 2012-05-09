@@ -49,7 +49,6 @@ class NotasDebito extends Spine.Controller
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send   
     
-#    Spine.trigger "show_lightbox" , "insert" , @documento , @after_send
     
   after_send: =>
     @reset(false)

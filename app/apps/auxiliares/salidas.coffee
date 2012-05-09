@@ -109,9 +109,6 @@ class Salidas extends Spine.Controller
       restData: Movimiento.all()
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
-   
-   
-   # Spine.trigger "show_lightbox" , "sendMovimientos" , Movimiento.all() , @after_send   
 
   after_send: =>
     @reset()

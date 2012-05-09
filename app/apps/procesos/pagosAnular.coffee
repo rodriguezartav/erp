@@ -22,7 +22,6 @@ class PagosAnular extends Spine.Controller
     "click .anular" : "anular"
 
   setVariables: ->
-    
 
   setBindings: ->
     Pago.bind 'query_success' , @onPagoLoaded
@@ -31,7 +30,6 @@ class PagosAnular extends Spine.Controller
   resetBindings: ->
     Pago.unbind 'query_success' , @onPagoLoaded
     Cliente.unbind 'current_set' , @onClienteSet
-
 
   preset: ->
     Cliente.reset()
@@ -59,17 +57,14 @@ class PagosAnular extends Spine.Controller
     target = $(e.target)
     reciboId = target.attr "data-recibo"
 
-
-#    Pago.rest( "Pago" , "POST" , JSON.stringify({ reciboId: @data.reciboId }) )
-    
     data =
       class: Pago
-      restRoute: "Pago"
+      restRoute: "Anular"
       restMethod: "POST"
-      restData: JSON.stringify({ reciboId: reciboId })
+      restData: JSON.stringify( { id: reciboId , tipo: "Pago" } )
 
-    Spine.trigger "show_lightbox" , "rest" , data , @reset   
-  
+    Spine.trigger "show_lightbox" , "rest" , data , @reset
+ 
     
   reset: () =>
     @resetBindings()

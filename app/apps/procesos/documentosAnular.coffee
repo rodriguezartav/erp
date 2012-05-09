@@ -6,15 +6,14 @@ class DocumentosAnular extends Spine.Controller
   @departamento = "Ventas"
   @label = "Anular Facturas"
   @icon = "icon-ban-circle"
-  
-  
+
   className: "row-fluid"
 
   events:
     "click .cancel" : "reset"
     "click .anular"  : "anular"
     "click .reload" : "reload"
-    
+
   elements: 
     ".src_documentos" : "list"
 
@@ -24,7 +23,7 @@ class DocumentosAnular extends Spine.Controller
     Documento.destroyAll()
     Documento.bind "query_success" , @renderDocumentos
     @reload()
-    
+
   reload: ->
     Documento.query( { tipos: ["'FA'"] , fecha: "TODAY" } )
 
@@ -37,12 +36,12 @@ class DocumentosAnular extends Spine.Controller
     target = $(e.target)
     id = target.attr "data-id"
     @doc = Documento.find(id)
-    
+
     data =
       class: Documento
       restRoute: "Anular"
       restMethod: "POST"
-      restData: JSON.stringify( { id: @doc.id , tipo: "Documento__c" } )
+      restData: JSON.stringify( { id: @doc.id , tipo: "Documento" } )
 
     Spine.trigger "show_lightbox" , "rest" , data , @anularSuccess   
 

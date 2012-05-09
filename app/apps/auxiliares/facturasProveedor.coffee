@@ -86,9 +86,7 @@ class FacturasProveedor extends Spine.Controller
       restData: [@cuentaPorPagar]
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
-    
- 
- 
+
    
   after_send: =>
     @reset(false)

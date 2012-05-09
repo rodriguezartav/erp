@@ -138,7 +138,12 @@ class PedidosEspecial extends Spine.Controller
     
   send: (e) =>
     @updateFromView(@pedido,@inputs_to_validate)
-    Spine.trigger "show_lightbox" , "sendPedidos" , PedidoItem.itemsInPedido(@pedido) , @after_send   
+    
+    data =
+      class: PedidoItem
+      restData: PedidoItem.itemsInPedido(@pedido)
+
+    Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
   after_send: =>
     @reset(false)

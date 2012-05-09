@@ -15,16 +15,4 @@ class CuentaPorPagar extends Spine.Model
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter
 
-
-  @insert: (documentos) ->
-    documentos = @salesforceFormat(documentos)
-    
-    $.ajax
-      url        : Spine.server + "/rest"
-      xhrFields  : {withCredentials: true}
-      type       : "POST"
-      data       : @ajaxParameters( { name: "Tesoreria" , data: '{"documentos":' + documentos + '}' })
-      success    : @on_send_success
-      error      : @on_send_error
-
 module.exports = CuentaPorPagar

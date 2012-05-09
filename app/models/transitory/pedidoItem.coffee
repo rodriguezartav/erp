@@ -27,16 +27,7 @@ class PedidoItem extends Spine.Model
     pedido.updateTotal()
     pedido.save()
     
-  @insert: (documentos) ->
-    pedidos = @salesforceFormat(documentos)
-    
-    $.ajax
-      url        : Spine.server + "/rest"
-      xhrFields  : {withCredentials: true}
-      type       : "POST"
-      data       : @ajaxParameters( { name: "Oportunidad" , data: '{"pedidos":' + pedidos + '}' })
-      success    : @on_send_success
-      error      : @on_send_error  
+
     
   @itemsInPedido: (pedido) ->
     PedidoItem.findAllByAttribute("Referencia", pedido.Referencia )

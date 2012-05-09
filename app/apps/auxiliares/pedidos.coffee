@@ -195,15 +195,13 @@ class Credito extends Spine.Controller
 
   send: (e) =>
     @save()
-    pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido) )
-    
-    data =
-      class: Cliente
-      restRoute: "Oportunidad"
-      restMethod: "POST"
-      restData: '{"pedidos":' + pedidos + '}'
 
-    Spine.trigger "show_lightbox" , "rest" , data , @after_send   
+    data =
+      class: PedidoItem
+      restData: PedidoItem.itemsInPedido(@pedido)
+
+    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+
 
   after_send: =>
     @customReset()

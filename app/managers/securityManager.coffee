@@ -12,7 +12,6 @@ PagosProveedor = require("apps/auxiliares/pagosProveedor")
 NotasCredito = require("apps/auxiliares/notasCredito")
 NotasDebito = require("apps/auxiliares/notasDebito")
 
-EmitirRecibo = require("apps/auxiliares/emitirRecibo")
 EmitirPago = require("apps/auxiliares/emitirPago")
 
 VerSaldos = require("apps/vistas/verSaldos")
@@ -21,10 +20,7 @@ Pedidos = require("apps/auxiliares/pedidos")
 PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
 
 PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
-RecibosAprobacion = require("apps/procesos/recibosAprobacion")
-RecibosConversion = require("apps/procesos/recibosConversion")
 
-#CierresContable = require("apps/contables/cierresContable")
 FacturasImpresion = require("apps/print/facturas")
 
 NotasImpresion = require("apps/print/notas")
