@@ -10,9 +10,7 @@ class Producto extends Spine.Model
 
   @autoPush = true;
   @autoQueryTimeBased = true;
-  @allowedPushActions = "updated"
   @allowCreate = false
-
 
   @queryFilter: (options ) =>
     return "" if !options

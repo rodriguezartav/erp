@@ -8,9 +8,9 @@ class SalesforceStreaming
 
   constructor: (@app) ->
     @pusher = new Pusher
-      appId: '19854',
-      key: 'a8cfc9203fbabab7e67f',
-      secret: 'dac21dde46d73add4aa3'
+      appId: process.env.PUSHER_APP_ID,
+      key: process.env.PUSHER_KEY,
+      secret: process.env.PUSHER_SECRET
 
   whenLoggedIn: (oauth) =>
     @pusher.trigger "salesforce_connection_information" , 'connect' , {"message": "Connection Established with Server"}

@@ -10,7 +10,6 @@ class Cliente extends Spine.Model
 
   @autoPush= true
   @autoQueryTimeBased = true
-  @allowCreate = true
 
   @avoidInsertList = ["Name","Rating_Crediticio","CodigoExterno","Activo","Saldo","DiasCredito","CreditoAsignado"]
 

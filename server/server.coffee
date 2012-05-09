@@ -30,10 +30,10 @@ OPF.bind "web_login_complete" , =>
 ##Setup Routes
 
 app.get '/' , (req, res) ->
-  res.render "app" , {useManifest: false, app: ""}
+  res.render "app" , {useManifest: false, app: "" , pusherKey: process.env.PUSHER_KEY }
   
 app.get '/remote' , (req, res) ->
-  res.render "app" , {useManifest: true,  app: ""}
+  res.render "app" , {useManifest: true,  app: "" , pusherKey: process.env.PUSHER_KEY }
 
 
 app.listen(port)

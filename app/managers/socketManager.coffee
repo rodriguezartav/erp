@@ -12,7 +12,7 @@ class SocketManager
     Spine.bind "login_complete" , @subscribe
 
   handshake: =>
-    @pusher = new Pusher('a8cfc9203fbabab7e67f') 
+    @pusher = new Pusher(Spine.pusherKey) 
     
     @salesforceConnectionChannel  = @pusher.subscribe('salesforce_connection_information')
     
@@ -28,8 +28,9 @@ class SocketManager
     @channel.bind "Pedido__c" , (message) =>
       results = PedidoPreparado.updateFromSocket(message)
       if results  != false
-        if Spine.session.hasPerfiles(['Venededor','Platform System Admin','Ejecutivo Ventas' , 'SubGerencia']) and PedidoPreparado.lastNotificationState == 'Facturado'
+        if Spine.session.hasPerfiles(['Venededor','Platform System Admin','Ejecutivo Ventas' , 'SubGerencia']) and PedidoPreparado.lastNotificationEstado == 'Facturado'
           Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Aprobado Pedido de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
+        
         else if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito' , 'SubGerencia']) and PedidoPreparado.lastNotificationEstado == 'Pendiente'
           Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
 

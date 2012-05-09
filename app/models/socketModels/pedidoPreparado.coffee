@@ -15,13 +15,10 @@ class PedidoPreparado extends Spine.Model
   @destroyBeforeRefresh = true;
 
   @beforeSocketUpdate: (results) =>
-    acceptResults = true
-    @lastNotificationState = ''
     for result in results
       @lastNotificationEstado = result['Estado']
       @lastNotificationCliente = result['Cliente']
-      #acceptResults = false if result['Estado'] != "Pendiente"
-    return acceptResults;
+    return true;
 
   @aprobar: (ids,observacion,aprobar) ->
     $.ajax

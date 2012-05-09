@@ -32,7 +32,7 @@ class App extends Spine.Controller
     StatManager.registerManager()
 
     Spine.server = @options.server
-    Spine.frontEndServer = @options.frontEndServer
+    Spine.pusherKey = @options.pusherKey
 
     new Header(el: $("header"))
     new Lightbox(el: $(".lightboxCanvas"))

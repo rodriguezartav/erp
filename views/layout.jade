@@ -36,6 +36,7 @@ else
     
     script(src='/application.js', type='text/javascript', charset='utf-8')
 
+
     script(type='text/javascript', charset='utf-8')
       var apiServer = "http://api2s.heroku.com";
       
@@ -45,11 +46,13 @@ else
         var App = require("index");
         var ErrorManager = require("managers/errorManager");
 
+        var pusherKey = "#{pusherKey}";
+
         var server= "http://api2s.heroku.com";
        // var server= "http://localhost:9393";
         
         var instance_url = "https://cs11.salesforce.com";
-        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null , server: server } });
+        exports.app =  new App({ el: $(".appCanvas") , options: { salesforceSession: null , server: server , pusherKey: pusherKey} });
 
         window.onerror = function (msg, url, num) {
           ErrorManager.logError(msg)
