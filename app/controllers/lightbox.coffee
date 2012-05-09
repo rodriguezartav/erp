@@ -34,7 +34,7 @@ class Lightbox extends Spine.Controller
         @current = new @current(data: data, callback: callback)
         @html @current
 
-  hide: =>
+  hide: (delay=false) =>
     @current?.release?()
     @current = null
     @el.empty()
