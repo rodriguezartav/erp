@@ -98,8 +98,12 @@ class FlujoDePago extends Spine.Controller
       restMethod: "POST"
       restData:   '{"cuentas":' +   cuentasSf  + '}'
 
-    Spine.trigger "show_lightbox" , "rest" , data , @reset
+    Spine.trigger "show_lightbox" , "rest" , data , @saveSuccess
 
+  saveSuccess: =>
+    window.open("https://na7.salesforce.com/00OA0000004WuVF")
+    @reset()
+    
   reset: ->
     CuentaPorPagar.unbind "query_success" , @onLoadPedidos
     

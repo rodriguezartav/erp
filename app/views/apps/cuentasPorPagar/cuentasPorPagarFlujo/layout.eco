@@ -32,7 +32,14 @@
     </tbody>
   </table>
 
-  <h5 style="text-align: right;">Escoja los saldos que quiere pagar </h5>
+  <h5>
+    <span>
+      <a href="https://na7.salesforce.com/00OA0000004WuVF">Ver Reporte del Flujo (sin cambios)</a>
+      
+    </span>
+    <span class="pull-right">Escoja los saldos que quiere pagar
+    <span> 
+  </h5>
 
   <h2 style="text-align: right;">Total a Pagar: <span class="lblTotal">0.00</span>  </h3>
 </div>

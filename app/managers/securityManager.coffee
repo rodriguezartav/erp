@@ -46,7 +46,7 @@ class SecurityManager
     @profiles["Presidencia"] =  [  AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarAprobacion       ,PedidosAprobacion   , DocumentosAnular ]
     @profiles["SubGerencia"] =  [  AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial ,  CuentasPorPagarFlujo, CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular ]
     @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , DocumentosAnular]
-    @profiles["Encargado de Ventas"] = [PedidosEspecial,AjustarNegociacion,Pedidos , FacturasImpresion , DocumentosAnular  ]
+    @profiles["Encargado de Ventas"] = [Pedidos , FacturasImpresion , DocumentosAnular  ]
     @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Devoluciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
     @profiles["Vendedor"] = [Pedidos]
     @profiles["Contabilidad"] = [ CuentasPorPagarFlujo ]
