@@ -21,6 +21,7 @@ class Items extends Spine.Controller
   constructor: ->
     super 
     @negociacion = Negociacion.createFromProducto(@producto) if @producto
+    @log @negociacion
     @html require("views/apps/procesos/ajustarNegociacion/item")(@negociacion) 
 
   on_click: (e) =>

@@ -10,8 +10,9 @@ class Negociacion extends Spine.Model
     negociacionProducto
 
   @createFromProducto: (producto ) ->
+    console.log producto
     negociacion = Negociacion.create
-      Familia: producto.Familiar
+      Familia: producto.Familia
       SubFamilia: producto.SubFamilia
       Descuento: 0
 

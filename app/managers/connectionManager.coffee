@@ -49,7 +49,7 @@ class ConnectionManager
     #if @cyclesCount > 380
       #@resetSocketSequence()
  
-    if @cyclesCount > 60
+    if @cyclesCount > 100
       @cyclesCount = 0
       @fetchServerData()
  

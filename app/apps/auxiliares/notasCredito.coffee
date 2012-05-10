@@ -54,6 +54,7 @@ class NotasCredito extends Spine.Controller
     
   customReset: =>
     Cliente.reset_current()
+    @clientes.reset()
     @documento.destroy() if @documento
     
 

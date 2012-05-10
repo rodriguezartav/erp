@@ -6,8 +6,8 @@ class FlujoDePago extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Tesoreria"
-  @label = "Flujo de Caja"
-  @icon = "icon-ok-sign"
+  @label = "Flujo de Pagos"
+  @icon = "icon-road"
 
   elements:
     ".srcCuentas" : "srcCuentas" 

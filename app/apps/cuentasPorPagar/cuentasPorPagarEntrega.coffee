@@ -7,7 +7,7 @@ class CuentasPorPagarEntrega extends Spine.Controller
 
   @departamento = "Tesoreria"
   @label = "Entrega de Cheques"
-  @icon = "icon-ok-sign"
+  @icon = "icon-envelope"
 
   elements:
     ".srcCuentas" : "srcCuentas" 
