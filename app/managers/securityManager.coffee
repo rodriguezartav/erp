@@ -43,8 +43,8 @@ class SecurityManager
     apps = [  AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega]
-    @profiles["Presidencia"] =  [  AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarAprobacion       ,PedidosAprobacion   , DocumentosAnular ]
-    @profiles["SubGerencia"] =  [  AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial ,  CuentasPorPagarFlujo, CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular ]
+    @profiles["Presidencia"] =  [  AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo,CuentasPorPagarAprobacion       ,PedidosAprobacion   , DocumentosAnular ]
+    @profiles["SubGerencia"] =  [  AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular ]
     @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , DocumentosAnular]
     @profiles["Encargado de Ventas"] = [Pedidos , FacturasImpresion , DocumentosAnular  ]
     @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Devoluciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
