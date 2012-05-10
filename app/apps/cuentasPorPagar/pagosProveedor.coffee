@@ -31,30 +31,41 @@ class PagosProveedor extends Spine.Controller
     "click .incluir" : "onIncluir"
     "click .excluir" : "onExcluir"
 
+  setBindings: =>
+    CuentaPorPagar.bind "query_success" , @onLoadSaldos
+    Cuenta.bind "query_success" , @onLoadCuenta
+    Proveedor.bind "current_set", @onProveedorSet
+    
+    
+  resetBindings: =>
+    CuentaPorPagar.unbind "query_success" , @onLoadSaldos
+    Cuenta.unbind "query_success" , @onLoadCuenta
+    Proveedor.unbind "current_set", @onProveedorSet
+  
+
   constructor: ->
     super
     @error.hide()
     CuentaPorPagar.destroyAll()
-    CuentaPorPagar.bind "query_success" , @onLoadSaldos
     
     Cuenta.query({tipos: ["'Bancaria'"] } )
-    Cuenta.bind "query_success" , @onLoadCuenta
 
     Proveedor.query()
-    Proveedor.bind "current_set", @onProveedorSet
     
-    @html require("views/apps/auxiliares/pagosProveedor/layout")(@constructor)
+    @setBindings()
+    
+    @html require("views/apps/cuentasPorPagar/pagosProveedor/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
     
 
   onProveedorSet: =>
-    CuentaPorPagar.query({ proveedor: Proveedor.current.id ,  saldo: true , aprobadoParaPagar: true})
+    CuentaPorPagar.query({ proveedor: Proveedor.current.id ,  saldo: true , estado: "'Para Pagar'"})
     
   onLoadCuenta: =>
-    @cuentas.html require("views/apps/auxiliares/pagosProveedor/itemCuentaGasto")(Cuenta.all())
+    @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
     
   onLoadSaldos: =>
-    @src_saldos.html require("views/apps/auxiliares/pagosProveedor/saldoItem")(CuentaPorPagar.all())
+    @src_saldos.html require("views/apps/cuentasPorPagar/pagosProveedor/saldoItem")(CuentaPorPagar.all())
     @refreshElements()
 
   onIncluir: (e) =>
@@ -121,8 +132,12 @@ class PagosProveedor extends Spine.Controller
     @pagoProveedor.destroy()
     @reset()
 
-  customReset: ->
+  customReset: =>
     @src_saldos.empty()
+    @resetBindings()
+    @proveedores.reset()
+    
+    
     CuentaPorPagar.destroyAll()
 
 module.exports = PagosProveedor

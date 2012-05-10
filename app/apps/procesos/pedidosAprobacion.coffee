@@ -37,11 +37,7 @@ class PedidosAprobacion extends Spine.Controller
     PedidoPreparado.query()    
 
   renderPedidos: =>
-    
-    
-    
     @groups = PedidoPreparado.group_by_referencia()
-    @log @groups
     @src_pedidos.html require("views/apps/procesos/pedidosAprobacion/item")(@groups)
 
   on_action_click: (e) =>
@@ -67,8 +63,8 @@ class PedidosAprobacion extends Spine.Controller
 
   reset: ->
     PedidoPreparado.unbind "query_success" , @onLoadPedidos
+    PedidoPreparado.unbind "push_success" , @renderPedidos
     @release()
-    @customReset?()
     @navigate "/apps"
 
 module.exports = PedidosAprobacion

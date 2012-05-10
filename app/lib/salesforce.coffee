@@ -32,18 +32,19 @@ Spine.Model.Salesforce =
         for attr of item.attributes()
           if @avoidInsertList.indexOf(attr) == -1
             object[attr + "__c" ] = item[attr] if attr != "id" and attr != "Name"
-            object["Id"] = item[attr] if attr = "id"
-            object["Name"] = item[attr] if attr = "Name"
+            object["Id"] = item[attr] if attr == "id"
+            object["Name"] = item[attr] if attr == "Name"
 
         object
 
-      salesforceFormat: (items) =>  
+      salesforceFormat: (items,includeId = false) =>  
         objects = []
         for item in items
           object = {}
           for attr of item.attributes()
             if @avoidInsertList.indexOf(attr) == -1
               object[attr + "__c" ] = item[attr] if attr != "id"
+              object["Id"] = item[attr] if attr == "id" and includeId
           objects.push object
         requests = JSON.stringify( objects )  
         requests
@@ -60,7 +61,9 @@ Spine.Model.Salesforce =
         return false
 
 
-      rest: (name,method,jsonObject) ->
+      rest: (name,method,jsonObject) =>
+        Spine.trigger "query_start"
+        
         @beforeRest
         StatManager.sendEvent 'Action' , { type: "Rest" , class: name }
         
@@ -71,11 +74,13 @@ Spine.Model.Salesforce =
           data       : @ajaxParameters( { name: name , data: jsonObject } )
           success    : @on_send_success
           error      : @on_send_error
-        
-        
+          complete   : @on_query_complete
+          
       insert: (documentos,url) =>
         @beforeInsert()
         className = @overrideName || @className 
+        Spine.trigger "query_start"
+          
         ##STAT  
         StatManager.sendEvent "Saved #{className}" , { count : documentos.length }
         
@@ -85,6 +90,8 @@ Spine.Model.Salesforce =
           data       : @ajaxParameters( { type: "#{className}__c" , items: @salesforceFormat(documentos) } )
           success    : @on_send_success
           error      : @on_send_error
+          complete   : @on_query_complete
+          
 
       on_send_success: (raw_results) =>
         results = JSON.parse raw_results
@@ -102,6 +109,9 @@ Spine.Model.Salesforce =
     
     
     ##QUERY ***************************
+
+      queryOrderAddCondition: (order,filter) ->
+        filter += " #{order} "
 
       queryFilterAddCondition: (condition,filter) ->
         if filter.indexOf("where") == -1

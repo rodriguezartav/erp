@@ -52,11 +52,11 @@ class FacturasProveedor extends Spine.Controller
     @txtPlazo.val(Proveedor.current.Plazo || 0)
 
   onLoadCuenta: =>
-    @cuentas.html require("views/apps/auxiliares/pagosProveedor/itemCuentaGasto")(Cuenta.all())
+    @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
 
 
   render: =>  
-    @html require("views/apps/auxiliares/facturasProveedor/layout")(@constructor)
+    @html require("views/apps/cuentasPorPagar/facturasProveedor/layout")(@constructor)
     @refreshView(@cuentaPorPagar,@inputs_to_validate)    
     @proveedores = new Proveedores(el: @src_proveedor)
 

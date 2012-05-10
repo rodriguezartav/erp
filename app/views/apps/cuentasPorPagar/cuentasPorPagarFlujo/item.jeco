@@ -1,0 +1,25 @@
+<% Spine   = require('spine') %>
+
+<tr>
+<td class="info_popover" rel="popover" data-content="<%= @Observacion %>" data-original-title="Observacion de la Factura">
+  <i class="icon-tag"></i>
+  <a target="_blank" href="<%= Spine.session.instance_url + "/" + @id %>"> <%= @Referencia  %> </a> 
+</td>
+  <td><p><%= @NombreProveedor %><p></td>
+
+  <td><p><%= @FechaVencimiento%><p></td>
+  <td>
+    <div class="input-append date txtFecha" data-id="<%= @id  %>" data-date="<%= @FechaPagoProgramado%>" data-date-format="yyyy-mm-dd">
+        <input data-id="<%= @id  %>" placeholder="Escoja una Fecha" class="span2" size="16" type="text" value="<%= @FechaPagoProgramado%>">
+        <span class="add-on"><i class="icon-th"></i></span>
+    </div>
+  </td>
+  
+  <td style="text-align: center;">
+    <button  data-id="<%= @id  %>" data-saldo="<%= @Saldo %>" style="min-width: 80%" class="btn saldo" data-toggle="button">
+      <%= @Saldo.toMoney() %>
+    </button>
+  </td>
+
+  
+</tr>

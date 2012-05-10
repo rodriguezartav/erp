@@ -6,8 +6,6 @@ Salidas = require("apps/auxiliares/salidas")
 Devoluciones = require("apps/auxiliares/devoluciones")
 Compras = require("apps/auxiliares/compras")
 
-FacturasProveedor = require("apps/auxiliares/facturasProveedor")
-PagosProveedor = require("apps/auxiliares/pagosProveedor")
 
 NotasCredito = require("apps/auxiliares/notasCredito")
 NotasDebito = require("apps/auxiliares/notasDebito")
@@ -29,20 +27,29 @@ PagosAnular = require("apps/procesos/pagosAnular")
 
 AjustarNegociacion = require("apps/procesos/ajustarNegociacion")
 
+
+FacturasProveedor = require("apps/cuentasPorPagar/facturasProveedor")
+PagosProveedor = require("apps/cuentasPorPagar/pagosProveedor")
+
+CuentasPorPagarFlujo = require("apps/cuentasPorPagar/cuentasPorPagarFlujo")
+CuentasPorPagarAprobacion= require("apps/cuentasPorPagar/cuentasPorPagarAprobacion")
+CuentasPorPagarEntrega= require("apps/cuentasPorPagar/cuentasPorPagarEntrega")
+
+
 class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor , PagosProveedor , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
+    apps = [  AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor ]
-    @profiles["Presidencia"] = apps
-    @profiles["SubGerencia"] = apps 
+    @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega]
+    @profiles["Presidencia"] =  [  AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarAprobacion       ,PedidosAprobacion   , DocumentosAnular ]
+    @profiles["SubGerencia"] =  [  AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial ,  CuentasPorPagarFlujo, CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular ]
     @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , DocumentosAnular]
     @profiles["Encargado de Ventas"] = [PedidosEspecial,AjustarNegociacion,Pedidos , FacturasImpresion , DocumentosAnular  ]
     @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Devoluciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,DocumentosAnular]
     @profiles["Vendedor"] = [Pedidos]
-    @profiles["Contabilidad"] = []
+    @profiles["Contabilidad"] = [ CuentasPorPagarFlujo ]
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>

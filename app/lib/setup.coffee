@@ -28,3 +28,4 @@ require('./bootstrap/bootstrap-button')
 require('./bootstrap/bootstrap-collapse')
 
 require('./format')
+require('./datePicker')
