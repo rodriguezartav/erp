@@ -56,7 +56,7 @@ class AjustarNegociacion extends Spine.Controller
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
-    "click .clienteItem" : "onClienteItemClick"
+    "click .clienteItem>a" : "onClienteItemClick"
 
   constructor: ->
     super

@@ -3,7 +3,12 @@
 
 <td class="primary"><h4 class="popable" rel="popover" data-content="Descuentos y Ofertas" data-original-title="<%= producto.InventarioActual %>"> <%= producto.Name.capitalize() %> </h4></td>
 
-<td><h4 class="precio" data-precio1="<%= producto.Precio_Distribuidor %>" data-precio2="<%= producto.Precio_Ferreteria %>" ><%= @Precio?.toMoney() %></h4></td>
+<td>
+  <span class="badge badge-success data-current-precio">1</span>
+  <h4 style="display: inline;" class="precio" data-current-precio="1" data-precio1="<%= producto.Precio_Distribuidor %>" data-precio2="<%= producto.Precio_Ferreteria %>" data-precio3="<%= producto.Precio_Industria || 1 %>" data-precio4="<%= producto.Precio_Retail || 1 %>">
+  <%= @Precio?.toMoney() %>
+  </h4>
+</td>
 
 <td><input class="span1 validatable" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @Cantidad %>" /></td>
 

@@ -14,7 +14,8 @@ class Items extends Spine.Controller
   tag: "tr"
 
   elements:
-    ".validatable" : "inputs_to_validate"
+    ".validatable"          : "inputs_to_validate"
+    ".data-current-precio"  : "data_current_precio"
 
   events:
     "click .js_btn_remove" : "reset"
@@ -41,14 +42,19 @@ class Items extends Spine.Controller
 
   onPrecioClick: (e) =>
     target = $(e.target)
-    precio2 = parseFloat(target.attr("data-precio2"))
-    precio1 = parseFloat(target.attr("data-precio1"))
-
-    if @pedidoItem.Precio == precio2
-      @pedidoItem.Precio = precio1
-    else
-      @pedidoItem.Precio = precio2
-
+    precios = []
+    precios.push parseFloat(target.attr("data-precio1"))
+    precios.push parseFloat(target.attr("data-precio2"))
+    precios.push parseFloat(target.attr("data-precio3"))
+    precios.push parseFloat(target.attr("data-precio4"))
+    currentPrecio = parseInt(target.attr("data-current-precio")) 
+    currentPrecio +=1
+    currentPrecio = 1 if currentPrecio > 4
+    
+    @pedidoItem.Precio = precios[currentPrecio-1]
+    target.attr "data-current-precio" , currentPrecio
+      
+    @data_current_precio.html currentPrecio
       
     target.html @pedidoItem.Precio.toMoney()
     @checkItem()
@@ -135,7 +141,9 @@ class Credito extends Spine.Controller
   addItem: =>
     return false if PedidoItem.isProductoInPedido(Producto.current,@pedido.Referencia)
     return false if Producto.current.InventarioActual == 0
-    return false if PedidoItem.findAllByAttribute( "Referencia" , @pedido.Referencia ).length > 11
+    if PedidoItem.findAllByAttribute( "Referencia" , @pedido.Referencia ).length > 10
+      Spine.trigger "show_lightbox" , "show_warning" , error: "Solo se pueden ingresar 10 Productos por Factura"
+      return false 
 
     item = new Items(producto: Producto.current , referencia: @pedido.Referencia, negociaciones: @negociaciones)
     @registerItem(item)

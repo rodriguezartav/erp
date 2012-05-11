@@ -1,8 +1,8 @@
 Spine = require('spine')
 
 class Producto extends Spine.Model
-  @configure 'Producto', 'Name', 'CodigoExterno', 'InventarioActual', 'Precio_Distribuidor' , 'Precio_Ferreteria' 
-  , 'DescuentoMaximo' ,'Familia', 'Impuesto' , "Activo" , "SubFamilia"
+  @configure 'Producto', 'Name', 'CodigoExterno', 'InventarioActual', 'Precio_Distribuidor' , 'Precio_Ferreteria','Precio_Industria',
+  'Precio_Retail' , 'DescuentoMaximo' ,'Familia', 'Impuesto' , "Activo" , "SubFamilia"
 
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SelectableModel

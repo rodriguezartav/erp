@@ -26,7 +26,6 @@ class Facturas extends Spine.Controller
   reload: ->
     FacturaPreparada.destroyAll()
     FacturaPreparada.query({})
-    
 
   renderDocumentos: =>
     docs= FacturaPreparada.findAllByAttribute "Tipo_de_Documento" , "FA"
