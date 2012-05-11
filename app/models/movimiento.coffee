@@ -3,7 +3,7 @@ Spine = require('spine')
 class Movimiento extends Spine.Model
   @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "Impuesto" , 
   "Descuento" , "SubTotal" , "Total" , "Referencia","Observacion","Cliente",
-  "CodigoExterno","Descuento_Unitario","Impuesto_Unitario" , "Proveedor","Plazo", "Proveedor"
+  "CodigoExterno","Descuento_Unitario","Impuesto_Unitario" ,"Plazo", "Proveedor"
   
   @extend Spine.Model.Salesforce
    
