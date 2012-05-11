@@ -8,14 +8,19 @@
 
 <div class="content well">
   <div class="row-fluid">
-    <div class="span6">
+    <div class="span12">
        <h3>Escoja un Cliente</h3>
        <div class="src_cliente"></div>
     </div>
   </div>
+  <ul class="nav nav-pills clientes_list">
+  </ul>
+  
 </div>
 
 <div class="content well">
+<h4 class="lbl_cliente">
+<h4/>
  <table class="table table-striped table-bordered table-condensed">
     <thead>
       <tr>

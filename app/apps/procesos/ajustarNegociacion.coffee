@@ -21,7 +21,6 @@ class Items extends Spine.Controller
   constructor: ->
     super 
     @negociacion = Negociacion.createFromProducto(@producto) if @producto
-    @log @negociacion
     @html require("views/apps/procesos/ajustarNegociacion/item")(@negociacion) 
 
   on_click: (e) =>
@@ -51,10 +50,13 @@ class AjustarNegociacion extends Spine.Controller
     ".lbl_descuento" : "lbl_descuento"
     ".lbl_impuesto" : "lbl_impuesto"
     ".lbl_total" : "lbl_total"
+    ".clientes_list" : "clientes_list"
+    ".lbl_cliente"   : "lbl_cliente"
 
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
+    "click .clienteItem" : "onClienteItemClick"
 
   constructor: ->
     super
@@ -66,8 +68,8 @@ class AjustarNegociacion extends Spine.Controller
     
     @html require("views/apps/procesos/ajustarNegociacion/layout")(@)
     @clientes = new Clientes(el: @src_cliente)
-
     @setBindings()
+    @addClientesWithNegociacion()
 
   setBindings: =>
     Producto.bind "current_set" , @addItem
@@ -76,6 +78,18 @@ class AjustarNegociacion extends Spine.Controller
   resetBindings: =>
     Cliente.unbind "current_set" , @addCliente
     Producto.unbind "current_set" , @addMovimiento
+
+  addClientesWithNegociacion: =>
+    clientes = Cliente.select (cliente) ->
+      return if cliente.Negociacion?.length > 0 then true else false
+    @clientes_list.html require("views/apps/procesos/ajustarNegociacion/clienteItem")(clientes)
+    
+  onClienteItemClick: (e) ->
+    target = $(e.target).parents(".clienteItem")
+    id = target.attr "data-id"
+    cliente = Cliente.find id 
+    Cliente.set_current cliente
+    @addItems()
     
   addCliente: =>
     Negociacion.destroyAll()
@@ -85,6 +99,7 @@ class AjustarNegociacion extends Spine.Controller
     for item in @items
       item.reset()
    
+    @lbl_cliente.html "<a>#{Cliente.current.Name}</a>"
     Negociacion.createFromCliente(Cliente.current)
     
     for negociacion in Negociacion.all()
