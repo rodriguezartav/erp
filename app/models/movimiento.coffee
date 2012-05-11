@@ -8,7 +8,8 @@ class Movimiento extends Spine.Model
   @extend Spine.Model.Salesforce
    
   @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario", "CodigoExterno"] 
-  @avoidQueryList = ["Plazo"]
+  #Adeed proveedor to list, because error in Devolucion 
+  @avoidQueryList = ["Plazo","Proveedor"]
    
   @queryFilter: (options ) =>
     return "" if !options
@@ -23,7 +24,7 @@ class Movimiento extends Spine.Model
       Producto: producto.id
       Name: producto.Name
       Cantidad: 1
-      ProductoCosto: producto.Costo
+      ProductoCosto: producto.Costo if producto.Costo
       Impuesto: producto.Impuesto
       ProductoPrecio: producto.Precio
       Descuento: producto.Descuento
