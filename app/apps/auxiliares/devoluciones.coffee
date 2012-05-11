@@ -85,13 +85,15 @@ class Devoluciones extends Spine.Controller
     @documento = Documento.create {Tipo_de_Documento: "NC"}     
     Movimiento.bind "query_success" , @onLoadMovimientos
     Movimiento.bind "change update" , @onMovimientoChange
-    
-    Cliente.bind 'current_set' , (cliente) =>
-      Movimiento.destroyAll()
-      Movimiento.query {cliente: cliente, tipos: ["'FA'"] , estado: "Impreso" }
+    Cliente.bind 'current_set' , @onClienteSet
+     
       
     @html require("views/apps/auxiliares/devoluciones/layout")(@constructor)
     @clientes = new Clientes(el: @src_cliente)
+
+  onClienteSet: (cliente) =>
+    Movimiento.destroyAll()
+    Movimiento.query {cliente: cliente, tipos: ["'FA'"] , estado: "Impreso" }
 
   onLoadMovimientos: =>
     movimientos = Movimiento.all()
@@ -152,6 +154,7 @@ class Devoluciones extends Spine.Controller
     @documento.destroy()
     Movimiento.unbind "query_success" , @onLoadMovimientos
     Movimiento.unbind "change update" , @onMovimientoChange
+    Cliente.unbind 'current_set' , @onClienteSet
     
 
 module.exports = Devoluciones
