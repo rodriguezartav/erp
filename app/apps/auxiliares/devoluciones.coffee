@@ -93,7 +93,7 @@ class Devoluciones extends Spine.Controller
 
   onClienteSet: (cliente) =>
     Movimiento.destroyAll()
-    Movimiento.query {cliente: cliente, tipos: ["'FA'"] , estado: "Impreso" }
+    Movimiento.query {cliente: cliente, tipos: ["'FA'"] , estado: "Impreso", diasAtras: "11" }
 
   onLoadMovimientos: =>
     movimientos = Movimiento.all()
