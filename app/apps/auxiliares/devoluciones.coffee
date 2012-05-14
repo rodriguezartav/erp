@@ -93,7 +93,7 @@ class Devoluciones extends Spine.Controller
 
   onClienteSet: (cliente) =>
     Movimiento.destroyAll()
-    Movimiento.query {cliente: cliente, tipos: ["'FA'"] , estado: "Impreso", diasAtras: "30" }
+    Movimiento.query {cliente: cliente, tipos: ["'FA'"] , estado: "Impreso", diasAtras: "12" }
 
   onLoadMovimientos: =>
     movimientos = Movimiento.all()
@@ -123,7 +123,7 @@ class Devoluciones extends Spine.Controller
     
   beforeSend: (object) =>
     for movimiento in Movimiento.all()
-      movimiento.Tipo             = object.Tipo_de_Documento
+      movimiento.Tipo             = "NC"
       movimiento.Observacion      = object.Observacion
       movimiento.Referencia       = movimiento.CodigoExterno
       movimiento.CodigoExterno    = null

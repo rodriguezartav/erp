@@ -7,7 +7,7 @@ class Documento extends Spine.Model
   
   @extend Spine.Model.Salesforce
 
-  @avoidQueryList: [ "Referencia" , "Fuente" ,"IsContado"]
+  @avoidQueryList: [ "Fuente" ,"IsContado"]
 
   updateFromMovimientos: (movimientos)  ->
     @Total = 0

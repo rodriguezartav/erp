@@ -22,10 +22,8 @@
     <thead>
         <tr>
           <th>Consecutivo</th>
-          <th>Tipo</th>
           <th>Cliente</th>
           <th>Total</th>
-          <th>Estado</th>
           <th></th>
         </tr>
       </thead>

@@ -12,16 +12,21 @@ class SocketManager
     Spine.bind "login_complete" , @subscribe
 
   handshake: =>
-    @pusher = new Pusher(Spine.pusherKey) 
+    try
+      @pusher = new Pusher(Spine.pusherKey) 
     
-    @salesforceConnectionChannel  = @pusher.subscribe('salesforce_connection_information')
+      @salesforceConnectionChannel  = @pusher.subscribe('salesforce_connection_information')
     
-    @salesforceConnectionChannel.bind 'connect', (data) ->
-      #Spine.trigger "show_lightbox" , "showWarning" , error : "Se conecto al servicio de actualizacion"
+      @salesforceConnectionChannel.bind 'connect', (data) ->
+        #Spine.trigger "show_lightbox" , "showWarning" , error : "Se conecto al servicio de actualizacion"
 
-    @salesforceConnectionChannel.bind 'error', (data) ->
-      #Spine.trigger "show_lightbox" , "showWarning" , error : "Se desconecto al servicio de actualizacion, no recibira actualizaciones"
-
+      @salesforceConnectionChannel.bind 'error', (data) ->
+        #Spine.trigger "show_lightbox" , "showWarning" , error : "Se desconecto al servicio de actualizacion, no recibira actualizaciones"
+    
+    catch error
+      Spine.trigger "show_lightbox" , "show-warning" , error: "No se puedo conectar al Notificador , intente reiniciar cuando haya internet"
+    
+  
   subscribe: =>
     @channel = @pusher.subscribe('salesforce_data_push')
 

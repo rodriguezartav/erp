@@ -20,24 +20,23 @@ class Movimientos extends Spine.Controller
   constructor: ->
     super
     @movimiento = Movimiento.create_from_producto(@producto)
-    @html require("views/apps/auxiliares/entradas/item")(@movimiento)
+    @html require("views/apps/auxiliares/salidas/item")(@movimiento)
   
   checkItem: (e) =>
     @updateFromView(@movimiento,@inputs_to_validate)
     
-  reset: ->
+  customReset: ->
     @movimiento.destroy()
     @release()
     
 
-class Entradas extends Spine.Controller
+class SalidasDanadas extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
-  className: "row-fluid"
 
   @departamento = "Inventarios"
-  @label = "Entradas de Mercaderia"
-  @icon = "icon-arrow-right"
-  
+  @label = "Salida de Mercaderia"
+  @icon = "icon-arrow-left"
+
 
   className: "row-fluid"
 
@@ -55,32 +54,32 @@ class Entradas extends Spine.Controller
     Producto.reset_current()
     Movimiento.destroyAll()
     @movimientos = []
-    @itemToControllerMap = {}
+    @itemToControllerMap= []
 
-    @documento = Documento.create {Tipo_de_Documento: "EN"}
-    @html require("views/apps/auxiliares/entradas/layout")(@constructor)
+    @documento = Documento.create {Tipo_de_Documento: "SAD"}
+    @html require("views/apps/auxiliares/salidas/layout")(@constructor)
     @error.hide()
     @setBindings()
 
   setBindings: =>
     Producto.bind "current_set" , @addMovimiento
-    Movimiento.bind "beforeDestroy" , @removeMovimiento
+    Movimiento.bind "beforeDestroy" , @removeItem
 
   resetBindings: =>
-    Movimiento.unbind "beforeDestroy" , @removeMovimiento
+    Movimiento.unbind "beforeDestroy" , @removeItem
     Producto.unbind "current_set" , @addMovimiento
-    
-    
+
+
   addMovimiento: =>
     movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
     if(movimiento.length == 0)
       item = new Movimientos(producto: Producto.current)
       @movimientos.push item
-      @itemToControllerMap[item.movimiento.id] = item
       @movimientos_list.append item.el
+      @itemToControllerMap[item.movimiento.id] = item
+    
 
-
-  removeMovimiento: (item) =>
+  removeItem: (item) =>
     item = @itemToControllerMap[item.id]
     index = @movimientos.indexOf(item)
     @movimientos.splice(index,1)
@@ -89,9 +88,8 @@ class Entradas extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Ingrese al menos un producto" if Movimiento.count() == 0
     item.checkItem() for item in @movimientos
-
+    
   beforeSend: (object) ->
-    console.log object
     for movimiento in Movimiento.all()
       movimiento.Tipo             = object.Tipo_de_Documento
       movimiento.Nombre_Contado   = object.Nombre_Contado
@@ -105,23 +103,22 @@ class Entradas extends Spine.Controller
     
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)
-    
+   
     data =
       class: Movimiento
       restData: Movimiento.all()
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
-    
 
   after_send: =>
     @reset()
 
   customReset: =>
+
     for items in @movimientos
       items?.reset()
     @documento.destroy()
     @resetBindings()
-    
   
 
-module.exports = Entradas
+module.exports = SalidasDanadas

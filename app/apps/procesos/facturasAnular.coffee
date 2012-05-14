@@ -2,9 +2,9 @@ require('lib/setup')
 Spine = require('spine')
 Documento = require("models/documento")
 
-class DocumentosAnular extends Spine.Controller
-  @departamento = "Credito y Cobro"
-  @label = "Anular Documentos"
+class FacturasAnular extends Spine.Controller
+  @departamento = "Ventas"
+  @label = "Anular Facturas"
   @icon = "icon-ban-circle"
 
   className: "row-fluid"
@@ -19,18 +19,18 @@ class DocumentosAnular extends Spine.Controller
 
   constructor: ->
     super
-    @html require("views/apps/procesos/documentosAnular/layout")(@constructor)
+    @html require("views/apps/procesos/facturasAnular/layout")(@constructor)
     Documento.destroyAll()
     Documento.bind "query_success" , @renderDocumentos
     @reload()
 
   reload: ->
-    Documento.query( { fecha: "TODAY" } )
+    Documento.query( { tipos: "'FA'" ,  fecha: "TODAY" } )
 
   renderDocumentos: =>
     @list.empty()
     for doc in Documento.all()
-      @list.append require("views/apps/procesos/documentosAnular/item")(doc)
+      @list.append require("views/apps/procesos/facturasAnular/item")(doc)
 
   anular: (e) =>
     target = $(e.target)
@@ -54,4 +54,4 @@ class DocumentosAnular extends Spine.Controller
     Documento.unbind "query_success" , @renderDocumentos
     @navigate "/apps"
 
-module.exports = DocumentosAnular
+module.exports = FacturasAnular
