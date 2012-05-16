@@ -1,5 +1,7 @@
 Spine = require('spine')
 PedidoPreparado  =  require("models/socketModels/pedidoPreparado")
+FacturaPreparada  =  require("models/socketModels/facturaPreparada")
+
 Cliente = require("models/cliente")
 
 class SocketManager
@@ -30,10 +32,17 @@ class SocketManager
   subscribe: =>
     @channel = @pusher.subscribe('salesforce_data_push')
 
+    @channel.bind "Impresion" , (message) =>
+      results = FacturaPreparada.updateFromSocket(message)
+      if results  != false
+        if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas'])
+          Spine.notifications.showNotification( "Impresion de Facturas" , "Impresa Factura de " + Cliente.find(FacturaPreparada.lastNotificationCliente)?.Name )
+
+
     @channel.bind "Pedido__c" , (message) =>
       results = PedidoPreparado.updateFromSocket(message)
       if results  != false
-        if Spine.session.hasPerfiles(['Venededor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas']) and PedidoPreparado.lastNotificationEstado == 'Facturado'
+        if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas']) and PedidoPreparado.lastNotificationEstado == 'Facturado'
           Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Aprobado Pedido de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
         
         else if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito']) and PedidoPreparado.lastNotificationEstado == 'Pendiente'

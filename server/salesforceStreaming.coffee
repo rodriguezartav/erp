@@ -22,7 +22,7 @@ class SalesforceStreaming
     @subscribe('Cliente__c')
     @subscribe('Producto__c')
     @subscribe('Pedido__c')
-    @subscribe('Documento__c')
+    @subscribe('Impresion')
 
   subscribe: (channel) =>
     subscription = @fayeClient.subscribe "/topic/#{channel}", (message) =>  

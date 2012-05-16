@@ -2,14 +2,26 @@ Spine = require('spine')
 
 class FacturaPreparada extends Spine.Model
   @configure "Documento", "Total" , "Consecutivo" , "Referencia" , "Observacion" , 
-   "Cliente" ,  "FechaFacturacion"  , "Tipo_de_Documento" , "IsContado"
+   "Cliente" ,  "FechaFacturacion"  , "Tipo_de_Documento" , "IsContado" , "Estado"
   
   
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
 
   @autoQueryTimeBased   :   false
-  @autoPush : true
+  @destroyBeforeRefresh = true;
+
+  @beforeSocketUpdate: (results) =>
+    for result in results
+      @lastNotificationCliente = result['Cliente']
+    return true;
+
+  @filterImpresion: =>
+    results = []
+    for doc in DocumentoPreparado.all()
+      results.push doc if doc.Tipo_de_Documento == "FA" or doc.Estado == "Preparado"
+    results
+    
 
   @filterNotas: =>
     results = []

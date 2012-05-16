@@ -21,14 +21,16 @@ class Facturas extends Spine.Controller
     super
     @html require("views/apps/print/layout")(@constructor)
     FacturaPreparada.bind "query_success" , @renderDocumentos
+    FacturaPreparada.bind "push_success" , @renderDocumentos
+    
     @renderDocumentos()
 
   reload: ->
     FacturaPreparada.destroyAll()
     FacturaPreparada.query({})
 
-  renderDocumentos: =>
-    docs= FacturaPreparada.findAllByAttribute "Tipo_de_Documento" , "FA"
+  renderDocumentos: =>    
+    docs= FacturaPreparada.findAllByAttribute "Estado" , "Preparado"
     @list.html require("views/apps/print/item_factura")(docs)
 
   print: (e) =>
@@ -43,6 +45,8 @@ class Facturas extends Spine.Controller
   reset: =>
     @release()
     FacturaPreparada.unbind "query_success" , @renderDocumentos
+    FacturaPreparada.unbind "push_success" , @renderDocumentos
+    
     @navigate "/apps"
 
 module.exports = Facturas
