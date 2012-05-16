@@ -15,7 +15,7 @@
       </select>
     </div>
 
-    <div class="span3">
+    <div class="span2">
       <h3>Forma de Pago</h3>
       <select class=" validatable" data-type="FormaPago" id="txt_formapago">
         <option value="Cheque">Cheque</span>
@@ -26,6 +26,11 @@
     <div class="span2 ">
       <h3>Referencia </h3>
       <input class=" validatable" data-type="Referencia" data-length="3" placeholder="Forma de Pago" />
+    </div>
+
+    <div class="span1 ">
+      <h3>TC</h3>
+      <input data-type="TipoCambio" data-numeric="true" value="1" data-positive="true" class=" validatable"  placeholder="Tipo Cambio" />
     </div>
 
   </div>

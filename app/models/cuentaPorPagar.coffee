@@ -3,7 +3,7 @@ Spine = require('spine')
 class CuentaPorPagar extends Spine.Model
   @configure "CuentaPorPagar", "Proveedor" , "Total" , "Saldo" , "Referencia" , "Observacion" , 
   "SubTotal" , "Descuento" , "Impuesto", "Plazo" , "FechaFacturacion","FechaVencimiento" , "FechaPagoProgramado" , "TipoCambio" ,
-  "CuentaGasto" , "CuentaBanco","NombreProveedor", "FlagedToSave"
+  "CuentaGasto" , "CuentaBanco","NombreProveedor", "FlagedToSave","Tipo_de_Documento" , "FechaIngreso","Estado"
   
   @extend Spine.Model.Salesforce
 
@@ -16,6 +16,7 @@ class CuentaPorPagar extends Spine.Model
     filter =""
     filter = @queryFilterAddCondition(" Estado__c   IN (#{options.estado})"          ,  filter)  if options.estado
     filter = @queryFilterAddCondition(" Saldo__c   != 0"                             ,  filter)  if options.saldo
+    filter = @queryFilterAddCondition(" FechaIngreso__c = #{options.fecha} "            ,  filter)  if options.fecha
     filter = @queryFilterAddCondition(" Proveedor__c = '#{options.proveedor}'"       ,  filter)  if options.proveedor
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter = @queryOrderAddCondition(" order by FechaVencimiento__c "               , filter)  if options.orderFechaVencimiento

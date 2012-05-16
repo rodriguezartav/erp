@@ -1,0 +1,20 @@
+<% Spine   = require('spine') %>
+
+<tr>
+  <td>
+    <a target="_blank" href="<%= Spine.session.instance_url + "/" + @id %>">
+       <%= @Referencia %>
+    </a> 
+  </td>
+  <td>
+    CXP-<%= @Tipo_de_Documento %>
+  </td>
+ 
+  <td><%= @NombreProveedor %></td>
+  
+  <td><%= @Total.toMoney() %></td>
+  <td><%= @Estado %></td>
+
+ <td><a  data-id="<%= @id %>" class="anularCuenta btn btn-info"><i class="icon-print icon-white"> </i> Anular</a></td>
+
+</tr>

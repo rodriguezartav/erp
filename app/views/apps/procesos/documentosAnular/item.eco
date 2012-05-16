@@ -20,6 +20,6 @@
   <td><%= @Total.toMoney() %></td>
   <td><%= @Estado %></td>
 
- <td><a data-id="<%= @id %>" class="anular btn btn-info"><i class="icon-print icon-white"> </i> Anular</a></td>
+ <td><a data-type="Documento" data-id="<%= @id %>" class="anularDocumento btn btn-info"><i class="icon-print icon-white"> </i> Anular</a></td>
 
 </tr>

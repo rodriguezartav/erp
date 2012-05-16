@@ -94,6 +94,7 @@ class PagosProveedor extends Spine.Controller
       saldo =  $(saldo)
       total+= parseFloat(saldo.attr("data-saldo"))
     @lblTotal.html total.toMoney()
+    total
 
   #####
   # ACTIONS
@@ -102,13 +103,14 @@ class PagosProveedor extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Ingrese al menos un pago" if @saldos.length == 0
     
+    
   beforeSend: (object) ->
     object.Items = []
     for saldo in @saldos
       saldo =  $(saldo)
       monto = parseFloat(saldo.attr("data-saldo"))
       documento = saldo.attr("data-id")
-      if monto > 0
+      if monto > 0 || monto < 0
         object.Documentos.push documento
         object.Montos.push monto
   

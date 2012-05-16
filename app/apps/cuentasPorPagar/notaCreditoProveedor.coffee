@@ -6,11 +6,11 @@ Cuenta = require("models/cuenta")
 
 CuentaPorPagar = require("models/cuentaPorPagar")
 
-class FacturasProveedor extends Spine.Controller
+class NotaCreditoProveedor extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
 
   @departamento = "Tesoreria"  
-  @label = "Ingreso de Facturas"
+  @label = "Ingreso de Notas"
   @icon = "icon-edit"
 
   className: "row-fluid"
@@ -37,26 +37,23 @@ class FacturasProveedor extends Spine.Controller
   preset: ->
     Proveedor.query()
     #Cuenta.query({tipos: ["'Bancaria'"] } )
-    
+
   constructor: ->
     super
     @setVariables()
     @preset()
     #Cuenta.bind "query_success" , @onLoadCuenta
     Proveedor.bind "current_set" , @onProveedorSet
-    
     @render()
-    
-    
+
   onProveedorSet: =>
     @txtPlazo.val(Proveedor.current.Plazo || 0)
 
   onLoadCuenta: =>
     @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
 
-
   render: =>  
-    @html require("views/apps/cuentasPorPagar/facturasProveedor/layout")(@constructor)
+    @html require("views/apps/cuentasPorPagar/notasProveedor/layout")(@constructor)
     @refreshView(@cuentaPorPagar,@inputs_to_validate)    
     @proveedores = new Proveedores(el: @src_proveedor)
 
@@ -75,27 +72,25 @@ class FacturasProveedor extends Spine.Controller
 
   beforeSend: (object) ->
     object.Proveedor = Proveedor.current.id
-    object.Tipo_de_Documento = 'FA'
+    object.Tipo_de_Documento = 'NC'
     object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
     object.FechaIngreso = new Date(Date.now()).to_salesforce_date()
+    object.Estado = "Para Pagar"
 
   send: (e) =>
     #@inputs_to_validate.push @cuentas
     @updateFromView(@cuentaPorPagar,@inputs_to_validate)
- 
     data =
       class: CuentaPorPagar
       restData: [@cuentaPorPagar]
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
-   
   after_send: =>
     @reset(false)
  
   customReset: ->
     Proveedor.reset_current()
     @cuentaPorPagar.destroy() if @cuentaPorPagar
-      
 
-module.exports = FacturasProveedor
+module.exports = NotaCreditoProveedor
