@@ -50,11 +50,11 @@ class SecurityManager
     apps = [  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega]
-    @profiles["Presidencia"] =  [ DocumentosAnular , AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacion   , DocumentosAnular ]
-    @profiles["SubGerencia"] =  [  DocumentosAnular ,AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular ]
+    @profiles["Presidencia"] =  [ NotaCreditoProveedor , DocumentosAnular , AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacion   , DocumentosAnular ]
+    @profiles["SubGerencia"] =  [ NotaCreditoProveedor , DocumentosAnular ,AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular ]
     @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , FacturasAnular ]
     @profiles["Encargado de Ventas"] = [Pedidos , FacturasImpresion , FacturasAnular  ]
-    @profiles["Ejecutivo Credito"] = [Entradas,Salidas,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,FacturasAnular]
+    @profiles["Ejecutivo Credito"] = [Entradas,Salidas,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion]
     @profiles["Vendedor"] = [Pedidos]
     @profiles["Contabilidad"] = [ CuentasPorPagarFlujo ]
     Spine.bind "login_complete" , @onLoginComplete
