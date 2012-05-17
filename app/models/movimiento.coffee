@@ -1,15 +1,15 @@
 Spine = require('spine')
 
 class Movimiento extends Spine.Model
-  @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "Impuesto" , 
-  "Descuento" , "SubTotal" , "Total" , "Referencia","Observacion","Cliente",
-  "CodigoExterno","Descuento_Unitario","Impuesto_Unitario" ,"Plazo", "Proveedor"
+  @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" ,"ProductoCosto", "ProductoPrecio" ,
+   "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia","Observacion","Cliente",
+   "CodigoExterno","Descuento_Unitario","Impuesto_Unitario" ,"Plazo", "Proveedor"
   
   @extend Spine.Model.Salesforce
    
   @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario", "CodigoExterno"] 
   #Adeed proveedor to list, because error in Devolucion 
-  @avoidQueryList = ["Plazo","Proveedor"]
+  @avoidQueryList = ["Plazo","Proveedor","ProductoCosto"]
    
   @queryFilter: (options ) =>
     return "" if !options
