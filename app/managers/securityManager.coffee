@@ -2,9 +2,9 @@ Spine = require('spine')
 
 Entradas = require("apps/auxiliares/entradas")
 Salidas = require("apps/auxiliares/salidas")
-#SalidasDanadas = require("apps/auxiliares/salidasDanadas")
+Reposiciones = require("apps/auxiliares/reposiciones")
 
-Devoluciones = require("apps/auxiliares/devoluciones")
+#SalidasDanadas = require("apps/auxiliares/salidasDanadas")
 
 #DevolucionesDanadas = require("apps/auxiliares/devolucionesDanadas")
 
@@ -47,14 +47,14 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Devoluciones , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
+    apps = [  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Reposiciones  , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega]
     @profiles["Presidencia"] =  [ NotaCreditoProveedor , DocumentosAnular , AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacion   , DocumentosAnular ]
     @profiles["SubGerencia"] =  [ NotaCreditoProveedor , DocumentosAnular ,AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular ]
     @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , FacturasAnular ]
     @profiles["Encargado de Ventas"] = [Pedidos , FacturasImpresion , FacturasAnular  ]
-    @profiles["Ejecutivo Credito"] = [Entradas,Salidas,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion]
+    @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Reposiciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion]
     @profiles["Vendedor"] = [Pedidos]
     @profiles["Contabilidad"] = [ CuentasPorPagarFlujo ]
     Spine.bind "login_complete" , @onLoginComplete
