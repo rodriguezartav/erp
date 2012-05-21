@@ -8,7 +8,7 @@ class CuentaPorPagar extends Spine.Model
   @extend Spine.Model.Salesforce
 
   @avoidInsertList = ["FlagedToSave"]
-  @avoidQueryList = ["FlagedToSave"]
+  @avoidQueryList =  ["FlagedToSave" , "CuentaGasto" ]
 
 
   @queryFilter: (options ) =>
