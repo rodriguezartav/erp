@@ -37,7 +37,7 @@ class AjustarNegociacion extends Spine.Controller
   
   className: "row-fluid"
 
-  @departamento = "Ventas"
+  @departamento = "Administracion"
   @label = "Negociaciones"
   @icon = "icon-key"
 
