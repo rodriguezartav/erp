@@ -30,7 +30,7 @@
 
     <div class="span1 ">
       <h3>TC</h3>
-      <input data-type="TipoCambio" data-numeric="true" value="1" data-positive="true" class=" validatable"  placeholder="Tipo Cambio" />
+      <input data-type="TipoCambio" data-numeric="true" value="1" data-positive="true" class=" validatable txt_tc"  placeholder="Tipo Cambio" />
     </div>
 
   </div>

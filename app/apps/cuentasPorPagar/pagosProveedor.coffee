@@ -17,13 +17,14 @@ class PagosProveedor extends Spine.Controller
   
 
   elements:
-    ".error" : "error"
-    ".validatable" : "inputs_to_validate"
-    ".src_saldos" : "src_saldos" 
-    ".cuentas" : "cuentas"
+    ".error"         : "error"
+    ".validatable"   : "inputs_to_validate"
+    ".src_saldos"    : "src_saldos" 
+    ".cuentas"       : "cuentas"
     ".src_proveedor" : "src_proveedor"
-    ".txt_saldo" : "saldos"
-    ".lblTotal" : "lblTotal"
+    ".txt_saldo"     : "saldos"
+    ".lblTotal"      : "lblTotal"
+    ".txt_tc"        : "txt_tc"
 
   events:
     "click .cancel" : "reset"
@@ -72,10 +73,15 @@ class PagosProveedor extends Spine.Controller
     target = $(e.target)
     id = target.attr "data-id"
     doc = CuentaPorPagar.find id
+    tc = parseFloat(@txt_tc.val())
+    if doc.TipoCambio >1 and tc == 1
+      throw "Primero ingrese un tipo de cambio"
+
     tr = target.parents("tr")
     input = tr.find(".txt_saldo")
-    input.html doc.Saldo.toMoney()
-    input.attr "data-saldo" ,doc.Saldo
+    newSaldo = (doc.Saldo / doc.TipoCambio) * tc 
+    input.html newSaldo.toMoney()
+    input.attr "data-saldo" , newSaldo
     @updateTotal()
 
   onExcluir: (e) =>

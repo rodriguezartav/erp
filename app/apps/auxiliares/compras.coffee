@@ -54,6 +54,7 @@ class Compras extends Spine.Controller
 
   constructor: ->
     super
+    Movimiento.attributes.push('ProductoCosto')
     Producto.reset_current()
     ProductoCosto.destroyAll()
     Proveedor.query()
