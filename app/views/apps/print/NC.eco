@@ -34,7 +34,7 @@
   <p ><strong style="width: 80px;display: inline-block">Cliente: </strong> <%= cliente?.Name.capitalize() %></p>
   
   
-  <p><strong  style="width: 80px;display: inline-block">Descripcion: </strong> <%= if @Observacion?.lenght > 5 then @Observacion else "Nota de Credito General" %></p>
+  <p><strong  style="width: 80px;display: inline-block">Descripcion: </strong> <%= @Observacion %></p>
 
   <div class=row>  
     <table class="table table-striped table-bordered table-condensed table-total pull-right">

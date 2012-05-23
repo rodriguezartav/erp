@@ -31,7 +31,7 @@ class Notas extends Spine.Controller
 
   reload: =>
     Documento.destroyAll()
-    Documento.query( { tipos: "'NC','ND'" , Estado__c: "Preparado" } )
+    Documento.query( { tipos: "'NC','ND'" , estado: "Preparado" } )
 
   on_print: (e) =>
     target = $(e.target)
