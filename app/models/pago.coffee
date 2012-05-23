@@ -27,7 +27,7 @@ class Pago extends Spine.Model
      return "" if !options
      filter =""
      filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
-     filter = @queryFilterAddCondition(" Fecha__c = THIS_MONTH "     ,  filter)  if options.fecha
+     filter = @queryFilterAddCondition(" Fecha__c = #{options.fecha} "     ,  filter)  if options.fecha
      filter
 
 module.exports = Pago

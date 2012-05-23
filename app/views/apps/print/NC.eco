@@ -11,48 +11,41 @@
 
   <div class="row-fluid">
 
-    <div style="float: left; width: 200px">
-      <img src="http://rodcoerp.herokuapp.com/images/logo.png">
-      <h6 style="padding-top: 5px">Materiales y Acabados para la Construccion<br/>
-      Tel: 2240-9966 | Fax: 2236-1169<br/>
-      APDO: 488-2120 San Jose, Costa Rica</h6>
+    <div style="width: 240px" class="pull-left">
+      <img style="height: 50px;" src="http://rodcoerp.herokuapp.com/images/logo.png">
+      <p>Tel: 2240-9966 | Fax: 2236-1169</p>
     </div>
 
-      <div style="width: 200px" class="pull-right">
+    <div style="text-align: center" class="pull-left">
       <h1><%= if @Tipo_de_Documento == "NC" then "Nota de Credito" else "Nota de Debito" %></h1>
-      <table class="table-total pull-right">
-        <tr><td><h3>Numero</h3></td><td><h4><%= @Consecutivo %></h4></td></tr>
-        <tr><td><h3>Fecha</h3></td><td><h4><%= @FechaFacturacion %></h4></td></tr>
-        <tr><td><h3>Plazo</h3></td><td><h4>30 Dias</h4></td></tr>
+    </div>
+
+      <div class="pull-right">
+        <h4>Fecha: <%= @FechaFacturacion %></h4>
+        <h4>Numero: <%= @Consecutivo %></h4>
+        <h4>Codigo: <%= cliente?.CodigoExterno %></h4>
       </table>
     </div>
   
   </div>
+
+  <br/>
+
+  <p ><strong style="width: 80px;display: inline-block">Cliente: </strong> <%= cliente?.Name.capitalize() %></p>
   
-  <div class="row-fluid">
-    <hr/>
-      <table >
-        <tr>
-          <td><h3>Cliente</h3> </td>
-          <td><h3>Codigo</h3> </td>
-        </tr>
-        <tr><td><h4 style="padding-right: 50px;"><%= cliente?.Name.capitalize() %></h4></td> <td><h4><%= cliente?.CodigoExterno %></h4></td></tr>
-      </table>
-    </div>
-
-
-      <h3 style="margin-top: 30px;">Descripcion de la Nota</h3>
-      <p><%= if @Observacion?.lenght > 5 then @Observacion else "Nota de Credito General" %></p>
-    <hr/>
-  </div>
+  
+  <p><strong  style="width: 80px;display: inline-block">Descripcion: </strong> <%= if @Observacion?.lenght > 5 then @Observacion else "Nota de Credito General" %></p>
 
   <div class=row>  
     <table class="table table-striped table-bordered table-condensed table-total pull-right">
-      <tr><td><h3>SubTotal:</h3> </td><td><h4><%= Math.abs(@SubTotal).toMoney() %></h4></td></tr>
-      <tr><td><h3>Descuento:</h3></td><td><h4><%= Math.abs(@Descuento).toMoney() %></h4></td></tr>
-      <tr><td><h3>Impuesto:</h3> </td><td><h4><%= Math.abs(@Impuesto).toMoney() %></h4></td></tr>
-      <tr><td><h3>Total:</h3> </td><td><h4><%= Math.abs(@Total).toMoney() %></h4></td></tr>
+      <tr><td><h4>SubTotal:</h4> </td><td><span class="pull-right"><%= Math.abs(@SubTotal).toMoney() %></span></td></tr>
+      <tr><td><h4>Descuento:</h4></td><td><span class="pull-right"><%= Math.abs(@Descuento).toMoney() %></span></td></tr>
+      <tr><td><h4>Impuesto:</h4> </td><td><span class="pull-right"><%= Math.abs(@Impuesto).toMoney() %></span></td></tr>
+      <tr><td><h4>Total:</h4> </td><td><span class="pull-right"><%= Math.abs(@Total).toMoney() %></span></td></tr>
     </table>
   </div>
 
+  <br/>
+
 </div>
+

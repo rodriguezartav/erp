@@ -40,6 +40,8 @@ class Notas extends Spine.Controller
     @saveUIState()
     @canvas = $("<div></div>")
     @canvas.html require("views/apps/print/NC")(doc)
+    @canvas.append require("views/apps/print/NC")(doc)
+    @canvas.append require("views/apps/print/NC")(doc)
     $("body").append @canvas
     $(".goBack").one "click",   @goBack
     doc.destroy()

@@ -48,7 +48,7 @@ class PagosAnular extends Spine.Controller
 
   onClienteSet: (cliente) =>
     Pago.destroyAll()
-    Pago.query({ cliente: cliente ,fecha: "THIS_MONTH" })
+    Pago.query({ cliente: cliente ,fecha: "TODAY" })
     
   onPagoLoaded: =>
     @src_pagos.html require("views/apps/procesos/pagosAnular/item")(Pago.group_by_recibo())
