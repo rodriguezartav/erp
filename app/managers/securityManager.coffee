@@ -17,6 +17,9 @@ EmitirPago = require("apps/auxiliares/emitirPago")
 
 VerSaldos = require("apps/vistas/verSaldos")
 
+Ajustes = require("apps/contables/ajustes")
+
+
 Pedidos = require("apps/auxiliares/pedidos")
 PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
 
@@ -47,7 +50,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Reposiciones  , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
+    apps = [ Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Reposiciones  , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega]
     @profiles["Presidencia"] =  [ NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacion   , DocumentosAnular ]

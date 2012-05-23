@@ -23,7 +23,7 @@ require('./bootstrap/bootstrap-popover')
 require('./bootstrap/bootstrap-scrollspy')
 require('./bootstrap/bootstrap-alert')
 require('./bootstrap/bootstrap-modal')
-require('./bootstrap/bootstrap-type-ahead')
+require('./bootstrap/bootstrap-typeahead')
 require('./bootstrap/bootstrap-button')
 require('./bootstrap/bootstrap-collapse')
 

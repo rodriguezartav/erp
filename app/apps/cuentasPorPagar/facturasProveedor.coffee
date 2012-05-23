@@ -35,25 +35,24 @@ class FacturasProveedor extends Spine.Controller
     @cuentaPorPagar = CuentaPorPagar.create { FechaFacturacion: new Date()  }
 
   preset: ->
-    Proveedor.query()
-    #Cuenta.query({tipos: ["'Bancaria'"] } )
-    
+    Cuenta.query({ clases: "'Gasto','Activo','Costo de Venta'" } )
+
   constructor: ->
     super
     @setVariables()
     @preset()
-    #Cuenta.bind "query_success" , @onLoadCuenta
+    Cuenta.bind "query_success" , @onLoadCuenta
     Proveedor.bind "current_set" , @onProveedorSet
-    
+
     @render()
-    
-    
+
   onProveedorSet: =>
     @txtPlazo.val(Proveedor.current.Plazo || 0)
+    @cuentas.val(Proveedor.current.Cuenta).attr("selected", "selected")
 
   onLoadCuenta: =>
+    Proveedor.query()
     @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
-
 
   render: =>  
     @html require("views/apps/cuentasPorPagar/facturasProveedor/layout")(@constructor)
@@ -73,29 +72,29 @@ class FacturasProveedor extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Escoja el Proveedor" if Proveedor.current == null
 
-  beforeSend: (object) ->
+  beforeSend: (object) =>
     object.Proveedor = Proveedor.current.id
+    object.CuentaGasto = @cuentas.find("option:selected").val()
     object.Tipo_de_Documento = 'FA'
     object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
     object.FechaIngreso = new Date(Date.now()).to_salesforce_date()
 
   send: (e) =>
-    #@inputs_to_validate.push @cuentas
     @updateFromView(@cuentaPorPagar,@inputs_to_validate)
- 
+
     data =
       class: CuentaPorPagar
       restData: [@cuentaPorPagar]
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
-   
   after_send: =>
     @reset(false)
  
   customReset: ->
     Proveedor.reset_current()
+    Cuenta.unbind "query_success" , @onLoadCuenta
+    Proveedor.unbind "current_set" , @onProveedorSet
     @cuentaPorPagar.destroy() if @cuentaPorPagar
-      
 
 module.exports = FacturasProveedor

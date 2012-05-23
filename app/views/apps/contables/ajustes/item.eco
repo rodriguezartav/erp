@@ -1,0 +1,7 @@
+
+
+<td><h4><%= @Cuenta.Name.capitalize() %></h4></td>
+<td><input class="editable validatable span5 detalle" data-numeric="false" data-required="false" data-type="Detalle" value="" /></td>
+<td><input class="editable validatable span2" data-numeric="true" data-min="0" data-type="Credito" value="0" /></td>
+<td><input class="editable validatable span2" data-numeric="true" data-min="0"  data-type="Debito" value="0" /></td>
+<td><a class="btn btn-danger btn-small js_btn_remove"><i class="icon-remove icon-white"></i></a></td>

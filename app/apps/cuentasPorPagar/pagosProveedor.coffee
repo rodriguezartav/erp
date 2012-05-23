@@ -49,7 +49,7 @@ class PagosProveedor extends Spine.Controller
     @error.hide()
     CuentaPorPagar.destroyAll()
     
-    Cuenta.query({tipos: ["'Bancaria'"] } )
+    Cuenta.query({tipos: ["'Activo'"] } )
 
     Proveedor.query()
     

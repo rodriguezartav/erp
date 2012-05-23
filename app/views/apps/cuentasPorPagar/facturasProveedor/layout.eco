@@ -6,9 +6,15 @@
 <div class="well">
   <div class="row-fluid">
 
-    <div class="span4">
+    <div class="span3">
       <h3>Proveedor</h3>
       <div class="src_proveedor"></div>
+    </div>
+
+    <div class="span3">
+      <h3>Cuenta</h3>
+      <select class="validatable cuentas" data-type="Cuenta">
+      </select>
     </div>
 
     <div class="span2">
@@ -34,7 +40,7 @@
         </div>
      </div>
 
-    <div class="span2">
+    <div class="span1">
       <h3>Plazo</h3>
       <input class=" validatable txtPlazo"  data-type="Plazo" data-numeric="true" placeholder="Dias desde la Emision" />
     </div>

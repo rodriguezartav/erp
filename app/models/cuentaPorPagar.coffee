@@ -3,7 +3,7 @@ Spine = require('spine')
 class CuentaPorPagar extends Spine.Model
   @configure "CuentaPorPagar", "Proveedor" , "Total" , "Saldo" , "Referencia" , "Observacion" , 
   "SubTotal" , "Descuento" , "Impuesto", "Plazo" , "FechaFacturacion","FechaVencimiento" , "FechaPagoProgramado" , "TipoCambio" ,
-  "CuentaGasto" , "CuentaBanco","NombreProveedor", "FlagedToSave","Tipo_de_Documento" , "FechaIngreso","Estado"
+  "CuentaGasto" , "CuentaBanco" , "NombreProveedor" , "FlagedToSave" , "Tipo_de_Documento" , "FechaIngreso","Estado"
   
   @extend Spine.Model.Salesforce
 
