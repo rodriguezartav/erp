@@ -27,6 +27,8 @@ class Items extends Spine.Controller
     Ajuste.trigger "updateTotal"
 
   reset: =>
+    Ajuste.trigger "updateTotal"
+    Ajuste.trigger "removeItem" , @
     @ajuste = null
     @release()
 
@@ -56,12 +58,14 @@ class Ajustes extends Spine.Controller
     Cuenta.bind "query_success" , @onLoadCuenta
     Cuenta.bind "selected" , @addItem
     Ajuste.bind "updateTotal" , @updateTotal
+    Ajuste.bind "removeItem" , @removeItem
+
     
   resetBinding: =>
     Cuenta.unbind "query_success" , @onLoadCuenta
     Cuenta.unbind "selected" , @addItem
     Ajuste.unbind "updateTotal" , @updateTotal
-
+    Ajuste.unbind "removeItem" , @removeItem
 
   constructor: ->
     super
@@ -104,10 +108,10 @@ class Ajustes extends Spine.Controller
       @itemToControllerMap[cuenta.id] = item
       @items.prepend item.el
 
-  removeMovimiento: (cuenta) =>
-    index = @ajustes.indexOf(cuenta)
+  removeItem: (item) =>
+    index = @ajustes.indexOf(item)
     @ajustes.splice(index,1)
-    @itemToControllerMap[cuenta.id] = null
+    @itemToControllerMap[item.cuenta.id] = null
 
   updateTotal: =>
     debito = 0
@@ -140,9 +144,6 @@ class Ajustes extends Spine.Controller
     data =
       class: Ajuste
       restData: Ajuste.all()
-
-    @log data
-
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
     
 
