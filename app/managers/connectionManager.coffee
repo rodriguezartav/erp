@@ -36,7 +36,7 @@ class ConnectionManager
     Spine.trigger "status_changed" , @connectionStatus
     Spine.trigger "show_lightbox" , "showWarning" , error: "Informacion: Esta trabajando sin internet,No podra enviar ni recibir informacion,Cuando se reconecte el sistema se actualizara solo"
 
-  resetSocketSequence: ->
+  resetSocketSequence: =>
     ciclesCount = 0
     Spine.socketManager.handshake()
     Spine.socketManager.subscribe()

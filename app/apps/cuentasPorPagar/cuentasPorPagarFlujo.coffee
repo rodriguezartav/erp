@@ -78,12 +78,12 @@ class FlujoDePago extends Spine.Controller
   
   beforeSend: =>
     saldos = @el.find(".saldo")
-
     for saldo in saldos
       s = $(saldo)
       if s.hasClass("active")
         cuenta = CuentaPorPagar.find(s.attr("data-id"))
         cuenta.Estado = "Para Aprobar"
+        cuenta.FechaPagoProgramado = Date.now().to_salesforce_date() if !cuenta.FechaPagoProgramado
         cuenta.FlagedToSave = true;
         cuenta.save()
       

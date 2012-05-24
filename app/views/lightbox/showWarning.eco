@@ -8,6 +8,8 @@
 <div class="modal-body">
   <h4>Detalles del Error: </h4>
   <p><%- String.replaceAll(@error || "N/D" , ',' , '<br/>') %></p>
+  <p><%= "Error de Internet " if !@error %></p>
+  
   
   <br/>
   <h5 class="label label-warning">Reportelo si es un error y <strong>no</strong> comprende su causa!</h5>

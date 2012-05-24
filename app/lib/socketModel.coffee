@@ -46,18 +46,6 @@ Spine.Model.SocketModel =
     
       recordLastUpdate: =>
         Spine.session.setLastUpdate(@name)
-      
-        
-      addLastUpdateFilter: () =>
-        date = Spine.session.getLastUpdate(@name)
-        try
-          date.getTime()
-        catch error
-          date = new Date('1970/1/1')
-
-        filter =""
-        filter +=  @queryFilterAddCondition(" LastModifiedDate >= #{date.to_salesforce() }" , filter) if @autoQueryTimeBased
-        return filter
 
   saveLocal: ->
     @beforeSaveLocal()

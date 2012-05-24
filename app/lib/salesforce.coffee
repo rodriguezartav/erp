@@ -142,7 +142,7 @@ Spine.Model.Salesforce =
         Spine.salesforceQueryQueue +=1
         query = @queryString()
         query += @queryFilter(options)
-        query += @addLastUpdateFilter() if @addLastUpdateFilter and useDate
+        query = @queryFilterAddCondition(" LastModifiedDate >= #{Spine.session.getLastUpdateOr1970(@name).to_salesforce() }" , query) if @autoQueryTimeBased
         Spine.trigger "query_start"
         $.ajax
           url: Spine.server + "/query"
@@ -165,6 +165,8 @@ Spine.Model.Salesforce =
         results
 
       on_query_success: (raw_results) =>
+        Spine.trigger "query_complete"
+        
         results = @parseSalesforceJSON(raw_results)
         @destroyAll() if @destroyBeforeRefresh
         @refresh(results)        
@@ -172,6 +174,8 @@ Spine.Model.Salesforce =
         @recordLastUpdate?()
 
       on_query_error: (error) =>
+        Spine.trigger "query_complete"
+        
         console.log error
         #alert responseText  = error.responseText
         responseText  = error.responseText

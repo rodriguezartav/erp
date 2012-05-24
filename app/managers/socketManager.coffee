@@ -30,6 +30,7 @@ class SocketManager
     
   
   subscribe: =>
+    return false if !@pusher
     @channel = @pusher.subscribe('salesforce_data_push')
 
     @channel.bind "Impresion" , (message) =>
