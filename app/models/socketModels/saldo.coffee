@@ -4,12 +4,12 @@ class Saldo extends Spine.Model
   @configure "Saldo" , "Total" , "Saldo" , "Consecutivo" ,  "Cliente" , "Plazo" , "FechaFacturacion" , "FechaVencimiento" ,
     "Tipo_de_Documento" 
 
- # @extend Spine.Model.Salesforce
-#  @extend Spine.Model.SocketModel
+  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SocketModel
 
   #@autoPush= true
-  #@autoQueryTimeBased = true
-  #@overrideName = "Documento"
+  @autoQueryTimeBased = true
+  @overrideName = "Documento"
   
 
   @queryFilter: (options ) =>

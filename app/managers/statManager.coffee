@@ -3,7 +3,7 @@ Spine = require('spine')
 
 class StatManager
   
-  @registerManager: ->
+  @registerManager: (api) ->
     ((d, c) ->
       a = undefined
       b = undefined
@@ -31,7 +31,7 @@ class StatManager
 
       window.mixpanel = c
     ) document, []
-    mixpanel.init "d7b392779910ad7a0dab3ffa716d9f68"
+    mixpanel.init api #"d7b392779910ad7a0dab3ffa716d9f68"
     false
   
   @identify: (user) =>

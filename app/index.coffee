@@ -29,7 +29,7 @@ class App extends Spine.Controller
   constructor: ->
     super
     
-    StatManager.registerManager()
+    StatManager.registerManager(@options.statApi)
 
     Spine.server = @options.server
     Spine.pusherKey = @options.pusherKey
