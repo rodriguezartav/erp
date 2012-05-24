@@ -33,9 +33,10 @@ class Pagos extends Spine.Controller
   constructor: ->
     super
     @setVariables()
-    @html require("views/apps/cuentasPorPagar/emitirRecibo/pago")(@pago)
+    @html require("views/apps/cuentasPorCobrar/emitirRecibo/pago")(@pago)
     @clientes = new Clientes(el: @src_cliente , cliente: @pago.Cliente )
     @refreshView(@pago,@inputs_to_validate)
+    @el.attr("data-codigo" , @pago.Codigo)
     @setBindings()
 
 class EmitirRecibo extends Spine.Controller  
@@ -50,7 +51,7 @@ class EmitirRecibo extends Spine.Controller
 
   events:
     "click .cancel"    :  "reset"
-    "click .create"    :  "onCreatePago"
+    "click .createPago"    :  "onCreatePago"
     "click .pago"      :  "onPagoClick"
 
   setVariables: =>
@@ -58,7 +59,6 @@ class EmitirRecibo extends Spine.Controller
     @currentController = null
     @pagoControllers = []
     @pagoToControllerMap = {}
-    Producto.reset()
     Cliente.reset()
     
   setBindings: =>
@@ -76,7 +76,7 @@ class EmitirRecibo extends Spine.Controller
   constructor: ->
     super
     @setVariables()
-    @html require("views/apps/cuentasPorPagar/emitirRecibo/pago")(@constructor)
+    @html require("views/apps/cuentasPorCobrar/emitirRecibo/layout")(@constructor)
     @setBindings()
     @loadPedido()
  
@@ -99,8 +99,8 @@ class EmitirRecibo extends Spine.Controller
 
   onPagoClick: (e) =>
     pagoEl = $(e.target).parents(".pago")
-    referencia = pedidoEl.attr("data-referencia")
-    controller = @pagoToControllerMap[referencia]
+    codigo = pagoEl.attr("data-codigo")
+    controller = @pagoToControllerMap[codigo]
     @setCurrentController(controller)
     return false;
 
@@ -111,7 +111,7 @@ class EmitirRecibo extends Spine.Controller
       @currentController.el.addClass "active"
 
   onPagoDestroy: (pedido) =>
-    @pagoToControllerMap[pago.Referencia]  = null
+    @pagoToControllerMap[pago.Codigo]  = null
     @setCurrentController(null);
 
   onCreatePago: =>

@@ -15,7 +15,7 @@ NotasDebito = require("apps/auxiliares/notasDebito")
 
 EmitirPago = require("apps/auxiliares/emitirPago")
 
-EmitirRecibo = require("apps/cuentasPorPagar/emitirRecibo")
+EmitirRecibo = require("apps/cuentasPorCobrar/emitirRecibo")
 
 VerSaldos = require("apps/vistas/verSaldos")
 
