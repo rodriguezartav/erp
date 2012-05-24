@@ -31,7 +31,7 @@ class Cliente extends Spine.Model
 
   willOverDraft: (monto) ->
     od = false
-    od = true if monto + Saldo > CreditoAsignado
+    od = true if monto + @Saldo > @CreditoAsignado
     return od
 
         
