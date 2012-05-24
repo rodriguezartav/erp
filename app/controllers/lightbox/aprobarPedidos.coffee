@@ -23,7 +23,10 @@ class AprobarPedidos extends Spine.Controller
 
   constructor: ->
     super
-    @html require('views/lightbox/aprobarPedidos')(@data)
+    if !@data.group.Cliente.willOverDraft(@data.group.Total) or @data.allowOverDraft
+      @html require('views/lightbox/aprobarPedidos')(@data)
+    else
+      @html require('views/lightbox/aprobarPedidosNoClearance')(@data)
     @show_input.show()
     @show_wait.hide() 
 

@@ -23,7 +23,10 @@ Ajustes = require("apps/contables/ajustes")
 Pedidos = require("apps/auxiliares/pedidos")
 PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
 
-PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
+#PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
+
+PedidosAprobacion = require("apps/procesos/pedidosAprobacionGerencia")
+
 
 FacturasImpresion = require("apps/print/facturas")
 

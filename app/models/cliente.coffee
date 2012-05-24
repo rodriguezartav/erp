@@ -29,6 +29,10 @@ class Cliente extends Spine.Model
     return names
 
 
+  willOverDraft: (monto) ->
+    od = false
+    od = true if monto + Saldo > CreditoAsignado
+    return od
 
         
 module.exports = Cliente
