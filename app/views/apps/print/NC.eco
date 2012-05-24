@@ -11,7 +11,7 @@
 
   <div class="row-fluid">
 
-    <div style="width: 240px" class="pull-left">
+    <div style="width: 220px" class="pull-left">
       <img style="height: 50px;" src="http://rodcoerp.herokuapp.com/images/logo.png">
       <p>Tel: 2240-9966 | Fax: 2236-1169</p>
     </div>
@@ -31,7 +31,7 @@
 
   <br/>
 
-  <p ><strong style="width: 80px;display: inline-block">Cliente: </strong> <%= cliente?.Name.capitalize() %></p>
+  <p><strong style="width: 80px;display: inline-block">Cliente: </strong> <%= cliente?.Name.capitalize() %></p>
   
   
   <p><strong  style="width: 80px;display: inline-block">Descripcion: </strong> <%= @Observacion %></p>
