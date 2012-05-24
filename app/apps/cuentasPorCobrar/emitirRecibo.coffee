@@ -1,7 +1,7 @@
 Spine = require('spine')
 Cliente = require("models/cliente")
 Clientes = require("controllers/clientes")
-Documento = require("models/documento")
+Saldo = require("models/socketModels/saldo")
 Pago = require("models/transitory/pago")
 PagoItem = require("models/transitory/pagoItem")
 
@@ -12,8 +12,7 @@ class Pagos extends Spine.Controller
 
   elements:
     ".alert_box" : "alert_box"
-    ".items_list" : "items_list"
-    ".src_cliente" : "src_cliente"
+    ".saldos_list" : "saldos_list"
     ".validatable" : "inputs_to_validate"
     ".lbl_total" : "lbl_total"
 
@@ -34,10 +33,22 @@ class Pagos extends Spine.Controller
     super
     @setVariables()
     @html require("views/apps/cuentasPorCobrar/emitirRecibo/pago")(@pago)
-    @clientes = new Clientes(el: @src_cliente , cliente: @pago.Cliente )
     @refreshView(@pago,@inputs_to_validate)
     @el.attr("data-codigo" , @pago.Codigo)
+    @saldos_list.html require("views/apps/cuentasPorCobrar/emitirRecibo/item")(Saldo.all())
     @setBindings()
+
+  close: =>
+    @customReset()
+
+  customReset: =>
+    @resetBindings()
+    #for index,items of @pedidoItemToControllerMap
+      #items.reset() if items
+    #item.destroy() for item in PedidoItem.itemsInPedido(@pedido) 
+    @pago.destroy()
+    @setVariables()
+    @release()
 
 class EmitirRecibo extends Spine.Controller  
   className: "row-fluid listable pedidos"
@@ -48,6 +59,7 @@ class EmitirRecibo extends Spine.Controller
 
   elements:
     ".list_item" : "list_item"
+    ".src_cliente" : "src_cliente"
 
   events:
     "click .cancel"    :  "reset"
@@ -61,22 +73,24 @@ class EmitirRecibo extends Spine.Controller
     @pagoToControllerMap = {}
     Cliente.reset()
     
+    
   setBindings: =>
     #PedidoItem.bind "change update" , @onPedidoItemChange
     #Producto.bind "current_set" , @addItem
-    Cliente.bind "current_set" , @addCliente
-    #Pedido.bind "beforeDestroy" , @onPedidoDestroy
+    #Cliente.bind "current_set" , @addCliente
+    Pago.bind "beforeDestroy" , @onPagoDestroy
 
   resetBindings: =>
     #PedidoItem.unbind "change update" , @onPedidoItemChange
     #Producto.unbind "current_set" , @addItem
-    Cliente.unbind "current_set" , @addCliente
-    #Pedido.unbind "beforeDestroy" , @onPedidoDestroy
+    #Cliente.unbind "current_set" , @addCliente
+    Pago.unbind "beforeDestroy" , @onPagoDestroy
 
   constructor: ->
     super
     @setVariables()
     @html require("views/apps/cuentasPorCobrar/emitirRecibo/layout")(@constructor)
+    @clientes = new Clientes(el: @src_cliente  )
     @setBindings()
     @loadPedido()
  
@@ -92,8 +106,9 @@ class EmitirRecibo extends Spine.Controller
     @currentController?.onPagoItemChange()
 
   createPago:(recibo) =>
+    throw "Escoja un cliente" if !Cliente.current
     codigo = parseInt( Math.random() * 10000 )
-    pago = Pago.create( { Codigo: codigo  })
+    pago = Pago.create( { Codigo: codigo , Cliente: Cliente.current.id  })
     @pagos.push pago
     return pago
 
@@ -102,6 +117,7 @@ class EmitirRecibo extends Spine.Controller
     codigo = pagoEl.attr("data-codigo")
     controller = @pagoToControllerMap[codigo]
     @setCurrentController(controller)
+    Cliente.reset_current;
     return false;
 
   setCurrentController: (controller) =>
@@ -110,7 +126,7 @@ class EmitirRecibo extends Spine.Controller
       @currentController = controller
       @currentController.el.addClass "active"
 
-  onPagoDestroy: (pedido) =>
+  onPagoDestroy: (pago) =>
     @pagoToControllerMap[pago.Codigo]  = null
     @setCurrentController(null);
 

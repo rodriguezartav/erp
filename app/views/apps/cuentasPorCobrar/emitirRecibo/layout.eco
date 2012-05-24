@@ -1,11 +1,18 @@
 <div class="row-fluid">
-  <div class="span9">
+  <div class="span5">
   <h5 class="preHeader"><%= @departamento %></h2>
   <h1><%= @label %></h2>
   </div>
 
-  <div class="span3">
-    <button class="btn btn-info btn-large createPago"><i class="icon-pencil icon-large icon-white"></i>Crear Pago</button>
+  <div class="span7">
+    <div class="row-fluid">
+    
+      <div class="span9">
+        <div class="src_cliente"></div>
+      </div>
+      
+      <button class="btn btn-info btn-large createPago span"><i class="icon-pencil icon-large icon-white"></i>Crear Pago</button>
+      
   </div>
 </div>
 

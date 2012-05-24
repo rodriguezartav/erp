@@ -2,13 +2,15 @@ Spine = require('spine')
 
 class Saldo extends Spine.Model
   @configure "Saldo" , "Total" , "Saldo" , "Consecutivo" ,  "Cliente" , "Plazo" , "FechaFacturacion" , "FechaVencimiento" ,
-    "Tipo_de_Documento" , "PagoEnRecibos" , "Restricciones"
+    "Tipo_de_Documento" , "Restricciones"
 
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
 
-  @autoQuery = false
-  @overrideName: "Documento"
+  @autoPush= true
+  @autoQueryTimeBased = true
+  @overrideName = "Documento"
+  
 
   @queryFilter: (options ) =>
     filter = ""
