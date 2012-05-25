@@ -20,7 +20,7 @@ class Update extends Spine.Controller
 
   constructor: ->
     super
-    @html require('views/lightbox/update')(@data)
+    @html require('views/controllers/lightbox/update')(@data)
     
     @data.class.bind "insert_error" , @on_error
     @data.class.bind "insert_success" , @on_success
@@ -32,7 +32,7 @@ class Update extends Spine.Controller
   on_success: (results) =>
     @data.class.unbind "insert_error" , @on_error
     @data.class.unbind "insert_success" , @on_success  
-    @html require('views/lightbox/success')
+    @html require('views/controllers/lightbox/success')
     @callback.apply @, [true]
     Spine.trigger "hide_lightbox"
 

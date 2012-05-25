@@ -31,9 +31,9 @@ class Items extends Spine.Controller
     @log @negociacion
     if @negociacion
       @pedidoItem.Descuento = @negociacion.Descuento
-      @html require("views/apps/auxiliares/pedidos/itemNegociacion")(pedidoItem: @pedidoItem, negociacion: @negociacion )
+      @html require("views/apps/pedidos/pedidos/itemNegociacion")(pedidoItem: @pedidoItem, negociacion: @negociacion )
     else
-      @html require("views/apps/auxiliares/pedidos/item")(@pedidoItem)  
+      @html require("views/apps/pedidos/pedidos/item")(@pedidoItem)  
 
   createItem: (producto,referencia) =>
     @pedidoItem = PedidoItem.createFromProducto(@producto)
@@ -113,8 +113,8 @@ class Credito extends Spine.Controller
   constructor: ->
     super
     @setVariables()
-    @html require("views/apps/auxiliares/pedidos/credito")(@pedido) if !@pedido.IsContado
-    @html require("views/apps/auxiliares/pedidos/contado")(@pedido) if @pedido.IsContado
+    @html require("views/apps/pedidos/pedidos/credito")(@pedido) if !@pedido.IsContado
+    @html require("views/apps/pedidos/pedidos/contado")(@pedido) if @pedido.IsContado
     @clientes = new Clientes(el: @src_cliente , cliente: @pedido.Cliente , contado: @pedido.IsContado)
     Negociacion.destroyAll()
     @negociaciones = Negociacion.createFromCliente(@pedido.Cliente)
@@ -234,7 +234,7 @@ class Credito extends Spine.Controller
 class Pedidos extends Spine.Controller
   className: "row-fluid listable pedidos"
 
-  @departamento = "Ventas"
+  @departamento = "Pedidos"
   @label = "Digitar Pedidos"
   @icon = "icon-shopping-cart"
 
@@ -272,7 +272,7 @@ class Pedidos extends Spine.Controller
     Producto.reset()
     Cliente.reset()
 
-    @html require("views/apps/auxiliares/pedidos/layout")(Pedidos)
+    @html require("views/apps/pedidos/pedidos/layout")(Pedidos)
     @setBindings()
     
     @loadPedido()

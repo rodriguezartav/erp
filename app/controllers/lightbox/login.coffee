@@ -79,16 +79,16 @@ class Login extends Spine.Controller
 
 
   renderLogin: (error = false ) =>
-    @html require("views/lightbox/login/login")(Spine.session)
+    @html require("views/controllers/lightbox/login/login")(Spine.session)
     if error
       @alert_box.show()
       @alert_box.html error
   
   renderOffLine: =>
-    @html require("views/lightbox/login/noNet")(Spine.session)
+    @html require("views/controllers/lightbox/login/noNet")(Spine.session)
 
   renderComplete: =>
-    @html require("views/lightbox/login/complete")(Spine.session)
+    @html require("views/controllers/lightbox/login/complete")(Spine.session)
 
   cancel: =>
     @renderOffLine()

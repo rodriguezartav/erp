@@ -22,7 +22,7 @@ class Clientes  extends Spine.Controller
     super
     @contado = false if @contado ==null
     
-    @html require("views/clientes/layout")({contado: @contado})
+    @html require("views/controllers/clientes/layout")({contado: @contado})
  
     @js_cliente_search.val Cliente.find(@cliente).Name if @cliente
  
@@ -30,7 +30,9 @@ class Clientes  extends Spine.Controller
       
     @clientes_list.hide()
 
-  onCloseList: =>
+  onCloseList: (e) =>
+    target = $(e.target)
+    target.select()
     if @clientes_list.css("display") != "none"
       @clientes_list.hide()      
 
@@ -42,7 +44,7 @@ class Clientes  extends Spine.Controller
     @js_cliente_search.val ""
 
   render: (clientes) =>
-    @clientes_list.html require("views/clientes/list_item")(clientes)
+    @clientes_list.html require("views/controllers/clientes/list_item")(clientes)
     @clientes_list.show()
 
   on_item_click: (e) =>

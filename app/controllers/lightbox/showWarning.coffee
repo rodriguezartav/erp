@@ -14,7 +14,7 @@ class ShowWarning extends Spine.Controller
 
   constructor: ->
     super
-    @html require('views/lightbox/showWarning')(@data)
+    @html require('views/controllers/lightbox/showWarning')(@data)
     
 
   accept: =>

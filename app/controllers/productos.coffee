@@ -28,7 +28,7 @@ class Productos  extends Spine.Controller
     @productos_list.hide()
 
   render: (productos) =>
-    @productos_list.html require("views/productos/list_item")(productos)
+    @productos_list.html require("views/controllers/productos/list_item")(productos)
     @productos_list.show()
     $('a.popable').popover(placement: "bottom" , delay: { show: 150, hide: 100 })    
 

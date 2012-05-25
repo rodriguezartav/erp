@@ -5,6 +5,45 @@ Saldo = require("models/socketModels/saldo")
 Pago = require("models/transitory/pago")
 PagoItem = require("models/transitory/pagoItem")
 
+class Items extends Spine.Controller  
+  @extend Spine.Controller.ViewDelegation
+  tag: "tr"
+
+  elements:
+    ".validatable" : "inputs_to_validate"
+
+  events:
+    "click .incluir" : "add_saldo"
+    "click .excluir" : "remove_saldo"
+    "change input" : "checkItem"
+
+  constructor: ->
+    super
+    @pagoItem = PagoItem.createFromDocumento(@saldo)
+    @render()
+    
+  render: =>
+    @html require("views/apps/cuentasPorCobrar/emitirRecibo/item")(@pagoItem)
+
+  add_saldo: (e) =>
+    @pagoItem.Monto = @pagoItem.Saldo
+    @pagoItem.save()
+    @render()
+    
+  remove_saldo: (e) =>
+    @pagoItem.Monto = 0
+    @pagoItem.save()
+    @render()
+
+  checkItem: (e) =>
+    @updateFromView(@pagoItem,@inputs_to_validate)
+    @saldos_list.html
+    
+  reset: =>
+    @pagoItem.destroy()
+    @saldo = null
+    @release()
+
 class Pagos extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
   
@@ -22,8 +61,7 @@ class Pagos extends Spine.Controller
     "click .save" : "save"
 
   setVariables: =>
-    @pagoItemToControllerMap = {}
-    @pagos = []
+    @items = []
 
   setBindings: =>
 
@@ -32,20 +70,36 @@ class Pagos extends Spine.Controller
   constructor: ->
     super
     @setVariables()
+    @setBindings()
     @html require("views/apps/cuentasPorCobrar/emitirRecibo/pago")(@pago)
     @refreshView(@pago,@inputs_to_validate)
     @el.attr("data-codigo" , @pago.Codigo)
-    @saldos_list.html require("views/apps/cuentasPorCobrar/emitirRecibo/item")(Saldo.all())
-    @setBindings()
+    @renderSaldos()
+
+  renderSaldos: ->
+    saldos = Saldo.findAllByAttribute("Cliente",@pago.Cliente)
+    saldos.sort (a,b) ->
+      return if parseInt(a.Consecutivo) < parseInt(b.Consecutivo) then -1 else 1
+      
+    for saldo in saldos
+      ri = new Items(saldo: saldo)
+      @items.push ri
+      @saldos_list.append ri.el
+    $('.info_popover').popover()
+
+  onPagoItemChange: =>
+    monto = 0
+    for item in @items
+      monto += item.pago.Monto
+    @lbl_total.html monto.toMoney()
 
   close: =>
     @customReset()
 
   customReset: =>
     @resetBindings()
-    #for index,items of @pedidoItemToControllerMap
-      #items.reset() if items
-    #item.destroy() for item in PedidoItem.itemsInPedido(@pedido) 
+    for item in @items
+      item.reset() if item
     @pago.destroy()
     @setVariables()
     @release()
@@ -58,13 +112,13 @@ class EmitirRecibo extends Spine.Controller
   @icon = "icon-shopping-cart"
 
   elements:
-    ".list_item" : "list_item"
-    ".src_cliente" : "src_cliente"
+    ".list_item"         : "list_item"
+    ".src_cliente"       : "src_cliente"
 
   events:
-    "click .cancel"    :  "reset"
-    "click .createPago"    :  "onCreatePago"
-    "click .pago"      :  "onPagoClick"
+    "click .cancel"      :  "reset"
+    "click .pago"        :  "onPagoClick"
+    "click .createPago"  :  "onClienteSelect"
 
   setVariables: =>
     @pagos = Pago.all()
@@ -72,22 +126,25 @@ class EmitirRecibo extends Spine.Controller
     @pagoControllers = []
     @pagoToControllerMap = {}
     Cliente.reset()
-    
-    
+
   setBindings: =>
-    #PedidoItem.bind "change update" , @onPedidoItemChange
+    PagoItem.bind "change update" , @onPagoItemChange
     #Producto.bind "current_set" , @addItem
-    #Cliente.bind "current_set" , @addCliente
+    Cliente.bind "current_set" , @onClienteSelect
     Pago.bind "beforeDestroy" , @onPagoDestroy
 
   resetBindings: =>
-    #PedidoItem.unbind "change update" , @onPedidoItemChange
+    PagoItem.unbind "change update" , @onPagoItemChange
     #Producto.unbind "current_set" , @addItem
-    #Cliente.unbind "current_set" , @addCliente
+    Cliente.unbind "current_set" , @onClienteSelect
     Pago.unbind "beforeDestroy" , @onPagoDestroy
 
   constructor: ->
     super
+    
+    for saldo in Saldo.all()
+      saldo.destroy() if saldo.Saldo == 0
+    
     @setVariables()
     @html require("views/apps/cuentasPorCobrar/emitirRecibo/layout")(@constructor)
     @clientes = new Clientes(el: @src_cliente  )
@@ -99,25 +156,15 @@ class EmitirRecibo extends Spine.Controller
      # controller = @createPedidoController(pedido)
     #  @setCurrentController(controller)
 
-  addCliente: =>
-    @currentController.addCliente()
 
   onPagoItemChange: =>
     @currentController?.onPagoItemChange()
-
-  createPago:(recibo) =>
-    throw "Escoja un cliente" if !Cliente.current
-    codigo = parseInt( Math.random() * 10000 )
-    pago = Pago.create( { Codigo: codigo , Cliente: Cliente.current.id  })
-    @pagos.push pago
-    return pago
 
   onPagoClick: (e) =>
     pagoEl = $(e.target).parents(".pago")
     codigo = pagoEl.attr("data-codigo")
     controller = @pagoToControllerMap[codigo]
     @setCurrentController(controller)
-    Cliente.reset_current;
     return false;
 
   setCurrentController: (controller) =>
@@ -126,20 +173,28 @@ class EmitirRecibo extends Spine.Controller
       @currentController = controller
       @currentController.el.addClass "active"
 
-  onPagoDestroy: (pago) =>
-    @pagoToControllerMap[pago.Codigo]  = null
-    @setCurrentController(null);
+  createPago:  =>
+    codigo = parseInt( Math.random() * 10000 )
+    pago = Pago.create( { Codigo: codigo , Cliente: Cliente.current.id  })
+    @pagos.push pago
+    return pago
 
-  onCreatePago: =>
+
+  onClienteSelect: =>
+    throw "Escoja un cliente" if !Cliente.current
     controller = @createPagoController(@createPago())
     @setCurrentController(controller)
-
+    
   createPagoController: (pago) =>
     controller = new Pagos(pago: pago)
     controller.bind ""
     @pagoToControllerMap[pago.Codigo] = controller
     @append controller
     controller
+
+  onPagoDestroy: (pago) =>
+    @pagoToControllerMap[pago.Codigo]  = null
+    @setCurrentController(null);
     
   reset: =>
     @resetBindings()
@@ -152,7 +207,5 @@ class EmitirRecibo extends Spine.Controller
     @setVariables()
     @release()
     @navigate "/apps"
-
-
 
 module.exports = EmitirRecibo

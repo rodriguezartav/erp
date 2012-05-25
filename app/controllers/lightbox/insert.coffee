@@ -17,7 +17,7 @@ class Insert extends Spine.Controller
 
   constructor: ->
     super
-    @html require('views/lightbox/insert')
+    @html require('views/controllers/lightbox/insert')
     
     @data.class.insert(@data.restData)
     @data.class.bind "insert_error" , @on_error
@@ -26,7 +26,7 @@ class Insert extends Spine.Controller
   on_success: (results) =>
     @data.class.unbind "insert_error" , @on_error
     @data.class.unbind "insert_success" , @on_success   
-    @html require('views/lightbox/success')
+    @html require('views/controllers/lightbox/success')
     @callback.apply @, [true]
     Spine.trigger "hide_lightbox", true
 

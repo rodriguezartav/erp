@@ -2,7 +2,6 @@ Spine = require('spine')
 Session = require('models/session')
 Lightbox = require("controllers/lightbox")
 
-
 class ConnectionManager
 
   constructor: ->
@@ -51,7 +50,7 @@ class ConnectionManager
  
     if @cyclesCount > 100
       @cyclesCount = 0
-      @fetchServerData()
+      @fetchServerData() if Spine.options.autoUpdate
  
     if navigator.onLine and @connectionStatus != "online"
       @connectionStatus = "online"

@@ -8,6 +8,14 @@ Reposiciones = require("apps/auxiliares/reposiciones")
 
 #DevolucionesDanadas = require("apps/auxiliares/devolucionesDanadas")
 
+#pedidos
+Pedidos = require("apps/pedidos/pedidos")
+PedidosEspecial = require("apps/pedidos/pedidosEspecial")
+#PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
+PedidosAprobacion = require("apps/pedidos/pedidosAprobacionGerencia")
+
+
+
 Compras = require("apps/auxiliares/compras")
 
 NotasCredito = require("apps/auxiliares/notasCredito")
@@ -22,12 +30,6 @@ VerSaldos = require("apps/vistas/verSaldos")
 Ajustes = require("apps/contables/ajustes")
 
 
-Pedidos = require("apps/auxiliares/pedidos")
-PedidosEspecial = require("apps/auxiliares/pedidosEspecial")
-
-#PedidosAprobacion = require("apps/procesos/pedidosAprobacion")
-
-PedidosAprobacion = require("apps/procesos/pedidosAprobacionGerencia")
 
 
 FacturasImpresion = require("apps/print/facturas")
@@ -49,6 +51,9 @@ CuentasPorPagarEntrega= require("apps/cuentasPorPagar/cuentasPorPagarEntrega")
 
 NotaCreditoProveedor = require("apps/cuentasPorPagar/notaCreditoProveedor")
 
+#FOR PROFILE BASED CONFIGURATION
+Movimiento = require("models/movimiento")
+Saldo = require("models/socketModels/saldo")
 
 
 class SecurityManager
@@ -68,16 +73,18 @@ class SecurityManager
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>
-    profile = Spine.session.user.Perfil__c
     Spine.status = "loggedIn"
     Spine.options =
-      locationType : if profile == "Vendedor" then "Ruta" else "Planta" 
-      aprobacion   : if profile.indexOf("Credito") > -1 then true else false
-      facturacion  : if profile == "Recepcion" or profile.indexOf("Ventas") then true else false
+      locationType : if Spine.session.hasPerfiles(["Vendedor"]) then "Ruta" else "Planta" 
+      aprobacion   : if Spine.session.hasPerfiles(["Ejecutivo Credito","Platform System Admin"])  then true else false
+      facturacion  : if Spine.session.hasPerfiles(["Recepcion","Encargado Ventas" , "Ejecutivo Ventas","Platform System Admin"]) then true else false
+      autoUpdate   : true
 
-    Spine.options.aprobacion = true if profile == "Platform System Admin"
-    Spine.options.facturacion = true if profile == "Platform System Admin"
+    Movimiento.attributes.push('ProductoCosto') if Spine.session.hasPerfiles(["Platform System Admin" , "Presidencia" , "SubGerencia"])
+    if Spine.session.hasPerfiles([ "Platform System Admin" , "Ejecutivo Credito" , "Vendedor" ])
+      Saldo.autoQuery = true
+      Saldo.query({}) 
 
-    Spine.apps= @profiles[profile]
+    Spine.apps = @profiles[Spine.session.user.Perfil__c]
 
 module.exports = SecurityManager

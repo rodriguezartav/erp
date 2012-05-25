@@ -4,7 +4,7 @@
 
 <div class="well">
 
-<a class="close">&times;</a>
+<a class="close cls">&times;</a>
 
 <div class=" row-fluid">
   <div class="span4">
@@ -18,13 +18,12 @@
     <input class="validatable" data-required="false" data-type="Recibo" placeholder="Recibo" />
   </div>
 
-  <div class="span6">
-    <textarea class="validatable" data-required="false" data-type="Observacion" placeholder="Observacion" />
+  <div class="span5">
+  <h4>Observacion</h4>
+    <input class="validatable" data-required="false" data-type="Observacion" placeholder="Observacion" />
   </div>
 
 </div>
-
- <hr/>
 
 <div class=" row-fluid">
 

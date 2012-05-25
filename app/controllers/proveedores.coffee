@@ -17,7 +17,7 @@ class Proveedores  extends Spine.Controller
 
   constructor: ->
     super
-    @html require("views/proveedores/layout")
+    @html require("views/controllers/proveedores/layout")
     Proveedor.reset()
     Proveedor.bind "query_success" , =>
       @loadable.show()
@@ -30,7 +30,7 @@ class Proveedores  extends Spine.Controller
     @proveedores_list.hide()
 
   render: (proveedores) =>
-    @proveedores_list.html require("views/proveedores/list_item")(proveedores)
+    @proveedores_list.html require("views/controllers/proveedores/list_item")(proveedores)
     @proveedores_list.show()
 
   on_item_click: (e) =>

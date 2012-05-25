@@ -10,7 +10,7 @@ User = require("models/user")
 class PedidosAprobacion extends Spine.Controller
   className: "row-fluid"
 
-  @departamento = "Credito y Cobro"
+  @departamento = "Pedidos"
   @label = "Aprobacion de Pedidos"
   @icon = "icon-ok-sign"
 
@@ -28,7 +28,7 @@ class PedidosAprobacion extends Spine.Controller
   constructor: ->
     super
     @error.hide()
-    @html require("views/apps/procesos/pedidosAprobacion/layout")(PedidosAprobacion)
+    @html require("views/apps/pedidos/pedidosAprobacion/layout")(PedidosAprobacion)
     @renderPedidos()
     PedidoPreparado.bind "query_success" , @renderPedidos
     PedidoPreparado.bind "push_success" , @renderPedidos
@@ -38,7 +38,7 @@ class PedidosAprobacion extends Spine.Controller
 
   renderPedidos: =>
     @groups = PedidoPreparado.group_by_referencia()
-    @src_pedidos.html require("views/apps/procesos/pedidosAprobacion/item")(@groups)
+    @src_pedidos.html require("views/apps/pedidos/pedidosAprobacion/item")(@groups)
 
   on_action_click: (e) =>
     target = $(e.target)
@@ -52,7 +52,7 @@ class PedidosAprobacion extends Spine.Controller
     return false if !group
     @aprovedGroup = group
     @aprobar = aprobar
-    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: true} , @aprobarSuccess
+    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar} , @aprobarSuccess
 
   aprobarSuccess: =>
     for pedido in @aprovedGroup.Pedidos

@@ -23,7 +23,7 @@ class Items extends Spine.Controller
   constructor: ->
     super 
     @pedidoItem = PedidoItem.createFromProducto(@producto)
-    @html require("views/apps/auxiliares/pedidosEspecial/item")(@pedidoItem) 
+    @html require("views/apps/pedidos/pedidosEspecial/item")(@pedidoItem) 
 
   on_click: (e) =>
     $(e).select()
@@ -44,7 +44,7 @@ class PedidosEspecial extends Spine.Controller
   
   className: "row-fluid"
 
-  @departamento = "Ventas"
+  @departamento = "Pedidos"
   @label = "Pedidos Especiales"
   @icon = "icon-key"
 
@@ -72,7 +72,7 @@ class PedidosEspecial extends Spine.Controller
     @items = []
     @itemToControllerMap = {}
     
-    @html require("views/apps/auxiliares/pedidosEspecial/layout")(@pedido)
+    @html require("views/apps/pedidos/pedidosEspecial/layout")(@pedido)
     @clientes = new Clientes(el: @src_cliente)
 
     @setBindings()

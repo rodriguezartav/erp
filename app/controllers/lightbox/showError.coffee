@@ -14,7 +14,7 @@ class ShowError extends Spine.Controller
 
   constructor: ->
     super
-    @html require('views/lightbox/showError')(@data)
+    @html require('views/controllers/lightbox/showError')(@data)
 
   accept: =>
     Spine.trigger "hide_lightbox"

@@ -20,7 +20,7 @@ class Header  extends Spine.Controller
   
   constructor: ->
     super
-    @html require('views/header/layout')
+    @html require('views/controllers/header/layout')
     $('.dropdown-toggle').dropdown()
     
     new Productos( el: @el )

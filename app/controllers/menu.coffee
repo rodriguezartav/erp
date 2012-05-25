@@ -15,7 +15,7 @@ class Menu extends Spine.Controller
     @render()
 
   render: =>
-    @html require("views/menu/layout")
+    @html require("views/controllers/menu/layout")
     group = {}
     for app in @apps
       appList = group[app.departamento] || []
@@ -23,9 +23,9 @@ class Menu extends Spine.Controller
       group[app.departamento] = appList
     
     for index,value of group
-      @list.append require("views/menu/header")(name: index)
+      @list.append require("views/controllers/menu/header")(name: index)
       for app in value
-        @list.append require("views/menu/app")(app)
+        @list.append require("views/controllers/menu/app")(app)
    
    on_click: (e) =>
      target = $(e.target)

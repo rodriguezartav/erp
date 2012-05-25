@@ -28,9 +28,9 @@ class AprobarPedidos extends Spine.Controller
     cliente = Cliente.find(@data.group.Cliente)
     render = ''
     if cliente.willOverDraft(@data.group.Total) and !@data.allowOverDraft
-      render = 'views/lightbox/aprobarPedidosNoClearance'
+      render = 'views/controllers/lightbox/aprobarPedidosNoClearance'
     else
-      render = 'views/lightbox/aprobarPedidos'  
+      render = 'views/controllers/lightbox/aprobarPedidos'  
     @html require(render)(@data)
     @show_input.show()
     @show_wait.hide() 
