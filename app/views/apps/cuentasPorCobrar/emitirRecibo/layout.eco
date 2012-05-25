@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row-fluid layoutHeader">
   <div class="span5">
   <h5 class="preHeader"><%= @departamento %></h2>
   <h1><%= @label %></h2>
@@ -16,10 +16,12 @@
 
     </div>  
   </div>
-  
-  
 </div>
 
+
+<div class="pagos_list">
+  
+</div>
 
 <div class="action_footer">
     <div class="modal-footer">

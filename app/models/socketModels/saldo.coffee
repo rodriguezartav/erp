@@ -17,8 +17,9 @@ class Saldo extends Spine.Model
 
   @queryFilter: (options ) =>
     filter = ""
-    filter = @queryFilterAddCondition(" IsContable__c = 'true' and IsContado__c = false" , filter)
-    filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "         , filter) if options.cliente
+    filter = @queryFilterAddCondition(" IsContable__c = 'true' and IsContado__c = false"    , filter)
+    filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "              , filter) if options.cliente
+    filter = @queryFilterAddCondition(" Saldo__c != 0 "                                     , filter) if options.saldo
     filter
 
 

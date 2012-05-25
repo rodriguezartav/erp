@@ -50,7 +50,7 @@ class ConnectionManager
  
     if @cyclesCount > 100
       @cyclesCount = 0
-      @fetchServerData() if Spine.options.autoUpdate
+      @fetchServerData() #if Spine.options.autoUpdate
  
     if navigator.onLine and @connectionStatus != "online"
       @connectionStatus = "online"

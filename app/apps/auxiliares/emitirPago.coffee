@@ -81,7 +81,6 @@ class EmitirPago extends Spine.Controller
  
   constructor: ->
     super
-
     @setVariables()
     @preset()
     @render()
@@ -152,13 +151,12 @@ class EmitirPago extends Spine.Controller
     for item in @items
       item?.release()
     #@resetBindings()
-    PagoItem.destroyAll()
     Documento.destroyAll()
     Cliente.reset()
     @pago.destroy()
     @setVariables()
-    @refreshView(@pago,@inputs_to_validate)    
-    
-    #@init()
+    @preset()
+    @render()
+
     
 module.exports = EmitirPago
