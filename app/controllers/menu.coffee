@@ -29,7 +29,7 @@ class Menu extends Spine.Controller
    
    on_click: (e) =>
      target = $(e.target)
-     name = target.attr("data-type")
+     name = target.attr("data-app")
      @items.removeClass "active"
      target.parent().addClass "active"
      @navigate "/apps/" + name
