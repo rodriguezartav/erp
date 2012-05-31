@@ -55,7 +55,6 @@ NotaCreditoProveedor = require("apps/cuentasPorPagar/notaCreditoProveedor")
 Movimiento = require("models/movimiento")
 Saldo = require("models/socketModels/saldo")
 
-
 class SecurityManager
   
   constructor: ->
