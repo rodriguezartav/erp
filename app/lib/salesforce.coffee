@@ -142,7 +142,7 @@ Spine.Model.Salesforce =
         Spine.salesforceQueryQueue +=1
         query = @queryString()
         query += @queryFilter(options)
-        query = @queryFilterAddCondition(" LastModifiedDate >= #{Spine.session.getLastUpdateOr1970(@name).to_salesforce() }" , query) if @autoQueryTimeBased and !options.avoidQueryTimeBased
+        query = @queryFilterAddCondition(" LastModifiedDate >= #{Spine.session.getLastUpdateOr1970(@name).to_salesforce() }" , query) if @autoQueryTimeBased and !options.avoidQueryTimeBased and useDate
         Spine.trigger "query_start"
         $.ajax
           url: Spine.server + "/query"
