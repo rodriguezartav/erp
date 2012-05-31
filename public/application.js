@@ -30932,7 +30932,7 @@ window.WebSocket,Pusher.TransportType="flash",window.WEB_SOCKET_SWF_LOCATION=a+"
   }
   (function() {
     
-      __out.push('<li><a data-app="');
+      __out.push('<li><a data-type="');
     
       __out.push(__sanitize(this.name));
     

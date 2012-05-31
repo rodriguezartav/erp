@@ -16,7 +16,7 @@ app.use express.cookieParser()
 app.set 'views' , './views'
 app.set 'view engine'  , 'jade'
 
-OpfDevUtil.setupCompilers(app) if process.env.NODE_ENV != "production"
+OpfDevUtil.setupCompilers(app) #if process.env.NODE_ENV != "production"
 app.use(express.static("./public"))
 
 webLogin = OPF.Salesforce.webLogin()

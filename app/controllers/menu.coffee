@@ -22,16 +22,14 @@ class Menu extends Spine.Controller
       appList.push app
       group[app.departamento] = appList
     
-    console.log group
-    for index , value of group
+    for index,value of group
       @list.append require("views/controllers/menu/header")(name: index)
       for app in value
-        console.log app
         @list.append require("views/controllers/menu/app")(app)
    
    on_click: (e) =>
      target = $(e.target)
-     name = target.attr("data-app")
+     name = target.attr("data-type")
      @items.removeClass "active"
      target.parent().addClass "active"
      @navigate "/apps/" + name
