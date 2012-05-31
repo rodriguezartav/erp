@@ -51,6 +51,7 @@
   <thead>
       <tr>
         <th>Consecutivo</th>
+        <th>Tipo Cambio</th>
         <th>Saldo</th>
         <th>Pago</th>
       </tr>

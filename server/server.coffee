@@ -3,6 +3,7 @@ port =  process.env.PORT || 9294
 
 express = require('express')
 OPF = require("opf")
+OpfDevUtil = require("./opfDevUtil")
 SalesforceStreaming = require ("./salesforceStreaming")
 OPF.debug= true
 
@@ -12,13 +13,10 @@ app.use(express.logger())
 app.use(express.bodyParser())
 app.use express.cookieParser()
 
-if process.env.NODE_ENV != "production"
-  Hem = require("hem")
-  hem = new Hem()
-  app.get(hem.options.jsPath, hem.hemPackage().createServer())
-  
 app.set 'views' , './views'
 app.set 'view engine'  , 'jade'
+
+OpfDevUtil.setupCompilers(app) if process.env.NODE_ENV != "production"
 app.use(express.static("./public"))
 
 webLogin = OPF.Salesforce.webLogin()

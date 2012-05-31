@@ -1,5 +1,7 @@
 <tr data-id="<%= @id %>">
     <td><h3 class=""><%= @Referencia %></h3></td>
+    <td><h3 class=""><%= @TipoCambio.toMoney() %></h3></td>
+    
     <td><h3 class=""><%= @Saldo.toMoney() %></h3></td>
     <td><h3 data-id="<%= @id %>"  data-saldo="0" class="txt_saldo" > 0.00 </h3> </td>
     <td>

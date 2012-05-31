@@ -29,6 +29,9 @@ class Proveedores  extends Spine.Controller
     @loadable.hide() if Proveedor.count() == 0
     @proveedores_list.hide()
 
+  setProveedor: =>
+    @js_proveedor_search.val Proveedor.current.Name
+
   render: (proveedores) =>
     @proveedores_list.html require("views/controllers/proveedores/list_item")(proveedores)
     @proveedores_list.show()
@@ -41,11 +44,12 @@ class Proveedores  extends Spine.Controller
     if Proveedor.set_current proveedor
       parent.toggleClass("active")
       parent.siblings().removeClass("active")
-      @js_proveedor_search.val proveedor.Name
+      @setProveedor()
       @proveedores_list.hide()
     
   on_filter: (e) =>
-    return false if Proveedor.locked 
+    return false if Proveedor.current
+    return false if Proveedor.locked
     txt = $(e.target).val()
     result = Proveedor.filter txt
     @render result

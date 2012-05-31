@@ -48,13 +48,10 @@ class PagosProveedor extends Spine.Controller
     super
     @error.hide()
     CuentaPorPagar.destroyAll()
-    
     Cuenta.query({clases: "'Activo'" } )
-
+    Proveedor.reset_current()
     Proveedor.query()
-    
     @setBindings()
-    
     @html require("views/apps/cuentasPorPagar/pagosProveedor/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
     
@@ -144,8 +141,7 @@ class PagosProveedor extends Spine.Controller
     @src_saldos.empty()
     @resetBindings()
     @proveedores.reset()
-    
-    
+    Proveedor.reset_current()
     CuentaPorPagar.destroyAll()
 
 module.exports = PagosProveedor
