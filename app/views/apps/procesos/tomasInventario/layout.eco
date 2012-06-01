@@ -1,0 +1,40 @@
+
+
+<div class="row-fluid">
+  
+    <h5><%= @app.departamento %></h5>
+    <h1><%= @app.label %></h2>
+  
+</div>
+
+<ul class="nav nav-pills familiasList hide_on_print">
+
+<% for familia in @familias:  %>
+    <li class="active"><a class="btn_familia" data-familia="<%= familia[0].Familia %>"> <%= familia[0].Familia %>  </a></li>  
+<% end %>
+</ul>
+
+<hr/>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Grupo</th>
+      <th>Producto</th>
+      <th>Inventario</th>
+      <th>Diferencia</th>
+    </tr>
+  </thead>
+  <tbody class="productList">
+
+  </tbody>
+</table>
+
+
+<div class="action_footer">
+    <div class="modal-footer">
+      <a class="btn btn-danger cancel">Regresar</a>
+      <a class="btn btn-danger send save print">Print</a>
+
+    </div>
+</div>

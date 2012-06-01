@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Producto extends Spine.Model
   @configure 'Producto', 'Name', 'CodigoExterno', 'InventarioActual', 'Precio_Distribuidor' , 'Precio_Ferreteria','Precio_Industria',
-  'Precio_Retail' , 'DescuentoMaximo' ,'Familia', 'Impuesto' , "Activo" , "SubFamilia"
+  'Precio_Retail' , 'DescuentoMaximo' ,'Familia', 'Impuesto' , "Activo" , "SubFamilia", "Grupo"
 
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SelectableModel
@@ -18,6 +18,18 @@ class Producto extends Spine.Model
     @queryFilterAddCondition(" Precio_Distribuidor__c > 0 ", filter) if options.withPrecio
     filter += " order by CodigoExterno__c "
     filter
+
+  @groupByFamilia:  ->
+    items = @all()
+    familiasMap = {}
+    for item in items
+      group = familiasMap[item.Familia] || []
+      group.push item
+      familiasMap[item.Familia] = group
+    familias = []
+    for index,value of familiasMap
+      familias.push value
+    return familias
     
   Ratio: ->
     r = (@Venta / @Meta)

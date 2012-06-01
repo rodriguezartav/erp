@@ -29,9 +29,6 @@ VerSaldos = require("apps/vistas/verSaldos")
 
 Ajustes = require("apps/contables/ajustes")
 
-
-
-
 FacturasImpresion = require("apps/print/facturas")
 
 NotasImpresion = require("apps/print/notas")
@@ -51,6 +48,8 @@ CuentasPorPagarEntrega= require("apps/cuentasPorPagar/cuentasPorPagarEntrega")
 
 NotaCreditoProveedor = require("apps/cuentasPorPagar/notaCreditoProveedor")
 
+TomasInventario = require("apps/procesos/tomasInventario")
+
 #FOR PROFILE BASED CONFIGURATION
 Movimiento = require("models/movimiento")
 Saldo = require("models/socketModels/saldo")
@@ -59,13 +58,13 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ EmitirRecibo, Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Reposiciones  , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
+    apps = [ TomasInventario , EmitirRecibo, Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos , VerSaldos ,  Entradas , Salidas , Reposiciones  , Compras , PedidosEspecial , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  ,PedidosAprobacion  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [  FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega]
-    @profiles["Presidencia"] =  [ NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacion   , DocumentosAnular ]
-    @profiles["SubGerencia"] =  [ NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular ]
+    @profiles["Presidencia"] =  [ NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacion   , DocumentosAnular , TomasInventario ]
+    @profiles["SubGerencia"] =  [ NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras , PedidosEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacion, DocumentosAnular , TomasInventario ]
     @profiles["Ejecutivo Ventas"] = [Pedidos , FacturasImpresion , FacturasAnular ]
-    @profiles["Encargado de Ventas"] = [Pedidos , FacturasImpresion , FacturasAnular  ]
+    @profiles["Encargado de Ventas"] = [Pedidos , FacturasImpresion , FacturasAnular , TomasInventario  ]
     @profiles["Ejecutivo Credito"] = [Entradas,Salidas,Reposiciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion]
     @profiles["Vendedor"] = [Pedidos]
     @profiles["Contabilidad"] = [ CuentasPorPagarFlujo ]

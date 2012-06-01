@@ -1,0 +1,6 @@
+<tr>
+  <th><%= @Grupo %></th>
+  <th><%= @Name.capitalize()  %></th>
+  <th><input data-producto="<%= @id %>" /> <i class="resultIcon"></i></th>
+  <th><h3 class="txtDiff"></h3></th>
+</tr>

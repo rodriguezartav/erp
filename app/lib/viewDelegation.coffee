@@ -12,7 +12,21 @@ Spine.Controller.ViewDelegation =
       # Functions To Override 
       ##
       
+      undelegateEvents: ->
+        for key, method of @events
+        
+          match      = key.match(@eventSplitter)
+          eventName  = match[1]
+          selector   = match[2]
+
+          if selector is ''
+            @el.unbind(eventName, method)
+          else
+            @el.undelegate(selector, eventName, method)
+      
+      
       reset: () ->
+        @undelegateEvents()
         @release()
         @customReset?()
         @navigate "/apps"
