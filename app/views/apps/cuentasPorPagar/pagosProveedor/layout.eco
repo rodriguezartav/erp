@@ -39,7 +39,7 @@
 
   <div class="span12">
     <h3>Observaciones del Pago</h3>
-    <textarea class=" validatable" data-type="Observacion"   placeholder="Observacion"/>
+    <textarea class=" validatable" data-required="false" data-type="Observacion"   placeholder="Observacion"/>
   </div>
 
 </div>
@@ -50,6 +50,7 @@
 
   <thead>
       <tr>
+        <th> </th>
         <th>Consecutivo</th>
         <th>Tipo Cambio</th>
         <th>Saldo</th>

@@ -1,4 +1,6 @@
 <tr>
+<th><%= @CodigoExterno %></th>
+
   <th><%= @Grupo %></th>
   <th><%= @Name.capitalize()  %></th>
   <th><input data-producto="<%= @id %>" /> <i class="resultIcon"></i></th>

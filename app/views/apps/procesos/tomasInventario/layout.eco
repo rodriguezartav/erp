@@ -19,6 +19,7 @@
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
+      <th>Codigo</th>
       <th>Grupo</th>
       <th>Producto</th>
       <th>Inventario</th>
