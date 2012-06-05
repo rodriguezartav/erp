@@ -9,9 +9,14 @@
     <div class="src_cliente"></div>
   </div>
 
-  <div class="span4">
-    <h3>Observacion</h3>
-    <textarea class="validatable " data-required="false" data-type="Observacion" placeholder="Observacion" />
+  <div class="span2">
+      <h4>Transporte</h4>
+      <input class="validatable" data-required="false" data-type="Transporte" placeholder="Transporte" />
+  </div>
+
+    <div class="span2">
+      <h4>Orden</h4>
+      <input class="validatable" data-required="false" data-type="Orden" placeholder="Orden" />
   </div>
   
   <div class="btn span1">
@@ -19,6 +24,13 @@
     <h2><%= @Referencia %></h2>
   </div>
   
+</div>
+
+<div class=" row-fluid">
+<h3>Observacion</h3>
+<textarea class="validatable " data-required="false" data-type="Observacion" placeholder="Observacion" />
+</div>
+
 </div>
 
 <div class=" row-fluid">

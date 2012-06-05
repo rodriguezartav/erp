@@ -38,10 +38,11 @@ class PedidosAprobacion extends Spine.Controller
 
   renderPedidos: =>
     pedidos = PedidoPreparado.select (pedido) ->
-      return true if pedido.Estado == "Pendiente" and pedido.Especial == true
-    
+      return true if pedido.Estado == "Pendiente" and !pedido.Especial
+
     @groups = PedidoPreparado.group_by_referencia(pedidos)
     @src_pedidos.html require("views/apps/pedidos/pedidosAprobacion/item")(@groups)
+    @el.find('.popable').popover()
 
   on_action_click: (e) =>
     target = $(e.target)

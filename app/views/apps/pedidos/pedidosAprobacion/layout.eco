@@ -8,7 +8,7 @@
   </div>
   
   <div class="span6">
-    <a class="btn btn-success btn-large reload pull-right"><i class="icon-refresh icon-white"></i> Actualizar</a><br/>
+    <a class="btn btn-info btn-large reload pull-right"><i class="icon-refresh icon-white"></i> Actualizar</a><br/>
   </div>
   
 </div>

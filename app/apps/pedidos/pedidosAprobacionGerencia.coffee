@@ -7,7 +7,7 @@ PedidoPreparado = require("models/socketModels/pedidoPreparado")
 Cuenta = require("models/cuenta")
 User = require("models/user")
 
-class PedidosAprobacion extends Spine.Controller
+class PedidosAprobacionGerencia extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Pedidos"
@@ -28,7 +28,7 @@ class PedidosAprobacion extends Spine.Controller
   constructor: ->
     super
     @error.hide()
-    @html require("views/apps/pedidos/pedidosAprobacion/layout")(PedidosAprobacion)
+    @html require("views/apps/pedidos/pedidosAprobacion/layout")(PedidosAprobacionGerencia)
     @renderPedidos()
     PedidoPreparado.bind "query_success" , @renderPedidos
     PedidoPreparado.bind "push_success" , @renderPedidos
@@ -69,4 +69,4 @@ class PedidosAprobacion extends Spine.Controller
     @release()
     @navigate "/apps"
 
-module.exports = PedidosAprobacion
+module.exports = PedidosAprobacionGerencia
