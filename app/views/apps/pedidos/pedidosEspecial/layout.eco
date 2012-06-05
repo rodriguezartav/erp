@@ -10,12 +10,12 @@
   </div>
 
   <div class="span2">
-      <h4>Transporte</h4>
+      <h3>Transporte</h3>
       <input class="validatable" data-required="false" data-type="Transporte" placeholder="Transporte" />
   </div>
 
     <div class="span2">
-      <h4>Orden</h4>
+      <h3>Orden</h3>
       <input class="validatable" data-required="false" data-type="Orden" placeholder="Orden" />
   </div>
   
