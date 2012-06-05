@@ -10,9 +10,9 @@
   </h4>
 </td>
 
-<td><input class="span1 validatable" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @Cantidad %>" /></td>
+<td><input class="span1 validatable" type="number" step="1" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @Cantidad %>" /></td>
 
-<td><input class="span1 validatable" data-min-value="0" data-max-value="<%= @Descuento %>" data-type="Descuento" data-numeric="true" value="<%= @Descuento %>" /></td>
+<td><input class="span1 validatable" type="number" step="1" data-min-value="0" data-max-value="<%= @Descuento %>" data-type="Descuento" data-numeric="true" value="<%= @Descuento %>" /></td>
 
 <td class="numeric"><h4><%= @Impuesto %><h4></td>
 
