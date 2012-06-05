@@ -7,11 +7,11 @@ PedidoPreparado = require("models/socketModels/pedidoPreparado")
 Cuenta = require("models/cuenta")
 User = require("models/user")
 
-class PedidosAprobacion extends Spine.Controller
+class PedidosAprobacionEspecial extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Pedidos"
-  @label = "Aprobacion de Pedidos"
+  @label = "Aprobacion de Pedidos Especiales"
   @icon = "icon-ok-sign"
 
   elements:
@@ -28,17 +28,17 @@ class PedidosAprobacion extends Spine.Controller
   constructor: ->
     super
     @error.hide()
-    @html require("views/apps/pedidos/pedidosAprobacion/layout")(PedidosAprobacion)
+    @html require("views/apps/pedidos/pedidosAprobacion/layout")(PedidosAprobacionEspecial)
     @renderPedidos()
     PedidoPreparado.bind "query_success" , @renderPedidos
     PedidoPreparado.bind "push_success" , @renderPedidos
 
   reload: ->
-    PedidoPreparado.query({ especial: false })
+    PedidoPreparado.query({ especial: true })
 
   renderPedidos: =>
     pedidos = PedidoPreparado.select (pedido) ->
-      return true if pedido.Estado == "Pendiente" and !pedido.Especial
+      return true if pedido.Estado == "Pendiente" and pedido.Especial == true
     @groups = PedidoPreparado.group_by_referencia(pedidos)
     @src_pedidos.html require("views/apps/pedidos/pedidosAprobacion/item")(@groups)
 
@@ -54,7 +54,7 @@ class PedidosAprobacion extends Spine.Controller
     return false if !group
     @aprovedGroup = group
     @aprobar = aprobar
-    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: true} , @aprobarSuccess
+    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar} , @aprobarSuccess
 
   aprobarSuccess: =>
     for pedido in @aprovedGroup.Pedidos
@@ -69,4 +69,4 @@ class PedidosAprobacion extends Spine.Controller
     @release()
     @navigate "/apps"
 
-module.exports = PedidosAprobacion
+module.exports = PedidosAprobacionEspecial

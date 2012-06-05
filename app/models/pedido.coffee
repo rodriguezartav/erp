@@ -35,6 +35,8 @@ class Pedido extends Spine.Model
     return "" if !options
     filter =""
     filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"              , filter) if options.estado
+  
+
     filter
 
 

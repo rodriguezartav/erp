@@ -134,6 +134,7 @@ class PedidosEspecial extends Spine.Controller
       pi.Fuente = Spine.session.type
       pi.Observacion = object.Observacion
       pi.Estado = "Pendiente"
+      pi.Especial = true
       pi.save()
     
   send: (e) =>

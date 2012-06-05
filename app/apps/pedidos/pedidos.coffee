@@ -185,6 +185,7 @@ class Credito extends Spine.Controller
       pi.Observacion = object.Observacion
       pi.IsContado = object.IsContado
       pi.Transporte = object.Transporte
+      pi.Especial = false
       pi.Estado = "Pendiente"
       if object.IsContado
         pi.Nombre = nombre

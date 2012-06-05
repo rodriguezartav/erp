@@ -34,10 +34,13 @@ class PedidosAprobacion extends Spine.Controller
     PedidoPreparado.bind "push_success" , @renderPedidos
 
   reload: ->
-    PedidoPreparado.query()
+    PedidoPreparado.query({ especial: false })
 
   renderPedidos: =>
-    @groups = PedidoPreparado.group_by_referencia()
+    pedidos = PedidoPreparado.select (pedido) ->
+      return true if pedido.Estado == "Pendiente" and pedido.Especial == true
+    
+    @groups = PedidoPreparado.group_by_referencia(pedidos)
     @src_pedidos.html require("views/apps/pedidos/pedidosAprobacion/item")(@groups)
 
   on_action_click: (e) =>

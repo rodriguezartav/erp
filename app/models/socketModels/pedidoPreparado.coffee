@@ -29,9 +29,7 @@ class PedidoPreparado extends Spine.Model
       success    : @on_send_success
       error      : @on_send_error
 
-  @group_by_referencia: () ->
-    pedidos = PedidoPreparado.findAllByAttribute("Estado", "Pendiente" )
-    
+  @group_by_referencia: (pedidos) ->    
     referencias = (pedido.Referencia for pedido in pedidos).unique()
     groups  = []
     for referencia in referencias
@@ -46,6 +44,9 @@ class PedidoPreparado extends Spine.Model
   @queryFilter: (options ) =>
     filter =""
     filter = @queryFilterAddCondition(" Estado__c  = 'Pendiente'" , filter)
+    filter = @queryFilterAddCondition(" Especial  = true               "               , filter) if options.especial == true
+    filter = @queryFilterAddCondition(" Especial  = false               "              , filter) if options.especial == false
+    
     filter
 
 module.exports = PedidoPreparado
