@@ -1,9 +1,10 @@
 <% Spine   = require('spine') %>
 
 <tr>
-<td class="info_popover" rel="popover" data-content="<%= @Observacion %>" data-original-title="Observacion de la Factura">
+<td class="center info_popover" rel="popover" data-content="<%= @Observacion %>" data-original-title="Observacion de la Factura">
+  <a target="_blank" class="label label-info" href="<%= Spine.session.instance_url + "/" + @id %>">
   <i class="icon-tag"></i>
-  <a target="_blank" href="<%= Spine.session.instance_url + "/" + @id %>"> <%= @Referencia  %> </a> 
+ <%= @Referencia  %> </a>
 </td>
   <td><p><%= @NombreProveedor %><p></td>
 
