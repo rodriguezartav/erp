@@ -1,0 +1,31 @@
+<% Spine   = require('spine') %>
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@groups.Cliente)  %>
+
+<tr>
+
+<td class="center">
+  <span class="popable" rel="popover" data-content="<%= require("views/apps/pedidos/pedidosAprobacion/details")(@groups.Pedidos)  %>" data-original-title="Detalles del Pedido"><%= @groups.Referencia %> <i class="icon-info-sign"> </i></span>
+</td>
+<td>
+  <h4>
+    <a target="_blank" href="<%= Spine.session.instance_url %>/<%= cliente.id  %>"> <%= cliente?.Name?.capitalize()  %> </a> 
+  </h4>
+</td>
+<td><p><%= @groups.Total?.toMoney() %><p></td>
+
+<td class="center">
+  <span class="popable" rel="popover" data-content="<%= require("views/apps/pedidos/pedidosAprobacion/saldos")(@saldos)  %>" data-original-title="Saldos del Cliente">
+  <%= cliente?.Saldo?.toMoney() %>
+  <i class="icon-info-sign"> </i>
+  </span>
+</td>
+
+
+
+
+<td  class="center">
+  <a data-referencia="<%= @groups.Referencia %>" data-aprobar="1"  class="btn btn-success aprobar"><i class="icon-ok"></i> Aprobar</a>
+  <a data-referencia="<%= @groups.Referencia %>" data-aprobar="0"  class="btn btn-danger archivar"><i class="icon-remove"></i> Archivar</a>
+</td>
+</tr>

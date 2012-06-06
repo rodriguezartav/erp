@@ -1,0 +1,37 @@
+<div class="row-fluid widgetHeader">  
+<div class="span6">
+  <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+</div>
+
+<div class="span6">
+  <div class="rightOptions">
+    <input class="txtFilter" type="search" />
+  </div>
+</div></div>
+
+<div class="well">
+
+  <table class="table table-striped table-bordered ">
+
+    <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Credito</th>
+          <th>Saldo</th>
+          <th></th>
+          <th>Credito Nuevo</th>
+          <th></th>
+        </tr>
+      </thead>
+
+    <tbody class="saldosList">
+    </tbody>
+  </table>
+
+</div>
+
+<div class="action_footer">
+  <div class="modal-footer">
+    <a class="btn btn-danger cancel">Regresar</a>
+  </div>
+</div>

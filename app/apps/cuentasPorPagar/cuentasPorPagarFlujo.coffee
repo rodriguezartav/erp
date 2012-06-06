@@ -43,8 +43,6 @@ class FlujoDePago extends Spine.Controller
     @error.hide()
     target = $(e.target)
     fechaPagoProgramado = new Date(e.timeStamp)
-
-
     #move to otherFun
     cuenta = CuentaPorPagar.find(target.attr("data-id"))
     cuenta.FechaPagoProgramado = target.val() #fechaPagoProgramado.to_salesforce_date()

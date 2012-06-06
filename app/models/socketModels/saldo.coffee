@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class Saldo extends Spine.Model
-  @configure "Saldo" , "Total" , "Saldo" , "Consecutivo" ,  "Cliente" , "Plazo" , "FechaFacturacion" , "FechaVencimiento" ,
+  @configure "Saldo" , "Total" , "Saldo" , "Consecutivo" ,  "Cliente" , "Plazo" , "PlazoActual" , "FechaFacturacion" , "FechaVencimiento" ,
     "Tipo_de_Documento" 
 
 
@@ -11,7 +11,7 @@ class Saldo extends Spine.Model
 
   #@autoPush= true
   @autoQueryTimeBased = true
-  @autoQuery = false
+  @autoQuery = true
   @overrideName = "Documento"
 
 

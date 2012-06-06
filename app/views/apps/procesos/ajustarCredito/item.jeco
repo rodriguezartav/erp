@@ -1,0 +1,10 @@
+<tr>
+  <td><%= @Name %></td>
+  <td><%= @CreditoAsignado?.toMoney() %></td>
+  <td><%= @Saldo?.toMoney() %></td>
+  <td><input data-cliente="<%= @id %>" value="<%= @CreditoAsignado %>" class="txtSlider" type="range"  min="0" max="<%= @Saldo * 1.1 || ( @CreditoAsignado * 1.25 ) %>" />  </td>
+  <td><span class="txtNewCredito"><%= @CreditoAsignado?.toMoney() %></span></td>
+  <td>
+    <a data-cliente="<%= @id %>" class="btn btn-success aprobar"><i class="icon-ok"></i> Guardar</a>
+  </td>
+</tr>

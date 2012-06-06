@@ -4,8 +4,7 @@ Documento = require("models/documento")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
-Cuenta = require("models/cuenta")
-User = require("models/user")
+Saldo = require("models/socketModels/saldo")
 
 class PedidosAprobacionGerencia extends Spine.Controller
   className: "row-fluid"
@@ -40,7 +39,11 @@ class PedidosAprobacionGerencia extends Spine.Controller
     pedidos = PedidoPreparado.select (pedido) ->
       return true if pedido.Estado == "Pendiente" and !pedido.Especial
     @groups = PedidoPreparado.group_by_referencia(pedidos)
-    @src_pedidos.html require("views/apps/pedidos/pedidosAprobacion/item")(@groups)
+    @src_pedidos.empty()
+    for group in @groups
+      @saldos = Saldo.findAllByAttribute "Cliente" , group.Cliente
+      @src_pedidos.append require("views/apps/pedidos/pedidosAprobacion/item")(groups: group , saldos: @saldos)
+    @el.find('.popable').popover()
 
   on_action_click: (e) =>
     target = $(e.target)
