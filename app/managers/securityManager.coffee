@@ -13,10 +13,8 @@ Pedidos = require("apps/pedidos/pedidos")
 PedidosEspecial = require("apps/pedidos/pedidosEspecial")
 
 PedidosAprobacionGerencia  = require("apps/pedidos/pedidosAprobacionGerencia")
-PedidosAprobacion = PedidosAprobacionGerencia
-
 PedidosAprobacionEspecial  = require("apps/pedidos/pedidosAprobacionEspecial")
-#PedidosAprobacion          = require("apps/pedidos/pedidosAprobacion")
+PedidosAprobacion          = require("apps/pedidos/pedidosAprobacion")
 
 
 Compras = require("apps/auxiliares/compras")
