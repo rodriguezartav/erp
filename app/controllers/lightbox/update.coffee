@@ -26,7 +26,7 @@ class Update extends Spine.Controller
     @data.class.bind "insert_success" , @on_success
     @show_input.hide()
     @show_wait.show()
-    @data.class.rest( @data.restRoute , @data.restMethod , @data.restData ) 
+    @data.class.update( @data.documento) 
 
 
   on_success: (results) =>

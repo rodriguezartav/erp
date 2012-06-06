@@ -30,8 +30,7 @@ class AjustarCredito extends Spine.Controller
 
   filterFunction: (query,item) =>
     return false if item.Activo == false
-    return false if item.DiasCredito > 0 and @contado == true
-    return false if item.DiasCredito == 0 and @contado == false
+    return false if item.DiasCredito > 0
     myRegExp =new RegExp( Cliente.queryToRegex(query),'gi')
     item.Name.search(myRegExp) > -1 or String(item.CodigoExterno).indexOf(query) == 0
 
@@ -48,7 +47,7 @@ class AjustarCredito extends Spine.Controller
     cliente = Cliente.find id
     slider.attr "data-changed" , "true"
     slider.parents('tr').find(".txtNewCredito").html parseFloat(val).toMoney()
- 
+
   onAprobar: (e) =>
     btn = $(e.target)
     id = btn.attr "data-cliente"
@@ -56,10 +55,9 @@ class AjustarCredito extends Spine.Controller
     cliente = Cliente.find id
     cliente.CreditoAsignado = val;
     cliente.save()
-    
+
     clienteSf = Cliente.toSalesforce(cliente)
-    @log clienteSf
-    
+
     data =
       class: Cliente
       restRoute: "Cliente"

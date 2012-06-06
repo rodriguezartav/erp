@@ -40,5 +40,4 @@ class Documento extends Spine.Model
       type       : "POST"
       data       : @ajaxParameters( { name: "Print" , data: JSON.stringify( { documentoId: documento.id } ) } )
 
-
 module.exports = Documento

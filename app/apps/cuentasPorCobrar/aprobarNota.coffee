@@ -27,34 +27,30 @@ class AprobarNota extends Spine.Controller
     @render()
 
   reload: ->
-    Saldo.query({ autorizado: true, tipos: "'NC','ND'" })    
+    Saldo.query({ autorizado: false, tipos: "'NC','ND'" } , false)    
 
   render: =>
     notas = Saldo.select (item) ->
-      return if (item.Tipo_de_Documento == 'NC' or item.Tipo_de_Documento == 'ND') and item.Saldo !=0 then true else false
+      return true if !item.Autorizado
 
     @srcNotas.html require("views/apps/cuentasPorCobrar/aprobarNota/item")(notas)
     @el.find('.info_popover').popover()
 
-      
+
   onSend: (e) =>
     target = $(e.target)
     @saldo = Saldo.find(target.attr("data-id"))
-    @saldo.Autorizado= true;
-    @saldo.save()    
-    saldoSf = Saldo.toSalesforce(@saldo)
-    Saldo.rest 
     data =
       class: Saldo
-      restRoute: "Documento"
-      restMethod: "PUT"
-      restData: JSON.stringify( { "saldos" :  [ saldoSf ] } )
+      restRoute: "Saldo"
+      restMethod: "POST"
+      restData: JSON.stringify( { "id" :  @saldo.id } )
 
-    Spine.trigger "show_lightbox" , "update" , data , @onAprobarSuccess
-
+    Spine.trigger "show_lightbox" , "rest" , data , @onAprobarSuccess
 
   onAprobarSuccess: =>
-    @saldo.destroy()
+    @saldo.Autorizado= true;
+    @saldo.save()
     @render()
 
   reset: ->

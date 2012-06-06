@@ -15,6 +15,7 @@
 </td>
 
 <td class="center"><p><%= @Tipo_de_Documento %><p></td>
+<td><p><%= @FechaFacturacion %><p></td>
 
 
   <td><p><%= @Total.toMoney() %><p></td>

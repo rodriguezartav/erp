@@ -50,7 +50,6 @@ Spine.Model.Salesforce =
         requests
 
       sendUrl: (items , update=false) =>
-        url = '/update' if update
         url = if items.length == 1 then url = "/save" else "/save/bulk"
         return Spine.server + url
 
@@ -93,6 +92,24 @@ Spine.Model.Salesforce =
           success    : @on_send_success
           error      : @on_send_error
           complete   : @on_query_complete
+
+
+      update: (documento) =>
+        @beforeUpdate()
+        className = @overrideName || @className 
+        Spine.trigger "query_start"
+
+        ##STAT  
+        StatManager.sendEvent "Saved #{className}" , { count : 1 }
+
+        $.ajax
+          url        : "/update"
+          type       : "POST"
+          data       : @ajaxParameters( { type: "#{className}__c" , item: JSON.stringify( @toSalesforce(documento) ) } )
+          success    : @on_send_success
+          error      : @on_send_error
+          complete   : @on_query_complete
+
 
       on_send_success: (raw_results) =>
         results = JSON.parse raw_results

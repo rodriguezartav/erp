@@ -50,7 +50,8 @@ class Header  extends Spine.Controller
     Cliente.query({credito: true},false)
     Cliente.query({contado: true},false)
     Producto.query({},false)
-    Saldo.query({})
+    Saldo.destroyAll()
+    Saldo.query( { saldo: true } , false)
 
   reset: ->
     for model in Spine.socketModels

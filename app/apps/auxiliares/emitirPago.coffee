@@ -150,7 +150,7 @@ class EmitirPago extends Spine.Controller
   minor_reset: () ->
     for item in @items
       item?.release()
-    #@resetBindings()
+    @resetBindings()
     Documento.destroyAll()
     Cliente.reset()
     @pago.destroy()
