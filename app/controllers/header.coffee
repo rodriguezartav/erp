@@ -1,6 +1,6 @@
 Spine = require('spine')
 Productos = require("controllers/productos")
-
+Saldo = require("models/socketModels/saldo")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
 
@@ -50,6 +50,7 @@ class Header  extends Spine.Controller
     Cliente.query({credito: true},false)
     Cliente.query({contado: true},false)
     Producto.query({},false)
+    Saldo.query({})
 
   reset: ->
     for model in Spine.socketModels

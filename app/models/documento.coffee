@@ -30,6 +30,7 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" FechaFacturacion__c = #{options.fecha} "     ,  filter)  if options.fecha
     filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"            ,  filter)  if options.estado
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
+    filter = @queryFilterAddCondition(" Autorizado__c        = true"                ,  filter)  if options.autorizado
     filter
 
   @markedPrinted: (documento) ->

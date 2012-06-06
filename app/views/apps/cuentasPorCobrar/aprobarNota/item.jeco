@@ -1,0 +1,28 @@
+<% Spine   = require('spine') %>
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@Cliente)  %>
+
+
+<tr>
+
+<td><p><%= cliente.Name %><p></td>
+
+
+<td class="center info_popover" rel="popover" data-content="<%= @Observacion %>" data-original-title="Observacion de la Nota">
+  <a target="_blank" class="label label-info" href="<%= Spine.session.instance_url + "/" + @id %>">
+  <i class="icon-tag"></i>
+   <%= @Consecutivo  %> </a> 
+</td>
+
+<td class="center"><p><%= @Tipo_de_Documento %><p></td>
+
+
+  <td><p><%= @Total.toMoney() %><p></td>
+
+  
+  <td style="text-align: center;">
+   <a data-id="<%= @id %>" class="btn btn-success aprobar">Aprobar</a>
+  </td>
+
+  
+</tr>

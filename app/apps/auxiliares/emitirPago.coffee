@@ -93,7 +93,7 @@ class EmitirPago extends Spine.Controller
 
   onClienteSet: (cliente) =>
     Documento.destroyAll()
-    Documento.query({ saldo: true , cliente: cliente  })
+    Documento.query({ saldo: true , cliente: cliente  , autorizado: true })
     @pago.Cliente = Cliente.current.id
 
   onDocumentoLoaded: =>

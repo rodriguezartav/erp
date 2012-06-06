@@ -49,17 +49,19 @@ Spine.Model.Salesforce =
         requests = JSON.stringify( objects )  
         requests
 
-      sendUrl: (items) =>
+      sendUrl: (items , update=false) =>
+        url = '/update' if update
         url = if items.length == 1 then url = "/save" else "/save/bulk"
         return Spine.server + url
 
       beforeInsert: () ->
         return false
 
+      beforeUpdate: () ->
+        return false
 
       beforeRest: () ->
         return false
-
 
       rest: (name,method,jsonObject) =>
         Spine.trigger "query_start"
@@ -91,7 +93,6 @@ Spine.Model.Salesforce =
           success    : @on_send_success
           error      : @on_send_error
           complete   : @on_query_complete
-          
 
       on_send_success: (raw_results) =>
         results = JSON.parse raw_results

@@ -20,15 +20,6 @@ class PedidoPreparado extends Spine.Model
       @lastNotificationCliente = result['Cliente']
     return true;
 
-  @aprobar: (ids,observacion,aprobar) ->
-    $.ajax
-      url        : Spine.server + "/rest"
-      xhrFields  : {withCredentials: true}
-      type       : "PUT"
-      data       : @ajaxParameters( { name: "Oportunidad" , data: JSON.stringify( { ids: ids , observacion: observacion , aprobar: aprobar } ) } )
-      success    : @on_send_success
-      error      : @on_send_error
-
   @group_by_referencia: (pedidos) ->    
     referencias = (pedido.Referencia for pedido in pedidos).unique()
     groups  = []

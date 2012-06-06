@@ -38,6 +38,7 @@ class NotasCredito extends Spine.Controller
     
   beforeSend: (documento) ->
     documento.Plazo = 30
+    documento.Autorizado = false;
     
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)    
@@ -47,8 +48,7 @@ class NotasCredito extends Spine.Controller
       restData: [@documento]
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
-    
-    
+
   after_send: =>
     @reset(false)
     

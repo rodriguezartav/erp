@@ -11,15 +11,6 @@ class Cierre extends Spine.Model
 
     @extend Spine.Model.Salesforce
 
-  @query: (options) ->
-    options.name = "Cierre"
-    $.ajax
-      url: Spine.server + "/rest"
-      xhrFields: {withCredentials: true}
-      type: "POST"
-      data: @ajaxParameters(options)
-      success: @on_query_success
-      error: @on_query_error
 
 module.exports = Cierre
 
