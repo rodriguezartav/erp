@@ -1,1 +1,3 @@
-<li><a data-type="<%= @label.replace(/\s/g,'') %>"><i class="<%= @icon || 'icon-book' %>"></i><%= @label %></a></li>
+<li class="">
+  <a data-type="<%= @app.label.replace(/\s/g,'') %>"><i class="<%= @app.icon || 'icon-book' %>"></i><%= @app.label %></a>
+</li>

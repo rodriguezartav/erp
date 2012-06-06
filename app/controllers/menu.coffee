@@ -24,18 +24,20 @@ class Menu extends Spine.Controller
     for index,value of group
       @list.append require("views/controllers/menu/header")(name: index)
       for app in value
-        html = require("views/controllers/menu/app")(app)
+        html = require("views/controllers/menu/app")(app: app , header: index)
         @list.append html
-   
-   on_click: (e) =>
-     target = $(e.target)
-     name = target.attr("data-type")
-     @items.removeClass "active"
-     target.parent().addClass "active"
-     @navigate "/apps/" + name
 
-   reset: =>
-     @el.undelegate('ul>li>a', 'click', 'on_click')
-     @release()
-   
+  
+      
+  on_click: (e) =>
+   target = $(e.target)
+   name = target.attr("data-type")
+   @items.removeClass "active"
+   target.parent().addClass "active"
+   @navigate "/apps/" + name
+
+  reset: =>
+   @el.undelegate('ul>li>a', 'click', 'on_click')
+   @release()
+ 
 module.exports = Menu

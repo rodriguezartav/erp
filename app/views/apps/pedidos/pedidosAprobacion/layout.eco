@@ -1,19 +1,19 @@
 
 
-<div class="row-fluid">
+<div class="row-fluid widgetHeader">
   
   <div class="span6">
-    <h5><%= @departamento %></h5>
-    <h1><%= @label %></h2>
+    <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
   </div>
   
   <div class="span6">
-    <a class="btn btn-info btn-large reload pull-right"><i class="icon-refresh icon-white"></i> Actualizar</a><br/>
+    <div class="rightOptions">
+      <a class="btn btn-info reload"><i class="icon-refresh icon-white"></i></a><br/>
+    </div>
   </div>
   
 </div>
 
-<hr/>
 
 <div class="content well">
   

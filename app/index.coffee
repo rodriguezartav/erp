@@ -45,6 +45,8 @@ class App extends Spine.Controller
       "/apps": =>
         @currentApp?.reset()
         @currentApp = new Menu(apps: Spine.apps)
+        @el.removeClass "container"
+        @el.addClass "container-fluid"
         @html @currentApp
 
       "/apps/:label": (params) =>
@@ -56,6 +58,8 @@ class App extends Spine.Controller
         StatManager.sendEvent "Used #{@currentApp.name}"
         @currentApp = new @currentApp
         @html @currentApp
+        @el.addClass "container"
+        @el.removeClass "container-fluid"
 
   loginComplete: =>
     @navigate "/apps"

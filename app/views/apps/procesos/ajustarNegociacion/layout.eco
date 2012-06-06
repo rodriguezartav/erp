@@ -1,9 +1,6 @@
 
-<div class="row-fluid">
-  <div class="span6">
-    <h5><%= @departamento %></h5>
-    <h1><%= @label %></h2>
-  </div>
+<div class="widgetHeader">
+  <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
 </div>
 
 <div class="content well">

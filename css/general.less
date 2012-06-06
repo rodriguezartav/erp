@@ -6,7 +6,7 @@ body {
   height: 92%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-image: url("/images/furley_bg.png");
-  padding-top: 60px;
+  padding-top: 70px;
 }
 
 .app{
@@ -58,6 +58,15 @@ table{
 }
 
 .pedidos{
+  .well{
+    background-color: #fff;
+    border: 1px solid #D5D5D5;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border-image: initial;
+    
+  }
   .list_item{
     opacity: 0.5;
     &.active{
@@ -79,3 +88,59 @@ td.center{
   text-align: center;
 }
 
+.widgetHeader{
+  h1{
+    position: relative;
+    top: 3px;
+    left: 10px;
+    display: inline-block;
+    margin-right: 3em;
+    font-size: 20px;
+    font-weight: 800;
+    color: #555;
+    line-height: 20px;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, .5);
+  }
+  
+  .rightOptions{
+    position: relative;
+    top: 3px;
+    right: 10px;
+    text-align: right;
+  }
+
+  margin-top: 15px;
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+  background: #E9E9E9;
+  background: -moz-linear-gradient(top, #FAFAFA 0%, #E9E9E9 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FAFAFA), color-stop(100%,#E9E9E9));
+  background: -webkit-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+  background: -o-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+  background: -ms-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+  background: linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+  border: 1px solid #D5D5D5;
+  -webkit-border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+  -moz-border-radius-topleft: 4px;
+  -moz-border-radius-topright: 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  -webkit-background-clip: padding-box;
+  border-image: initial;
+}
+
+
+.appCanvas>*>.well{
+  margin-top: 0px;
+  background-color: #fff;
+  padding: 20px 15px 15px;
+  background: white;
+  border: 1px solid #D5D5D5;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border-image: initial;
+
+}

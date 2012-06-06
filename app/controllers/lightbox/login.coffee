@@ -69,12 +69,13 @@ class Login extends Spine.Controller
 
   on_continue: =>
     ##STAT
+    Spine.notifications.checkPermision()
+    
     StatManager.identify Spine.session.user
     StatManager.sendEvent 'Session Reload'
 
     Spine.trigger "hide_lightbox"
     Spine.trigger "login_complete"
-    Spine.notifications.checkPermision()
     @callback?.apply @, [true]
 
 

@@ -3,7 +3,7 @@
 <div class="row-fluid">
 
   <div class="span3">
-    <ul class="nav nav-list menu">
+    <ul class="nav nav-tabs nav-stacked menu">
     </ul>
   </div>
 
