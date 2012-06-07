@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class PedidoPreparado extends Spine.Model
   @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , 
-  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia","Estado"
+  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia","Estado" , "Especial"
   
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel

@@ -10,7 +10,7 @@ class PedidosAprobacionEspecial extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Pedidos"
-  @label = "Aprobacion de Pedidos"
+  @label = "Aprobacion de Pedidos Especial"
   @icon = "icon-ok-sign"
 
   elements:
