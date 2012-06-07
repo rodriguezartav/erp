@@ -1,7 +1,7 @@
 Spine   = require('spine')
 User = require('models/user')
 Cliente = require("models/cliente")
-PedidoPreparado = require("models/socketModels/pedidoPreparado")
+Saldo = require("models/socketModels/saldo")
 
 $       = Spine.$
 
@@ -27,8 +27,10 @@ class AprobarPedidos extends Spine.Controller
     super
     cliente = Cliente.find(@data.group.Cliente)
     render = ''
-    if cliente.willOverDraft(@data.group.Total) and !@data.allowOverDraft
+    if (cliente.willOverDraft(@data.group.Total) and !@data.allowOverDraft)
       render = 'views/controllers/lightbox/aprobarPedidosNoClearance'
+    else if Saldo.overDraft(cliente)
+      render = 'views/controllers/lightbox/aprobarPedidosSaldo60'
     else
       render = 'views/controllers/lightbox/aprobarPedidos'  
     @html require(render)(@data)
