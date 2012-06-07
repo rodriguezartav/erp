@@ -35,8 +35,8 @@ class PedidoPreparado extends Spine.Model
   @queryFilter: (options ) =>
     filter =""
     filter = @queryFilterAddCondition(" Estado__c  = 'Pendiente'" , filter)
-    filter = @queryFilterAddCondition(" Especial  = true               "               , filter) if options.especial == true
-    filter = @queryFilterAddCondition(" Especial  = false               "              , filter) if options.especial == false
+    filter = @queryFilterAddCondition(" Especial__c  = true               "               , filter) if options.especial == true
+    filter = @queryFilterAddCondition(" Especial__c  = false               "              , filter) if options.especial == false
     
     filter
 
