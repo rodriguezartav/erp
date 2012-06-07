@@ -55,7 +55,7 @@ class Header  extends Spine.Controller
     Saldo.bind "query_success" , @onUpdateDone
 
   onUpdateDone: ->
-    window.location.reload()
+    #window.location.reload()
     
 
   reset: ->
