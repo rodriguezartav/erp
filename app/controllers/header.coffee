@@ -47,16 +47,23 @@ class Header  extends Spine.Controller
     window.open Spine.session.instance_url + "/home/home.jsp"
 
   onUpdate: ->
+    Saldo.bind "bulk_deleted" , @onDeleteDone
+    Spine.trigger "show_lightbox" , "showWait" , error: "Esto puede tomar varios minutos, cuando se complete el proceso se refrescara la pagina."
     Saldo.bulkDelete()
-    Cliente.query({credito: true},false)
-    Cliente.query({contado: true},false)
+    Cliente.query({credito: true} , false)
+    Cliente.query({contado: true} , false)
     Producto.query({},false)
-    Saldo.query( { saldo: true } , false)
-    Saldo.bind "query_success" , @onUpdateDone
 
-  onUpdateDone: ->
-    #window.location.reload()
+
+  onDeleteDone: =>
+    Saldo.query( { saldo: true } , false)
+    console.log @onUpdateDone
+    Saldo.bind "query_success" , @onUpdateDone
     
+    
+  onUpdateDone: ->
+    window.location.reload()
+
 
   reset: ->
     for model in Spine.socketModels

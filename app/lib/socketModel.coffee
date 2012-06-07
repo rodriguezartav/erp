@@ -47,8 +47,17 @@ Spine.Model.SocketModel =
       recordLastUpdate: =>
         Spine.session.setLastUpdate(@name)
 
-  bulkDelete: ->
-    localStorage[@className] = []
+      bulkDelete: =>
+        @source = @all()
+        start = @source.length - 20
+        start = 0 if start < 0
+        to_work = @source.slice(start)
+        console.log "Starting from " + start + " of " + @source.length
+        @source = @source.slice(0,start)
+        for item in to_work
+          item.destroy()
+        setTimeout(@bulkDelete, 135) if @source.length > 0
+        @trigger "bulk_deleted" if @source.length == 0
 
   saveLocal: ->
     @beforeSaveLocal()

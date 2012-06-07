@@ -19,8 +19,9 @@ class Saldo extends Spine.Model
     filter = @queryFilterAddCondition(" Con_Saldo__c = 'true' "                             , filter)   if options.saldo
     filter = @queryFilterAddCondition(" Autorizado__c   = #{options.autorizado }"           ,  filter)  if options.autorizado
     filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) "        ,  filter)  if options.tipos
-    
     filter
+
+
 
 
   @overDraft: (cliente) ->
