@@ -47,6 +47,9 @@ Spine.Model.SocketModel =
       recordLastUpdate: =>
         Spine.session.setLastUpdate(@name)
 
+  bulkDelete: ->
+    localStorage[@className] = []
+
   saveLocal: ->
     @beforeSaveLocal()
     result = JSON.stringify(@)
