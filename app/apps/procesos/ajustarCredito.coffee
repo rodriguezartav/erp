@@ -23,11 +23,15 @@ class AjustarCredito extends Spine.Controller
   constructor: ->
     super
     @html require("views/apps/procesos/ajustarCredito/layout")(@constructor)
-    cliente = cliente.select (item) ->
+    clientes = Cliente.select (item) ->
       return if item.DiasCredito > 0 then true else false
-    @render( Cliente.selec() )
+    @render( clientes )
 
   render: (clientes) =>
+    clientes.sort (cliente1,cliente2) ->
+      return cliente1.Name > cliente2.Name
+    clientes.sort()
+      
     @list.html require("views/apps/procesos/ajustarCredito/item")(clientes)
 
   filterFunction: (query,item) =>
