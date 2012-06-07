@@ -58,7 +58,7 @@ class PedidosAprobacion extends Spine.Controller
     return false if !group
     @aprovedGroup = group
     @aprobar = aprobar
-    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar} , @aprobarSuccess
+    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: false , allowOver60: false} , @aprobarSuccess
 
   aprobarSuccess: =>
     for pedido in @aprovedGroup.Pedidos

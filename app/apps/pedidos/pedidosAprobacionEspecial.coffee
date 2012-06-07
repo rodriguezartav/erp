@@ -4,14 +4,13 @@ Documento = require("models/documento")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
-Cuenta = require("models/cuenta")
-User = require("models/user")
+Saldo = require("models/socketModels/saldo")
 
 class PedidosAprobacionEspecial extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Pedidos"
-  @label = "Aprobacion de Pedidos Especiales"
+  @label = "Aprobacion de Pedidos"
   @icon = "icon-ok-sign"
 
   elements:
@@ -34,13 +33,17 @@ class PedidosAprobacionEspecial extends Spine.Controller
     PedidoPreparado.bind "push_success" , @renderPedidos
 
   reload: ->
-    PedidoPreparado.query({ especial: true })
+    PedidoPreparado.query({ especial: false })
 
   renderPedidos: =>
     pedidos = PedidoPreparado.select (pedido) ->
-      return true if pedido.Estado == "Pendiente" and pedido.Especial == true
+      return true if pedido.Estado == "Pendiente" and pedido.Especial
     @groups = PedidoPreparado.group_by_referencia(pedidos)
-    @src_pedidos.html require("views/apps/pedidos/pedidosAprobacion/item")(@groups)
+    @src_pedidos.empty()
+    for group in @groups
+      @saldos = Saldo.findAllByAttribute "Cliente" , group.Cliente
+      @src_pedidos.append require("views/apps/pedidos/pedidosAprobacion/item")(groups: group , saldos: @saldos)
+    @el.find('.popable').popover()
 
   on_action_click: (e) =>
     target = $(e.target)
@@ -54,7 +57,7 @@ class PedidosAprobacionEspecial extends Spine.Controller
     return false if !group
     @aprovedGroup = group
     @aprobar = aprobar
-    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar} , @aprobarSuccess
+    Spine.trigger "show_lightbox" , "aprobarPedidos" , { group: group , aprobar: aprobar , allowOverDraft: true , allowOver60: true } , @aprobarSuccess
 
   aprobarSuccess: =>
     for pedido in @aprovedGroup.Pedidos

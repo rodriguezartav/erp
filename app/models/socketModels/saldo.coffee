@@ -27,7 +27,7 @@ class Saldo extends Spine.Model
     saldos = Saldo.findAllByAttribute "Cliente" , cliente.id
     over60 = false
     for saldo in saldos
-      over60 = true if saldo.PlazoActual > 60
+      over60 = true if saldo.PlazoActual > 63
     return over60
 
 module.exports = Saldo
