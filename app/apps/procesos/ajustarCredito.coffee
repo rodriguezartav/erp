@@ -23,14 +23,16 @@ class AjustarCredito extends Spine.Controller
   constructor: ->
     super
     @html require("views/apps/procesos/ajustarCredito/layout")(@constructor)
-    @render( Cliente.all() )
+    cliente = cliente.select (item) ->
+      return if item.DiasCredito > 0 then true else false
+    @render( Cliente.selec() )
 
   render: (clientes) =>
     @list.html require("views/apps/procesos/ajustarCredito/item")(clientes)
 
   filterFunction: (query,item) =>
     return false if item.Activo == false
-    return false if item.DiasCredito > 0
+    return false if item.DiasCredito == 0
     myRegExp =new RegExp( Cliente.queryToRegex(query),'gi')
     item.Name.search(myRegExp) > -1 or String(item.CodigoExterno).indexOf(query) == 0
 
