@@ -29,9 +29,9 @@ class AprobarPedidos extends Spine.Controller
     super
     cliente = Cliente.find(@data.group.Cliente)
     render = ''
-    if cliente.willOverDraft(@data.group.Total) and !@data.allowOverDraft
-      render = 'views/controllers/lightbox/aprobarPedidosNoClearance'
-    else if Saldo.overDraft(cliente) and !@data.allowOver60
+   #if cliente.willOverDraft(@data.group.Total) and !@data.allowOverDraft
+      #render = 'views/controllers/lightbox/aprobarPedidosNoClearance'
+    if Saldo.overDraft(cliente) and !@data.allowOver60
       render = 'views/controllers/lightbox/aprobarPedidosSaldo60'
     else
       render = 'views/controllers/lightbox/aprobarPedidos'  
