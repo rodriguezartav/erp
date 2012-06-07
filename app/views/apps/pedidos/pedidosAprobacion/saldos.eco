@@ -5,6 +5,7 @@
     <% for saldo in @: %>
       <tr>
         <td class="center"><strong><%= saldo.Consecutivo %></strong></td>
+        <td class="center"><%= saldo.Tipo_de_Documento %></td>
         <td class="center"><%= saldo.Saldo.toMoney() %></td>
         <td class="center"><%= saldo.PlazoActual %></td>
        </tr>

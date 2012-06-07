@@ -59,7 +59,7 @@ class AjustarCredito extends Spine.Controller
     id = btn.attr "data-cliente"
     val = btn.parents('tr').find(".txtSlider").val()
     cliente = Cliente.find id
-    cliente.CreditoAsignado = val;
+    cliente.CreditoAsignado = parseFloat(val)
     cliente.save()
 
     clienteSf = Cliente.toSalesforce(cliente)
