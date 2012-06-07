@@ -59,6 +59,9 @@ Spine.Model.SocketModel =
         setTimeout(@bulkDelete, 135) if @source.length > 0
         @trigger "bulk_deleted" if @source.length == 0
 
+      forceDelete: ->
+        localStorage[@className] = []
+
   saveLocal: ->
     @beforeSaveLocal()
     result = JSON.stringify(@)

@@ -60,14 +60,12 @@ class Header  extends Spine.Controller
     console.log @onUpdateDone
     Saldo.bind "query_success" , @onUpdateDone
     
-    
   onUpdateDone: ->
     window.location.reload()
 
-
   reset: ->
     for model in Spine.socketModels
-      model.bulkDelete()
+      model.forceDelete()
 
     for model in Spine.transitoryModels
       model.destroyAll()

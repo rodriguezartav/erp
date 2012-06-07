@@ -10,6 +10,7 @@ AprobarPedidos = require("controllers/lightbox/aprobarPedidos")
 
 ShowWarning = require("controllers/lightbox/showWarning")
 ShowError = require("controllers/lightbox/showError")
+Wait = require("controllers/lightbox/wait")
 
 
 Rest = require("controllers/lightbox/rest")
@@ -22,7 +23,7 @@ class Lightbox extends Spine.Controller
 
   constructor: ->
     super
-    @items = [Insert,Update,Rest,ShowError , ShowWarning , Login , AprobarPedidos ]
+    @items = [Insert,Update,Rest,ShowError , ShowWarning , Login , AprobarPedidos , Wait ]
     
     Spine.bind "hide_lightbox" , @hide
     
