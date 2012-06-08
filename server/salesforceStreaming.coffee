@@ -17,7 +17,7 @@ class SalesforceStreaming
     
     url = oauth.instance_url + '/cometd/24.0/'
     auth = oauth.access_token
-    @fayeClient = new Faye.Client(url , {retry: 60, timeout: 300 });
+    @fayeClient = new Faye.Client(url , {retry: 5, timeout: 300 });
     @fayeClient.setHeader('Authorization', "OAuth #{auth}");
     @subscribe('Cliente__c')
     @subscribe('Producto__c')
@@ -31,7 +31,12 @@ class SalesforceStreaming
 
     subscription.errback (error) =>
       console.log error
-      
       @pusher.trigger "salesforce_connection_information" , 'error', {"message": "There was an error in the Server- Salesforce Connection " , "error": "#{error}"}
+
+    
+    subscription.callback ->
+      console.log "Active"
+    
+
 
 module.exports = SalesforceStreaming

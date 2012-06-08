@@ -25,11 +25,11 @@ class Saldo extends Spine.Model
 
 
   @overDraft: (cliente) ->
-    saldos = Saldo.findAllByAttribute "Cliente" , cliente.id
-    over60 = false
-    for saldo in saldos
-      over60 = true if saldo.PlazoActual > 63 and saldo.Tipo_de_Documento=="FA"
-    return over60
+    saldos = Saldo.select (item) ->
+      return true if item.Cliente == cliente.id and item.Tipo_de_Documento == "FA" and item.PlazoActual > 63
+      return false
+
+    return if saldos.length > 0 then true else false
 
 module.exports = Saldo
 
