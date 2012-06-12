@@ -3,7 +3,7 @@ port =  process.env.PORT || 9294
 express = require('express')
 OPF = require("opf")
 OpfDevUtil = require("./opfDevUtil")
-SalesforceStreaming = require ("./salesforceStreaming")
+#SalesforceStreaming = require ("./salesforceStreaming")
 OPF.debug= true
 
 ##Setup Server
@@ -18,11 +18,11 @@ app.set 'view engine'  , 'jade'
 OpfDevUtil.setupCompilers(app) if process.env.NODE_ENV != "production"
 app.use(express.static("./public"))
 
-webLogin = OPF.Salesforce.webLogin()
-sfStreaming = new SalesforceStreaming(app)
+#webLogin = OPF.Salesforce.webLogin()
+#sfStreaming = new SalesforceStreaming(app)
 
-OPF.bind "web_login_complete" , =>
-  sfStreaming.whenLoggedIn(webLogin.oauthToken)
+#OPF.bind "web_login_complete" , =>
+#  sfStreaming.whenLoggedIn(webLogin.oauthToken)
 
 ##Setup Routes
 
