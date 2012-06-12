@@ -23,12 +23,18 @@ class Saldo extends Spine.Model
 
 
 
+  PlazoReal: =>
+    date = Date.parse @FechaFacturacion 
+    date = new Date(date)
+    plazo = date.days_from_now(date)
 
   @overDraft: (cliente) ->
     saldos = Saldo.select (item) ->
-      return true if item.Cliente == cliente.id and item.Tipo_de_Documento == "FA" and item.PlazoActual > 63
-      return false
-
+      overd = false
+      overd = true if item.Cliente == cliente.id and item.Tipo_de_Documento == "FA" and item.PlazoActual > 63
+      console.log item.Tipo_de_Documento + " :: " + item.PlazoActual 
+      return overd;
+      
     return if saldos.length > 0 then true else false
 
 module.exports = Saldo

@@ -6,14 +6,16 @@
   <h1><%= @label %></h2>
   </div>
 
+<hr/>
+
   <div class="span3">
     <div class="btn-group pull-right">
-      <button class="btn btn-info btn-large"><i class="icon-pencil icon-large icon-white"></i> Crear Pedidos</button>
+      <button class="btn btn-info btn-large"><i class="icon-pencil icon-white"></i> Crear Pedidos</button>
       <button class="btn dropdown-toggle btn-info btn-large" data-toggle="dropdown">
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-        <li><a class="credito"><i class="icon-user icon-large "></i> Credito</a></li>
+        <li><a class="credito"><i class="icon-user "></i> Credito</a></li>
         <li><a class="contado"><i class="icon-shopping-cart "></i> Contado</a></li>
       </ul>
     </div>
