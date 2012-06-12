@@ -33,7 +33,7 @@ class PedidosAprobacionEspecial extends Spine.Controller
     PedidoPreparado.bind "push_success" , @renderPedidos
 
   reload: ->
-    PedidoPreparado.query({ especial: false })
+    PedidoPreparado.query({ especial: true })
 
   renderPedidos: =>
     pedidos = PedidoPreparado.select (pedido) ->

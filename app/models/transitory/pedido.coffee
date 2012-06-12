@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Pedido extends Spine.Model
   @configure 'Pedido', "Cliente" ,  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Observacion" , "IsContado" , "Transporte" ,
-    "Orden"
+    "Orden" , "Especial"
 
   @extend Spine.Model.TransitoryModel
   

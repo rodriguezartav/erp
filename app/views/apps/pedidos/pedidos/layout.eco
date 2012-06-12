@@ -17,6 +17,7 @@
       <ul class="dropdown-menu">
         <li><a class="credito"><i class="icon-user "></i> Credito</a></li>
         <li><a class="contado"><i class="icon-shopping-cart "></i> Contado</a></li>
+        <li><a class="especial"><i class="icon-magic "></i> Especial</a></li>
       </ul>
     </div>
   </div>

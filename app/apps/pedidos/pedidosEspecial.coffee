@@ -67,8 +67,7 @@ class PedidosEspecial extends Spine.Controller
     Producto.reset()
     Cliente.reset()
 
-
-    @pedido = Pedido.create( { Referencia: parseInt(Math.random() * 10000) })
+    @pedido = Pedido.create( { Referencia: parseInt(Math.random() * 10000 ) })
     @items = []
     @itemToControllerMap = {}
     
@@ -136,6 +135,7 @@ class PedidosEspecial extends Spine.Controller
       pi.Estado = "Pendiente"
       pi.Especial = true
       pi.save()
+      object.Observacion = ""
     
   send: (e) =>
     @updateFromView(@pedido,@inputs_to_validate)

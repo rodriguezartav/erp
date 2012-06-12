@@ -100,6 +100,7 @@ class Salidas extends Spine.Controller
       movimiento.Observacion      = object.Observacion
       movimiento.Referencia       = object.Referencia
       movimiento.save()
+      object.Observacion = ""
     
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)

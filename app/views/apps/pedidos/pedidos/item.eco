@@ -1,7 +1,8 @@
 <% Producto = require("models/producto")  %>
 <% producto = Producto.find(@Producto)  %>
 
-<td class="primary"><h4 class="popable" rel="popover" data-content="Descuentos y Ofertas" data-original-title="<%= producto.InventarioActual %>"> <%= producto.Name.capitalize() %> </h4></td>
+<td class="primary"><h4 class="popable" rel="popover" data-content="<ul><li>Inventario <%= producto.InventarioActual.toMoney() %></li><li>Precio <%= producto.Precio_Distribuidor.toMoney() %></li><li>Descuento <%= producto.DescuentoMaximo %></li><ul>" data-original-title="<%= producto.Name %>"> <%= producto.Name.capitalize() %> </h4></td>
+
 
 <td>
   <span class="badge badge-success data-current-precio">1</span>

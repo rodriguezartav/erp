@@ -25,18 +25,21 @@ class Items extends Spine.Controller
 
   constructor: ()->
     super
-    @createItem(@producto,@referencia) if @producto
+    @createItem(@producto,@referencia,@especial) if @producto
     
     @negociacion = Negociacion.getFromProducto(@producto,@negociaciones)
-    if @negociacion
+    if @pedidoItem.Especial
+      @html require("views/apps/pedidos/pedidos/itemEspecial")(@pedidoItem)  
+    else if @negociacion
       @pedidoItem.Descuento = @negociacion.Descuento
       @html require("views/apps/pedidos/pedidos/itemNegociacion")(pedidoItem: @pedidoItem, negociacion: @negociacion )
     else
       @html require("views/apps/pedidos/pedidos/item")(@pedidoItem)  
 
-  createItem: (producto,referencia) =>
+  createItem: (producto,referencia,especial=false) =>
     @pedidoItem = PedidoItem.createFromProducto(@producto)
     @pedidoItem.Referencia = referencia
+    @pedidoItem.Especial = especial
     @pedidoItem.save()
 
   onPrecioClick: (e) =>
@@ -144,7 +147,7 @@ class Credito extends Spine.Controller
       Spine.trigger "show_lightbox" , "show_warning" , error: "Solo se pueden ingresar 10 Productos por Factura"
       return false 
 
-    item = new Items(producto: Producto.current , referencia: @pedido.Referencia, negociaciones: @negociaciones)
+    item = new Items(producto: Producto.current , referencia: @pedido.Referencia, negociaciones: @negociaciones , especial: @pedido.Especial)
     @registerItem(item)
     
   registerItem: (item) =>
@@ -152,7 +155,7 @@ class Credito extends Spine.Controller
     @movimientos.push item
     @pedidoItemToControllerMap[item.pedidoItem.id] =  item
     @onPedidoItemChange()
-    $('a.popable').popover(placement: "bottom")    
+    $('.popable').popover(placement: "bottom")    
     
   onPedidoItemDestroy: (pedidoItem) =>
     item = @pedidoItemToControllerMap[pedidoItem.id]
@@ -184,7 +187,7 @@ class Credito extends Spine.Controller
       pi.Observacion = object.Observacion
       pi.IsContado = object.IsContado
       pi.Transporte = object.Transporte
-      pi.Especial = false
+      pi.Especial = object.Especial || false
       pi.Estado = "Pendiente"
       if object.IsContado
         pi.Nombre = nombre
@@ -192,6 +195,7 @@ class Credito extends Spine.Controller
         pi.Identificacion = object.Identificacion
         pi.Email = object.Email
       pi.save()
+      object.Observacion = ""
     
   save: (e = null)=>
     @updateFromView(@pedido,@inputs_to_validate)
@@ -245,6 +249,7 @@ class Pedidos extends Spine.Controller
     "click .cancel"    : "reset"
     "click .credito"   : "onCredito"
     "click .contado"   : "onContado"
+    "click .especial"   : "onEspecial"
     "click .pedido"    : "onPedidoClick"
 
   setVariables: =>
@@ -291,9 +296,9 @@ class Pedidos extends Spine.Controller
   onPedidoItemChange: =>
     @currentController?.onPedidoItemChange()
 
-  createPedido: (contado=false) =>
+  createPedido: (contado=false, especial=true) =>
     ref = parseInt(Math.random() * 10000)
-    pedido = Pedido.create( { Referencia: ref , Tipo_de_Documento: "FA" , IsContado: contado })
+    pedido = Pedido.create( { Referencia: ref , Tipo_de_Documento: "FA" , IsContado: contado , Especial: especial })
     @pedidos.push pedido
     return pedido
 
@@ -315,16 +320,20 @@ class Pedidos extends Spine.Controller
     @setCurrentController(null);
 
   onCredito: =>
-    controller = @createPedidoController(@createPedido())
+    controller = @createPedidoController(@createPedido(false,false))
+    @setCurrentController(controller)
+    
+  onEspecial: =>
+    pedido = @createPedido(false,true)
+    controller = @createPedidoController(pedido);
     @setCurrentController(controller)
     
   onContado: =>
-    controller = @createPedidoController(@createPedido(true))
+    controller = @createPedidoController(@createPedido(true,false))
     @setCurrentController(controller)
 
   createPedidoController: (pedido) =>
     controller = new Credito(pedido: pedido)
-    controller.bind ""
     @pedidoToControllerMap[pedido.Referencia] = controller
     @append controller
     controller
