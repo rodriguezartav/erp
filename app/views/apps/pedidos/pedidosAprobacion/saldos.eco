@@ -3,7 +3,7 @@
   <tbody>
 
     <% for saldo in @: %>
-      <% if saldo.Saldo > 0 : %>
+      <% if saldo.Saldo != 0 : %>
         <tr>
           <td class="center"><strong><%= saldo.Consecutivo %></strong></td>
           <td class="center"><%= saldo.Tipo_de_Documento %></td>

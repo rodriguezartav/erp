@@ -22,7 +22,6 @@ class Saldo extends Spine.Model
     filter
 
 
-
   PlazoReal: =>
     date = Date.parse @FechaFacturacion 
     date = new Date(date)
@@ -32,7 +31,7 @@ class Saldo extends Spine.Model
     saldos = Saldo.select (item) ->
       overd = false
       overd = true if item.Cliente == cliente.id and item.Tipo_de_Documento == "FA" and item.PlazoActual > 63
-      console.log item.Tipo_de_Documento + " :: " + item.PlazoActual 
+      #console.log item.Tipo_de_Documento + " :: " + item.PlazoActual 
       return overd;
       
     return if saldos.length > 0 then true else false
