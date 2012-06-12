@@ -57,7 +57,6 @@ class Header  extends Spine.Controller
 
   onDeleteDone: =>
     Saldo.query( { saldo: true } , false)
-    console.log @onUpdateDone
     Saldo.bind "query_success" , @onUpdateDone
     
   onUpdateDone: ->

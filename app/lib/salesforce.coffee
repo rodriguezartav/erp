@@ -189,6 +189,7 @@ Spine.Model.Salesforce =
         @destroyAll() if @destroyBeforeRefresh
         @refresh(results)        
         @trigger "query_success"
+        @onQuerySuccess?()
         @recordLastUpdate?()
 
       on_query_error: (error) =>

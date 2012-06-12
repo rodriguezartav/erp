@@ -9,6 +9,10 @@ class FacturaPreparada extends Spine.Model
   @extend Spine.Model.SocketModel
 
   @autoQueryTimeBased   :   false
+  
+  #Turned On only for certain profiles in SecurityManager
+  @autoQuery = false
+
   @destroyBeforeRefresh = true;
 
   @beforeSocketUpdate: (results) =>

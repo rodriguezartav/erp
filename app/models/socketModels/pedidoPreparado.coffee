@@ -9,6 +9,8 @@ class PedidoPreparado extends Spine.Model
 
   @autoQuery = true;
   @autoQueryTimeBased   :   false
+  #Turned On only for certain profiles in SecurityManager
+  @autoQuery = false
 
   @overrideName = "Oportunidad"
 

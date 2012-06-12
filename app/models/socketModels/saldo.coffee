@@ -3,28 +3,24 @@ Spine = require('spine')
 class Saldo extends Spine.Model
   @configure "Saldo" , "Total" , "Saldo" , "Consecutivo" ,  "Cliente" , "Plazo" , "PlazoActual" , "FechaFacturacion" , "FechaVencimiento" ,
     "Tipo_de_Documento"  , "Autorizado" , "Observacion"
+
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
 
-  constructor: ->
-    super
-    Saldo.trigger "query_success" , @onQuerySuccess
-  
-  onQuerySuccess: ->
-    console.log "Deleting Saldos"
+  @autoQueryTimeBased = true
+  @overrideName = "Documento"  
+
+  #Turned On only for certain profiles in SecurityManager
+  @autoQuery = false
+
+  @onQuerySuccess: ->
     saldos = Saldo.select (saldo) ->
       return true if saldo.Saldo == 0
     return alert("Debe usa la opcion Actualizar Ahora") if saldos.length > 500
     for saldo in saldos
-      console.log "Destoy"
+      console.log "Destory"
       console.log saldo
       saldo.destroy()
-    
-
-  #@autoPush= true
-  @autoQueryTimeBased = true
-  @autoQuery = true
-  @overrideName = "Documento"
 
   @queryFilter: (options ) =>
     filter = ""

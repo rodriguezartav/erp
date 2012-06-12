@@ -53,6 +53,8 @@ TomasInventario = require("apps/procesos/tomasInventario")
 #FOR PROFILE BASED CONFIGURATION
 Movimiento = require("models/movimiento")
 Saldo = require("models/socketModels/saldo")
+FacturaPreparada = require("models/socketModels/facturaPreparada")
+PedidoPreparado = require("models/socketModels/pedidoPreparado")
 
 class SecurityManager
   
@@ -81,7 +83,13 @@ class SecurityManager
     Movimiento.attributes.push('ProductoCosto') if Spine.session.hasPerfiles(["Platform System Admin" , "Presidencia" , "SubGerencia"])
     if Spine.session.hasPerfiles([ "Platform System Admin" , "Ejecutivo Credito" , "Vendedor" ])
       Saldo.autoQuery = true
-      Saldo.query({}) 
+
+    if Spine.session.hasPerfiles([ "Platform System Admin" , "Ejecutivo Ventas" ])
+      FacturaPreparada.autoQuery = true
+    
+    if Spine.session.hasPerfiles([ "Platform System Admin" , "Ejecutivo Credito" ])
+      PedidoPreparado.autoQuery = true
+  
 
     Spine.apps = @profiles[Spine.session.user.Perfil__c]
 

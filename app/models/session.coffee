@@ -39,7 +39,7 @@ class Session extends Spine.SingleModel
   getLastUpdateOr1970: (className) =>
     date = @getLastUpdate(className)
     try
-      date.getTime()
+      date.getTime() - (60*1000)
     catch error
       date = new Date('1970/1/1')
     return date;
