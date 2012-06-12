@@ -28,7 +28,6 @@ class Items extends Spine.Controller
     @createItem(@producto,@referencia) if @producto
     
     @negociacion = Negociacion.getFromProducto(@producto,@negociaciones)
-    @log @negociacion
     if @negociacion
       @pedidoItem.Descuento = @negociacion.Descuento
       @html require("views/apps/pedidos/pedidos/itemNegociacion")(pedidoItem: @pedidoItem, negociacion: @negociacion )

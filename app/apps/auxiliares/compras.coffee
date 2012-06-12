@@ -104,13 +104,13 @@ class Compras extends Spine.Controller
   beforeSend: (object) ->
     for movimiento in Movimiento.all()
       movimiento.Tipo             = object.Tipo_de_Documento
-      movimiento.Nombre_Contado   = object.Nombre_Contado
+      movimiento.Nombre_Contado   = Proveedor.current.Name + ' ' + object.Referencia
       movimiento.Precio           = 0
       movimiento.Impuesto         = 0
       movimiento.Descuento        = 0
       movimiento.Observacion      = object.Observacion
       movimiento.Referencia       = object.Referencia
-      movimiento.Proveedor        = Proveedor.current.id
+      #movimiento.Proveedor        = Proveedor.current.id
       movimiento.SubTotal         = 0
       movimiento.save()
    
