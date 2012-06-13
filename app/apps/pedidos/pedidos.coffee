@@ -200,7 +200,7 @@ class Credito extends Spine.Controller
   save: (e = null)=>
     @updateFromView(@pedido,@inputs_to_validate)
     @pedido.save()
-    @alert_box.html require("views/alert")(message: "Listo! Se han guardado los cambios..")
+    @alert_box.html require("views/alert")(message: "Listo! Se han guardado los cambios...")
     window.setTimeout => 
       @alert_box.empty()  
     , 1400
@@ -208,11 +208,21 @@ class Credito extends Spine.Controller
   send: (e) =>
     @save()
 
+    pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
+    
     data =
       class: PedidoItem
-      restData: PedidoItem.itemsInPedido(@pedido)
+      restRoute: "Oportunidad"
+      restMethod: "POST"
+      restData: '{"oportunidades" : ' + pedidos + '}'
 
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
+
+    #data =
+    #  class: PedidoItem
+    #  restData: PedidoItem.itemsInPedido(@pedido)
+
+    #Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
 
   after_send: =>
