@@ -13,7 +13,6 @@ PedidosAprobacion          = require("apps/pedidos/pedidosAprobacion")
 
 AprobarNota = require("apps/cuentasPorCobrar/aprobarNota")
 
-
 Compras = require("apps/auxiliares/compras")
 
 NotasCredito = require("apps/auxiliares/notasCredito")
@@ -64,7 +63,7 @@ class SecurityManager
     @profiles = {}
     apps = [ AprobarNota , AjustarCredito , TomasInventario , EmitirRecibo, Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas , Reposiciones  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Tesoreria"] = [  PedidosAprobacionGerencia , FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega]
+    @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega ]
     @profiles["Presidencia"] =  [ AprobarNota , NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacionGerencia   , DocumentosAnular , TomasInventario ]
     @profiles["SubGerencia"] =  [ AprobarNota , NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacionGerencia, DocumentosAnular , TomasInventario ]
     @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , FacturasAnular ]
