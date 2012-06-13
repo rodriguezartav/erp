@@ -43,7 +43,6 @@ class SocketManager
         if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas'])
           Spine.notifications.showNotification( "Impresion de Facturas" , "Impresa Factura de " + Cliente.find(FacturaPreparada.lastNotificationCliente)?.Name )
 
-
     @channel.bind "AllPedidos" , (message) =>
       console.log message
       results = PedidoPreparado.updateFromSocket(message)
@@ -53,10 +52,5 @@ class SocketManager
         
         else if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito']) and PedidoPreparado.lastNotificationEstado == 'Pendiente'
           Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
-
-    #for m in Spine.socketModels   
-      #if m.autoPush
-        #className = m.className 
-        #@channel.bind "#{className}__c" , m.updateFromSocket
 
 module.exports = SocketManager
