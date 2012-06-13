@@ -5,7 +5,8 @@ class Session extends Spine.SingleModel
     "username" , "password" ,"passwordToken" ,
     "user"
     "lastLogin","lastUpdate"
-    "error" , "isOnline","isSalesforce"
+    "error" , "isOnline","isSalesforce",
+    "updateInterval"
   
   @extend Spine.Model.Salesforce
   

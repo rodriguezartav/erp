@@ -12,14 +12,13 @@ class Saldo extends Spine.Model
 
   #Turned On only for certain profiles in SecurityManager
   @autoQuery = false
+  @allowCreate = false
 
   @onQuerySuccess: ->
     saldos = Saldo.select (saldo) ->
       return true if saldo.Saldo == 0
     return alert("Debe usa la opcion Actualizar Ahora") if saldos.length > 500
     for saldo in saldos
-      console.log "Destory"
-      console.log saldo
       saldo.destroy()
 
   @queryFilter: (options ) =>
@@ -40,7 +39,7 @@ class Saldo extends Spine.Model
     saldos = Saldo.select (item) ->
       overd = false
       overd = true if item.Cliente == cliente.id and item.Tipo_de_Documento == "FA" and item.PlazoActual > 63
-      #console.log item.Tipo_de_Documento + " :: " + item.PlazoActual 
+      #console.log item.Tipo_de_Documento + " :: " + item.PlazoActual if item.Cliente == cliente.id 
       return overd;
       
     return if saldos.length > 0 then true else false

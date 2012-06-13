@@ -52,6 +52,8 @@ TomasInventario = require("apps/procesos/tomasInventario")
 
 #FOR PROFILE BASED CONFIGURATION
 Movimiento = require("models/movimiento")
+Cliente = require("models/cliente")
+Producto = require("models/producto")
 Saldo = require("models/socketModels/saldo")
 FacturaPreparada = require("models/socketModels/facturaPreparada")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
@@ -78,18 +80,60 @@ class SecurityManager
       locationType : if Spine.session.hasPerfiles(["Vendedor"]) then "Ruta" else "Planta" 
       aprobacion   : if Spine.session.hasPerfiles(["Ejecutivo Credito","Platform System Admin"])  then true else false
       facturacion  : if Spine.session.hasPerfiles(["Recepcion","Encargado Ventas" , "Ejecutivo Ventas","Platform System Admin"]) then true else false
-      autoUpdate   : true
 
     Movimiento.attributes.push('ProductoCosto') if Spine.session.hasPerfiles(["Platform System Admin" , "Presidencia" , "SubGerencia"])
-    if Spine.session.hasPerfiles([ "Platform System Admin" , "Ejecutivo Credito" , "Vendedor" ])
-      Saldo.autoQuery = true
-
-    if Spine.session.hasPerfiles([ "Platform System Admin" , "Ejecutivo Ventas" ])
-      FacturaPreparada.autoQuery = true
     
-    if Spine.session.hasPerfiles([ "Platform System Admin" , "Ejecutivo Credito" ])
-      PedidoPreparado.autoQuery = true
-  
+    Cliente.autoReQuery = false
+    Producto.autoReQuery = false
+    
+    Spine.session.updateInterval = 360
+    #setting profile based update preferences
+    if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
+      Saldo.autoQuery = true
+      Saldo.autoReQuery = true
+      Cliente.autoQuery = true
+      Cliente.autoReQuery = true
+      PedidoPreparado.autoQuery    = true
+      PedidoPreparado.autoReQuery  = false
+      
+    else if Spine.session.hasPerfiles([ "Ejecutivo Ventas" ])
+      Producto.autoQuery   = true
+      Producto.autoReQuery = true
+      FacturaPreparada.autoQuery   = true
+      Spine.session.updateInterval = 50
+
+    else if Spine.session.hasPerfiles([ "Encargado Ventas" ])
+      Producto.autoQuery   = true
+      Producto.autoReQuery = true
+      Spine.session.updateInterval = 50
+
+    else if Spine.session.hasPerfiles([ "Vendedor" ])
+      Producto.autoQuery   = true
+      Producto.autoReQuery = true
+      Saldo.autoQuery = false
+      Spine.session.updateInterval = 50
+
+    else if Spine.session.hasPerfiles([ "Tesoreria" ])
+      Saldo.autoQuery = true
+      Saldo.autoReQuery = false
+
+    else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia" ])
+      Cliente.autoQuery = true
+      Producto.autoQuery = true
+      Saldo.autoQuery = true
+      PedidoPreparado.autoQuery    = true
+
+    else if Spine.session.hasPerfiles([ "Platform System Admin" ])
+      Cliente.autoQuery = true
+      Producto.autoQuery = true
+      Saldo.autoQuery = true
+      Saldo.autoReQuery = true
+      Spine.session.updateInterval = 50
+
+    #else if Spine.session.hasPerfiles([ "Contabilidad" ])
+        
+    Spine.session.save()
+
 
     Spine.apps = @profiles[Spine.session.user.Perfil__c]
 

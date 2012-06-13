@@ -8,9 +8,7 @@ class Producto extends Spine.Model
   @extend Spine.Model.SelectableModel
   @extend Spine.Model.SocketModel
 
-  @autoPush = true;
   @autoQueryTimeBased = true;
-  @allowCreate = false
 
   @queryFilter: (options ) =>
     return "" if !options

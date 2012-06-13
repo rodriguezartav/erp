@@ -43,14 +43,11 @@ class ConnectionManager
   checkOverallStatus: =>
     statusChanged = false
     @cyclesCount++
- 
-    #A little over an Hour Salesforce Session Expires
-    #if @cyclesCount > 380
-      #@resetSocketSequence()
- 
-    if @cyclesCount > 100
+    
+    interval = Spine.session.updateInterval
+    if @cyclesCount > interval
       @cyclesCount = 0
-      @fetchServerData() #if Spine.options.autoUpdate
+      @fetchServerData(true)
  
     if navigator.onLine and @connectionStatus != "online"
       @connectionStatus = "online"
@@ -71,10 +68,14 @@ class ConnectionManager
       Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
         window.location.reload();
     
-  fetchServerData: =>
+  fetchServerData: (reQuery = false) =>
     if navigator.onLine 
       for model in Spine.socketModels
-        model.query() if model.autoQuery
+        if reQuery
+          model.query() if model.autoReQuery
+        else
+          model.query() if model.autoQuery
+
 
   fetchLocalData: =>
     Session.fetch()    

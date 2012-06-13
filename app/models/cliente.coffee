@@ -8,7 +8,6 @@ class Cliente extends Spine.Model
   @extend Spine.Model.SocketModel
   @extend Spine.Model.SelectableModel
 
-  @autoPush= true
   @autoQueryTimeBased = true
 
   @avoidInsertList = ["Name","Rating_Crediticio","CodigoExterno","Activo","Saldo","DiasCredito"]

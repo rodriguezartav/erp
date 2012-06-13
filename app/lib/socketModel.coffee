@@ -10,7 +10,8 @@ Spine.Model.SocketModel =
     Spine.socketModels.push @
     
     @extend
-      autoQuery            :   true
+      autoQuery            :   false
+      autoReQuery          :   false
       autoQueryTimeBased   :   false
       autoPush             :   false
       allowCreate          :   true

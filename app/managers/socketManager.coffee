@@ -1,8 +1,10 @@
 Spine = require('spine')
 PedidoPreparado  =  require("models/socketModels/pedidoPreparado")
 FacturaPreparada  =  require("models/socketModels/facturaPreparada")
+Saldo  =  require("models/socketModels/saldo")
 
-Cliente = require("models/cliente")
+Cliente  =  require("models/cliente")
+
 
 class SocketManager
   
@@ -33,14 +35,17 @@ class SocketManager
     return false if !@pusher
     @channel = @pusher.subscribe('salesforce_data_push')
 
-    @channel.bind "Impresion" , (message) =>
+    @channel.bind "AllDocumentos" , (message) =>
       results = FacturaPreparada.updateFromSocket(message)
+      results = Saldo.updateFromSocket(message)
+
       if results  != false
         if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas'])
           Spine.notifications.showNotification( "Impresion de Facturas" , "Impresa Factura de " + Cliente.find(FacturaPreparada.lastNotificationCliente)?.Name )
 
 
-    @channel.bind "Pedido__c" , (message) =>
+    @channel.bind "AllPedidos" , (message) =>
+      console.log message
       results = PedidoPreparado.updateFromSocket(message)
       if results  != false
         if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas']) and PedidoPreparado.lastNotificationEstado == 'Facturado'
@@ -49,9 +54,9 @@ class SocketManager
         else if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito']) and PedidoPreparado.lastNotificationEstado == 'Pendiente'
           Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
 
-    for m in Spine.socketModels   
-      if m.autoPush
-        className = m.className 
-        @channel.bind "#{className}__c" , m.updateFromSocket
+    #for m in Spine.socketModels   
+      #if m.autoPush
+        #className = m.className 
+        #@channel.bind "#{className}__c" , m.updateFromSocket
 
 module.exports = SocketManager

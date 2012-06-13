@@ -78,6 +78,7 @@ class EmitirPago extends Spine.Controller
     Cliente.reset()
     PagoItem.destroyAll()
     Pago.destroyAll()
+    Documento.destroyAll()
  
   constructor: ->
     super
@@ -102,7 +103,6 @@ class EmitirPago extends Spine.Controller
       @items.push ri
       @saldos_list.append ri.el
     $('.info_popover').popover()
-    
 
   updateTotal: =>
     total =0
@@ -150,10 +150,6 @@ class EmitirPago extends Spine.Controller
   minor_reset: () ->
     for item in @items
       item?.release()
-    @resetBindings()
-    Documento.destroyAll()
-    Cliente.reset()
-    @pago.destroy()
     @setVariables()
     @preset()
     @render()
