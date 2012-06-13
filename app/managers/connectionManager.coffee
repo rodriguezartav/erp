@@ -74,7 +74,6 @@ class ConnectionManager
   fetchServerData: =>
     if navigator.onLine 
       for model in Spine.socketModels
-        console.log model +  model.autoQuery
         model.query() if model.autoQuery
 
   fetchLocalData: =>

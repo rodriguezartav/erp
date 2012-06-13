@@ -2,6 +2,7 @@ port =  process.env.PORT || 9294
 
 express = require('express')
 OpfDevUtil = require("./opfDevUtil")
+Opf =require "opf"
 
 ##Setup Server
 app = express.createServer()
