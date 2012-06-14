@@ -119,7 +119,7 @@ class EmitirPago extends Spine.Controller
   beforeSend: (object) =>
     for item in PagoItem.all()
       console.log item.Monto
-      if item.Monto == 0
+      if parseInt(item.Monto) == 0
         item.destroy()
       else
         item.Recibo = object.Recibo
