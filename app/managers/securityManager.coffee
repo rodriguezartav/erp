@@ -48,6 +48,8 @@ CuentasPorPagarEntrega= require("apps/cuentasPorPagar/cuentasPorPagarEntrega")
 NotaCreditoProveedor = require("apps/cuentasPorPagar/notaCreditoProveedor")
 
 TomasInventario = require("apps/procesos/tomasInventario")
+ListasPrecio = require("apps/procesos/listasPrecio")
+
 
 #FOR PROFILE BASED CONFIGURATION
 Movimiento = require("models/movimiento")
@@ -61,7 +63,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ AprobarNota , AjustarCredito , TomasInventario , EmitirRecibo, Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas , Reposiciones  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
+    apps = [ ListasPrecio,AprobarNota , AjustarCredito , TomasInventario , EmitirRecibo, Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas , Reposiciones  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega ]
     @profiles["Presidencia"] =  [ AprobarNota , NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacionGerencia   , DocumentosAnular , TomasInventario ]
@@ -86,53 +88,39 @@ class SecurityManager
     Producto.autoReQuery = false
     
     Spine.session.updateInterval = 360
-    #setting profile based update preferences
     if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
       Saldo.autoQuery = true
-      Saldo.autoReQuery = true
       Cliente.autoQuery = true
-      Cliente.autoReQuery = true
       PedidoPreparado.autoQuery    = true
-      PedidoPreparado.autoReQuery  = false
       
     else if Spine.session.hasPerfiles([ "Ejecutivo Ventas" ])
       Producto.autoQuery   = true
-      Producto.autoReQuery = true
       FacturaPreparada.autoQuery   = true
-      Spine.session.updateInterval = 50
 
     else if Spine.session.hasPerfiles([ "Encargado Ventas" ])
       Producto.autoQuery   = true
-      Producto.autoReQuery = true
-      Spine.session.updateInterval = 50
 
     else if Spine.session.hasPerfiles([ "Vendedor" ])
       Producto.autoQuery   = true
-      Producto.autoReQuery = true
       Saldo.autoQuery = false
-      Spine.session.updateInterval = 50
 
     else if Spine.session.hasPerfiles([ "Tesoreria" ])
       Saldo.autoQuery = true
-      Saldo.autoReQuery = false
+      PedidoPreparado.autoQuery = true
 
     else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia" ])
       Cliente.autoQuery = true
       Producto.autoQuery = true
       Saldo.autoQuery = true
-      PedidoPreparado.autoQuery    = true
+      PedidoPreparado.autoQuery = true
 
     else if Spine.session.hasPerfiles([ "Platform System Admin" ])
       Cliente.autoQuery = true
       Producto.autoQuery = true
       Saldo.autoQuery = true
       Saldo.autoReQuery = true
-      Spine.session.updateInterval = 50
 
-    #else if Spine.session.hasPerfiles([ "Contabilidad" ])
-        
     Spine.session.save()
-
 
     Spine.apps = @profiles[Spine.session.user.Perfil__c]
 

@@ -9,12 +9,8 @@ class NotificationManager
       window.webkitNotifications?.requestPermission?()
 
   showNotification: (title,message) =>
-    @notification =  {title: title,message:message}
-    @notificationTimer = window.setTimeout @showNotifications , 4000 if !@notificationTimer
-
-  showNotifications: =>
-    notificacion = window?.webkitNotifications?.createNotification "/images/logo_icon.png" , @notification.title , @notification.message
+    notificationObj =  {title: title,message:message}
+    notificacion = window?.webkitNotifications?.createNotification "/images/logo_icon.png" , notificationObj.title , notificationObj.message
     notificacion.show()
-    @notificationTimer = null
 
 module.exports = NotificationManager

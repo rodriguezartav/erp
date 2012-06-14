@@ -1,0 +1,10 @@
+<tr>
+<th><%= @CodigoExterno %></th>
+
+  <th><%= @InventarioActual.capitalize()  %></th>
+  <th><%= @Name.capitalize()  %></th>
+  <th><%= Precio_Distribuidor.toMoney()  %></th>
+  <th><%= @Precio_Industria.toMoney()  %></th>
+  <th><%= @Precio_Retail.toMoney()  %></th>
+
+</tr>

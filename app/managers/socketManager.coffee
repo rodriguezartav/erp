@@ -4,7 +4,7 @@ FacturaPreparada  =  require("models/socketModels/facturaPreparada")
 Saldo  =  require("models/socketModels/saldo")
 
 Cliente  =  require("models/cliente")
-
+Producto  =  require("models/producto")
 
 class SocketManager
   
@@ -35,22 +35,44 @@ class SocketManager
     return false if !@pusher
     @channel = @pusher.subscribe('salesforce_data_push')
 
-    @channel.bind "AllDocumentos" , (message) =>
-      results = FacturaPreparada.updateFromSocket(message)
+    @channel.bind "Clientes" , (message) =>
+      console.log "Updating Clientes"
+      console.log message
+      results = Cliente.updateFromSocket(message)
+
+    @channel.bind "Saldos" , (message) =>
+      console.log "Updating Saldos"
+      console.log message
       results = Saldo.updateFromSocket(message)
+      Saldo.onQuerySuccess()
 
-      if results  != false
-        if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas'])
-          Spine.notifications.showNotification( "Impresion de Facturas" , "Impresa Factura de " + Cliente.find(FacturaPreparada.lastNotificationCliente)?.Name )
+    @channel.bind "Productos" , (message) =>
+      console.log "Updating Productos"
+      console.log message
+      results = Producto.updateFromSocket(message)
 
-    @channel.bind "AllPedidos" , (message) =>
+    @channel.bind "PedidoPreparado" , (message) =>
+      console.log "Updating PedidoPreparado"
       console.log message
       results = PedidoPreparado.updateFromSocket(message)
+      if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito'])
+        Spine.notifications.showNotification( "Pedidos Preparados" , "Han ingresado nuevos pedidos" )
+
+    @channel.bind "PedidoAprobado" , (message) =>
+      console.log "Updating PedidoAprobado"
+      console.log message
+      results = PedidoPreparado.updateFromSocket(message)
+
+    @channel.bind "FacturaPreparada" , (message) =>
+      console.log "Updating FacturaPreparada"
+      
+      results = FacturaPreparada.updateFromSocket(message)
       if results  != false
-        if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas']) and PedidoPreparado.lastNotificationEstado == 'Facturado'
-          Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Aprobado Pedido de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
-        
-        else if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito']) and PedidoPreparado.lastNotificationEstado == 'Pendiente'
-          Spine.notifications.showNotification( "Aprobacion de Pedidos" , "Hay Pedidos Pendientes por Aprobar de " + Cliente.find(PedidoPreparado.lastNotificationCliente)?.Name )
+        if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas'])
+          Spine.notifications.showNotification( "Aprobacion de Facturas" , "Facturas Listas para Imprimir" )
+
+    @channel.bind "FacturaImpresa" , (message) =>
+      console.log "Updating FacturaImpresa"
+      results = FacturaPreparada.updateFromSocket(message)
 
 module.exports = SocketManager

@@ -68,13 +68,10 @@ class ConnectionManager
       Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
         window.location.reload();
     
-  fetchServerData: (reQuery = false) =>
+  fetchServerData: () =>
     if navigator.onLine 
       for model in Spine.socketModels
-        if reQuery
-          model.query() if model.autoReQuery
-        else
-          model.query() if model.autoQuery
+        model.query() if model.autoQuery
 
 
   fetchLocalData: =>

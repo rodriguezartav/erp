@@ -15,13 +15,12 @@ class Productos  extends Spine.Controller
     ".productos_list>li" : "productos_list_items"
     ".js_search_productos" : "js_search_productos"
     "a.popable"           : "popovers"
-    
-    
+
   constructor: ->
     super
     @productos_list.hide()
     Producto.bind "current_reset" , @productoSet
-  
+
   productoSet: =>
     @js_search_productos.val ""
     @productos_list.empty()
@@ -59,12 +58,9 @@ class Productos  extends Spine.Controller
     txt = $(e.target).val() if e
     result = Producto.filter txt
     @render result
-    
 
   reset: =>
     Producto.unbind "current_reset" , @productoSet
-    
     @release()
-    
 
 module.exports = Productos

@@ -11,7 +11,6 @@ Spine.Model.SocketModel =
     
     @extend
       autoQuery            :   false
-      autoReQuery          :   false
       autoQueryTimeBased   :   false
       autoPush             :   false
       allowCreate          :   true
@@ -22,21 +21,16 @@ Spine.Model.SocketModel =
       beforeSocketUpdate: (results) ->
         return true
 
-      allowAction: (action) ->
-        if (@allowCreate and action == "created") or (@allowUpdate and action=="updated")
-          return true
-        return false
-
       updateFromSocket: (message) =>
-        jsonLoop = JSON.stringify [message.sobject]
+        for object in message.sobjects
+          delete object.attributes
+        jsonLoop = JSON.stringify message.sobjects
         results = @parseSalesforceJSON jsonLoop
-        if @beforeSocketUpdate(results) and @allowAction(message.event.type)
+        console.log results
+        if @beforeSocketUpdate(results)
           @refresh results
           @trigger "push_success"
-          #console.log "Actualizacion de " + @className + " " + jsonLoop
           return results
-#        else
- #         console.log "No se actualizo por #{@allowedPushActions} y #{message.event}" 
         return false
 
       beforeSaveLocal: ->

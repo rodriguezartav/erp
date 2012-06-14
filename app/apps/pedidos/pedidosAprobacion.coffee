@@ -6,7 +6,6 @@ Producto = require("models/producto")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
 Saldo = require("models/socketModels/saldo")
 
-
 class PedidosAprobacion extends Spine.Controller
   className: "row-fluid"
 
