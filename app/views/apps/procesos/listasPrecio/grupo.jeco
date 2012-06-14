@@ -1,0 +1,1 @@
+<li class="active"><a class="btn_grupo" data-grupo="<%= @ %>"> <%= @ %>  </a></li>  

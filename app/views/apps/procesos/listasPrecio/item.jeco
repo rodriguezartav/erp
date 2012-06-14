@@ -1,4 +1,4 @@
-<tr>
+<tr data-grupo="<%= @Grupo %>">
   <td><%= @CodigoExterno %></th>
   <td><%= @InventarioActual.toMoney()  %></td>
   <td><%= @Name.capitalize()  %></td>

@@ -11,9 +11,12 @@ class listasPrecio extends Spine.Controller
 
   elements:
     ".productList"       :  "productList"
+    ".gruposList"        :  "gruposList"
+    ".gruposList>li"     :  "gruposListElements"
     
   events:
     "click .btn_familia" : "onBtnFamilia"
+    "click .btn_grupo"   : "onBtnGrupo"
     "click .cancel"      : "reset"
     "click .print"       : "onPrint"
 
@@ -36,6 +39,14 @@ class listasPrecio extends Spine.Controller
   render: ->
     @html require("views/apps/procesos/listasPrecio/layout")(app: listasPrecio , familias: Producto.groupByFamilia())
 
+  onBtnGrupo: (e) =>
+    target = $(e.target)
+    grupo = target.attr "data-grupo"
+    target.parent().removeClass "active"
+    
+    $("tr[data-grupo='#{grupo}']").hide()
+    
+
   onBtnFamilia: (e) =>
     familia = $(e.target).attr "data-familia"
     productos = Producto.findAllByAttribute("Familia" , familia )
@@ -43,7 +54,12 @@ class listasPrecio extends Spine.Controller
       a.Grupo = 'N/D' if !a.Grupo
       b.Grupo = 'N/D' if !b.Grupo
       return if a.Grupo > b.Grupo then 1 else -1
+
+    groups = []
+    for producto in productos
+      groups.push producto.Grupo if groups.indexOf(producto.Grupo) == -1
     
+    @gruposList.html require("views/apps/procesos/listasPrecio/grupo")(groups)
     @productList.html require("views/apps/procesos/listasPrecio/item")(productos)
 
   onPrint: =>
