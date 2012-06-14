@@ -83,8 +83,8 @@ class EmitirPago extends Spine.Controller
  
   constructor: ->
     super
-    @setVariables()
     @preset()
+    @setVariables()
     @render()
     @setBindings()
    
@@ -116,7 +116,11 @@ class EmitirPago extends Spine.Controller
     @validationErrors.push "El pago debe tener al menos 1 pago" if PagoItem.count() == 0
     item.checkItem() for item in @items
 
-  beforeSend: (object) =>
+  send: (e) =>
+    @updateFromView(@pago,@inputs_to_validate)
+    
+    pagoItems = []
+    
     for item in PagoItem.all()
       item.Recibo = object.Recibo
       item.Cliente = object.Cliente
@@ -124,14 +128,7 @@ class EmitirPago extends Spine.Controller
       item.Fecha = object.Fecha.to_salesforce_date()
       item.Referencia = object.Referencia
       item.setTipo()
-      item.save()
-    true  
-
-  send: (e) =>
-    console.log @pago
-    @updateFromView(@pago,@inputs_to_validate)
-    pagoItems = PagoItem.select item ->
-      return true if item.Monto and parseInt(item.Monto) != 0
+      pagoItems.push item if item.Monto and parseInt(item.Monto) != 0
 
     data =
       class: PagoItem
