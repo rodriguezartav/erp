@@ -122,11 +122,11 @@ class EmitirPago extends Spine.Controller
     pagoItems = []
     
     for item in PagoItem.all()
-      item.Recibo = object.Recibo
-      item.Cliente = object.Cliente
-      item.FormaPago = object.FormaPago
-      item.Fecha = object.Fecha.to_salesforce_date()
-      item.Referencia = object.Referencia
+      item.Recibo = @pago.Recibo
+      item.Cliente = @pago.Cliente
+      item.FormaPago = @pago.FormaPago
+      item.Fecha = @pago.Fecha.to_salesforce_date()
+      item.Referencia = @pago.Referencia
       item.setTipo()
       pagoItems.push item if item.Monto and parseInt(item.Monto) != 0
 
