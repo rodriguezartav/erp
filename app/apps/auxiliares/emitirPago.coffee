@@ -37,7 +37,6 @@ class Items extends Spine.Controller
     @render()
 
   checkItem: (e) =>
-    console.log @pagoItem
     @updateFromView(@pagoItem,@inputs_to_validate)
 
 class EmitirPago extends Spine.Controller
@@ -147,8 +146,8 @@ class EmitirPago extends Spine.Controller
   minor_reset: () ->
     for item in @items
       item?.release()
+    @preset()  
     @setVariables()
-    @preset()
     @render()
 
     
