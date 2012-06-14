@@ -37,6 +37,7 @@ class Items extends Spine.Controller
     @render()
 
   checkItem: (e) =>
+    console.log @pagoItem
     @updateFromView(@pagoItem,@inputs_to_validate)
 
 class EmitirPago extends Spine.Controller
@@ -117,6 +118,7 @@ class EmitirPago extends Spine.Controller
 
   beforeSend: (object) =>
     for item in PagoItem.all()
+      console.log item.Monto
       if item.Monto == 0
         item.destroy()
       else
