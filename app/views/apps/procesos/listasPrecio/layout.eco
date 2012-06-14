@@ -6,7 +6,7 @@
   <ul class="nav nav-pills familiasList hide_on_print">
 
   <% for familia in @familias:  %>
-    <% if familia.length > 0:  %>
+    <% if familia:  %>
       <li class="active"><a class="btn_familia" data-familia="<%= familia[0].Familia %>"> <%= familia[0].Familia %>  </a></li>  
     <% end %>
   <% end %>
@@ -21,10 +21,11 @@
     <thead>
       <tr>
         <th>Codigo</th>
-        <th>Grupo</th>
-        <th>Producto</th>
         <th>Inventario</th>
-        <th>Diferencia</th>
+        <th>Producto</th>
+        <th>Mayorista</th>
+        <th>Industria</th>
+        <th>Detalle</th>
       </tr>
     </thead>
     <tbody class="productList">

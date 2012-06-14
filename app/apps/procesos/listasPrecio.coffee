@@ -34,7 +34,7 @@ class listasPrecio extends Spine.Controller
     @setBindings()
    
   render: ->
-    @html require("views/apps/procesos/listasPrecio/layout")(app: tomasInventario , familias: Producto.groupByFamilia())
+    @html require("views/apps/procesos/listasPrecio/layout")(app: listasPrecio , familias: Producto.groupByFamilia())
 
   onBtnFamilia: (e) =>
     familia = $(e.target).attr "data-familia"
@@ -43,7 +43,7 @@ class listasPrecio extends Spine.Controller
       a.Grupo = 'N/D' if !a.Grupo
       b.Grupo = 'N/D' if !b.Grupo
       return if a.Grupo > b.Grupo then 1 else -1
-      
+    
     @productList.html require("views/apps/procesos/listasPrecio/item")(productos)
 
   onPrint: =>
