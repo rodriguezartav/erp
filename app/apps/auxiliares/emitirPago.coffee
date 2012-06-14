@@ -118,15 +118,17 @@ class EmitirPago extends Spine.Controller
 
   beforeSend: (object) =>
     for item in PagoItem.all()
-        item.Recibo = object.Recibo
-        item.Cliente = object.Cliente
-        item.FormaPago = object.FormaPago
-        item.Fecha = object.Fecha.to_salesforce_date()
-        item.Referencia = object.Referencia
-        item.setTipo()
-        item.save()
+      item.Recibo = object.Recibo
+      item.Cliente = object.Cliente
+      item.FormaPago = object.FormaPago
+      item.Fecha = object.Fecha.to_salesforce_date()
+      item.Referencia = object.Referencia
+      item.setTipo()
+      item.save()
+    true  
 
   send: (e) =>
+    console.log @pago
     @updateFromView(@pago,@inputs_to_validate)
     pagoItems = PagoItem.select item ->
       return true if item.Monto and parseInt(item.Monto) != 0
