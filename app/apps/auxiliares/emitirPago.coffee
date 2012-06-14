@@ -131,7 +131,6 @@ class EmitirPago extends Spine.Controller
         item.save()
 
   send: (e) =>
-    @refreshElements()
     @updateFromView(@pago,@inputs_to_validate)
     
     data =
