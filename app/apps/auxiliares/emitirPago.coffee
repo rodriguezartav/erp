@@ -138,7 +138,6 @@ class EmitirPago extends Spine.Controller
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
-
   after_send: =>
     @minor_reset()
 

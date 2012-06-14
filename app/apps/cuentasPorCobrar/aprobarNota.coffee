@@ -24,6 +24,7 @@ class AprobarNota extends Spine.Controller
     super
     @html require("views/apps/cuentasPorCobrar/aprobarNota/layout")(AprobarNota)
     Saldo.bind "query_success" , @render
+    Saldo.bind "push_success" , @render
     @render()
 
   reload: ->
@@ -31,7 +32,7 @@ class AprobarNota extends Spine.Controller
 
   render: =>
     notas = Saldo.select (item) ->
-      return true if !item.Autorizado
+      return true if !item.Autorizado and (item.Tipo_de_Documento__c = 'NC' or item.Tipo_de_Documento__c = 'ND') 
 
     @srcNotas.html require("views/apps/cuentasPorCobrar/aprobarNota/item")(notas)
     @el.find('.info_popover').popover()

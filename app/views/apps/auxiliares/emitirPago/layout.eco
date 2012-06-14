@@ -42,6 +42,7 @@
         <option value="Efectivo">Efectivo</span>
         <option value="Cheque">Cheque</span>
         <option value="Transferencia">Transferencia</span>
+        <option value="Nota de Credito">Nota de Credito</span>
       </select>
     </div>
 

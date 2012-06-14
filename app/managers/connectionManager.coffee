@@ -47,7 +47,7 @@ class ConnectionManager
     interval = Spine.session.updateInterval
     if @cyclesCount > interval
       @cyclesCount = 0
-      @fetchServerData(true)
+      @fetchServerData()
  
     if navigator.onLine and @connectionStatus != "online"
       @connectionStatus = "online"
