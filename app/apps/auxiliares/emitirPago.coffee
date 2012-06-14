@@ -118,10 +118,6 @@ class EmitirPago extends Spine.Controller
 
   beforeSend: (object) =>
     for item in PagoItem.all()
-      console.log item
-      if !item.Monto || parseInt(item.Monto) == 0
-        item.destroy()
-      else
         item.Recibo = object.Recibo
         item.Cliente = object.Cliente
         item.FormaPago = object.FormaPago
@@ -132,10 +128,12 @@ class EmitirPago extends Spine.Controller
 
   send: (e) =>
     @updateFromView(@pago,@inputs_to_validate)
-    
+    pagoItems = PagoItem.select item ->
+      return true if item.Monto and parseInt(item.Monto) != 0
+
     data =
       class: PagoItem
-      restData: PagoItem.all()
+      restData: pagoItems
 
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
