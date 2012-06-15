@@ -120,6 +120,8 @@ class EmitirPago extends Spine.Controller
     
     pagoItems = []
     
+    console.log "El codigo del cliente es " + @pago.Cliente
+    
     for item in PagoItem.all()
       item.Recibo = @pago.Recibo
       item.Cliente = @pago.Cliente
@@ -128,8 +130,6 @@ class EmitirPago extends Spine.Controller
       item.Referencia = @pago.Referencia
       item.setTipo()
       pagoItems.push item if item.Monto and parseInt(item.Monto) != 0
-
-    throw "El Cliente con codigo " + @pago.Cliente + " no tiene codigo" if !@pago.Cliente
 
     data =
       class: PagoItem
