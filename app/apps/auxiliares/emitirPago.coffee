@@ -120,8 +120,6 @@ class EmitirPago extends Spine.Controller
     
     pagoItems = []
     
-    console.log "El codigo del cliente es " + @pago.Cliente
-    
     for item in PagoItem.all()
       item.Recibo = @pago.Recibo
       item.Cliente = @pago.Cliente
