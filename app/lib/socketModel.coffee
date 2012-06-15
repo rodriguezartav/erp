@@ -19,6 +19,9 @@ Spine.Model.SocketModel =
       ##SOCKETS ***************************
 
       beforeSocketUpdate: (results) ->
+        for result in results
+          Spine.trigger "show_lightbox" , "showWarning" , error: "REPORTE ESTE ERROR: El objecto " + JSON.parse(result) + " no tiene id" if !result.id 
+          result = {}
         return true
 
       updateFromSocket: (message) =>
@@ -26,7 +29,6 @@ Spine.Model.SocketModel =
           delete object.attributes
         jsonLoop = JSON.stringify message.sobjects
         results = @parseSalesforceJSON jsonLoop
-        console.log results
         if @beforeSocketUpdate(results)
           @refresh results
           @trigger "push_success"
