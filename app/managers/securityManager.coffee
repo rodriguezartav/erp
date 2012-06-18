@@ -71,9 +71,9 @@ class SecurityManager
     @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega ]
     @profiles["Presidencia"] =  [ AprobarNota , NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacionGerencia   , DocumentosAnular , TomasInventario , VerCierre , VerRegistros ]
     @profiles["SubGerencia"] =  [ AprobarNota , NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacionGerencia, DocumentosAnular , TomasInventario ,VerCierre , VerRegistros ]
-    @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , FacturasAnular ,VerCierre , VerRegistros]
-    @profiles["Encargado de Ventas"] = [ Pedidos  ,FacturasImpresion , FacturasAnular , TomasInventario  ,VerCierre , VerRegistros]
-    @profiles["Ejecutivo Credito"] = [ AjustarCredito , Entradas,Salidas,Reposiciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion,VerCierre , VerRegistros]
+    @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , FacturasAnular  , VerRegistros]
+    @profiles["Encargado de Ventas"] = [ Pedidos  ,FacturasImpresion , FacturasAnular , TomasInventario , VerRegistros]
+    @profiles["Ejecutivo Credito"] = [ AjustarCredito , Entradas,Salidas,Reposiciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion , VerRegistros]
     @profiles["Vendedor"] = [Pedidos]
     @profiles["Contabilidad"] = [ CuentasPorPagarFlujo ,VerCierre , VerRegistros]
     Spine.bind "login_complete" , @onLoginComplete
