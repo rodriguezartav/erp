@@ -8,7 +8,7 @@ class VerSaldos extends Spine.Controller
   
   className: "row-fluid verSaldos"
   
-  @departamento = "Credito y Cobro"
+  @departamento = "Vistas"
   @label = "Ver Saldos"
   @icon = "icon-eye-open"
 

@@ -1,0 +1,12 @@
+Spine = require('spine')
+
+
+<tr data-departamento="<%= @Departamento %>">>
+  <td><%= @Name %></td>
+  <td><%= new Date(@Fecha).to_pretty() %></td>
+  <td><a href="<%= Spine.session.instance_url  %>/<%= @Responsable %>" ><%= @Responsable %> </a> </td>  
+  <td><%= @Departamento.capitalize() %></td>
+  <td><%= @Tipo.capitalize() %></td>
+  <td><%= @Descripcion %></td>
+  <td><%= @Monto.toMoney() %></td>
+</tr>

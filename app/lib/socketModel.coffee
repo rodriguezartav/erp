@@ -19,6 +19,9 @@ Spine.Model.SocketModel =
       ##SOCKETS ***************************
 
       beforeSocketUpdate: (results) ->
+        for result in results
+          alert "REPORTE ESTE ERROR: Se esta actualizando sin ID : "  + JSON.stringify result if !result.id
+          result = {}
         return true
 
       updateFromSocket: (message) =>

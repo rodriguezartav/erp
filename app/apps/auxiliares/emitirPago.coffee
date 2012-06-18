@@ -113,7 +113,15 @@ class EmitirPago extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pago.Cliente == null
     @validationErrors.push "El pago debe tener al menos 1 pago" if PagoItem.count() == 0
-    item.checkItem() for item in @items
+    hasFactura = false
+    total = 0
+    for item in @items
+      hasFactura = true if item.pagoItem.Monto and parseInt(item.pagoItem.Monto) != 0 and item.documento.Tipo_de_Documento == 'FA'
+      total += item.pagoItem.Monto if item.pagoItem.Monto and parseInt(item.pagoItem.Monto) != 0
+      item.checkItem()
+    @validationErrors.push "El pago debe tener al menos una factura " if !hasFactura
+    @validationErrors.push "El pago debe ser mayor o igual a 0" if total < 0
+     
 
   send: (e) =>
     @updateFromView(@pago,@inputs_to_validate)
@@ -140,6 +148,7 @@ class EmitirPago extends Spine.Controller
 
   reset: ->
     @minor_reset()
+    @resetBindings()
     @release()
     @navigate "/apps"
 
