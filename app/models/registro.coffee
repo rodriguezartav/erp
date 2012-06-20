@@ -27,6 +27,8 @@ class Registro extends Spine.Model
   @queryFilter: (options) =>
     return "" if !options
     filter = ""
+    filter = @queryFilterAddCondition(" Fecha__c = TODAY "                             , filter)   if options.today
+    filter = @queryFilterAddCondition(" Dia__c = #{options.fecha} "                  , filter)   if options.fecha
     filter = @queryOrderAddCondition(" order by Fecha__c "               , filter)
     
     

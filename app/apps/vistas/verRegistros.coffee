@@ -14,6 +14,7 @@ class VerRegistros extends Spine.Controller
   elements:
     ".registros_list"       : "registros_list"
     ".departamentos_list"       : "departamentos_list"
+    ".viewDate"             : "viewDate"
 
     
   events:
@@ -25,7 +26,7 @@ class VerRegistros extends Spine.Controller
  
   preset: ->
     Registro.destroyAll()
-    Registro.query()
+    Registro.query( today: true )
 
   constructor: ->
     super
@@ -35,6 +36,9 @@ class VerRegistros extends Spine.Controller
    
   render: ->
     @html require("views/apps/vistas/verRegistros/layout")(VerRegistros)
+    pickers =  @el.find('.viewDate').datepicker({autoclose: true})
+    #@viewDate.datepicker({autoclose: true})
+    #pickers.on("change",@onInputChange)
 
   onRegistroLoaded: =>
     departamentos = Registro.uniqueDepartamentos()

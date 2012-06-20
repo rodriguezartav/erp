@@ -12,6 +12,8 @@ class VerCierre extends Spine.Controller
 
   elements:
     ".departamentos_list"       : "departamentos_list"
+    ".viewDate"             : "viewDate"
+    
     
   events:
     "click .cancel" : "reset"
@@ -21,7 +23,7 @@ class VerCierre extends Spine.Controller
  
   preset: ->
     Registro.destroyAll()
-    Registro.query()
+    Registro.query( today: true )
 
   constructor: ->
     super
@@ -31,6 +33,15 @@ class VerCierre extends Spine.Controller
    
   render: ->
     @html require("views/apps/vistas/verCierre/layout")(VerCierre)
+    @viewDate.val new Date().to_salesforce()
+    pickers =  @viewDate.datepicker({autoclose: true})
+    pickers.on("change",@onDateChange)
+
+  onDateChange: (e) =>
+    target = $(e.target)
+    fecha = new Date(target.val())
+    console.log fecha.to_salesforce_date()
+    Registro.query( fecha: fecha.to_salesforce_date() )
 
   onRegistroLoaded: =>
     departamentosList = Registro.uniqueDepartamentos()

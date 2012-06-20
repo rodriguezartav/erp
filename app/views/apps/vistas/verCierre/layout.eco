@@ -1,5 +1,15 @@
-<div class="widgetHeader">
-  <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+<div class="row-fluid widgetHeader">
+  
+  <div class="span6">
+    <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+  </div>
+  
+  <div class="span6">
+    <div class="rightOptions">
+      <input class="viewDate" />
+    </div>
+  </div>
+  
 </div>
 
 <div class="well">
@@ -14,6 +24,6 @@
 <div class="action_footer">
   <div class="modal-footer">
     <a class="btn btn-danger cancel">Regresar</a>
-        <a class="btn send">Realizar Cierre</a>
+        <a class="btn btn-primary save">Realizar Cierre</a>
   </div>
 </div>

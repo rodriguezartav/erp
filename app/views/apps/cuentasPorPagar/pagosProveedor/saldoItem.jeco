@@ -1,5 +1,5 @@
 <tr data-id="<%= @id %>">
-<td><%= '<span class="label label-warning">($) DOLARES</span>' if @TipoCambio != 1 %></td>
+<td><%- '<span class="label label-warning">($) DOLARES</span>' if @TipoCambio != 1 %></td>
 
   <td><h3 class=""><%= @Referencia %></h3></td>
   <td><h3 class=""><%= @TipoCambio.toMoney() %></h3></td>
