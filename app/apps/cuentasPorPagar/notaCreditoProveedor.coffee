@@ -75,7 +75,6 @@ class NotaCreditoProveedor extends Spine.Controller
     object.Tipo_de_Documento = 'NC'
     object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
     object.FechaIngreso = new Date(Date.now()).to_salesforce_date()
-    object.Estado = "Para Pagar"
 
   send: (e) =>
     #@inputs_to_validate.push @cuentas
