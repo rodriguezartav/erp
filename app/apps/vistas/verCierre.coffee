@@ -13,8 +13,7 @@ class VerCierre extends Spine.Controller
   elements:
     ".departamentos_list"       : "departamentos_list"
     ".viewDate"             : "viewDate"
-    
-    
+
   events:
     "click .cancel" : "reset"
 

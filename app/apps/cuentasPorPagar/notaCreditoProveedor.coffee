@@ -35,21 +35,23 @@ class NotaCreditoProveedor extends Spine.Controller
     @cuentaPorPagar = CuentaPorPagar.create { FechaFacturacion: new Date()  }
 
   preset: ->
-    Proveedor.query()
+    Cuenta.query({ clases: "'Gasto','Activo','Costo de Venta'" } )
+    
     #Cuenta.query({tipos: ["'Bancaria'"] } )
 
   constructor: ->
     super
     @setVariables()
     @preset()
-    #Cuenta.bind "query_success" , @onLoadCuenta
+    Cuenta.bind "query_success" , @onLoadCuenta
     Proveedor.bind "current_set" , @onProveedorSet
     @render()
 
   onProveedorSet: =>
-    @txtPlazo.val(Proveedor.current.Plazo || 0)
+    @cuentas.val(Proveedor.current.Cuenta).attr("selected", "selected")
 
   onLoadCuenta: =>
+    Proveedor.query()
     @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
 
   render: =>  
@@ -72,7 +74,10 @@ class NotaCreditoProveedor extends Spine.Controller
 
   beforeSend: (object) ->
     object.Proveedor = Proveedor.current.id
+    object.CuentaGasto = @cuentas.find("option:selected").val()
+    
     object.Tipo_de_Documento = 'NC'
+    object.Plazo= 1
     object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
     object.FechaIngreso = new Date(Date.now()).to_salesforce_date()
 
