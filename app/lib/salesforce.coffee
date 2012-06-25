@@ -114,8 +114,11 @@ Spine.Model.Salesforce =
       on_send_success: (raw_results) =>
         results = JSON.parse raw_results
         @trigger "insert_success" , results
+        Spine.trigger "query_complete"
+        
 
       on_send_error: (error) =>
+        Spine.trigger "query_complete"
         responseText = error.responseText
         if responseText.length > 0
           #If session expired

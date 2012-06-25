@@ -1,0 +1,28 @@
+<div class="row-fluid widgetHeader">
+  
+  <div class="span6">
+    <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+  </div>
+  
+  <div class="span6">
+    <div class="rightOptions">
+      <input class="viewDate" />
+    </div>
+  </div>
+  
+</div>
+
+<div class="well">
+
+<div class=" departamentos_list">
+  
+</div>
+
+</div>
+
+
+<div class="action_footer">
+  <div class="modal-footer">
+    <a class="btn btn-danger cancel">Regresar</a>
+  </div>
+</div>

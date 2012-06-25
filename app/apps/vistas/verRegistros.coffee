@@ -22,25 +22,39 @@ class VerRegistros extends Spine.Controller
     "click .btn_departamento" : "onClickDepartamento"
 
   setBindings: ->
-    Registro.bind 'query_success' , @onRegistroLoaded
+    #Hack to use REST to load Data for Free Edition Limits
  
   preset: ->
-    Registro.destroyAll()
-    Registro.query( today: true )
-
+    date = new Date()
+    @reloadRegistros(date)
+    
   constructor: ->
     super
     @preset()
     @render()
     @setBindings()
    
+  reloadRegistros: (date) ->
+    Registro.destroyAll()
+    data=
+      restRoute: "Registros"
+      restMethod: "POST"
+      restData: JSON.stringify( { year: date.getFullYear() , month: date.getMonth() + 1 , day: date.getDate()  } )
+      class: Registro
+
+    Spine.trigger "show_lightbox" , "rest" , data  , @onRegistroLoaded
+
   render: ->
     @html require("views/apps/vistas/verRegistros/layout")(VerRegistros)
     pickers =  @el.find('.viewDate').datepicker({autoclose: true})
     #@viewDate.datepicker({autoclose: true})
     #pickers.on("change",@onInputChange)
 
-  onRegistroLoaded: =>
+  onRegistroLoaded: (success , results) =>
+    #Hack to use REST to load Data for Free Edition Limits
+    
+    Registro.refreshFromRest(results.results[0])
+    
     departamentos = Registro.uniqueDepartamentos()
     @departamentos_list.html require("views/apps/vistas/verRegistros/departamento")(departamentos)
     @registros_list.html require("views/apps/vistas/verRegistros/item")(Registro.all())

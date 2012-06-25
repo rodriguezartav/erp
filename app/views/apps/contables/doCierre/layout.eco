@@ -1,0 +1,34 @@
+
+
+<div class="row-fluid widgetHeader">
+  <h1><i class="<%= @app.icon %>"></i> <%= @app.label %></h2>
+</div>
+
+
+<div class="content well">
+  
+ <table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+        <th>Tipo</th>
+        <th>Monto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for index,value of @cierre:  %>
+      <tr>
+        <td><%= index %></td>
+        <td><%= value.toMoney() %></td>
+      </tr>
+      <% end  %>
+    </tbody>
+  </table>
+
+ 
+</div>
+
+<div class="action_footer">
+    <div class="modal-footer">
+      <a class="btn btn-danger cancel">Regresar</a>
+    </div>
+</div>

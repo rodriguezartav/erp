@@ -8,6 +8,11 @@ class Registro extends Spine.Model
  
   @extend Spine.Model.Salesforce
 
+  @refreshFromRest: (raw_results) =>
+    results = JSON.stringify(raw_results)  
+    results = @parseSalesforceJSON(results)
+    @refresh(results)        
+
   @uniqueDepartamentos: ->
     departamentos = []
     for registro in Registro.all()
