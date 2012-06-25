@@ -47,7 +47,7 @@ class Registro extends Spine.Model
       allowedTypes = []
       allowedTypes = ['saldos por pagar' , 'inventarios valor' , 'inventarios unidad' , 'cobro']  if Spine.session.hasPerfiles([ "Tesoreria" ])      
       allowedTypes = ['ventas contado','inventarios unidad'] if Spine.session.hasPerfiles([ "Ejecutivo Ventas" ])
-      allowedTypes = ['ventas credito','inventarios unidad'] if Spine.session.hasPerfiles([ "Encargado de Ventas" ])
+      allowedTypes = ['ventas credito', 'ventas contado' , 'inventarios unidad'] if Spine.session.hasPerfiles([ "Encargado de Ventas" ])
       allowedTypes = ['saldos' , 'cobro' , 'ventas credito'] if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
       return allowedTypes
     
