@@ -1,4 +1,4 @@
-<div class="span3" style="width:25%;">
+<div class="span3" style="width:22%;">
   <div class="thumbnail" data-departamento="<%= @Departamento %>">
 
   <h4><%= @Departamento.capitalize() %></h4>
@@ -14,12 +14,13 @@
     <% for tipo in @Tipos: %>
       <% total += tipo.Monto  %>
       <tr>
-       
+        <td><a href="#" class="badge badge-info popable" rel="popover" title="A Title" data-content="<%- require("views/apps/vistas/verRegistroResumen/popOver")(tipo.Registros)  %>">i</a> </td>
         <td><%= tipo.Tipo.capitalize() %></td>
         <td><%= tipo.Monto.toMoney() %></td>
       </tr>
     <% end %>
     <tr>
+    <td></td>
       <td>Total</td>
       <td><%= total.toMoney() %></td>
     </tr>
