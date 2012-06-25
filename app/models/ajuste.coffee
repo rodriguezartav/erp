@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class Ajuste extends Spine.Model
-  @configure "Ajuste" , "Cuenta" , "Monto" , "Descripcion" , "Tipo"
+  @configure "Ajuste" , "Cuenta" , "Monto" , "Descripcion" , "Tipo" , "Fecha"
   @extend Spine.Model.Salesforce
 
   @queryFilter: (options) =>

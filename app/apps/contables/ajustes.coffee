@@ -49,6 +49,8 @@ class Ajustes extends Spine.Controller
     ".lblDebito"       : "lblDebito"
     ".lblBalance"      : "lblBalance"
     ".detalle"         : "detalles"
+    ".viewDate"        : "viewDate"
+    
     
   events:
     "click .cancel"    :  "reset"
@@ -60,7 +62,6 @@ class Ajustes extends Spine.Controller
     Ajuste.bind "updateTotal" , @updateTotal
     Ajuste.bind "removeItem" , @removeItem
 
-    
   resetBinding: =>
     Cuenta.unbind "query_success" , @onLoadCuenta
     Cuenta.unbind "selected" , @addItem
@@ -75,6 +76,9 @@ class Ajustes extends Spine.Controller
     @balance = 0
     @html require("views/apps/contables/ajustes/layout")(@constructor)
     Cuenta.query({ clases: "'Gasto','Activo','Costo de Venta','Patrimonio','Ingreso'" } )
+    
+    @viewDate.val new Date().to_salesforce()
+    pickers =  @viewDate.datepicker({autoclose: true})
     @setBinding()
 
   onLoadCuenta: =>
@@ -98,7 +102,7 @@ class Ajustes extends Spine.Controller
   
   highlightCuentas: (item) =>
     return item.Codigo + ' ' + item.Name
-  
+
   addItem: (cuentaRaw)  =>
     cuenta = JSON.parse cuentaRaw
     exists = @itemToControllerMap[cuenta.id]
@@ -127,8 +131,10 @@ class Ajustes extends Spine.Controller
     
   send: (e) =>
     Ajuste.destroyAll()
+    date = new Date @viewDate.val()
     @validationErrors.push "Ingrese al menos un ajuste" if @ajustes.length == 0
     @validationErrors.push "El balance del ajuste debe ser 0.00" if @balance != 0
+
     monto = 0
     tipo = ''
     for item in @ajustes
@@ -139,7 +145,8 @@ class Ajustes extends Spine.Controller
       else 
         monto = item.ajuste.Debito
         tipo = "Debito"
-      Ajuste.create Cuenta: item.ajuste.Cuenta.id , Tipo: tipo , Monto: monto , Descripcion: item.ajuste.Detalle
+      
+      Ajuste.create Cuenta: item.ajuste.Cuenta.id , Tipo: tipo , Monto: monto , Descripcion: item.ajuste.Detalle , Fecha: date
 
     data =
       class: Ajuste

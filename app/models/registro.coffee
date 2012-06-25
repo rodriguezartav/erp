@@ -33,7 +33,7 @@ class Registro extends Spine.Model
     return tipos
 
   @queryFilter: (options) =>
-    allowedTypes =  @getFilterByProfile()
+    allowedTypes =  ''#@getFilterByProfile()
   
     return "" if !options
     filter = ""
@@ -43,11 +43,11 @@ class Registro extends Spine.Model
     filter = @queryOrderAddCondition(" order by Fecha__c "                , filter)
     
     
-  @getFilterByProfile: ->
+  @getAllowedDepartamentos: ->
       allowedTypes = ""
       allowedTypes = "'saldos por pagar' , 'inventarios valor' , 'inventarios unidad' , 'cobro'"  if Spine.session.hasPerfiles([ "Tesoreria" ])      
-      allowedTypes = "'ventas contado'" if Spine.session.hasPerfiles([ "Ejecutivo Ventas" ])
-      allowedTypes = "'ventas credito'" if Spine.session.hasPerfiles([ "Encargado de Ventas" ])
+      allowedTypes = "'ventas contado','inventarios unidad'" if Spine.session.hasPerfiles([ "Ejecutivo Ventas" ])
+      allowedTypes = "'ventas credito','inventarios unidad'" if Spine.session.hasPerfiles([ "Encargado de Ventas" ])
       allowedTypes = "'saldos' , 'cobro' , 'ventas credito'" if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
       return allowedTypes
     

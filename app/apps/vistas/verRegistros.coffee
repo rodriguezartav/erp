@@ -39,7 +39,7 @@ class VerRegistros extends Spine.Controller
     data=
       restRoute: "Registros"
       restMethod: "POST"
-      restData: JSON.stringify( { year: date.getFullYear() , month: date.getMonth() + 1 , day: date.getDate()  } )
+      restData: JSON.stringify( { year: date.getFullYear() , month: date.getMonth() + 1 , day: date.getDate() , departamentos: Registro.getAllowedDepartamentos()  } )
       class: Registro
 
     Spine.trigger "show_lightbox" , "rest" , data  , @onRegistroLoaded
