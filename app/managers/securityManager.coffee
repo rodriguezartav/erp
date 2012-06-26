@@ -27,6 +27,8 @@ VerRegistros = require("apps/vistas/verRegistros")
 VerRegistrosResumen = require("apps/vistas/verRegistrosResumen")
 
 
+VerCierreDiario = require("apps/vistas/verCierreDiario")
+
 Ajustes  = require("apps/contables/ajustes")
 DoCierre = require("apps/contables/doCierre")
 
@@ -67,7 +69,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ DoCierre, VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota , AjustarCredito , TomasInventario , EmitirRecibo, Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas , Reposiciones  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
+    apps = [ VerCierreDiario , DoCierre, VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota , AjustarCredito , TomasInventario , EmitirRecibo, Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas , Reposiciones  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , FacturasProveedor , PagosProveedor , CuentasPorPagarEntrega , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros ]
     @profiles["Presidencia"] =  [ DoCierre, AprobarNota , NotaCreditoProveedor  , AjustarNegociacion , PagosAnular ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacionGerencia   , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros ]
