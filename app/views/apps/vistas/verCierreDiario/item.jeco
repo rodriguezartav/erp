@@ -1,1 +1,4 @@
-<%= @Monto %>
+<tr>
+<td><%= @index %></td>
+<td><%= @value.toMoney() %></td>
+</tr>

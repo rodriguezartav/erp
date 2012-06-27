@@ -6,7 +6,7 @@ class VerCierreDiario extends Spine.Controller
   className: "row-fluid verCierreDiario"
   
   @departamento = "Vistas"
-  @label = "Cierre Diario"
+  @label = "Ver Cierre Diario"
   @icon = "icon-eye-open"
 
   elements:
@@ -15,6 +15,7 @@ class VerCierreDiario extends Spine.Controller
 
   events:
     "click .cancel" : "reset"
+    
 
   setBindings: ->
   
@@ -30,12 +31,12 @@ class VerCierreDiario extends Spine.Controller
     @setBindings()
 
   reloadCierres: (date) ->
-    Registro.destroyAll()
+    Cierre.destroyAll()
     data=
       restRoute: "CierreDiario"
       restMethod: "GET"
-      restData: {}
-      class: Registro
+      restData: date.to_salesforce_date()
+      class: Cierre
 
     Spine.trigger "show_lightbox" , "rest" , data  , @onCierreLoaded
 
@@ -50,10 +51,16 @@ class VerCierreDiario extends Spine.Controller
     date = new Date(target.val())    
     @reloadCierres(date);
 
-  onRegistroLoaded: (success , results) =>
+  onCierreLoaded: (success , results) =>
     #Hack to use REST to load Data for Free Edition Limits
-    console.log results.results[0]
-    @cierres_list.html require("views/apps/vistas/verCierreDiario/item")({}) 
+    parsed = JSON.parse results.results[0]?.Data__c
+    values = []
+    if parsed
+      for index,value of parsed
+        values.push  index: index , value: value
+      @cierres_list.html require("views/apps/vistas/verCierreDiario/item")(values) 
+    else
+      @cierres_list.html "<tr><td>No hay cierres para esta fecha</td></tr>"
     
 
   reset: ->

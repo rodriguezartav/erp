@@ -7,6 +7,8 @@ class Cuenta extends Spine.Model
   @queryFilter: (options) =>
     return "" if !options
     filter = "where Clase__c IN (#{options.clases})"
+    filter = @queryOrderAddCondition(" order by Codigo__c "                , filter)
+    
 
  
 

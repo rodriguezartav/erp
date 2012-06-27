@@ -72,11 +72,8 @@ class VerRegistrosResumen extends Spine.Controller
         content4.append require("views/apps/vistas/verRegistroResumen/departamento")(Departamento: departamentoName , Tipos: departamentoGroup)
 
     @departamentos_list.html content1
-    @departamentos_list.append "<hr/>"
     @departamentos_list.append content2
-    @departamentos_list.append "<hr/>"
     @departamentos_list.append content3
-    @departamentos_list.append "<hr/>"
     @departamentos_list.append content4
     $('.popable').popover()
 

@@ -4,7 +4,7 @@
   <table class="table table-striped table-bordered table-condensed">
     <thead>
       <tr>
-        <th>Tipo</th>
+        <th class="span2">Tipo</th>
         <th>Monto</th>
       </tr>
     </thead>
@@ -12,8 +12,7 @@
     <% total = 0 %>
     <% for tipo in @Tipos: %>
       <% total += tipo.Monto  %>
-      <tr>
-       
+      <tr> 
         <td><%= tipo.Tipo.capitalize() %></td>
         <td><%= tipo.Monto.toMoney() %></td>
       </tr>
@@ -22,8 +21,6 @@
       <td>Total</td>
       <td><%= total.toMoney() %></td>
     </tr>
-
-    
     </tbody>
   </table>
 </div>
