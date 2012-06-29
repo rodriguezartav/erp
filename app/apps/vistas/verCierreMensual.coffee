@@ -1,12 +1,12 @@
 Spine = require('spine')
 Cierre = require("models/cierre")
 
-class VerCierreDiario extends Spine.Controller
+class VerCierreMensual extends Spine.Controller
   
-  className: "row-fluid verCierreDiario"
+  className: "row-fluid VerCierreMensual"
   
   @departamento = "Vistas"
-  @label = "Ver Cierre Diario"
+  @label = "Ver Cierre Mensual"
   @icon = "icon-eye-open"
 
   elements:
@@ -33,15 +33,15 @@ class VerCierreDiario extends Spine.Controller
   reloadCierres: (date) ->
     Cierre.destroyAll()
     data=
-      restRoute: "CierreDiario"
+      restRoute: "Cierre"
       restMethod: "GET"
-      restData: date.to_salesforce_date()
+      restData: "#{date.getMonth()}-#{date.getFullYear()}"
       class: Cierre
 
     Spine.trigger "show_lightbox" , "rest" , data  , @onCierreLoaded
 
   render: ->
-    @html require("views/apps/vistas/verCierreDiario/layout")(VerCierreDiario)
+    @html require("views/apps/vistas/verCierreDiario/layout")(VerCierreMensual)
     @viewDate.val new Date().to_salesforce()
     pickers =  @viewDate.datepicker({autoclose: true})
     pickers.on("change",@onDateChange)
@@ -58,6 +58,11 @@ class VerCierreDiario extends Spine.Controller
     if parsed
       for index,value of parsed
         values.push  index: index , value: value
+        
+        values.sort (a,b) ->
+          return a.index.localeCompare(b.index)
+          
+        
       @cierres_list.html require("views/apps/vistas/verCierreDiario/item")(values) 
     else
       @cierres_list.html "<tr><td>No hay cierres para esta fecha</td></tr>"
@@ -68,4 +73,4 @@ class VerCierreDiario extends Spine.Controller
     @resetBindings()
     @navigate "/apps"
 
-module.exports = VerCierreDiario
+module.exports = VerCierreMensual
