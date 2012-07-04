@@ -15,7 +15,6 @@ class VerCierreDiario extends Spine.Controller
 
   events:
     "click .cancel" : "reset"
-    
 
   setBindings: ->
   

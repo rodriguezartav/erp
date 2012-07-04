@@ -12,14 +12,15 @@ class VerRegistros extends Spine.Controller
 
 
   elements:
-    ".registros_list"       : "registros_list"
-    ".departamentos_list"       : "departamentos_list"
-    ".viewDate"             : "viewDate"
-
+    ".registros_list"       :   "registros_list"
+    ".departamentos_list"   :   "departamentos_list"
+    ".viewDate"             :   "viewDate"
+    ".totalVal"             :   "totalVal"
     
   events:
     "click .cancel" : "reset"
     "click .btn_departamento" : "onClickDepartamento"
+    "click .doTotal"   : "onDoTotal"
 
   setBindings: ->
     #Hack to use REST to load Data for Free Edition Limits
@@ -66,10 +67,22 @@ class VerRegistros extends Spine.Controller
     btn = target.parent() 
     if btn.hasClass "active"
       btn.removeClass "active"
-      items.hide()
+      items.addClass "hidden"
     else
       btn.addClass "active"
-      items.show()
+      items.removeClass "hidden"
+  
+  onDoTotal: =>
+    items = @el.find("tr")
+    total = 0
+    for item in items
+      item = $(item)
+      if item.hasClass("hidden") == false
+        it = item.find ".total"
+        value = parseFloat( it.attr("data-monto") )
+        console.log value
+        total += value if value
+    @totalVal.html total.toMoney()
 
   reset: ->
     Registro.destroyAll()

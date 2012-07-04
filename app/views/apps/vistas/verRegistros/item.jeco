@@ -8,5 +8,5 @@ Spine = require('spine')
   <td><%= @Departamento.capitalize() %></td>
   <td><%= @Tipo.capitalize() %></td>
   <td><%= @Descripcion %></td>
-  <td><%= @Monto.toMoney() %></td>
+  <td data-monto="<%= @Monto %>" class="total"><%= @Monto.toMoney() %></td>
 </tr>

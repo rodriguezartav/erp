@@ -1,5 +1,9 @@
 <div class="widgetHeader">
   <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+  
+  <div class="totalVal pull-right"></div>
+  <a class="btn btn-info  pull-right doTotal">Total</a>
+  
 </div>
 
 <div class="well">

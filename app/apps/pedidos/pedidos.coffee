@@ -48,10 +48,9 @@ class Items extends Spine.Controller
     precios.push parseFloat(target.attr("data-precio1"))
     precios.push parseFloat(target.attr("data-precio2"))
     precios.push parseFloat(target.attr("data-precio3"))
-    precios.push parseFloat(target.attr("data-precio4"))
     currentPrecio = parseInt(target.attr("data-current-precio")) 
     currentPrecio +=1
-    currentPrecio = 1 if currentPrecio > 4
+    currentPrecio = 1 if currentPrecio > 3
     
     @pedidoItem.Precio = precios[currentPrecio-1]
     target.attr "data-current-precio" , currentPrecio
