@@ -29,7 +29,6 @@ Spine.Controller.ViewDelegation =
         @undelegateEvents()
         @release()
         @customReset?()
-        @navigate "/apps"
 
       beforeSend: (object) ->
         return true

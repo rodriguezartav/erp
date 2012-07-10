@@ -12,6 +12,7 @@ class VerCierreDiario extends Spine.Controller
   elements:
     ".cierres_list"       : "cierres_list"
     ".viewDate"             : "viewDate"
+    ".fecha"               : "fecha"
 
   events:
     "click .cancel" : "reset"
@@ -52,6 +53,8 @@ class VerCierreDiario extends Spine.Controller
 
   onCierreLoaded: (success , results) =>
     #Hack to use REST to load Data for Free Edition Limits
+    fecha = results.results[0]?.Fecha__c
+    @fecha.html = fecha
     parsed = JSON.parse results.results[0]?.Data__c
     values = []
     if parsed
@@ -60,7 +63,6 @@ class VerCierreDiario extends Spine.Controller
       @cierres_list.html require("views/apps/vistas/verCierreDiario/item")(values) 
     else
       @cierres_list.html "<tr><td>No hay cierres para esta fecha</td></tr>"
-    
 
   reset: ->
     Cierre.destroyAll()

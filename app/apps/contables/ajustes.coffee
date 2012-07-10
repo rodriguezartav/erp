@@ -75,7 +75,7 @@ class Ajustes extends Spine.Controller
     @itemToControllerMap = {}
     @balance = 0
     @html require("views/apps/contables/ajustes/layout")(@constructor)
-    Cuenta.query({ clases: "'Gasto','Activo','Costo de Venta','Patrimonio','Ingreso'" } )
+    Cuenta.query({ clases: "'Pasivo','Gasto','Activo','Costo de Venta','Patrimonio','Ingreso'" } )
     
     @viewDate.val new Date().to_salesforce()
     pickers =  @viewDate.datepicker({autoclose: true})
