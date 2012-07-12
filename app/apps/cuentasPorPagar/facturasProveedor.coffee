@@ -96,5 +96,7 @@ class FacturasProveedor extends Spine.Controller
     Cuenta.unbind "query_success" , @onLoadCuenta
     Proveedor.unbind "current_set" , @onProveedorSet
     @cuentaPorPagar.destroy() if @cuentaPorPagar
+    @navigate "/apps"
+    
 
 module.exports = FacturasProveedor

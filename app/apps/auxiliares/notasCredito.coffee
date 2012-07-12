@@ -56,6 +56,8 @@ class NotasCredito extends Spine.Controller
     Cliente.reset_current()
     @clientes.reset()
     @documento.destroy() if @documento
+    @navigate "/apps"
+    
     
 
 module.exports = NotasCredito

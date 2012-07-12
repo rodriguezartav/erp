@@ -132,6 +132,8 @@ class Compras extends Spine.Controller
     for items in @movimientos
       items?.reset()
     @documento.destroy()
+    @navigate "/apps"
+    
     
   
 module.exports = Compras

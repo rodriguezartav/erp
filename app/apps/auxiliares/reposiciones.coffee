@@ -134,6 +134,8 @@ class Reposiciones extends Spine.Controller
       items?.reset()
     @documento.destroy()
     @resetBindings()
+    @navigate "/apps"
+    
   
 
 module.exports = Reposiciones

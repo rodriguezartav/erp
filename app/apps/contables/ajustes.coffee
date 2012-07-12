@@ -161,6 +161,7 @@ class Ajustes extends Spine.Controller
     for items in @items
       item?.reset()
     @resetBinding()
+    @navigate "/apps"
     
   
 

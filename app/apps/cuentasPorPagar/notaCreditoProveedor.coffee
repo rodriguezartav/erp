@@ -96,5 +96,7 @@ class NotaCreditoProveedor extends Spine.Controller
   customReset: ->
     Proveedor.reset_current()
     @cuentaPorPagar.destroy() if @cuentaPorPagar
+    @navigate "/apps"
+    
 
 module.exports = NotaCreditoProveedor

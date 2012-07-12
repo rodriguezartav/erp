@@ -155,6 +155,7 @@ class Devoluciones extends Spine.Controller
     Movimiento.unbind "query_success" , @onLoadMovimientos
     Movimiento.unbind "change update" , @onMovimientoChange
     Cliente.unbind 'current_set' , @onClienteSet
+    @navigate "/apps"
     
 
 module.exports = Devoluciones

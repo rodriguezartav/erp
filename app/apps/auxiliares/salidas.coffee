@@ -120,6 +120,7 @@ class Salidas extends Spine.Controller
       items?.reset()
     @documento.destroy()
     @resetBindings()
+    @navigate "/apps"
   
 
 module.exports = Salidas

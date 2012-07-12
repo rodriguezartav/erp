@@ -10,7 +10,7 @@ class NotificationManager
 
   showNotification: (title,message) =>
     notificationObj =  {title: title,message:message}
-    notificacion = window?.webkitNotifications?.createNotification "/images/logo_icon.png" , notificationObj.title , notificationObj.message
+    notificacion = window?.webkitNotifications?.createNotification "http://rodcoerp.herokuapp.com/images/logo_icon.png" , notificationObj.title , notificationObj.message
     notificacion.show()
 
 module.exports = NotificationManager

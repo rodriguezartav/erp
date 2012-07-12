@@ -143,5 +143,7 @@ class PagosProveedor extends Spine.Controller
     @proveedores.reset()
     Proveedor.reset_current()
     CuentaPorPagar.destroyAll()
+    @navigate "/apps"
+    
 
 module.exports = PagosProveedor

@@ -157,6 +157,8 @@ class PedidosEspecial extends Spine.Controller
     Cliente.reset()
     @resetBindings()
     @pedido.destroy()
+    @navigate "/apps"
+    
     
   
 module.exports = PedidosEspecial
