@@ -82,7 +82,7 @@ class SecurityManager
     @profiles["Encargado de Ventas"] = [ Pedidos  , FacturasImpresion , FacturasAnular , TomasInventario , VerRegistrosResumen , VerRegistros ]
     @profiles["Ejecutivo Credito"] = [ AjustarCredito , PagosAnular , Entradas,Salidas,Reposiciones,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion ,VerRegistrosResumen , VerRegistros ]
     @profiles["Vendedor"] = [ Pedidos ]
-    @profiles["Contabilidad"] = [ Ajustes , VerCierreMensual ,  VerCierreDiario , DoCierreDiario , DoCierreMensual ,CuentasPorPagarFlujo , VerRegistrosResumen ]
+    @profiles["Contabilidad"] = [ Ajustes , VerCierreMensual ,  VerCierreDiario , DoCierreDiario , DoCierreMensual ,CuentasPorPagarFlujo , VerRegistros ,  VerRegistrosResumen ]
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>

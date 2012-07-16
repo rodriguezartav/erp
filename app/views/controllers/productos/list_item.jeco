@@ -3,11 +3,8 @@
   <div class="thumbnail <% if @InventarioActual == 0: %> disable  <% end %> ">
   
     <a class="popable" rel="popover" data-content="<ul><li>Inventario <%= @InventarioActual.toMoney() %></li><li>Precio <%= @Precio_Distribuidor.toMoney() %></li><li>Descuento <%= @DescuentoMaximo %></li><ul>" data-original-title="<%= @Name.capitalize() %>">
-  
-  
-  
-      <%= @Name.capitalize() %>
-
+      
+      <%= @Name.capitalize() %> - G: <%= @Grupo  %>
       </a>
   
   </div>

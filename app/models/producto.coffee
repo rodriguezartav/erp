@@ -51,7 +51,6 @@ class Producto extends Spine.Model
     else if @Cantidad > @Minimo
       color = "brown"
 
-  
     return color
 
   @map_by_familia: (productos) ->

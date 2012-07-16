@@ -56,8 +56,24 @@ class Productos  extends Spine.Controller
     return false if Producto.locked 
     @hidePopOvers()
     txt = $(e.target).val() if e
-    result = Producto.filter txt
+    result = Producto.filter txt , @filterFunction
+    result.sort (a,b) ->
+      res = 0
+      return 0 if a.Grupo == b.Grupo
+      return if a.Grupo > b.Grupo then -1 else 1
+      
     @render result
+
+  filterFunction: (query,item) =>
+    return false if item.Activo == false
+    words = query.split(" ")
+    for word in words
+      return false if item.Name.indexOf(word) == -1
+    
+    return true
+
+
+
 
   reset: =>
     Producto.unbind "current_reset" , @productoSet
