@@ -56,7 +56,7 @@ class Productos  extends Spine.Controller
     return false if Producto.locked 
     @hidePopOvers()
     txt = $(e.target).val() if e
-    result = Producto.filter txt , @filterFunction
+    result = Producto.filter txt
     result.sort (a,b) ->
       res = 0
       return 0 if a.Grupo == b.Grupo
