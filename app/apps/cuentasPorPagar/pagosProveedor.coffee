@@ -106,16 +106,18 @@ class PagosProveedor extends Spine.Controller
   customValidation: =>
     @validationErrors.push "Ingrese al menos un pago" if @saldos.length == 0
     
-    
   beforeSend: (object) ->
     object.Items = []
+    total = 0
     for saldo in @saldos
       saldo =  $(saldo)
       monto = parseFloat(saldo.attr("data-saldo"))
       documento = saldo.attr("data-id")
       if monto > 0 || monto < 0
+        total += monto
         object.Documentos.push documento
         object.Montos.push monto
+    throw "El monto del pago debe ser mayor que 0 y es #{total}" if total < 0
   
   send: (e) =>
     @inputs_to_validate.push @cuentas   
