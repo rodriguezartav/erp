@@ -112,9 +112,11 @@ class Productos  extends Spine.Controller
   sortFunction: (productos) =>
     productos.sort (a,b) ->
       res = 0
-      return 0 if a.Grupo == b.Grupo
-      return if a.Grupo > b.Grupo then -1 else 1
+      return 0 if a.Name == b.Name
+      return if a.Name < b.Name then -1 else 1
     return productos
+    
+
     
   filterFunction: (query,item) =>
     return false if item.Activo == false
