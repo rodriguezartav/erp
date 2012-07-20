@@ -7,7 +7,7 @@ class tomasInventario extends Spine.Controller
   
   @departamento = "Administracion"
   @label = "Toma Inventarios"
-  @icon = "icon-remove"
+  @icon = "icon-edit"
 
 
   elements:

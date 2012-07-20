@@ -1,0 +1,116 @@
+.productosToolbar{
+
+  position: fixed;
+  top: 59px;
+  left: 0px;
+  right: 0px;
+  z-index: 1100;
+  background-color: #fff;
+  max-height: 250px;
+  overflow-y: hidden;
+  @shadow: 0 1px 4px rgba(33,33,33,.2);
+  .box-shadow(@shadow);
+ 
+  
+  &.closed{
+    max-height: 30px;  
+    .box-shadow(0 0 0);
+  }
+
+  .container{
+    position: relative;
+    
+    .options{
+      position: absolute;
+      right: 0px;
+      top: 5px;
+      i{
+        display: inline-block;
+        margin-right: 10px;
+        &:hover{
+          color: lighten(@red,9%);
+        }
+        &.active{
+          color: @red;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .familias_list{
+    margin: 0px;
+    padding-right: 20px;
+    height: 30px;
+    
+    overflow: hidden;
+    .badge{
+      cursor: pointer;
+      margin: 5px;
+      background-color: #efefef;
+      color: @red;
+      padding: 4px 12px 4px;
+      text-shadow: 0 0 0;
+      font-size: 13px;
+      &:hover,&.active{
+        background-color: @red;
+        color: #efefef;
+      }
+    }
+  }
+
+  .grupos_list {
+    background-color: #fff;
+    max-height: 200px;
+    overflow-y: scroll;
+    margin: 0px;
+    margin-top: 10px;
+    overflow-x: hidden;
+    .badge{
+      text-shadow: 0 0 0;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+      .border-radius(15px 0px 15px 15px);
+      background-color: #efefef;
+      color: @red;
+      padding: 9px;
+      border: 1px dotted #fff;
+      &:hover{
+        border: 1px solid @red;
+      }
+      &.active{
+        background-color: @red;
+        color: #efefef;
+      }
+    }
+  }
+
+  .productosListWrapper{
+    height: 190px;
+    overflow-y: scroll;
+  }
+  table{
+    margin-top: 10px;
+    background-color: #fff;
+
+  }
+  
+  .productos_list {
+
+
+   .name{
+      cursor: pointer;
+      width: 80%;
+      font-size: 17px;
+      color: #333;
+      font-weight: 200;
+   }
+   :not(.name){
+    text-align: center;
+    font-size: 17px;
+    font-weight: 100;
+    
+   }
+  }
+}  

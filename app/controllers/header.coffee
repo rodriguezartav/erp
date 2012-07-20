@@ -1,5 +1,4 @@
 Spine = require('spine')
-Productos = require("controllers/productos")
 Saldo = require("models/socketModels/saldo")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
@@ -23,7 +22,6 @@ class Header  extends Spine.Controller
     @html require('views/controllers/header/layout')
     $('.dropdown-toggle').dropdown()
     
-    new Productos( el: @el )
     
     Spine.bind "query_start",=>
       @loader.addClass "animate"

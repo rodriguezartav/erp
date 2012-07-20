@@ -8,6 +8,7 @@ SocketManager = require("managers/socketManager")
 StatManager = require("managers/statManager")
 
 Header = require("controllers/header")
+Productos = require("controllers/productos")
 Footer = require("controllers/footer")
 
 Lightbox = require("controllers/lightbox")
@@ -25,15 +26,17 @@ class App extends Spine.Controller
   constructor: ->
     super
     
-    StatManager.registerManager(@options.statApi)
+    #StatManager.registerManager(@options.statApi)
 
     Spine.server = @options.server
     Spine.pusherKey = @options.pusherKey
 
     new Header(el: $("header"))
+    new Productos(el: $(".productosToolbar"))
+    
+    #new Footer(el: $("footer"))
     new Lightbox(el: $(".lightboxCanvas"))
 
- 
     Spine.security       =  new SecurityManager()
     Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()

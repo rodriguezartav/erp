@@ -8,7 +8,7 @@ class VerRegistros extends Spine.Controller
   
   @departamento = "Vistas"
   @label = "Registros de Hoy"
-  @icon = "icon-eye-open"
+  @icon = "icon-list"
 
 
   elements:

@@ -21,7 +21,6 @@ class Footer  extends Spine.Controller
     $('.dropdown-toggle').dropdown()
     @loader.hide()
     
-    new Productos( el: @el )
     
     Spine.bind "query_start",=>
       @loader.show()

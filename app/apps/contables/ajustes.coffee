@@ -38,7 +38,7 @@ class Ajustes extends Spine.Controller
 
   @departamento = "Contabilidad"
   @label = "Ajustes Contables"
-  @icon = "icon-refresh"
+  @icon = "icon-copy"
 
   className: "row-fluid"
 

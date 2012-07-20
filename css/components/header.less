@@ -1,115 +1,95 @@
 header{
 
  .navbar-inner{ 
-    .gradientBar(#222, #444);
+  padding: 4px 0px;
+    background-image: url("/images/furley_bg.png");
   }
 
-  .status_button_label{
-    color: #fff;
-  }
-
-  .navbar .brand {
-    padding-top: 0px;
-    padding-bottom: 0px;
-    background-image: url("/images/logo_horizontal_white_on_black.png");
-    height:50px;
-    width: 80px;
-  }
-
-  .predefined_options{
-    padding-top: 10px;
-    font-size: 13px;
-  }
-
-  .header_menu{
-    >li{
-      padding-top: 5px;
+  .headerWrapper{
+    text-align: center;
+    input{
+      margin-top: 13px;
+      color: @blueDark;
+      margin-top: 5px;
+      background-color: #fff;
+      display: inline-block;
+      padding: 8px 13px;
+      .border-radius(25px);
     }
-  }
-  .status_button{
-    height: 45px;
   }
   
-  input{
-    margin-top: 8px;
-    height: 19px;
+  
+  .productIcon{
+    font-size: 25px;
+    vertical-align: middle;
+    color: #666;
+    margin-right: 5%;
+  }
+  
+  .navbar .brand {
+    padding: 0px;
+    font-size: 50px;
     color: #fff;
-  }
-
-  .btn_icon{    
-
+    text-shadow: 0 1px 1px rgba(33,33,33,.65);
+    vertical-align: baseline;
     i{
-      font-size: 15px;
+      vertical-align: top;
+      font-size: 20px;
+      color: @red;
     }
-
-    &.rotate.animate{
-      i{
-        -webkit-animation-name: rotateThis;
-        -webkit-animation-duration:2s;
-        -webkit-animation-iteration-count:infinite;
-        -webkit-animation-timing-function:linear;
-        color: @orange;
-      }
+    .first{
+      color: @red;
+      font-size: 60px;
+      font-weight: 800;
+      line-height: 30px;
     }
-
-    &.jump.animate{
-      i{
-        -webkit-animation-name: jumpThis;
-        -webkit-animation-duration:0.5s;
-        -webkit-animation-iteration-count:infinite;
-        -webkit-animation-timing-function: ease-in-out ;
-        color: @orange;
-      }
-    }
-
-    @-webkit-keyframes jumpThis {
-    from {-webkit-transform:scale(1) rotate(0deg);}
-    to {-webkit-transform:scale(1.2) rotate(2deg);}
-    }
-
-    @-webkit-keyframes rotateThis {
-      from {-webkit-transform: scale(1.2) rotate(0deg);}
-      to {-webkit-transform: scale(1.2) rotate(360deg);}
+    .version{
+      font-size: 12px;
+      color: #999;
     }
   }
 
-  .productos_list {
-    max-height: 390px;
-    overflow-y: scroll;
-    padding-top: 12px;
-    .buttonBackground(@btnBackground, @btnBackgroundHighlight);
-    border-bottom-color: darken(@btnBorder, 10%);
-    .border-radius(0px 0px 8px 8px);
-    @shadow: 0 1px 4px rgba(33,33,33,.2);
-    .box-shadow(@shadow);
-    border-top: 3px solid @blue;
-    border: 1px solid @orange;
-
-    .thumbnail {
-      cursor: pointer;
-      height: 42px;
-      background-color: #fff;
-      .box-shadow(@shadow);
-      padding: 9px;
+  .actionButtons{
+    padding-top: 10px;
+    a{
+      color: #999;
+      display: inline-block;
+      margin: 5px 7px;
       &:hover{
-        .buttonBackground(@btnWarningBackground, @btnWarningBackgroundHighlight);
-        a{
-          color: @black;
-          text-decoration: none;
-        }
+        color: @red;
+        text-decoration: none;
       }
-      a{
-        text-transform: capitalize;
-        font-size: 15px;
-        font-weight: 200;
-        color: @black;
-      }
-      
-      &.disable{
-        a{
-          color: #999;
-        }
+      i{
+        font-size: 20px; 
       }
     }
   }
+
+  .account{
+    padding-top: 5px;
+    margin: 10px;
+    a:hover{
+      text-decoration: none;
+      color: @red;
+    }
+    h4{
+      color: #999;
+      vertical-align: top;
+      &:hover{
+        color: @red;
+        text-decoration: none;
+      }
+      i{
+       vertical-align: top;
+       padding: right: 5px;
+       font-size: 20px; 
+       color: #999;
+      }
+
+    }
+  }
+
+
+
+ 
 }

@@ -3,10 +3,12 @@ html {
 }
 
 body {
-  height: 92%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-image: url("/images/furley_bg.png");
-  padding-top: 70px;
+  padding-top: 115px;
+  &.noScroll{
+    overflow: hidden; 
+    height: 100%
+  }
 }
 
 .app{
@@ -15,6 +17,10 @@ body {
 
 a {
   cursor: pointer;
+}
+
+input.span1{
+  width: 50px;
 }
 
 .validatable{
@@ -116,13 +122,8 @@ td.center{
   position: relative;
   height: 40px;
   line-height: 40px;
-  background: #E9E9E9;
-  background: -moz-linear-gradient(top, #FAFAFA 0%, #E9E9E9 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FAFAFA), color-stop(100%,#E9E9E9));
-  background: -webkit-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
-  background: -o-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
-  background: -ms-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
-  background: linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%);
+  background-image: url("/images/furley_bg.png");
+
   border: 1px solid #D5D5D5;
   -webkit-border-top-left-radius: 4px;
   -webkit-border-top-right-radius: 4px;
@@ -143,7 +144,7 @@ td.center{
   border: 1px solid #D5D5D5;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  border-radius: 5px;
+  border-radius: 0px 5px 5px 0px;
   border-image: initial;
 }
 

@@ -1,4 +1,3 @@
-<li data-state="close" data-name="<%= @name %>" class="nav-header">
-  <i class=" icon-chevron-down"></i>
-  <%= @name %>
+<li  data-name="<%= @name %> " class="nav-header header thumbnail">
+ <h4><%= @name %></h4>
 </li>

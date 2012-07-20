@@ -7,7 +7,7 @@ class DoCierreDiario extends Spine.Controller
   
   @departamento = "Contabilidad"
   @label = "Cierre Diario"
-  @icon = "icon-eye-open"
+  @icon = "icon-money"
 
   elements:
     ".departamentos_list"       : "departamentos_list"

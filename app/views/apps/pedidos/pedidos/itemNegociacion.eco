@@ -5,9 +5,9 @@
 
 <td><h4><%= @pedidoItem.Precio.toMoney() %></h4></td>
 
-<td><input class="span1 validatable" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @pedidoItem.Cantidad %>" /></td>
+<td><input class="span3 validatable" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @pedidoItem.Cantidad %>" /></td>
 
-<td><input class="span1 validatable" data-min-value="0" data-max-value="<%= @negociacion.Descuento %>" data-type="Descuento" data-numeric="true" value="<%= @pedidoItem.Descuento %>" /></td>
+<td><input class="span3 validatable" data-min-value="0" data-max-value="<%= @negociacion.Descuento %>" data-type="Descuento" data-numeric="true" value="<%= @pedidoItem.Descuento %>" /></td>
 
 <td class="numeric"><h4><%= @pedidoItem.Impuesto %><h4></td>
 

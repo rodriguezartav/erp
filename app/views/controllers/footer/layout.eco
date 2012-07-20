@@ -1,11 +1,12 @@
-<div class="navbar-inner">
+<div class="navbar navbar-fixed-bottom">
 
-  <ul>
-    <li class="btn"><i class="icon-print"></i></li>
-    <li class="btn"><i class="icon-print"></i></li>
-    <li class="btn"><i class="icon-print"></i></li>
-    <li class="btn"><i class="icon-print"></i></li>
-  </ul>
+  <div class="navbar-inner">
 
+    <div class="container">
+
+        <a class="btn pull-right">A</a>
+        <a class="btn  pull-left">b</a>
+      
+    </div>
+  </div>
 </div>
-

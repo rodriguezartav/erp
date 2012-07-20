@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="options">
+  
+  <span class="close minimize">
+    <i class="icon-remove"></i>
+  </span>
+  
+  <span class="keepOpen close">
+    <i class="icon-fullscreen"></i>
+  </span>
+  
+  </div>
+  
+  
+  <ul class="nav nav-pills familias_list">
+    <% for f in @familias : %>
+      <li data-familia="<%= f %>" class="badge familiaItem">
+        
+          <%= f  %>
+
+      </li>
+      
+    <% end %>
+  </ul>
+  <div class="row-fluid">
+
+
+    
+    <div class="span8 productosListWrapper">
+      <table class="table table-striped table-bordered table-condensed">
+        <tbody class="productos_list" >
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="span4">
+      <ul class="nav nav-pills grupos_list">
+
+      </ul>
+    </div>
+    
+  </div>  
+
+  </div>
+</div>

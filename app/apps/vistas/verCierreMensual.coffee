@@ -7,7 +7,7 @@ class VerCierreMensual extends Spine.Controller
   
   @departamento = "Vistas"
   @label = "Ver Cierre Mensual"
-  @icon = "icon-eye-open"
+  @icon = "icon-briefcase"
 
   elements:
     ".cierres_list"       : "cierres_list"

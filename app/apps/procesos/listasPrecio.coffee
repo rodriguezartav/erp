@@ -7,7 +7,7 @@ class listasPrecio extends Spine.Controller
   
   @departamento = "Administracion"
   @label = "Lista de Precios"
-  @icon = "icon-remove"
+  @icon = "icon-table"
 
   elements:
     ".productList"       :  "productList"

@@ -7,7 +7,7 @@ class VerRegistrosResumen extends Spine.Controller
   
   @departamento = "Vistas"
   @label = "Resumen de Registos"
-  @icon = "icon-eye-open"
+  @icon = "icon-th"
 
   elements:
     ".departamentos_list"       : "departamentos_list"

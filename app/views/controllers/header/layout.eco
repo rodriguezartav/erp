@@ -1,87 +1,38 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
+
       <div class="container">
        
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-       
-        <a class="brand" href="/">
-        </a>
-       
-       
-        <div class="nav-collapse">
-          
-          <ul class="nav predefined_options">
-           
-            <li><a  class="predefined" data-txt="yale">Yale</a></li>
-           
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown">Hilco <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a class="predefined" data-txt="6013">6013</a></li>
-                <li><a  class="predefined" data-txt="7018">7018</a></li>
-                <li><a  class="predefined" data-txt="hilcrome"  >Especiales</a></li>
-                <li class="divider"></li>
-                <li class="nav-header">Otros</li>
-                <li><a  class="predefined" data-txt="alum"  >Aluminio</a></li>
-              </ul>
-            </li>
-          </ul>
-         
-          <div class="navbar-search pull-left src_productos">
-            <input type="text" class="search-query span4 js_search_productos" placeholder="Busque los productos aqui!!!"/>
-          </div>
-          
-          
-          
-          <ul class="nav pull-right header_menu">
-          
-            <li>
-              <a class="toSalesforce">
-                <i class="icon-external-link"></i>
-                Salesforce
-              </a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-              <div class="btn-group">
-                <a  class="btn btn_icon rotate loader">
-                  <i class="icon-refresh"></i>
-                </a>
-              </div>
-            </li>
-            <li class="divider-vertical"></li>
-            <li class="dropdown status_button btn-success">
-              <a class="dropdown-toggle" data-toggle="dropdown">
-                <span class="status_button_label">
-                  <i class="icon-ok"></i>
-                </span>
-                <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                  <li>
-                    <a class="actualizar update">Actualizar Ahora</a>
-                  </li>
-                <li class="divider"></li>
-                 <li>
-                    <a class="reset">Master Reset (Cuidado)</a>
-                  </li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.nav-collapse -->
-      </div>
-    </div><!-- /navbar-inner -->
+       <div class="headerWrapper">
 
-    <div class="container">
-      <div class="row">
-        <ul class="productos_list thumbnails" >
-        </ul>
+         <div class="brand pull-left">
+           <i class="icon-home"></i>
+           <span class="first">R</span>odco
+           <span class="version">1.0</span>
+         </div>
+       
+        <div class="actionButtons pull-right">          
+           <a><i class="icon-refresh icon-large update"></i></a>
+           <a><i class="icon-off icon-large reset"></i></a>
+         </div>
+
+          <div class="account pull-right">          
+            <a class="dropdown-toggle" data-toggle="dropdown">
+              <h4>Roberto
+                 <i class="icon-chevron-down"></i>
+              </h4>
+            </a>
+            
+          </div>
+
+   
+
+
+          <input type="text" class=" span5 js_search_productos" placeholder="Busque los productos aqui!!!"/>
+          <i class="icon-search productIcon"></i>
+
+        </div>
       </div>
     </div>
-    
 </div>
 

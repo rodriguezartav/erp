@@ -1,24 +1,9 @@
 <% Spine = require('spine') %>
 
-<div class="row-fluid">
+  <div class="container">
 
-  <div class="span3">
-    <ul class="nav nav-tabs nav-stacked menu">
+    <ul class="thumbnails">
+
     </ul>
-  </div>
-
-  <div class="span8">
-    <div class="row-fluid">
-      <div class="hero-unit">
-        <% name = Spine.session.user.Name || "Visitante" %>
-        <h1>Hola, <%= name.substring(0,name.indexOf(" ")) %></h1>
-        <h4><%= Spine.session.user.Perfil__c %></h4>
-        <hr/>
-        <h2>Bienvenido al Centro de Apps de Rodco</h2>
-        <h4>Visitenos desde Web y Table o Mobile</h4>
-        <h5>Version: 3.0.0</h5>
-      </div>
-    </div>
-   
-    </div>
+    
 </div>

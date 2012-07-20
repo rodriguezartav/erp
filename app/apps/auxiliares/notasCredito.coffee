@@ -29,9 +29,12 @@ class NotasCredito extends Spine.Controller
     @documento = Documento.create {Tipo_de_Documento: "NC"}
     @html require("views/apps/auxiliares/notasCredito/layout")(NotasCredito)
     @clientes = new Clientes(el: @src_cliente)
-    Cliente.bind "current_set" , =>
-      @documento.Cliente = Cliente.current.id
-      @documento.save()
+    Cliente.bind "current_set" , @onClienteSet
+      
+  
+  onClienteSet: =>
+    @documento.Cliente = Cliente.current.id
+    @documento.save()
 
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if Cliente.current == null
@@ -54,6 +57,7 @@ class NotasCredito extends Spine.Controller
     
   customReset: =>
     Cliente.reset_current()
+    Cliente.unbind "current_set" , @onClienteSet
     @clientes.reset()
     @documento.destroy() if @documento
     @navigate "/apps"

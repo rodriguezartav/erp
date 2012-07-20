@@ -7,7 +7,7 @@ class DoCierreMensual extends Spine.Controller
   
   @departamento = "Contabilidad"
   @label = "Cierre Mensual"
-  @icon = "icon-eye-open"
+  @icon = "icon-bar-chart"
 
   elements:
     ".departamentos_list"       : "departamentos_list"

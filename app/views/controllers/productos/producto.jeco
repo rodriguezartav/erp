@@ -1,0 +1,9 @@
+<tr >
+
+<td><%= @InventarioActual.toMoney() %></td>
+
+  <td class="productoItem name"  data-id="<%= @id %>" class="name"><%= @Name.capitalize() %></td>
+  
+
+  <td><%= @Precio_Distribuidor.toMoney() %></td>
+</tr>

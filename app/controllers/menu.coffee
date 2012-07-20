@@ -1,20 +1,23 @@
 Spine = require('spine')
 
 class Menu extends Spine.Controller
-
+ 
+  className: "menu"
+   
   elements:
     "ul" : "list"
     "li" : "items"
  
   events:
-    "click ul>li>a" : "on_click"
+    "click .appButton" : "on_click"
   
   constructor: ->
     super
     @render()
 
   render: =>
-    @html require("views/controllers/menu/layout")
+    @html require("views/controllers/menu/layout")(apps: @apps)
+    
     group = {}
     for app in @apps
       appList = group[app.departamento] || []
@@ -30,7 +33,8 @@ class Menu extends Spine.Controller
   
       
   on_click: (e) =>
-   target = $(e.target)
+   target = $(e.target).parents "li"
+   
    name = target.attr("data-type")
    @items.removeClass "active"
    target.parent().addClass "active"
