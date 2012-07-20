@@ -25,12 +25,17 @@ class Login extends Spine.Controller
   constructor: ->
     super
     Spine.session = Session.record || Session.create()
+    
+    return @renderOffLine() if Spine.session.token and !navigator.onLine
+    
+    
     @data = {} if !@data
     if @data.salesforceSession
       Spine.session.loadFromSalesforce(@data.salesforceSession) 
       Spine.session.salesforceLogin({user_id: @data.salesforceSession.user_id })
       @login_effect()
     else
+    
       if Spine.session.token and !Spine.session.isExpired()
         if navigator.onLine
           @renderComplete()

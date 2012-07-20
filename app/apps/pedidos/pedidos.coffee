@@ -96,7 +96,7 @@ class Credito extends Spine.Controller
     ".nombre" : "nombre"
 
   events:
-    "click .close" : "close"
+    "click .remove" : "close"
     "click .send" : "send"
     "click .save" : "save"
 

@@ -6,16 +6,17 @@ Producto = require("models/producto")
 class Header  extends Spine.Controller
   
   elements:
-    ".loader"  : "loader"
-    ".online"  : "online"
-    ".offline" : "offline"
-    ".status_button" : "status_button"
-    ".status_button_label" : "status_button_label"
+    ".loader"                : "loader"
+    ".online"                : "online"
+    ".offline"               : "offline"
+    ".status_button"         : "status_button"
+    ".status_button_label"   : "status_button_label"
 
   events:
-    "click .reset" : "reset"
-    "click .toSalesforce" : "onClickSalesforce"
-    "click .update" : "onUpdate"
+    "click .reset"         : "reset"
+    "click .toSalesforce"  : "onClickSalesforce"
+    "click .update"        : "onUpdate"
+    "click .home"          : "onHome"
   
   constructor: ->
     super
@@ -52,13 +53,15 @@ class Header  extends Spine.Controller
     Cliente.query({contado: true} , false)
     Producto.query({},false)
 
-
   onDeleteDone: =>
     Saldo.query( { saldo: true } , false)
     Saldo.bind "query_success" , @onUpdateDone
     
   onUpdateDone: ->
     window.location.reload()
+
+  onHome: ->
+    @navigate "/apps"
 
   reset: ->
     for model in Spine.socketModels

@@ -10,6 +10,40 @@
 @import "./general.less";
 @import "./responsive.less";
 
+body{
+  min-width: 600px;
+  .container{
+    max-width: 980px;
+  }
+}
+
+
+@media (max-width: 979px) {
+
+
+  header{
+    .navbar-fixed-top{
+      margin-bottom: 10px;
+    }
+  
+    .productIcon{
+      display: none;
+    }
+  
+  }
+  
+
+  .productosToolbar{
+    position: static;
+    max-height: 390px;
+  }
+
+  .appCanvas{
+    margin-top: 20px;
+  }
+
+}
+
 
 
 

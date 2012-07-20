@@ -6,7 +6,7 @@
   
   <div class="span6">
     <div class="rightOptions">
-      <a class="btn btn-info reload"><i class="icon-refresh icon-white"></i></a><br/>
+      <a class="btn btn-primary reload"><i class="icon-refresh icon-white"></i></a><br/>
     </div>
   </div>
   
@@ -34,8 +34,3 @@
 
  
 
-<div class="action_footer">
-    <div class="modal-footer">
-      <a class="btn btn-danger cancel">Regresar</a>
-    </div>
-</div>

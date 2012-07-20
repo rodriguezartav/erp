@@ -6,7 +6,7 @@
        <div class="headerWrapper">
 
          <div class="brand pull-left">
-           <i class="icon-home"></i>
+           <i class="icon-home home"></i>
            <span class="first">R</span>odco
            <span class="version">1.0</span>
          </div>

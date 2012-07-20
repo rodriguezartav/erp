@@ -34,6 +34,7 @@ class Productos  extends Spine.Controller
     productos = Producto.select (item) ->
       return true if item?.Familia
     familias= (producto.Familia for producto in productos ).unique()
+    familias = familias.sort()
     @html require("views/controllers/productos/layout")(familias : familias)
 
   productoSet: =>

@@ -5,10 +5,11 @@
 
 
 <td>
-  <span class="badge badge-success data-current-precio">1</span>
   <h4 style="display: inline;" class="precio" data-current-precio="1" data-precio1="<%= producto.Precio_Distribuidor %>" data-precio2="<%= producto.Precio_Industria || 1 %>" data-precio3="<%= producto.Precio_Retail || 1 %>">
   <%= @Precio?.toMoney() %>
   </h4>
+  <span class="badge data-current-precio">1</span>
+  
 </td>
 
 <td><input class="span5 validatable" type="number" step="1" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @Cantidad %>" /></td>
