@@ -2,12 +2,15 @@ html {
   height: 100%;
 }
 
+
+@bodyMarginTop: 115px;
+
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  padding-top: 115px;
+  padding-top: @bodyMarginTop;
   &.noScroll{
     overflow: hidden; 
-    height: 100%
+    height: 100%;
   }
 }
 
