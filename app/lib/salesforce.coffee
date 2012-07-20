@@ -1,7 +1,7 @@
 #INCLUDES THE NECCESARY METHODS AND EVENTS TO QUERY AND INSERT OBJECTS TO SALESFORCE
 #IT IS ALSO INTEGRATED WITH OTHER PLUGINS LIKE SYNCRONIZABLE, IF IT IS NOT INCLUDED THEN NO PROBLEM
 
-Spine ?= require('spine')
+Spine = require('spine')
 
 StatManager = require("managers/statManager")
 
@@ -210,5 +210,5 @@ Spine.Model.Salesforce =
         @trigger "query_error" , errors
       
 
-module?.exports = Spine.Model.Salesforce
+module.exports = Spine.Model.Salesforce
 
