@@ -73,9 +73,9 @@ class SecurityManager
     @profiles = {}
     apps = [VerCierreMensual,  VerCierreDiario , DoCierreDiario, DoCierreMensual ,  VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota  , TomasInventario , Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular ,  CuentasPorPagarEntrega , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion ]
+    @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion ]
     @profiles["Presidencia"] =  [ DoCierreDiario  , AjustarNegociacion ,   Compras , CuentasPorPagarFlujo , CuentasPorPagarAprobacion  , TomasInventario , VerRegistrosResumen  ]
-    @profiles["SubGerencia"] =  [ AprobarNota , NotaCreditoProveedor  , AjustarNegociacion ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , CuentasPorPagarEntrega   , PedidosAprobacionGerencia, DocumentosAnular , TomasInventario ,VerRegistrosResumen , VerRegistros ]
+    @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacionGerencia , VerRegistrosResumen ]
     @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , FacturasAnular , VerRegistrosResumen , VerRegistros  ]
     @profiles["Encargado de Ventas"] = [ Pedidos  , FacturasImpresion , FacturasAnular , TomasInventario , VerRegistrosResumen , VerRegistros ]
     @profiles["Ejecutivo Credito"] = [ PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion ,VerRegistrosResumen , VerRegistros ]
