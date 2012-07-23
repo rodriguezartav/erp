@@ -62,7 +62,6 @@ class Clientes  extends Spine.Controller
     return false if item.Activo == false
     return false if item.DiasCredito > 0 and @contado == true
     return false if item.DiasCredito == 0 and @contado == false
-    console.log item
     myRegExp =new RegExp( Cliente.queryToRegex(query),'gi')
     item.Name.search(myRegExp) > -1 or String(item.CodigoExterno).indexOf(query) == 0
 
