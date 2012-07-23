@@ -16,6 +16,8 @@ Lightbox = require("controllers/lightbox")
 User = require("models/user")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
+User = require("models/user")
+
 Session = require('models/session')
 
 Menu = require("controllers/menu")

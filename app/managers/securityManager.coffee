@@ -85,6 +85,7 @@ class SecurityManager
 
   onLoginComplete: =>
     Spine.status = "loggedIn"
+        
     Spine.options =
       locationType : if Spine.session.hasPerfiles(["Vendedor"]) then "Ruta" else "Planta" 
       aprobacion   : if Spine.session.hasPerfiles(["Ejecutivo Credito","Platform System Admin"])  then true else false
@@ -132,6 +133,7 @@ class SecurityManager
       Saldo.autoReQuery = true
 
     Spine.session.save()
+
 
     Spine.apps = @profiles[Spine.session.user.Perfil__c]
 

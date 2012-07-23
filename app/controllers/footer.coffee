@@ -1,5 +1,6 @@
 Spine = require('spine')
 Productos = require("controllers/productos")
+User = require("models/user")
 
   
 class Footer  extends Spine.Controller
@@ -11,6 +12,8 @@ class Footer  extends Spine.Controller
     ".offline" : "offline"
     ".status_button" : "status_button"
     ".status_button_label" : "status_button_label"
+    ".users" : "users"
+    ".currentUser" : "currentUser"
 
   events:
     "click .reset" : "reset"
@@ -18,7 +21,7 @@ class Footer  extends Spine.Controller
   constructor: ->
     super
     @html require('views/controllers/footer/layout')
-    
+    User.bind "refresh" , @onUserFresh
     
     Spine.bind "query_start",=>
       @loader.show()
@@ -37,9 +40,11 @@ class Footer  extends Spine.Controller
         @status_button.removeClass "btn-success"
         @status_button.removeClass "btn-warning"
         @status_button_label.html "OFFLINE"
-        
-    
 
+  onUserFresh: =>
+    @users.html require("views/controllers/footer/user")(User.all())
+    user = User.exists Spine.session.userId
+    @currentUser.html require("views/controllers/footer/user")([user])
 
   reset: ->
     for model in Spine.nSync

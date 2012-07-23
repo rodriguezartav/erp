@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class User extends Spine.Model
-  @configure "User", "Name" , "email" , "token" , "password" , "is_visualforce"
+  @configure "User", "Name" , "SmallPhotoUrl", "Perfil__c" ,  "FirstName"
   @extend Spine.Model.Salesforce
   
   @standardObject = true
@@ -9,9 +9,8 @@ class User extends Spine.Model
   @avoidQueryList: ["email","token","password","is_visualforce"]
   
   @queryFilter: (options) =>
-    return "" if !options
     filter = ""
-    filter = @queryFilterAddCondition(" Active = true " , filter)
+    filter = @queryFilterAddCondition(" IsActive = true " , filter)
     filter = @queryFilterAddCondition(" Profile = 'Cobrador' or Profile = 'Vendedor' " , filter) if options.cobrador
     filter
 

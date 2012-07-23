@@ -1,5 +1,7 @@
 Spine = require('spine')
 Session = require('models/session')
+User = require('models/user')
+
 Lightbox = require("controllers/lightbox")
 
 class ConnectionManager
@@ -69,10 +71,10 @@ class ConnectionManager
         window.location.reload();
     
   fetchServerData: () =>
-    if navigator.onLine 
+    if navigator.onLine
+      User.query() if User.count() ==0
       for model in Spine.socketModels
         model.query() if model.autoQuery
-
 
   fetchLocalData: =>
     Session.fetch()    

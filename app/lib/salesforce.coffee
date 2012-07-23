@@ -43,8 +43,9 @@ Spine.Model.Salesforce =
           object = {}
           for attr of item.attributes()
             if @avoidInsertList.indexOf(attr) == -1
-              object[attr + "__c" ] = item[attr] if attr != "id"
+              object[attr + "__c" ] = item[attr] if attr != "id" and attr != "Name"
               object["Id"] = item[attr] if attr == "id" and includeId
+              object["Name"] = item[attr] if attr == "Name"
           objects.push object
         requests = JSON.stringify( objects )  
         requests
@@ -152,7 +153,13 @@ Spine.Model.Salesforce =
         for attribute in @attributes
           if @avoidQueryList?.indexOf(attribute) == -1
             query += attribute
-            if attribute.indexOf("Name") == -1 || @standardObject then query += "__c,"  else query += ","
+            if @standardObject
+              query += ","
+            else if attribute.indexOf("Name") == 0 
+              query += ","
+            else
+              query += "__c,"
+              
         query += "Id "
         query +=  "from #{className}" 
         query +=  "__c"  if !@standardObject 

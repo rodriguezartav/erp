@@ -68,7 +68,7 @@ class SocketManager
       
       results = FacturaPreparada.updateFromSocket(message)
       if results  != false
-        if Spine.session.hasPerfiles(['Vendedor','Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas'])
+        if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas'])
           Spine.notifications.showNotification( "Aprobacion de Facturas" , "Facturas Listas para Imprimir" )
 
     @channel.bind "FacturaImpresa" , (message) =>

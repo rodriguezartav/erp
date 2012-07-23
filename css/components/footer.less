@@ -1,10 +1,43 @@
 footer{
 
+  .navbar .nav > li > a {
+    padding: 0px 0px 5px 0px;
+  }
+
   .navbar-inner{
     background: none;
     .buttonBackground(@btnBackground, @btnBackgroundHighlight);
     border-top: #ddd;
     padding-bottom: 5px;
+    
+
+    
+    .nav{
+      .dropdown{
+        .userWrapper{
+          max-height: 350px;
+          width: 200px;
+          overflow-y: scroll;
+        }
+        
+        .currentUser{
+          img{
+            width: 25px;
+            height: 25px;
+          }
+        }
+        
+        .users{
+          li{
+            img{
+              width: 25px;
+              height: 25px;
+            }
+          }
+        }
+      }
+    }
+    
   }
 
   a{
@@ -15,4 +48,7 @@ footer{
       font-size: 30px;
     }
   }
+  
+  
+  
 }
