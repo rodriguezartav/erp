@@ -2,8 +2,6 @@
   <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
 </div>
 
-<br/>
-
 <div class="well">
   <div class="row-fluid">
 
@@ -38,20 +36,19 @@
           <div class="span4">
            <input class="validatable "   data-writable="false" data-type="FechaFacturacion"  date-part="year" date-name="FechaFacturacion"  placeholder="Año"/>
           </div>
+          
         </div>
      </div>
 
     <div class="span1">
       <h3>Plazo</h3>
       <input class=" validatable txtPlazo"  data-type="Plazo" data-numeric="true" placeholder="Dias desde la Emision" />
-    </div>
-    
-      
-</div>
+    </div>  
+  </div>
 
-    <div class="row-fluid">
-      <h3>Contenido de la Factura</h3>
-      <textarea class="validatable" data-type="Observacion" placeholder="Observacion"/>
+  <div class="row-fluid">
+    <h3>Contenido de la Factura</h3>
+    <textarea class="validatable" data-type="Observacion" placeholder="Observacion"/>
   </div>
 
   <div class="row-fluid">
@@ -78,13 +75,17 @@
           <h3>Total</h3>
           <input data-type="Total" data-numeric="true" data-positive="true" class=" validatable totales total"  placeholder="" />
         </div>
+        
       </div>
+      
     </div>
     
     <div class="span1 ">
       <h3>TC</h3>
       <input data-type="TipoCambio" data-numeric="true" value="1" data-positive="true" class=" validatable"  placeholder="Tipo Cambio" />
     </div>
+  
+  </div>
   
 </div>
 

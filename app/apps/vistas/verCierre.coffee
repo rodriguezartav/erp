@@ -6,7 +6,7 @@ class VerCierre extends Spine.Controller
   
   className: "row-fluid VerCierre"
   
-  @departamento = "Vistas"
+  @departamento = "Contabilidad"
   @label = "Cierre Contable"
   @icon = "icon-eye-open"
 

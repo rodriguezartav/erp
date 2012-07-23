@@ -34,7 +34,7 @@ class App extends Spine.Controller
     new Header(el: $("header"))
     new Productos(el: $(".productosToolbar"))
     
-    #new Footer(el: $("footer"))
+    new Footer(el: $("footer")) 
     new Lightbox(el: $(".lightboxCanvas"))
 
     Spine.security       =  new SecurityManager()

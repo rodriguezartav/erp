@@ -1,5 +1,11 @@
 
 .menu{
+  
+  .thumbnails{
+    margin-right: 20px;
+    >li{
+      }
+  }
 
 
   li{
@@ -8,14 +14,13 @@
     width: 120px;
     text-align: center;
     cursor: pointer;
-    &.header{
-      background-color: #333;
-      color: #fff;
-      h4{
-        padding-top: 40px;
-        font-weight: 200;
-      }
+    
+    &:hover{
+      >* {
+      color: @red;
+     }
     }
+    
     i{
       font-size: 30px;
       color: #454545;
@@ -26,12 +31,23 @@
       display: block;
       max-width: 100px;
     }
-   
-    &:hover{
-      >* {
-      color: @red;
-     }
+    
+    &.header{
+      background-color: #333;
+      color: #fff;
+      height: 50px;
+      h4{
+        padding-top: 17px;
+        font-weight: 200;
+      }
+      &:hover{
+        h4{
+          color: #fff;
+        }
+      
+      }
     }
+    
    
   }
 

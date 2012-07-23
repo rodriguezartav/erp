@@ -3,7 +3,7 @@ Spine = require('spine')
 FacturaPreparada = require("models/socketModels/facturaPreparada")
 
 class Facturas extends Spine.Controller
-  @departamento = "Administracion"
+  @departamento = "Pedidos"
   @label = "Impresion de Facturas"
   @icon = "icon-print"
   

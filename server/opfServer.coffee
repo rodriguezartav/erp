@@ -20,6 +20,10 @@ app.use(express.static("./public"))
 
 app.get '/' , (req, res) ->
   res.render "app" , {useManifest: false, app: "" , pusherKey: process.env.PUSHER_KEY }
+
+app.get '/test' , (req, res) ->
+  res.render "app" , {layout: "test",  app: "" , pusherKey: process.env.PUSHER_KEY }
+
   
 app.get '/remote' , (req, res) ->
   res.render "app" , {useManifest: true,  app: "" , pusherKey: process.env.PUSHER_KEY }

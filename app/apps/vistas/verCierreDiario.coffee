@@ -5,7 +5,7 @@ class VerCierreDiario extends Spine.Controller
   
   className: "row-fluid verCierreDiario"
   
-  @departamento = "Vistas"
+  @departamento = "Contabilidad"
   @label = "Ver Cierre Diario"
   @icon = "icon-file"
 

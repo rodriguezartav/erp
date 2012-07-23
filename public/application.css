@@ -810,10 +810,12 @@ i.modal_success{font-size:40px;color:#46a546;}
 .proveedores .proveedores_list li.active{background-color:#08c;}
 .proveedores .proveedores_list li.active a{color:#fff;}
 .proveedores .proveedores_list li a{text-transform:capitalize;}
-.menu li{border:none;height:100px;width:120px;text-align:center;cursor:pointer;}.menu li.header{background-color:#333;color:#fff;}.menu li.header h4{padding-top:40px;font-weight:200;}
+.menu .thumbnails{margin-right:20px;}
+.menu li{border:none;height:100px;width:120px;text-align:center;cursor:pointer;}.menu li:hover>*{color:#9d261d;}
 .menu li i{font-size:30px;color:#454545;}
 .menu li span{font-size:18px;font-weight:200;display:block;max-width:100px;}
-.menu li:hover>*{color:#9d261d;}
+.menu li.header{background-color:#333;color:#fff;height:50px;}.menu li.header h4{padding-top:17px;font-weight:200;}
+.menu li.header:hover h4{color:#fff;}
 header .navbar-inner{padding:4px 0px;background-image:url("/images/furley_bg.png");}
 header .headerWrapper{text-align:center;}header .headerWrapper input{margin-top:13px;color:#0064cd;margin-top:5px;background-color:#fff;display:inline-block;padding:8px 13px;-webkit-border-radius:25px;-moz-border-radius:25px;border-radius:25px;}
 header .productIcon{font-size:25px;vertical-align:middle;color:#666;margin-right:5%;}
@@ -825,6 +827,9 @@ header .actionButtons a i{font-size:20px;}
 header .account{padding-top:5px;margin:10px;}header .account a:hover{text-decoration:none;color:#9d261d;}
 header .account h4{color:#999;vertical-align:top;}header .account h4:hover{color:#9d261d;text-decoration:none;}
 header .account h4 i{vertical-align:top;padding:right: 5px;font-size:20px;color:#999;}
+footer .navbar-inner{background:none;background-color:#f5f5f5;background-image:-moz-linear-gradient(top, #ffffff, #e6e6e6);background-image:-ms-linear-gradient(top, #ffffff, #e6e6e6);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));background-image:-webkit-linear-gradient(top, #ffffff, #e6e6e6);background-image:-o-linear-gradient(top, #ffffff, #e6e6e6);background-image:linear-gradient(top, #ffffff, #e6e6e6);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);*background-color:#e6e6e6;filter:progid:DXImageTransform.Microsoft.gradient(enabled = false);border-top:#ddd;padding-bottom:5px;}footer .navbar-inner:hover,footer .navbar-inner:active,footer .navbar-inner.active,footer .navbar-inner.disabled,footer .navbar-inner[disabled]{background-color:#e6e6e6;*background-color:#d9d9d9;}
+footer .navbar-inner:active,footer .navbar-inner.active{background-color:#cccccc \9;}
+footer a{margin-top:15px;color:#049cdb;}footer a i{vertical-align:middle;font-size:30px;}
 .productosToolbar{-webkit-tap-highlight-color:rgba(0, 0, 0, 0);position:fixed;top:59px;left:0px;right:0px;z-index:1100;background-color:#fff;max-height:250px;overflow-y:hidden;-webkit-box-shadow:0 1px 4px rgba(33, 33, 33, 0.2);-moz-box-shadow:0 1px 4px rgba(33, 33, 33, 0.2);box-shadow:0 1px 4px rgba(33, 33, 33, 0.2);}.productosToolbar.closed{max-height:33px;-webkit-box-shadow:0 0 0;-moz-box-shadow:0 0 0;box-shadow:0 0 0;}
 .productosToolbar .container{position:relative;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}.productosToolbar .container .options{position:absolute;right:-9px;top:7px;}.productosToolbar .container .options i{display:inline-block;margin-right:10px;}.productosToolbar .container .options i:hover{color:#c42f24;}
 .productosToolbar .container .options i.active{color:#9d261d;opacity:1;}

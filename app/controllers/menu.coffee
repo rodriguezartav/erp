@@ -5,8 +5,7 @@ class Menu extends Spine.Controller
   className: "menu"
    
   elements:
-    "ul" : "list"
-    "li" : "items"
+    ".list" : "list"
  
   events:
     "click .appButton" : "on_click"
@@ -24,19 +23,19 @@ class Menu extends Spine.Controller
       appList.push app
       group[app.departamento] = appList
     
+    console.log group
     for index,value of group
-      @list.append require("views/controllers/menu/header")(name: index)
+      html = '<ul class="thumbnails span2">'
+      html += require("views/controllers/menu/header")(name: index)
       for app in value
-        html = require("views/controllers/menu/app")(app: app , header: index)
-        @list.append html
-
+        html += require("views/controllers/menu/app")(app: app , header: index)
+      html += "</ul>"
+      @list.append html
   
       
   on_click: (e) =>
-   target = $(e.target).parents "li"
-   
+   target = $(e.target).parents ".thumbnail"   
    name = target.attr("data-type")
-   @items.removeClass "active"
    target.parent().addClass "active"
    @navigate "/apps/" + name
 

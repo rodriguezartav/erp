@@ -18,8 +18,6 @@ class Footer  extends Spine.Controller
   constructor: ->
     super
     @html require('views/controllers/footer/layout')
-    $('.dropdown-toggle').dropdown()
-    @loader.hide()
     
     
     Spine.bind "query_start",=>
