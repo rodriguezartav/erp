@@ -32,7 +32,8 @@ class Productos  extends Spine.Controller
   onFirstLoad: =>
     Producto.unbind "refresh" , @onFirstLoad
     productos = Producto.select (item) ->
-      return true if item?.Familia
+      return false if !item?.Familia or item.Activo == false or item.Familia == "Prueba"
+      return true
     familias= (producto.Familia for producto in productos ).unique()
     familias = familias.sort()
     @html require("views/controllers/productos/layout")(familias : familias)
