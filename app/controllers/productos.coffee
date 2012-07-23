@@ -9,6 +9,7 @@ class Productos  extends Spine.Controller
     "click .grupoItem"      :  "on_grupo_click"
     "click .minimize"       :  "close"
     "click .keepOpen"       :  "on_keepOpen_click"
+    "click .hideEmpty"      :  "onHideEmpty"
 
   elements:
     ".badge"                :  "allFamiliasAndGroups"
@@ -35,7 +36,11 @@ class Productos  extends Spine.Controller
       return false if !item?.Familia or item.Activo == false or item.Familia == "Prueba"
       return true
     familias= (producto.Familia for producto in productos ).unique()
-    familias = familias.sort()
+    familias = familias.sort (a,b) ->
+      if a == 'Hilco' or a == "Candados" or a == "Cerraduras"
+        return -1
+
+      return 1
     @html require("views/controllers/productos/layout")(familias : familias)
 
   productoSet: =>
@@ -73,6 +78,14 @@ class Productos  extends Spine.Controller
       @keepOpen = true
       target.addClass "active" 
 
+
+  onHideEmpty: (e) =>
+    
+    for hideable in @el.find ".hideable"
+      hideable = $(hideable)
+      inventario = hideable.attr("data-inventario")
+      hideable.empty() if inventario == "0"
+ 
 
   on_item_click: (e) =>
     target = $(e.target)

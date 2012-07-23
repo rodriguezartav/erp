@@ -9,6 +9,10 @@
     <i class="icon-fullscreen"></i>
   </span>
   
+  <span class="hideEmpty close">
+    <i class="icon-random"></i>
+  </span>
+  
   </div>
   
   

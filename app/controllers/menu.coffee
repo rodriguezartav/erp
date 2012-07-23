@@ -23,7 +23,6 @@ class Menu extends Spine.Controller
       appList.push app
       group[app.departamento] = appList
     
-    console.log group
     for index,value of group
       html = '<ul class="thumbnails span2">'
       html += require("views/controllers/menu/header")(name: index)
