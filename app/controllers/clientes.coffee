@@ -62,14 +62,16 @@ class Clientes  extends Spine.Controller
     return false if item.Activo == false
     return false if item.DiasCredito > 0 and @contado == true
     return false if item.DiasCredito == 0 and @contado == false
+    console.log item
     myRegExp =new RegExp( Cliente.queryToRegex(query),'gi')
     item.Name.search(myRegExp) > -1 or String(item.CodigoExterno).indexOf(query) == 0
 
 
   on_filter: (e) =>
-    return false if Cliente.locked 
+    #return false if Cliente.locked 
     txt = $(e.target).val()
     result = Cliente.filter txt,@filterFunction
+    console.log result
     @render result
 
   reset: =>
