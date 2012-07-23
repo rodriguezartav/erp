@@ -32,14 +32,14 @@ html(lang="en" , manifest="manifest")
     script(src='/application.js', type='text/javascript', charset='utf-8')
 
     script(type='text/javascript', charset='utf-8')
-      //window.addEventListener('load', function(e) {
-        //window.applicationCache.addEventListener( 'updateready', function(e) {
-            //if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-              //window.applicationCache.swapCache();
-              //window.location.reload();
-            //}
-        //});
-      //});
+      window.addEventListener('load', function(e) {
+        window.applicationCache.addEventListener( 'updateready', function(e) {
+            if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+              window.applicationCache.swapCache();
+              window.location.reload();
+            }
+        });
+      });
       
     script(type='text/javascript', charset='utf-8')
       var apiServer = "http://api2s.heroku.com";
