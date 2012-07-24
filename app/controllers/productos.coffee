@@ -33,15 +33,15 @@ class Productos  extends Spine.Controller
   onFirstLoad: =>
     Producto.unbind "refresh" , @onFirstLoad
     productos = Producto.select (item) ->
-      return false if !item?.Familia or item.Activo == false or item.Familia == "Prueba"
+      return false if !item?.Categoria or item.Activo == false or item.Categoria == "Prueba"
       return true
-    familias= (producto.Familia for producto in productos ).unique()
-    familias = familias.sort (a,b) ->
+    categorias= (producto.Categoria for producto in productos ).unique()
+    categorias = categorias.sort (a,b) ->
       if a == 'Hilco' or a == "Candados" or a == "Cerraduras"
         return -1
 
       return 1
-    @html require("views/controllers/productos/layout")(familias : familias)
+    @html require("views/controllers/productos/layout")(familias : categorias)
 
   productoSet: =>
     @js_search_productos.val ""
@@ -105,7 +105,7 @@ class Productos  extends Spine.Controller
     target.addClass "active"
     familia = target.attr "data-familia"
     productos = Producto.select (producto) =>
-      return true if producto.Familia == familia
+      return true if producto.Categoria == familia
     @render @sortFunction productos
 
   on_grupo_click: (e) =>
