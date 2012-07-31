@@ -19,7 +19,7 @@ class Movimiento extends Spine.Model
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "        , filter) if options.cliente
     filter
  
-  @create_from_producto: (producto ) ->
+  @create_from_producto: (producto, cantidad = 1 ) ->
     movimiento = Movimiento.create
       Producto: producto.id
       Name: producto.Name
@@ -28,6 +28,7 @@ class Movimiento extends Spine.Model
       Impuesto: producto.Impuesto
       ProductoPrecio: producto.Precio
       Descuento: producto.Descuento
+      ProductoCantidad: cantidad
     movimiento.updateSubTotal()
     movimiento.applyDescuento()
     movimiento.applyImpuesto()

@@ -46,6 +46,8 @@ class App extends Spine.Controller
 
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 
+    $('.tipable').tooltip({})
+
     @routes
       "/apps": =>
         @currentApp?.reset()

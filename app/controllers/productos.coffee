@@ -10,6 +10,7 @@ class Productos  extends Spine.Controller
     "click .minimize"       :  "close"
     "click .keepOpen"       :  "on_keepOpen_click"
     "click .hideEmpty"      :  "onHideEmpty"
+    "change input"          :  "onInputChange"
 
   elements:
     ".badge"                :  "allFamiliasAndGroups"
@@ -26,9 +27,8 @@ class Productos  extends Spine.Controller
     @searchBox.click  @open
     @el.addClass "closed"
     Producto.bind "refresh" , @onFirstLoad
-
-    #@productos_list.hide()
     Producto.bind "current_reset" , @productoSet
+    @keepOpen = true
 
   onFirstLoad: =>
     Producto.unbind "refresh" , @onFirstLoad
@@ -80,12 +80,10 @@ class Productos  extends Spine.Controller
 
 
   onHideEmpty: (e) =>
-    
     for hideable in @el.find ".hideable"
       hideable = $(hideable)
       inventario = hideable.attr("data-inventario")
       hideable.empty() if inventario == "0"
- 
 
   on_item_click: (e) =>
     target = $(e.target)
@@ -93,7 +91,21 @@ class Productos  extends Spine.Controller
     producto = Producto.find(id)
     Producto.set_current producto
     @close() if !@keepOpen
-    
+  
+  onInputChange: (e) =>
+    target = $(e.target)
+    id = target.attr "data-id"
+    producto = Producto.find(id)
+    val = parseFloat(target.val())
+    val = 1 if isNaN(val)
+    posibleError = "El producto #{producto.Name} solo tiene #{producto.InventarioActual}"
+    return Spine.trigger("show_lightbox" , "showWarning" , error: posibleError) if val > producto.InventarioActual
+    $(":input:eq(" + ($(":input").index(target) + 1) + ")").focus();
+    return false if val == 0
+    Producto.set_current producto , val
+    target.val ""
+    @close() if !@keepOpen
+
   onPredefinedClick: (e) ->
     t = $(e.target)
     txt = t.attr "data-txt"

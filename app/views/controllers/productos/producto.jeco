@@ -6,4 +6,5 @@
   <td><%= @DescuentoMaximo %>%</td>
 
   <td><%= @Precio_Distribuidor.toMoney() %></td>
+  <td><input data-id="<%= @id %>" /></td>
 </tr>

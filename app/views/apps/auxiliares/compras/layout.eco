@@ -32,7 +32,8 @@
          <th>Producto</th>
          <th>Cantidad</th>
          <th>Costo</th>
-         <th>Costo Anterior</th>
+         <th>Ultimo Costo Ingresado</th>
+         <th>Costo Promedio Anterior</th>
          <th>Action</th>
        </tr>
      </thead>

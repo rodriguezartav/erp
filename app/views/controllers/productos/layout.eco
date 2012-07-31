@@ -1,20 +1,23 @@
 <div class="container">
   <div class="options">
   
-  <span class="close minimize">
+  <span class="tipable close minimize" rel="tooltip" data-original-title="Cierra la Ventana de Productos">
     <i class="icon-remove"></i>
   </span>
   
-  <span class="keepOpen close">
-    <i class="icon-fullscreen"></i>
+  <span class="tipable keepOpen close " rel="tooltip" data-original-title="Mantiene abierta la ventana para escoger varios productos">
+    <i class="icon-sort active"></i>
   </span>
   
-  <span class="hideEmpty close">
-    <i class="icon-random"></i>
+  <span class="tipable hideEmpty close" rel="tooltip" data-original-title="Oculta los productos sin inventario">
+    <i class="icon-magic"></i>
   </span>
   
   </div>
   
+  
+  
+
   
   <ul class="nav nav-pills familias_list">
     <% for f in @familias : %>

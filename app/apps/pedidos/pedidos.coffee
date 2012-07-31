@@ -5,7 +5,6 @@ Cliente = require("models/cliente")
 Negociacion = require("models/transitory/negociacion")
 Pedido = require("models/transitory/pedido")
 PedidoItem = require("models/transitory/pedidoItem")
-
 Clientes = require("controllers/clientes")
 
 class Items extends Spine.Controller
@@ -25,8 +24,8 @@ class Items extends Spine.Controller
 
   constructor: ()->
     super
-    @createItem(@producto,@referencia,@especial) if @producto
-    
+    @createItem(@producto,@cantidad,@referencia,@especial) if @producto
+    @checkItem()
     @negociacion = Negociacion.getFromProducto(@producto,@negociaciones)
     if @pedidoItem.Especial
       @html require("views/apps/pedidos/pedidos/itemEspecial")(@pedidoItem)  
@@ -36,10 +35,11 @@ class Items extends Spine.Controller
     else
       @html require("views/apps/pedidos/pedidos/item")(@pedidoItem)  
 
-  createItem: (producto,referencia,especial=false) =>
+  createItem: (producto,cantidad,referencia,especial=false) =>
     @pedidoItem = PedidoItem.createFromProducto(@producto)
     @pedidoItem.Referencia = referencia
     @pedidoItem.Especial = especial
+    @pedidoItem.Cantidad= cantidad
     @pedidoItem.save()
 
   onPrecioClick: (e) =>
@@ -61,7 +61,7 @@ class Items extends Spine.Controller
     @checkItem()
 
   on_click: (e) =>
-    $(e).select()
+    $(e.target).select()
 
   checkItem: (e) =>
     @updateFromView(@pedidoItem,@inputs_to_validate)
@@ -69,6 +69,7 @@ class Items extends Spine.Controller
     @pedidoItem.applyDescuento()
     @pedidoItem.applyImpuesto()
     @pedidoItem.updateTotal()
+    
 
   reset: =>
     @pedidoItem.destroy()
@@ -139,14 +140,14 @@ class Credito extends Spine.Controller
     @negociaciones = Negociacion.createFromCliente(Cliente.current)
     @pedido.save()
 
-  addItem: =>
-    return false if PedidoItem.isProductoInPedido(Producto.current,@pedido.Referencia)
+  addItem: (cantidad) =>
+    return false if PedidoItem.isProductoInPedido(Producto.current , @pedido.Referencia)
     return false if Producto.current.InventarioActual == 0
-    if PedidoItem.findAllByAttribute( "Referencia" , @pedido.Referencia ).length > 10
-      Spine.trigger "show_lightbox" , "show_warning" , error: "Solo se pueden ingresar 10 Productos por Factura"
-      return false 
 
-    item = new Items(producto: Producto.current , referencia: @pedido.Referencia, negociaciones: @negociaciones , especial: @pedido.Especial)
+    if PedidoItem.findAllByAttribute( "Referencia" , @pedido.Referencia ).length > 10
+      Spine.trigger "show_lightbox" , "showWarning" , error: "Solo se pueden ingresar 10 Productos por Factura"
+      return false 
+    item = new Items(producto: Producto.current , cantidad:cantidad , referencia: @pedido.Referencia, negociaciones: @negociaciones , especial: @pedido.Especial)
     @registerItem(item)
     
   registerItem: (item) =>
@@ -299,8 +300,8 @@ class Pedidos extends Spine.Controller
   addCliente: =>
     @currentController.addCliente()
     
-  addItem: =>
-    @currentController?.addItem()
+  addItem: (p,amount) =>
+    @currentController?.addItem(amount)
     
   onPedidoItemChange: =>
     @currentController?.onPedidoItemChange()

@@ -26,15 +26,23 @@
       position: absolute;
       right: -9px;
       top: 7px;
-      i{
-        display: inline-block;
-        margin-right: 10px;
-        &:hover{
-          color: lighten(@red,9%);
-        }
-        &.active{
-          color: @red;
-          opacity: 1;
+      span{
+        padding: 4px;
+        text-align: center;
+         &:hover{
+            color: @red;
+            li{
+              
+            }
+          }
+        i{
+          font-size: 25px;
+          display: inline-block;
+          margin-right: 10px;
+          &.active{
+            color: @red;
+            opacity: 1;
+          }
         }
       }
     }
@@ -112,7 +120,9 @@
     text-align: center;
     font-size: 17px;
     font-weight: 100;
-    
+   }
+   input{
+    width: 50px;
    }
   }
 }  

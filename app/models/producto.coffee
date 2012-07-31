@@ -28,7 +28,12 @@ class Producto extends Spine.Model
     for index,value of familiasMap
       familias.push value
     return familias
-    
+
+  @set_current: (item,amount=1) =>
+    @current = item
+    @trigger('current_set' , @current,amount)
+    true
+
   Ratio: ->
     r = (@Venta / @Meta)
     r = 1 if r >= 1

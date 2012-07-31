@@ -18,14 +18,22 @@ class Movimientos extends Spine.Controller
   events:
     "click .btn_remove" : "reset"
     "change input" : "checkItem"
+    "click input" : "onItemClick"
     
   constructor: ->
     super 
-    @movimiento = Movimiento.create_from_producto(@producto)
+    @movimiento = Movimiento.create_from_producto(@producto, @cantidad)
     @html require("views/apps/auxiliares/compras/item")(movimiento: @movimiento , productoCosto: @productoCosto)
+
+  onItemClick: (e) =>
+    target = $(e.target)
+    target.select()
 
   checkItem: (e) =>
     @updateFromView(@movimiento,@inputs_to_validate)
+    if e and e.target
+      target = $(e.target)
+      $(":input:eq(" + ($(":input").index(target) + 1) + ")").focus();
     
   reset: ->
     @movimiento.destroy()
@@ -77,13 +85,13 @@ class Compras extends Spine.Controller
     Producto.unbind "current_set" , @addMovimiento
     Movimiento.unbind "beforeDestroy" , @removeMovimiento
 
-  addMovimiento: =>
+  addMovimiento: (p,cantidad) =>
     if ProductoCosto.count() > 0
       movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
       productoCosto = ProductoCosto.find Producto.current.id
     
       if(movimiento.length == 0)
-        item = new Movimientos(producto: Producto.current, productoCosto: productoCosto)
+        item = new Movimientos(producto: Producto.current, cantidad: cantidad, productoCosto: productoCosto)
         @itemToControllerMap[item.movimiento.id] = item
         @movimientos.push item
         @movimientos_list.append item.el
