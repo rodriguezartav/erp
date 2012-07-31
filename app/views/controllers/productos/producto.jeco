@@ -1,10 +1,10 @@
 <tr class="hideable" data-inventario="<%= @InventarioActual %>">
 
-<td><%= @InventarioActual.toMoney() %></td>
+  <td><%= @InventarioActual.toMoney() %></td>
+  <td><input data-id="<%= @id %>" /></td>
 
   <td class="productoItem name"  data-id="<%= @id %>" class="name"><%= @Name.capitalize() %></td>
   <td><%= @DescuentoMaximo %>%</td>
 
   <td><%= @Precio_Distribuidor.toMoney() %></td>
-  <td><input data-id="<%= @id %>" /></td>
 </tr>

@@ -11,6 +11,8 @@ class Productos  extends Spine.Controller
     "click .keepOpen"       :  "on_keepOpen_click"
     "click .hideEmpty"      :  "onHideEmpty"
     "change input"          :  "onInputChange"
+    "click input"           :  "onInputClick"
+    "keydown input"         :  "onInputType"
 
   elements:
     ".badge"                :  "allFamiliasAndGroups"
@@ -91,6 +93,18 @@ class Productos  extends Spine.Controller
     producto = Producto.find(id)
     Producto.set_current producto
     @close() if !@keepOpen
+  
+
+  onInputType: (e) =>
+    if e.keyCode == 13
+      @onInputChange(e)
+
+  onInputClick: (e) =>
+    target = $(e.target)
+    id = target.attr "data-id"
+    producto = Producto.find(id)
+    target.val producto.InventarioActual if target.val() == ""
+    target.select()
   
   onInputChange: (e) =>
     target = $(e.target)
