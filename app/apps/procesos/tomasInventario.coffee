@@ -9,7 +9,6 @@ class tomasInventario extends Spine.Controller
   @label = "Toma Inventarios"
   @icon = "icon-edit"
 
-
   elements:
     ".productList"       :  "productList"
     
@@ -18,7 +17,6 @@ class tomasInventario extends Spine.Controller
     "click .cancel"      : "reset"
     "click .print"       : "onPrint"
     "change input"       : "onInputChange"
-    
 
   setVariables: ->
 
@@ -66,7 +64,7 @@ class tomasInventario extends Spine.Controller
     else
       resultIcon.addClass "icon-remove"
       
-    txtDiff.html producto.InventarioActual - value
+    txtDiff.html value - producto.InventarioActual
     
   reset: () =>
     @resetBindings()
