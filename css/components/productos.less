@@ -14,7 +14,7 @@
  
   
   &.closed{
-    max-height: 33px;  
+    max-height: 35px;  
     .box-shadow(0 0 0);
   }
 
@@ -30,7 +30,7 @@
         padding: 4px;
         text-align: center;
          &:hover{
-            color: @red;
+            color: @blueDark;
             li{
               
             }
@@ -40,7 +40,7 @@
           display: inline-block;
           margin-right: 10px;
           &.active{
-            color: @red;
+            color: @blueDark;
             opacity: 1;
           }
         }
@@ -51,20 +51,22 @@
   .familias_list{
     margin: 0px;
     padding-right: 30px;
-    height: 34px;
+    height: 35px;
     
     overflow: hidden;
     .badge{
       cursor: pointer;
       margin: 6px 4px;
-      background-color: #efefef;
-      color: @red;
+      color: @blueDark;
       padding: 6px 13px 6px;
       text-shadow: 0 0 0;
       font-size: 13px;
+      border: #efefef 1px solid;
+      background-image: url("/images/furley_bg.png");
       &:hover,&.active{
-        background-color: @red;
-        color: #efefef;
+        background: none;
+        background-color: @blueDark;
+        color: #ffffff;
       }
     }
   }
@@ -79,18 +81,18 @@
     .badge{
       text-shadow: 0 0 0;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 13px;
       margin: 5px;
       .border-radius(15px 0px 15px 15px);
       background-color: #efefef;
-      color: @red;
+      color: @blueDark;
       padding: 9px;
       border: 1px dotted #fff;
       &:hover{
-        border: 1px solid @red;
+        border: 1px solid @blueDark;
       }
       &.active{
-        background-color: @red;
+        background-color: @blueDark;
         color: #efefef;
       }
     }

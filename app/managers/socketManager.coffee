@@ -36,35 +36,35 @@ class SocketManager
     @channel = @pusher.subscribe('salesforce_data_push')
 
     @channel.bind "Clientes" , (message) =>
-      console.log "Updating Clientes"
-      console.log message
+      #console.log "Updating Clientes"
+      #console.log message
       results = Cliente.updateFromSocket(message)
 
     @channel.bind "Saldos" , (message) =>
-      console.log "Updating Saldos"
-      console.log message
+      #console.log "Updating Saldos"
+      #console.log message
       results = Saldo.updateFromSocket(message)
       Saldo.onQuerySuccess()
 
     @channel.bind "Productos" , (message) =>
-      console.log "Updating Productos"
-      console.log message
+      #console.log "Updating Productos"
+      #console.log message
       results = Producto.updateFromSocket(message)
 
     @channel.bind "PedidoPreparado" , (message) =>
-      console.log "Updating PedidoPreparado"
-      console.log message
+      #console.log "Updating PedidoPreparado"
+      #console.log message
       results = PedidoPreparado.updateFromSocket(message)
       if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito'])
         Spine.notifications.showNotification( "Pedidos Preparados" , "Han ingresado nuevos pedidos" )
 
     @channel.bind "PedidoAprobado" , (message) =>
-      console.log "Updating PedidoAprobado"
-      console.log message
+      #console.log "Updating PedidoAprobado"
+      #console.log message
       results = PedidoPreparado.updateFromSocket(message)
 
     @channel.bind "FacturaPreparada" , (message) =>
-      console.log "Updating FacturaPreparada"
+      #console.log "Updating FacturaPreparada"
       
       results = FacturaPreparada.updateFromSocket(message)
       if results  != false
@@ -72,7 +72,7 @@ class SocketManager
           Spine.notifications.showNotification( "Aprobacion de Facturas" , "Facturas Listas para Imprimir" )
 
     @channel.bind "FacturaImpresa" , (message) =>
-      console.log "Updating FacturaImpresa"
+      #console.log "Updating FacturaImpresa"
       results = FacturaPreparada.updateFromSocket(message)
 
 module.exports = SocketManager

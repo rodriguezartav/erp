@@ -1,0 +1,15 @@
+
+<td>
+  <%= @Consecutivo %>
+</td>
+<td><%= @Tipo_de_Documento %></td>
+<td><%= @Saldo.toMoney() %></td>
+<td><%= @FechaVencimiento %>
+<strong>( 
+
+<%= if (@Plazo - @PlazoActual) > 0 then "en #{(@Plazo - @PlazoActual)} días" else "venció" %>
+
+ )</strong>
+</td>
+
+

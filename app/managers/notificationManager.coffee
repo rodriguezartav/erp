@@ -9,7 +9,7 @@ class NotificationManager
       window.webkitNotifications?.requestPermission?()
 
   showNotification: (title,message) =>
-    console.log title
+    #console.log title
     return false if @notificationObj?.title == title
     @notificationObj =  {title: title,message:message}
     @notificacion = window?.webkitNotifications?.createNotification "http://rodcoerp.herokuapp.com/images/logo_icon.png" , @notificationObj.title , @notificationObj.message
