@@ -37,7 +37,13 @@
           <td style="width: 60%">
             <h1><i class="icon-user"></i> <span class="clienteName"></span></h1>
             <h4>Codigo: <span class="clienteId"></span></h4>
-            <hr/>
+          </td>
+          <td class="well">
+            <h1>
+              Saldo 
+              <span class="saldo">
+              </span>
+            </h1>
           </td>
         </tr>
       </table>
@@ -52,7 +58,6 @@
               <th>Tipo</th>
               <th>Saldo</th>
               <th>Vence</th>
-
             </tr>
           </thead>
           <tbody class="saldos_list">
@@ -63,6 +68,3 @@
     
   </table>
 </div>
-
-
-

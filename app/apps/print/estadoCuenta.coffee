@@ -61,6 +61,7 @@ class EstadoCuenta extends Spine.Controller
     ".info_popover"      : "info_popover"
     ".clienteName"       : "clienteName"
     ".clienteId"         : "clienteId"
+    ".saldo"             : "saldo"
     
   events:
     "click .print" : "print"
@@ -103,13 +104,14 @@ class EstadoCuenta extends Spine.Controller
     documentos.sort (a,b) ->
       return -1 if a.Tipo_de_Documento != "FA"
       return (a.Plazo - a.PlazoActual) - (b.Plazo - b.PlazoActual)
-      
-      
-      
+    
+    saldo = 0 
     for documento in documentos
+      saldo+= documento.Saldo
       ri = new Items(documento: documento)
       @items.push ri
       @saldos_list.append ri.el
+    @saldo.html saldo.toMoney()
 
   print: ->
     window.print()
