@@ -66,6 +66,8 @@ EstadoCuenta = require("apps/print/estadoCuenta")
 ClienteAccess = require("apps/asc/clienteAccess")
 
 
+VerClientes = require("apps/vistas/verClientes")
+
 #FOR PROFILE BASED CONFIGURATION
 Movimiento = require("models/movimiento")
 Cliente = require("models/cliente")
@@ -78,15 +80,15 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ClienteAccess, EstadoCuenta , VerCierreMensual,  VerCierreDiario , DoCierreDiario, DoCierreMensual ,  VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota  , TomasInventario , Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
+    apps = [VerClientes,ClienteAccess, EstadoCuenta , VerCierreMensual,  VerCierreDiario , DoCierreDiario, DoCierreMensual ,  VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota  , TomasInventario , Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion ]
     @profiles["Presidencia"] =  [ DoCierreDiario  , AjustarNegociacion ,   Compras , CuentasPorPagarFlujo , CuentasPorPagarAprobacion  , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacionGerencia , VerRegistrosResumen ]
-    @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , FacturasAnular , VerRegistrosResumen , VerRegistros  ]
-    @profiles["Encargado de Ventas"] = [ Pedidos  , FacturasImpresion , FacturasAnular , TomasInventario , VerRegistrosResumen , VerRegistros ]
-    @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion ,VerRegistrosResumen , VerRegistros ]
-    @profiles["Vendedor"] = [ Pedidos ]
+    @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , FacturasAnular , VerRegistrosResumen , VerRegistros  , VerClientes ]
+    @profiles["Encargado de Ventas"] = [ Pedidos  , FacturasImpresion , FacturasAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Vendedor"] = [ Pedidos , VerClientes ]
     @profiles["Contabilidad"] = [ Ajustes , VerCierreMensual ,  VerCierreDiario , DoCierreDiario , DoCierreMensual ,CuentasPorPagarFlujo , VerRegistros ,  VerRegistrosResumen ]
     Spine.bind "login_complete" , @onLoginComplete
 
