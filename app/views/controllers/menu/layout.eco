@@ -3,10 +3,15 @@
   <div class="container">
 
   <div class="row-fluid">
-    <div class="row-fluid list span10 menuContainer">
+    <div class="row-fluid span10 menuContainer">
     </div>
     
-    <div class="row-fluid span2">
+    <div class="span2 notificationContainer">
+    
+      <ul  class="unstyled notificacion_list">
+        
+      </ul>
+    
     </div>
   </div>
   

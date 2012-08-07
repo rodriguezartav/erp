@@ -1,8 +1,8 @@
 Spine = require('spine')
-Productos = require("controllers/productos")
 User = require("models/user")
 Saldo = require("models/socketModels/saldo")
-
+Cliente = require("models/cliente")
+Producto = require("models/producto")
   
 class Footer  extends Spine.Controller
   className: "navbar navbar-fixed-left"

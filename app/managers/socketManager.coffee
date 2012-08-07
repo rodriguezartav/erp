@@ -2,6 +2,7 @@ Spine = require('spine')
 PedidoPreparado  =  require("models/socketModels/pedidoPreparado")
 FacturaPreparada  =  require("models/socketModels/facturaPreparada")
 Saldo  =  require("models/socketModels/saldo")
+Notificacion = require "models/notificacion"
 
 Cliente  =  require("models/cliente")
 Producto  =  require("models/producto")
@@ -55,6 +56,8 @@ class SocketManager
       #console.log "Updating PedidoPreparado"
       #console.log message
       results = PedidoPreparado.updateFromSocket(message)
+      Notificacion.create date: new Date(), text: "Han ingresado nuevos pedidos"
+      
       if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito'])
         Spine.notifications.showNotification( "Pedidos Preparados" , "Han ingresado nuevos pedidos" )
 
@@ -65,8 +68,9 @@ class SocketManager
 
     @channel.bind "FacturaPreparada" , (message) =>
       #console.log "Updating FacturaPreparada"
-      
       results = FacturaPreparada.updateFromSocket(message)
+      Notificacion.create date: new Date(), text: "Facturas Listas para Imprimir"
+      
       if results  != false
         if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Ventas' , 'Encargado de Ventas'])
           Spine.notifications.showNotification( "Aprobacion de Facturas" , "Facturas Listas para Imprimir" )

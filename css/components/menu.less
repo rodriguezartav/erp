@@ -1,67 +1,78 @@
 
 .menu{
+
+  .notificationContainer{
+    &.span2{
+      margin-left: 0px;
+      width: 17.05%;
+    }
   
-  
-  .appList{
-    border-bottom: 1px solid #efefef;
-    &:last-child{
-      border: none;
+    li{
+      padding: 10px;
+      margin-bottom: 5px;
+      background-color: lighten(#efefef,5%);
+      border: 1px #efefef solid;
     }
   }
-  
+
   .menuContainer{
     border-right: 1px solid #efefef;
-  }
 
-  li{
-    border: none;
-    height: 70px;
-    width: 75px;
-    text-align: center;
-    cursor: pointer;
-    float: left;
-    margin: 14px 10px 7px 10px;
-    
-    &:hover{
-      >* {
-      color: @blue;
-     }
-    }
-    
-    i{
-      font-size: 26px;
-      color: #454545;
-    }
-    span{
-      font-size: 16px;
-      font-weight: 200;
-      display: block;
-      max-width: 100px;
-    }
-    
-    &.header{
-      background-color: #555;
-      color: #fff;
-      margin: 0px;
-      width: 120px;
-      height: 60px;
-      margin-right: 15px;
-      margin-top: 10px;
-      .border-radius(10px);
-      h4{
-        padding-top: 20px;
-        font-weight: 200;
+    .appList{
+      border-bottom: 1px solid #efefef;
+      &:last-child{
+        border: none;
       }
+    }
+
+    li{
+      border: none;
+      height: 70px;
+      width: 85px;
+      text-align: center;
+      cursor: pointer;
+      float: left;
+      margin: 14px 10px 7px 10px;
+    
       &:hover{
-        h4{
-          color: #fff;
-        }
-      
+        >* {
+        color: @blue;
+       }
       }
-    }
     
-   
+      i{
+        font-size: 28px;
+        color: #454545;
+      }
+      span{
+        font-size: 17px;
+        font-weight: 200;
+        display: block;
+        max-width: 100px;
+      }
+    
+      &.header{
+        background-color: #555;
+        color: #fff;
+        margin: 0px;
+        width: 120px;
+        height: 60px;
+        margin-right: 15px;
+        margin-top: 10px;
+        .border-radius(10px);
+        h4{
+          padding-top: 20px;
+          font-weight: 200;
+        }
+        &:hover{
+          h4{
+            color: #fff;
+          }
+      
+        }
+      }
+    
+    }
   }
-
 
 }
