@@ -1,4 +1,4 @@
-<li class="" data-type="<%= @app.label.replace(/\s/g,'') %>">
+<li class="menuApp" data-type="<%= @app.label.replace(/\s/g,'') %>">
 
 <i class="<%= @app.icon || 'icon-book' %> appButton"></i>
   

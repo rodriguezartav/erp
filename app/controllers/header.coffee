@@ -25,6 +25,9 @@ class Header  extends Spine.Controller
     user = User.exists Spine.session.userId
     @currentUser.html require("views/controllers/header/user")([user])
 
+  onHome: ->
+    @navigate "/apps"
+
   obsolte: ->
     Spine.bind "query_start",=>
       @loader.addClass "animate"

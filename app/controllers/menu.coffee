@@ -36,7 +36,7 @@ class Menu extends Spine.Controller
     #@list.append '<ul class="span2"><li><h2>Notificaciones</h2></li></ul>'
       
   on_click: (e) =>
-   target = $(e.target).parents ".thumbnail"   
+   target = $(e.target).parents ".menuApp"   
    name = target.attr("data-type")
    target.parent().addClass "active"
    @navigate "/apps/" + name
