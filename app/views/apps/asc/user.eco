@@ -1,0 +1,20 @@
+  <td><%= new Date(Date.parse(@updatedAt)).to_pretty() %></td>
+  <td><%= @empresa %></td>
+  <td><%= @name %></td>
+  <td><%= @position %></td>
+  <td>
+    <%= @username %>
+  </td>
+  <td>
+    <% if @aprobado :  %>
+      <a class="btn btn-error noAprobar">Des-Aprobar</a>
+      <a class="btn btn-primary enviar">Enviar Pin</a>
+
+      <% else :  %>
+        <a class="btn btn-primary aprobar">Aprobar</a>
+    <% end  %>
+  </td>
+  
+  <td>
+    <a class="btn btn-danger remove">X</a>
+  </td>

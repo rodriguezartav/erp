@@ -21,6 +21,7 @@ EmitirPago = require("apps/auxiliares/emitirPago")
 
 EmitirRecibo = require("apps/cuentasPorCobrar/emitirRecibo")
 
+
 VerSaldos = require("apps/vistas/verSaldos")
 VerRegistros = require("apps/vistas/verRegistros")
 VerRegistrosResumen = require("apps/vistas/verRegistrosResumen")
@@ -62,6 +63,9 @@ ListasPrecio = require("apps/procesos/listasPrecio")
 EstadoCuenta = require("apps/print/estadoCuenta")
 
 
+ClienteAccess = require("apps/asc/clienteAccess")
+
+
 #FOR PROFILE BASED CONFIGURATION
 Movimiento = require("models/movimiento")
 Cliente = require("models/cliente")
@@ -74,7 +78,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [EstadoCuenta , VerCierreMensual,  VerCierreDiario , DoCierreDiario, DoCierreMensual ,  VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota  , TomasInventario , Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
+    apps = [ClienteAccess, EstadoCuenta , VerCierreMensual,  VerCierreDiario , DoCierreDiario, DoCierreMensual ,  VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota  , TomasInventario , Ajustes ,  NotaCreditoProveedor, FacturasAnular,AjustarNegociacion,PagosAnular , Pedidos ,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion ]
     @profiles["Presidencia"] =  [ DoCierreDiario  , AjustarNegociacion ,   Compras , CuentasPorPagarFlujo , CuentasPorPagarAprobacion  , TomasInventario , VerRegistrosResumen  ]

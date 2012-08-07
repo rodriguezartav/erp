@@ -5,26 +5,12 @@
     <div class="container">
 
         <a href="https://na7.salesforce.com/00O/o" target="_blank" class="pull-left"><i class="icon-cloud"></i> To Salesforce</a>
-      
-        
-      
-        <ul class="nav pull-right">
-          
-      
-          
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="currentUser"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="userWrapper">
-                <ul class="users unstyled">
-                  
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
+
+         <div class="actionButtons pull-right">          
+             <a><i data-placement="left"class="tipable icon-refresh icon-large update" rel="tooltip" data-original-title="Actualizar Clientes,Productos y Saldos"></i></a>
+             <a><i  data-placement="left"  style="color: red"  class="tipable icon-off icon-large reset" rel="tooltip" data-original-title="Master Reset del APP"></i></a>
+           </div>
+           
     </div>
   </div>
 </div>

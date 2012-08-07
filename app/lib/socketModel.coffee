@@ -1,4 +1,4 @@
-Spine ?= require('spine')
+Spine = require('spine')
 Spine.socketModels = [] if !Spine.socketModels
 
 Spine.Model.SocketModel =

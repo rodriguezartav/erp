@@ -4,7 +4,7 @@ FacturaPreparada = require("models/socketModels/facturaPreparada")
 
 class Facturas extends Spine.Controller
   @departamento = "Pedidos"
-  @label = "Impresion de Facturas"
+  @label = "Impresion"
   @icon = "icon-print"
   
   className: "row-fluid"

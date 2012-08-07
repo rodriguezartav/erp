@@ -1,19 +1,26 @@
 
 .menu{
   
-  .thumbnails{
-    margin-right: 20px;
-    >li{
-      }
+  
+  .appList{
+    border-bottom: 1px solid #efefef;
+    &:last-child{
+      border: none;
+    }
   }
-
+  
+  .menuContainer{
+    border-right: 1px solid #efefef;
+  }
 
   li{
     border: none;
-    height: 100px;
-    width: 120px;
+    height: 70px;
+    width: 75px;
     text-align: center;
     cursor: pointer;
+    float: left;
+    margin: 14px 10px 7px 10px;
     
     &:hover{
       >* {
@@ -22,11 +29,11 @@
     }
     
     i{
-      font-size: 30px;
+      font-size: 26px;
       color: #454545;
     }
     span{
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 200;
       display: block;
       max-width: 100px;
@@ -34,12 +41,15 @@
     
     &.header{
       background-color: #555;
-      border: 4px solid @blue;
       color: #fff;
-      height: 50px;
-      .border-radius(15px);
+      margin: 0px;
+      width: 120px;
+      height: 60px;
+      margin-right: 15px;
+      margin-top: 10px;
+      .border-radius(10px);
       h4{
-        padding-top: 17px;
+        padding-top: 20px;
         font-weight: 200;
       }
       &:hover{

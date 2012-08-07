@@ -7,7 +7,7 @@ class PagosAnular extends Spine.Controller
   
   className: "row-fluid"
   
-  @departamento = "Administracion"
+  @departamento = "Credito y Cobro"
   @label = "Anular Pagos"
   @icon = "icon-remove"
 

@@ -6,7 +6,7 @@ class VerRegistrosResumen extends Spine.Controller
   className: "row-fluid VerRegistroResumen"
   
   @departamento = "Contabilidad"
-  @label = "Resumen de Registos"
+  @label = "Registos Resumen"
   @icon = "icon-th"
 
   elements:

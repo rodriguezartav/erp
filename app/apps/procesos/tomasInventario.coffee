@@ -5,7 +5,7 @@ class tomasInventario extends Spine.Controller
   
   className: "row-fluid"
   
-  @departamento = "Administracion"
+  @departamento = "Inventarios"
   @label = "Toma Inventarios"
   @icon = "icon-edit"
 

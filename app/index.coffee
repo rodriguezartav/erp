@@ -32,6 +32,7 @@ class App extends Spine.Controller
 
     Spine.server = @options.server
     Spine.pusherKey = @options.pusherKey
+    Spine.registerParse @options.parseKeys
 
     new Header(el: $("header"))
     new Productos(el: $(".productosToolbar"))

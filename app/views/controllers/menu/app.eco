@@ -1,4 +1,8 @@
-<li class="thumbnail" data-type="<%= @app.label.replace(/\s/g,'') %>">
-  <i class="<%= @app.icon || 'icon-book' %> appButton"></i>
-  <span class="caption appButton"><%= @app.label %></span>
+<li class="" data-type="<%= @app.label.replace(/\s/g,'') %>">
+
+<i class="<%= @app.icon || 'icon-book' %> appButton"></i>
+  
+  <span class=" appButton">
+    <%= @app.label %>
+  </span>
 </li>

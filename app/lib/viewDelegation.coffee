@@ -1,4 +1,4 @@
-Spine ?= require('spine')
+Spine = require('spine')
 
 Spine.Controller.ViewDelegation =
 
@@ -142,15 +142,7 @@ Spine.Controller.ViewDelegation =
         return null
 
 
-      resetDates: ->
-        for input in @inputs_to_validate
-          input = $(input) 
-          options = @getInputOptions(input)
-          if options.dateName
-            date = new Date()
-            input.val(date.getDate()) if options.datePart == "date"
-            input.val(date.getMonth() + 1) if options.datePart == "month"
-            input.val(date.getFullYear()) if options.datePart == "year"
+
 
       parseDates: (object,fechas) ->
         errors = []

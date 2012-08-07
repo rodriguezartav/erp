@@ -10,7 +10,7 @@ class PedidosAprobacion extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Pedidos"
-  @label = "Aprobacion de Pedidos"
+  @label = "Aprobacion"
   @icon = "icon-ok-sign"
 
   elements:
@@ -69,6 +69,7 @@ class PedidosAprobacion extends Spine.Controller
   reset: ->
     PedidoPreparado.unbind "query_success" , @onLoadPedidos
     PedidoPreparado.unbind "push_success" , @renderPedidos
+    @el.find('.popable').popover("hide")
     @release()
     @navigate "/apps"
 

@@ -46,7 +46,7 @@ class Compras extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Inventarios"
-  @label = "Compra de Mercaderia"
+  @label = "Compras"
   @icon = "icon-shopping-cart"
 
   elements:

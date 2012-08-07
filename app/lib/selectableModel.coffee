@@ -2,7 +2,7 @@
 #FOR EXAMPLE, WHEN DOING OPERATIONS ON A CUSTOMER; IT NEEDS TO BE SELECTED IN A "SINGLETON" OF ITS CLASS AND BLOCKED SO IT NEEDS TO BE 
 #RESET IN ORDER TO BE CHANGED
 
-Spine ?= require('spine')
+Spine = require('spine')
 
 Spine.Model.SelectableModel =
 

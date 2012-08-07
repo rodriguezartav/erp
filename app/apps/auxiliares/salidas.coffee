@@ -34,7 +34,7 @@ class Salidas extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
 
   @departamento = "Inventarios"
-  @label = "Salida de Mercaderia"
+  @label = "Salidas"
   @icon = "icon-arrow-left"
 
 

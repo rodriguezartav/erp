@@ -1,4 +1,4 @@
-Spine ?= require('spine')
+Spine = require('spine')
 
 #ADD ON FOR A MODEL THAT MUST BE A SINGLETON AND LOCAL , LIKE FOR SESSION AND OPTIONS
 

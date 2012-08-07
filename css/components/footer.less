@@ -9,35 +9,23 @@ footer{
     .buttonBackground(@btnBackground, @btnBackgroundHighlight);
     border-top: #ddd;
     padding-bottom: 5px;
-    
+  }
 
-    
-    .nav{
-      .dropdown{
-        .userWrapper{
-          max-height: 350px;
-          width: 200px;
-          overflow-y: scroll;
-        }
-        
-        .currentUser{
-          img{
-            width: 25px;
-            height: 25px;
-          }
-        }
-        
-        .users{
-          li{
-            img{
-              width: 25px;
-              height: 25px;
-            }
-          }
-        }
+
+  .actionButtons{
+    padding-top: 10px;
+    a{
+      color: #999;
+      display: inline-block;
+      margin: 5px 7px;
+      &:hover{
+        color: @red;
+        text-decoration: none;
+      }
+      i{
+        font-size: 20px; 
       }
     }
-    
   }
 
   a{

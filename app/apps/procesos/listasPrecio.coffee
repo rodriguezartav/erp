@@ -5,7 +5,7 @@ class listasPrecio extends Spine.Controller
   
   className: "row-fluid"
   
-  @departamento = "Administracion"
+  @departamento = "Inventarios"
   @label = "Lista de Precios"
   @icon = "icon-table"
 
