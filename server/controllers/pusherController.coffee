@@ -13,6 +13,14 @@ class PusherController
       req.pusherController = @
       next()
 
+  keys: =>
+    apiKeys=
+      restKey: process.env.PUSHER_KEY
+      appId: process.env.PUSHER_APP_ID
+      secret: process.env.PUSHER_SECRET
+      authUrl: process.env.PUSHER_AUTH_URL
+    JSON.stringify apiKeys
+
   auth: (socketId, channel, channelData) =>
     returnHash = {}
     channelDataStr = ''

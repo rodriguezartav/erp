@@ -25,8 +25,8 @@ class SocketManager
 
   handshake: =>
     try
-      Pusher.channel_auth_endpoint = 'http://erp.rodcocr.com/pusherAuth';
-      @pusher = new Pusher(Spine.pusherKey) 
+      Pusher.channel_auth_endpoint = Spine.pusherKeys.authUrl
+      @pusher = new Pusher(Spine.pusherKeys.restKey) 
 
     catch error
       Spine.trigger "show_lightbox" , "show-warning" , error: "No se puedo conectar al Notificador , intente reiniciar cuando haya internet"

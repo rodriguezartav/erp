@@ -8,13 +8,13 @@ class Routes
 
   setupRoutes: ->
     @app.get '/' , (req, res) ->
-      res.render "app" , {useManifest: false, app: "" , pusherKey: process.env.PUSHER_KEY, parseKeys: req.parseController.keys() }
+      res.render "app" , {useManifest: false, app: "" , pusherKeys: req.pusherController.keys(), parseKeys: req.parseController.keys() }
 
     @app.get '/test' , (req, res) -> 
-      res.render "app" , {layout: "test",  app: "" , pusherKey: process.env.PUSHER_KEY, parseKeys: req.parseController.keys() }
+      res.render "app" , {layout: "test",  app: "" , pusherKeys: req.pusherController.keys() , parseKeys: req.parseController.keys() }
 
     @app.get '/remote' , (req, res) ->
-      res.render "app" , {useManifest: true,  app: "" , pusherKey: process.env.PUSHER_KEY, parseKeys: req.parseController.keys() }
+      res.render "app" , {useManifest: true,  app: "" , pusherKeys: req.pusherController.keys() , parseKeys: req.parseController.keys() }
 
     @app.all "/parse/users/?*" , (req,res) ->
       req.parseController.handleProxy(req,res)
