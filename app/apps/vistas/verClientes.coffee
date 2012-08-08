@@ -6,7 +6,7 @@ class VerClientes extends Spine.Controller
   
   className: "row-fluid verClientes"
   
-  @departamento = "Pedidos"
+  @departamento = "Servicio"
   @label = "Ver Clientes"
   @icon = "icon-eye-open"
 

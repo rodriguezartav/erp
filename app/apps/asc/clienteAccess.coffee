@@ -37,19 +37,21 @@ class Items extends Spine.Controller
     @user.aprobado= true;
     @user.save()
     @render()
-    
+    Spine.socketManager.push "custumer_aproval" , { user: @user }
+
   noAprobarUser: ->
     @user.aprobado= false;
     @user.save()
     @render()
     
   sendPin: ->
-    
+    ParseUser.sendPin @user.username
+    alert "Se envio el pin"
 
 class ClienteAccess extends Spine.Controller
   className: "row-fluid"
   
-  @departamento = "Credito y Cobro"
+  @departamento = "Servicio"
   @label = "Acceso de Clientes"
   @icon = "icon-remove"
   
@@ -107,9 +109,7 @@ class ClienteAccess extends Spine.Controller
   onUserLoaded: =>
     users = ParseUser.all()
     users= users.sort (a,b) ->
-      
       return Date.parse(b.updatedAt) - Date.parse(a.updatedAt)
-      
     for user in users
       @createItem(user)
 

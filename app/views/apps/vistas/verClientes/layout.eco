@@ -1,7 +1,7 @@
 <h5 class="preHeader"><%= @departamento %></h2>
 <h1><%= @label %></h2>
 
-
+<h4>Puede buscar usando pulsando en el teclado las teclas <strong>CTRL</strong> y <strong>F</strong> al mismo tiempo</h4>
 
   <table class="table table-striped table-bordered table-condensed">
     <thead>

@@ -14,7 +14,7 @@ class ParseUser extends Spine.Model
   @sendPin: (username) ->
     data=
       username: username
-    Spine.ParseUtil.custom "POST" , data: data , url: "/api/1/users/sendPin"
+    $.post "http://localhost:5000/api/1/users/sendPin", data: data
 
   @checkPin: (pin) ->
     User.fetch pin

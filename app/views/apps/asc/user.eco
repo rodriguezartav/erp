@@ -8,7 +8,7 @@
   <td>
     <% if @aprobado :  %>
       <a class="btn btn-error noAprobar">Des-Aprobar</a>
-      <a class="btn btn-primary enviar">Enviar Pin</a>
+      <a class="btn btn-primary enviar sendPin">Enviar Pin</a>
 
       <% else :  %>
         <a class="btn btn-primary aprobar">Aprobar</a>

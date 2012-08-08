@@ -49,6 +49,16 @@ class App extends Spine.Controller
 
     $('.tipable').tooltip({})
 
+    @clicked = false
+    
+    setInterval =>
+      return @clicked = false if @clicked
+      @navigate "/apps"
+    , 60000
+
+    $("body").click =>
+      @clicked = true
+
     @routes
       "/apps": =>
         @currentApp?.reset()

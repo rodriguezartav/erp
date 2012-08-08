@@ -3,6 +3,9 @@ port =  process.env.PORT || 9294
 express = require('express')
 OpfDevUtil = require("./opfDevUtil")
 ParseController = require('./controllers/parseController')
+PusherController = require('./controllers/pusherController')
+TwilioController = require('./controllers/twilioController')
+
 
 Opf =require "opf"
 
@@ -15,7 +18,9 @@ app.use express.cookieParser()
 app.set 'views' , './views'
 app.set 'view engine'  , 'jade'
 
-new ParseController(app)    
+new ParseController(app)
+new PusherController(app)
+new TwilioController(app)
 
 OpfDevUtil.setupCompilers(app) if process.env.NODE_ENV != "production"
 app.use(express.static("./public"))
@@ -32,6 +37,13 @@ app.get '/remote' , (req, res) ->
 
 app.all "/parse/users/?*" , (req,res) ->
   req.parseController.handleProxy(req,res)
+
+app.post "/pusherAuth" , (req,res) ->
+  channel_name = req.body.channel_name
+  socket_id = req.body.socket_id
+  res.send req.pusherController.auth(socket_id,channel_name)
+
+
 
 app.listen(port)
 console.log "Listening on port " + port

@@ -70,7 +70,6 @@ class Clientes  extends Spine.Controller
     #return false if Cliente.locked 
     txt = $(e.target).val()
     result = Cliente.filter txt,@filterFunction
-    console.log result
     @render result
 
   reset: =>

@@ -11,11 +11,13 @@ class Menu extends Spine.Controller
  
   events:
     "click .appButton" : "on_click"
+    "click .notificacion_item" : "onNotificacionItemClick"
   
   constructor: ->
     super
     @renderApps()
-    Notificacion.bind "create" , @onNotificacionCreate
+    @renderNotificaciones()
+    Notificacion.bind "create destroy" , @renderNotificaciones
 
   renderApps: =>
     @html require("views/controllers/menu/layout")(apps: @apps)
@@ -35,9 +37,9 @@ class Menu extends Spine.Controller
       @menuContainer.append html
   
 
-  onNotificacionCreate: =>
+  renderNotificaciones: =>
     nots = Notificacion.all()
-    nots.sort (a,b) ->
+    nots = nots.sort (a,b) ->
       return b.date.getTime() - a.date.getTime()
     @notificacion_list.html require("views/controllers/menu/notificacion")(nots)
       
@@ -46,6 +48,12 @@ class Menu extends Spine.Controller
    name = target.attr("data-type")
    target.parent().addClass "active"
    @navigate "/apps/" + name
+
+  onNotificacionItemClick: (e) ->
+    target = $(e.target).parents ".notificacion_item"   
+    target.removeClass "pending"
+    notificacion= Notificacion.find target.attr "data-id"
+    notificacion.destroy()
 
   reset: =>
    @el.undelegate('ul>li>a', 'click', 'on_click')

@@ -48,7 +48,7 @@ class EstadoCuenta extends Spine.Controller
   
   className: "row-fluid"
   
-  @departamento = "Credito y Cobro"
+  @departamento = "Servicio"
   @label = "Estado de Cuenta"
   @icon = "icon-inbox"
 
