@@ -50,7 +50,7 @@ html(lang="en")
         var App = require("index");
         var ErrorManager = require("managers/errorManager");
 
-        var pusherKey = !{pusherKeys};
+        var pusherKeys = !{pusherKeys};
         var parseKeys = !{parseKeys};
         var statApi = "7fe222080e1ae26d9f89ba1ba8f320b2";
         
@@ -59,7 +59,7 @@ html(lang="en")
         //var server= "http://api2s.heroku.com";
         
         var instance_url = "https://cs11.salesforce.com";
-        exports.app =  new App({ el: $(".appCanvas") , options: {statApi: statApi , salesforceSession: null , server: server , pusherKey: pusherKey, parseKeys: parseKeys} });
+        exports.app =  new App({ el: $(".appCanvas") , options: {statApi: statApi , salesforceSession: null , server: server , pusherKeys: pusherKeys, parseKeys: parseKeys} });
 
         window.onerror = function (msg, url, num) {
           ErrorManager.logError(msg)

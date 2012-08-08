@@ -31,10 +31,8 @@ class App extends Spine.Controller
     #StatManager.registerManager(@options.statApi)
 
     Spine.server = @options.server
-    Spine.pusherKey = @options.pusherKey
+    Spine.pusherKeys = @options.pusherKeys
     Spine.registerParse @options.parseKeys
-
-    console.log @options.pusherKey
 
     new Header(el: $("header"))
     new Productos(el: $(".productosToolbar"))
