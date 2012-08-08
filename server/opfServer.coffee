@@ -4,7 +4,7 @@ express = require('express')
 OpfDevUtil = require("./opfDevUtil")
 ParseController = require('./controllers/parseController')
 PusherController = require('./controllers/pusherController')
-TwilioController = require('./controllers/twilioController')
+#TwilioController = require('./controllers/twilioController')
 
 
 Opf =require "opf"
@@ -20,7 +20,7 @@ app.set 'view engine'  , 'jade'
 
 new ParseController(app)
 new PusherController(app)
-new TwilioController(app)
+#new TwilioController(app)
 
 OpfDevUtil.setupCompilers(app) if process.env.NODE_ENV != "production"
 app.use(express.static("./public"))

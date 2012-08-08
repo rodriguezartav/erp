@@ -14,7 +14,15 @@ class ParseUser extends Spine.Model
   @sendPin: (username) ->
     data=
       username: username
-    $.post "http://localhost:5000/api/1/users/sendPin", data: data
+    $.ajax
+      url: 'http://localhost:5000/api/1/users/sendPin',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(data)
+      dataType: 'json'
+      processData: false
+    
+
 
   @checkPin: (pin) ->
     User.fetch pin
