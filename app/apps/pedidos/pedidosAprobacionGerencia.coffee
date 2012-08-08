@@ -60,7 +60,7 @@ class PedidosAprobacionGerencia extends Spine.Controller
     Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: true , allowOver60: true} , @aprobarSuccess
 
   aprobarSuccess: =>
-    Spine.SocketManager.pushToProfiles("Encargado Ventas" , "Aprobando varios pedidos, pueden facturar.")
+    Spine.socketManager.pushToProfiles("Encargado Ventas" , "Aprobando varios pedidos, pueden facturar.")
     
     for pedido in @aprovedGroup.Pedidos
       pedido.destroy()

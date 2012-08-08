@@ -69,7 +69,7 @@ class PedidosAprobacion extends Spine.Controller
 
   notify: =>
     Spine.throttle ->
-      Spine.SocketManager.pushToProfiles("Encargado Ventas" , "Aprobando varios pedidos, pueden facturar.")
+      Spine.socketManager.pushToProfiles("Encargado Ventas" , "Aprobando varios pedidos, pueden facturar.")
     , 60000
 
   reset: ->

@@ -218,7 +218,8 @@ class Credito extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
   after_send: =>
-    Spine.SocketManager.pushToProfiles "all" , "Ingrese un Pedido por #{@pedido.Total.toMoney()} de #{Cliente.current.Name}"
+    cliente = Cliente.find @pedido.Cliente
+    Spine.socketManager.pushToProfiles "all" , "Ingrese un Pedido por #{@pedido.Total.toMoney()} de #{cliente.Name}"
     @customReset()
 
   close: =>

@@ -33,7 +33,7 @@ class Rest extends Spine.Controller
     @data.class.unbind "insert_success" , @on_success  
     @html require('views/controllers/lightbox/success')      
     @callback.apply @, [true,results]
-    Spine.trigger "hide_lightbox"
+    Spine.trigger "hide_lightbox" , 1300
     
 
   on_error: (error_obj) =>

@@ -43,8 +43,6 @@ Spine.Model.SocketModel =
 
       afterSocketUpdate: (message,results) =>
         console.log "updated #{@className}"
-        console.log message
-        console.log results   
         return true
 
       beforeSaveLocal: ->
