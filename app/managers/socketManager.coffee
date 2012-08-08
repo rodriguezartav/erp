@@ -18,7 +18,7 @@ class SocketManager
 
   handshake: =>
     try
-      Pusher.channel_auth_endpoint = 'https://erp.rodcocr.com/pusherAuth';
+      Pusher.channel_auth_endpoint = 'http://erp.rodcocr.com/pusherAuth';
       @pusher = new Pusher(Spine.pusherKey) 
 
     catch error
