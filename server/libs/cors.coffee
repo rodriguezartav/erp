@@ -20,6 +20,9 @@ class Cors
     allowOrigin = origin if origin.indexOf("heroku") > -1 
     allowOrigin = origin if origin.indexOf("herokuapp") > -1
     allowOrigin = origin if origin.indexOf("rodcocr") > -1
+    allowOrigin = origin if origin.indexOf("visual.force") > -1
+    allowOrigin = origin if origin.indexOf("force.com") > -1
+    allowOrigin = origin if origin.indexOf("salesforce.com") > -1
     allowOrigin
 
 module.exports = Cors
