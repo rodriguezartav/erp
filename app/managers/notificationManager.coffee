@@ -4,7 +4,7 @@ Notificacion = require "models/notificacion"
 class NotificationManager
   
   constructor: ->
-    setInterval @showNotification , 10000
+    setInterval @showNotification , 60000
 
   checkPermision: ->
     if window.webkitNotifications?.checkPermission?() != 0
