@@ -13,6 +13,7 @@ class Header  extends Spine.Controller
 
   events:
     "click .home"          : "onHome"
+    "click .currentUser"   : "onCurrentUserClick"
   
   constructor: ->
     super
@@ -21,9 +22,13 @@ class Header  extends Spine.Controller
     User.bind "refresh" , @onUserFresh
 
   onUserFresh: =>
-    @users.html require("views/controllers/header/user")(User.all())
+    
     user = User.exists Spine.session.userId
     @currentUser.html require("views/controllers/header/user")([user])
+
+  onCurrentUserClick: =>
+    @users.html require("views/controllers/header/user")(User.all()) if !@loaded
+    @loaded = true
 
   onHome: ->
     @navigate "/apps"

@@ -43,7 +43,9 @@ class App extends Spine.Controller
     Spine.security       =  new SecurityManager()
     Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()
-    Spine.socketManager    =  new SocketManager(Spine.frontEndServer)
+    Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
+    Spine.statManager    =  StatManager
+    Spine.statManager.registerManager(@options.statApi)
 
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 
@@ -80,6 +82,7 @@ class App extends Spine.Controller
         @el.removeClass "container-fluid"
 
   loginComplete: =>
+    Spine.statManager.identify Spine.session.user.Name
     @navigate "/apps"
 
 

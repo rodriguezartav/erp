@@ -55,7 +55,6 @@ class SocketManager
       user = User.find message.user
       Notificacion.createForPerfil( user , message.text )
 
-
   push: (eventName, data ) =>
     @ascChannel.trigger("client-#{eventName}", data );
 
