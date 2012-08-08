@@ -5,6 +5,7 @@ OpfDevUtil = require("./opfDevUtil")
 ParseController = require('./controllers/parseController')
 PusherController = require('./controllers/pusherController')
 #TwilioController = require('./controllers/twilioController')
+Cors = require ("./libs/cors")
 
 
 Opf =require "opf"
@@ -18,6 +19,7 @@ app.use express.cookieParser()
 app.set 'views' , './views'
 app.set 'view engine'  , 'jade'
 
+cors = new Cors(app)
 new ParseController(app)
 new PusherController(app)
 #new TwilioController(app)
@@ -42,8 +44,6 @@ app.post "/pusherAuth" , (req,res) ->
   channel_name = req.body.channel_name
   socket_id = req.body.socket_id
   res.send req.pusherController.auth(socket_id,channel_name)
-
-
 
 app.listen(port)
 console.log "Listening on port " + port
