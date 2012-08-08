@@ -144,6 +144,9 @@ class EmitirPago extends Spine.Controller
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
   after_send: =>
+    cliente = Cliente.find @pago.Cliente
+    monto = @pago.Monto?.toMoney() || "N/D"
+    Spine.socketManager.pushToProfiles( "all" , "Aplique un pago de #{cliente.Name} por #{monto}")
     @minor_reset()
 
   reset: ->
