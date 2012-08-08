@@ -1,3 +1,4 @@
+
 Array::unique = ->
   output = {}
   output[@[key]] = @[key] for key in [0...@length]

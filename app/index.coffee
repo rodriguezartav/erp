@@ -82,4 +82,14 @@ class App extends Spine.Controller
   loginComplete: =>
     @navigate "/apps"
 
+
+  #TODO PUT SOMEWHERE ELSE
+  Spine.throttle= (fn,delay) ->
+    clearTimeout(Spine.throttleTimer) if Spine.throttleTimer
+    Spine.throttleTimer = setTimeout =>
+      console.log arguments
+      fn.apply(@, arguments);
+    , delay
+
+
 module.exports = App

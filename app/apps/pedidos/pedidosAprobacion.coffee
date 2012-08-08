@@ -60,11 +60,17 @@ class PedidosAprobacion extends Spine.Controller
     Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: false , allowOver60: false} , @aprobarSuccess
 
   aprobarSuccess: =>
+    @notify() if @aprobar == 1
     for pedido in @aprovedGroup.Pedidos
       pedido.destroy()
     @aprovedGroup = null
     @aprobar = null
     @renderPedidos()
+
+  notify: =>
+    Spine.throttle ->
+      Spine.SocketManager.pushToProfiles("Encargado Ventas" , "Aprobando varios pedidos, pueden facturar.")
+    , 60000
 
   reset: ->
     PedidoPreparado.unbind "query_success" , @onLoadPedidos
