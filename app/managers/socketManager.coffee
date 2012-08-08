@@ -25,7 +25,6 @@ class SocketManager
 
   handshake: =>
     try
-      console.log Spine.pusherKeys
       Pusher.channel_auth_endpoint = Spine.pusherKeys.authUrl
       @pusher = new Pusher(Spine.pusherKeys.restKey) 
 
