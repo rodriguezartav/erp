@@ -7,20 +7,17 @@ class PedidoPreparado extends Spine.Model
   @extend Spine.Model.Salesforce
   @extend Spine.Model.SocketModel
 
+  @overrideName = "Oportunidad"
   @autoQuery = true;
   @autoQueryTimeBased   :   false
   #Turned On only for certain profiles in SecurityManager
   @autoQuery = false
-
-  @overrideName = "Oportunidad"
-
   @destroyBeforeRefresh = true;
 
-  @beforeSocketUpdate: (results) =>
-    for result in results
-      @lastNotificationEstado = result['Estado']
-      @lastNotificationCliente = result['Cliente']
-    return true;
+
+  @afterSocketUpdate: (message, results) =>
+
+
 
   @group_by_referencia: (pedidos) ->    
     referencias = (pedido.Referencia for pedido in pedidos).unique()

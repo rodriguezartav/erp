@@ -104,7 +104,6 @@ class Credito extends Spine.Controller
   setVariables: =>
     @pedidoItemToControllerMap = {}
     @movimientos = []
-    
 
   setBindings: =>
     PedidoItem.bind "beforeDestroy" , @onPedidoItemDestroy
@@ -218,14 +217,8 @@ class Credito extends Spine.Controller
 
     Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
-    #data =
-      #class: PedidoItem
-      #restData: PedidoItem.itemsInPedido(@pedido)
-
-    #Spine.trigger "show_lightbox" , "insert" , data , @after_send
-
-
   after_send: =>
+    Spine.SocketManager.pushToProfiles "all" , "Ingrese un Pedido por #{@pedido.Total.toMoney()} de #{Cliente.current.Name}"
     @customReset()
 
   close: =>

@@ -1,8 +1,8 @@
-<li data-id="<%= @id  %>" class="notificacion_item <%= @status %>">
+<li data-userid="<%= @id  %>" data-id="<%= @id  %>" class="notificacion_item <%= @status %>">
   <div class="row-fluid">
-    <img src="<%= @user.SmallPhotoUrl %>"/>
+    <img src="<%= @image %>"/>
     
-    <h6><%= @user.Name %></h6>
+    <h6><%= @title %></h6>
     
     <p class="text"><%= @text %></p>
     

@@ -4,24 +4,24 @@ Notificacion = require "models/notificacion"
 class NotificationManager
   
   constructor: ->
-    setInterval 60000 , @showNotification
+    setInterval @showNotification , 10000
 
   checkPermision: ->
     if window.webkitNotifications?.checkPermission?() != 0
       window.webkitNotifications?.requestPermission?()
 
-  showNotification: (title,message) =>
+  showNotification: () =>
     pendingNotifications = Notificacion.findAllByAttribute "status" , "pending"
     return false if pendingNotifications.length == 0
-    return false if @notificationObj?.title == title
+    return false if @notificacion
     
-    @notificationObj =  {title: title,message:message}
     @notificacion = window?.webkitNotifications?.createNotification "http://rodcoerp.herokuapp.com/images/logo_icon.png" 
     , "Notificaciones Pendientes" , "Hay #{pendingNotifications.length} notificaciones pendientes, de click en cada una para completarlas."
     
     @notificacion.show()
     setTimeout =>
       @notificacion.close() 
+      @notificacion = null
       4000
 
 module.exports = NotificationManager
