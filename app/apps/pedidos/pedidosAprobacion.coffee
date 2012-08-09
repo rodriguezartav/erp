@@ -53,14 +53,13 @@ class PedidosAprobacion extends Spine.Controller
     for g in @groups
       if g.Referencia == referencia
         group = g
-
     return false if !group
     @aprovedGroup = group
     @aprobar = aprobar
     Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: false , allowOver60: false} , @aprobarSuccess
 
   aprobarSuccess: =>
-    @notify() if @aprobar == 1
+    @notify()
     for pedido in @aprovedGroup.Pedidos
       pedido.destroy()
     @aprovedGroup = null
