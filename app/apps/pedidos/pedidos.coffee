@@ -232,10 +232,10 @@ class Credito extends Spine.Controller
     cliente = Cliente.find @pedido.Cliente
     Spine.socketManager.pushToFeed "Ingrese un Pedido de #{cliente.Name}"
     if now
-      Spine.socketManager.pushToProfile "Encargado Credito" ,"ATENCION: Favor aprobar pedido de #{cliente.Name}"
+      Spine.socketManager.pushToProfile "Ejecutivo Credito" ,"ATENCION: Favor aprobar pedido de #{cliente.Name}"
     else
       Spine.throttle ->
-        Spine.socketManager.pushToProfile "Encargado Credito" , "Hay Pedidos pendientes por aprobar"
+        Spine.socketManager.pushToProfile "Ejecutivo Credito" , "Hay Pedidos pendientes por aprobar"
       , 65000
 
   close: =>
