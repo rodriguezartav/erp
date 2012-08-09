@@ -114,7 +114,7 @@ class Entradas extends Spine.Controller
     
 
   after_send: =>
-    Spine.socketManager.pushToFeed( "Hice la entrada #{@documento.Referencia}")
+    Spine.socketManager.pushToFeed("Hice la entrada #{@documento.Referencia}")
     @reset()
 
   customReset: =>

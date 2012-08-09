@@ -113,7 +113,6 @@ class Salidas extends Spine.Controller
 
   after_send: =>
     Spine.socketManager.pushToFeed("Hice la salida #{@documento.Referencia}")
-    
     @reset()
 
   customReset: =>

@@ -60,8 +60,12 @@ class PedidosAprobacionGerencia extends Spine.Controller
     Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: true , allowOver60: true} , @aprobarSuccess
 
   aprobarSuccess: =>
-    Spine.socketManager.pushToProfile("Encargado Ventas" , "Aprobando pedidos especiales.")
-    Spine.socketManager.pushToFeed("Aprobando pedido de N/D ")
+    cliente = Cliente.find @aprovedGroup.Cliente
+    Spine.socketManager.pushToFeed("Aprobando pedido bloqueado de #{cliente.Name}")
+    
+    Spine.throttle ->
+      Spine.socketManager.pushToProfile("Ejecutivo Ventas" , "Aprobando pedidos especiales, pueden ser facturados.")
+    , 15000
     
     for pedido in @aprovedGroup.Pedidos
       pedido.destroy()
