@@ -112,6 +112,8 @@ class Salidas extends Spine.Controller
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
   after_send: =>
+    Spine.socketManager.pushToFeed("Hice la salida #{@documento.Referencia}")
+    
     @reset()
 
   customReset: =>

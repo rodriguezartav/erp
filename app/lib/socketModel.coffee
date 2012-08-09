@@ -21,6 +21,9 @@ Spine.Model.SocketModel =
       registerForUpdate: (channel) =>
         name = @overrideName || @className
         channel.bind "#{name}__c" , (message) =>
+          console.log "got message from #{@className}"
+          console.log message
+          
           @updateFromSocket(message)
 
       beforeSocketUpdate: (results) ->

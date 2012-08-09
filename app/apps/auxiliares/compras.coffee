@@ -132,6 +132,7 @@ class Compras extends Spine.Controller
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
   after_send: =>
+    Spine.socketManager.pushToFeed( "Hice la entrada de mercaderia #{@documento.Referencia}")
     @reset(false)
 
   customReset: =>

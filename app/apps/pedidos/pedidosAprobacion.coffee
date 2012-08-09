@@ -68,9 +68,11 @@ class PedidosAprobacion extends Spine.Controller
     @renderPedidos()
 
   notify: =>
+    cliente = Cliente.find @aprovedGroup.Cliente
+    Spine.socketManager.pushToFeed("Aprobe un pedido de #{cliente.Name}")
     Spine.throttle ->
-      Spine.socketManager.pushToProfiles("Encargado Ventas" , "Aprobando varios pedidos, pueden facturar.")
-    , 60000
+      Spine.socketManager.pushToProfile("Ejecutivo Ventas" , "Aprobando varios pedidos, pueden proceder a facturar.")
+    , 15000
 
   reset: ->
     PedidoPreparado.unbind "query_success" , @onLoadPedidos

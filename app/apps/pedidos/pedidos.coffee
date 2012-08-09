@@ -205,8 +205,11 @@ class Credito extends Spine.Controller
     , 1400
 
   send: (e) =>
+    target = $(e.target)
     @save()
-
+    
+    callback = if target.attr then @after_send else @after_send_fast
+    
     pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
     
     data =
@@ -215,12 +218,25 @@ class Credito extends Spine.Controller
       restMethod: "POST"
       restData: '{"oportunidades" : ' + pedidos + '}'
 
-    Spine.trigger "show_lightbox" , "rest" , data , @after_send
+    Spine.trigger "show_lightbox" , "rest" , data , callback
 
   after_send: =>
-    cliente = Cliente.find @pedido.Cliente
-    Spine.socketManager.pushToProfiles "all" , "Ingrese un Pedido por #{@pedido.Total.toMoney()} de #{cliente.Name}"
+    @notify()
     @customReset()
+
+  after_send_fast: =>
+    @notify(true)
+    @customReset()
+
+  notify: (now=false) =>
+    cliente = Cliente.find @pedido.Cliente
+    Spine.socketManager.pushToFeed "Ingrese un Pedido de #{cliente.Name}"
+    if now
+      Spine.socketManager.pushToProfile "Encargado Credito" ,"ATENCION: Favor aprobar pedido de #{cliente.Name}"
+    else
+      Spine.throttle ->
+        Spine.socketManager.pushToProfile "Encargado Credito" , "Hay Pedidos pendientes por aprobar"
+      , 65000
 
   close: =>
     @customReset()

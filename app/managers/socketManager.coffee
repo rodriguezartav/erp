@@ -41,19 +41,30 @@ class SocketManager
     for model in Spine.socketModels
       model.registerForUpdate @public_salesforce
 
-  pushToProfiles: (profile, text ) =>
+  pushToProfile: (profile, text ) =>
     data = { user: Spine.session.userId , text: text}
     @private_erp_profiles.trigger("client-#{profile}" , data );
 
+
+  pushToFeed: ( text ) =>
+    data = { user: Spine.session.userId , text: text}
+    @private_erp_profiles.trigger("client-feed" , data );
+
+
+
   profileEvents: =>
     @private_erp_profiles = @pusher.subscribe('private-erp_profiles')
+
     @private_erp_profiles.bind "client-#{Spine.session.user.Perfil__c}" , (message) =>
       user = User.find message.user
-      Notificacion.createForPerfil( user , message.text )
+      Notificacion.createForPerfil( user , message.text , true )
 
-    @private_erp_profiles.bind "client-all" , (message) =>
+    @private_erp_profiles.bind "client-feed" , (message) =>
       user = User.find message.user
-      Notificacion.createForPerfil( user , message.text )
+      Notificacion.createForFeed( user , message.text )
+
+
+
 
   push: (eventName, data ) =>
     @ascChannel.trigger("client-#{eventName}", data );

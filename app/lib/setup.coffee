@@ -26,6 +26,7 @@ require('./bootstrap/bootstrap-modal')
 require('./bootstrap/bootstrap-typeahead')
 require('./bootstrap/bootstrap-button')
 require('./bootstrap/bootstrap-collapse')
+require('./bootstrap/bootstrap-tab')
 
 require('./format')
 require('./datePicker')

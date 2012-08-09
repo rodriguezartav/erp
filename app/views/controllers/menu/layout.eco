@@ -8,9 +8,33 @@
     
     <div class="span3 notificationContainer">
     
-      <ul  class="unstyled notificacion_list">
+      <div class="toolbar">
         
-      </ul>
+      </div>
+      
+      <ul class="tabHeader nav nav-tabs">
+          <li class="hasNots dm active"><a href="#tabDm" data-toggle="tab">DM <i class=" icon-comment-alt"></i></a></li>
+          <li><a class="hasNots profile" href="#tabProfile" data-toggle="tab">Tarea <i class=" icon-tasks"></i></a></li>
+          <li><a class="hasNots feed" href="#tabFeed" data-toggle="tab">BI <i class="  icon-comments-alt"></i></a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tabDm">
+            <ul  class="unstyled dms_list notificacion_list">
+
+            </ul>
+          </div>
+          <div class="tab-pane active" id="tabProfile">
+            <ul  class="unstyled profiles_list notificacion_list">
+
+            </ul>
+          </div>
+          
+          <div class="tab-pane" id="tabFeed">
+            <ul  class="unstyled feeds_list notificacion_list">
+
+            </ul>
+          </div>
+        </div>
     
     </div>
   </div>

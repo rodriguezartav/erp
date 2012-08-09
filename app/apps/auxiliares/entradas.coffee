@@ -91,7 +91,6 @@ class Entradas extends Spine.Controller
     item.checkItem() for item in @movimientos
 
   beforeSend: (object) ->
-    console.log object
     for movimiento in Movimiento.all()
       movimiento.Tipo             = object.Tipo_de_Documento
       movimiento.Nombre_Contado   = object.Nombre_Contado
@@ -115,6 +114,7 @@ class Entradas extends Spine.Controller
     
 
   after_send: =>
+    Spine.socketManager.pushToFeed( "Hice la entrada #{@documento.Referencia}")
     @reset()
 
   customReset: =>

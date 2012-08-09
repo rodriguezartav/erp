@@ -13,10 +13,10 @@ class FacturaPreparada extends Spine.Model
   @destroyBeforeRefresh = true;
 
 
-  @afterSocketUpdate: (message, results) =>
-    
-
-
+  @beforeSocketUpdate: (results) ->
+    for result in results
+      return false if result.Estado__c != "Impreso" and result.Estado__c == "Preparado"
+    return true    
 
   @filterImpresion: =>
     results = []

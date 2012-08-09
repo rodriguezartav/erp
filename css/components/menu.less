@@ -7,49 +7,61 @@
       width: 25.4%;
     }
   
-    li{
-      padding: 0px 4px 0px 10px;
-      margin-bottom: 15px;
-      border-right: 1px solid #999;      
-      cursor: pointer;
-
-      &.pending{
-        border-right: 2px solid @blue;      
+    .tabHeader{
+      .hasNots{
+        i{
+          font-size: 20px;
+        }
+        &.has{
+          color: @red;
+        }
       }
+    }
+  
+    .notificacion_list{
+      li{
+        padding: 0px 4px 0px 10px;
+        margin-bottom: 15px;
+        border-right: 1px solid #999;      
+        cursor: pointer;
+
+        &.pending{
+          border-right: 2px solid @blue;      
+        }
     
-      &:hover{
-        border-right: 2px solid @blueDark;  
-      }
+        &:hover{
+          border-right: 2px solid @blueDark;  
+        }
     
-      img{
-        float: left;
-        border: 1px solid #ddd;
-        padding: 1px;
-        margin-right: 4px;
-        height: 50px;
-      }
+        img{
+          float: left;
+          border: 1px solid #ddd;
+          padding: 1px;
+          margin-right: 4px;
+          height: 50px;
+        }
 
-      h6{
-        margin-bottom: 1px;
-        line-height: 11px;
-        color: @blue;
-      }
+        h6{
+          margin-bottom: 1px;
+          line-height: 11px;
+          color: @blue;
+        }
 
-      .text{
-        display: inline;
-        margin-bottom: 0px;
-        padding-bottom: 0px;
-        font-weight: 200;
-        font-size: 12px;
-        line-height: 12px;
-      }
+        .text{
+          display: inline;
+          margin-bottom: 0px;
+          padding-bottom: 0px;
+          font-weight: 200;
+          font-size: 12px;
+          line-height: 12px;
+        }
       
-      .date{
-        font-size: 11px;
-        color: #999;
-        text-align: right
+        .date{
+          font-size: 11px;
+          color: #999;
+          text-align: right
+        }
       }
-      
     }
   }
 
