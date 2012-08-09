@@ -68,9 +68,11 @@ class PedidosAprobacion extends Spine.Controller
 
   notify: =>
     cliente = Cliente.find @aprovedGroup.Cliente
-    Spine.socketManager.pushToFeed("Aprobe un pedido de #{cliente.Name}")
+    verb = if @aprobar == 1 then "Aprobe" else "Archive"
+    Spine.socketManager.pushToFeed("#{verb} un pedido de #{cliente.Name}") 
+
     Spine.throttle ->
-      Spine.socketManager.pushToProfile("Ejecutivo Ventas" , "Aprobando varios pedidos, pueden proceder a facturar.")
+      Spine.socketManager.pushToProfile("Ejecutivo Ventas" , "#{verb} varios pedidos, pueden proceder a revisarlos.")
     , 15000
 
   reset: ->

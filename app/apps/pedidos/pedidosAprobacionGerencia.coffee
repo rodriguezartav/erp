@@ -57,11 +57,11 @@ class PedidosAprobacionGerencia extends Spine.Controller
     return false if !group
     @aprovedGroup = group
     @aprobar = aprobar
-    Spine.socketManager.pushToFeed("Aprobando pedido de N/D ")
     Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: true , allowOver60: true} , @aprobarSuccess
 
   aprobarSuccess: =>
-    Spine.socketManager.pushToProfiles("Encargado Ventas" , "Aprobando varios pedidos, pueden facturar.")
+    Spine.socketManager.pushToProfile("Encargado Ventas" , "Aprobando pedidos especiales.")
+    Spine.socketManager.pushToFeed("Aprobando pedido de N/D ")
     
     for pedido in @aprovedGroup.Pedidos
       pedido.destroy()
