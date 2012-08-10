@@ -3,6 +3,7 @@
 
 Spine = require('spine')
 
+StatManager = require("../managers/statManager")
 
 Spine.salesforceQueryQueue = 0
 
