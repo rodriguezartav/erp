@@ -55,6 +55,7 @@ class DocumentosAnular extends Spine.Controller
     @anular(CuentaPorPagar , @doc , "CuentaPorPagar")
 
   anular: (cls,obj,typeName) ->
+    @type = typeName
     data =
        class: cls
        restRoute: "Anular"
@@ -63,6 +64,8 @@ class DocumentosAnular extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @anularSuccess   
 
   anularSuccess: =>
+    Spine.socketManager.pushToFeed("Anule un #{@type}")
+    @type = null
     @doc.destroy()
     @list.empty()
     @renderDocumentos()

@@ -52,6 +52,13 @@ class CuentasPorPagarAprobacion extends Spine.Controller
 
 
   onAprobarSuccess: =>
+    Spine.socketManager.pushToFeed( "Aprobe una CXP de #{@cuenta.NombreProveedor}")
+
+    Spine.throttle ->
+      Spine.socketManager.pushToProfile("Tesoreria" , "Aprobe algunas CXP, pueden proceeder a pagarlos.")
+    , 15000
+    
+    
     @cuenta.destroy()
     @renderCuentas()
 

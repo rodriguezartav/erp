@@ -54,6 +54,7 @@ class Compras extends Spine.Controller
     ".validatable"     : "inputs_to_validate"
     ".src_proveedor" : "src_proveedor"
 
+
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
@@ -132,7 +133,8 @@ class Compras extends Spine.Controller
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
   after_send: =>
-    Spine.socketManager.pushToFeed( "Hice la entrada de mercaderia #{@documento.Referencia}")
+    proveedor = @src_proveedor.find("input")
+    Spine.socketManager.pushToFeed( "Hice la entrada de mercaderia #{@documento.Referencia} de #{proveedor.val()}")
     @reset(false)
 
   customReset: =>

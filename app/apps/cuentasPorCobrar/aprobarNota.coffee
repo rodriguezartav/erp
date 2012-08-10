@@ -1,6 +1,7 @@
 require('lib/setup')
 Spine = require('spine')
 Saldo = require("models/socketModels/saldo")
+Cliente = require("models/cliente")
 
 class AprobarNota extends Spine.Controller
   className: "row-fluid"
@@ -50,6 +51,13 @@ class AprobarNota extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @onAprobarSuccess
 
   onAprobarSuccess: =>
+    cliente = Cliente.find @saldo.Cliente
+    Spine.socketManager.pushToFeed( "Aprobe una Nota de Credito de #{cliente.Name}")
+
+    Spine.throttle ->
+      Spine.socketManager.pushToProfile("Ejecutivo Credito" , "He aprobado algunas Notas de Credito")
+    , 35000
+    
     @saldo.Autorizado= true;
     @saldo.save()
     @render()

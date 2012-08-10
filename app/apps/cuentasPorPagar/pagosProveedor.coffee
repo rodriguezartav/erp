@@ -136,6 +136,8 @@ class PagosProveedor extends Spine.Controller
 
 
   after_send: =>
+    proveedor = @src_proveedor.find("input").val()
+    Spine.socketManager.pushToFeed("He pagado CXP de #{proveedor}")
     @pagoProveedor.destroy()
     @reset()
 

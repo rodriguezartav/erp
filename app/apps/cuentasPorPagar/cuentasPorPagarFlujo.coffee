@@ -99,6 +99,8 @@ class FlujoDePago extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @saveSuccess
 
   saveSuccess: =>
+    Spine.socketManager.pushToFeed("He ingresado CXP al Flujo de Pagos")
+    Spine.socketManager.pushToProfile("Tesoreria" , "He ingresado CXP al Flujo")
     window.open("https://na7.salesforce.com/00OA0000004WuVF")
     @reset()
     

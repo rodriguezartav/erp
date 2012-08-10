@@ -67,6 +67,8 @@ class PagosAnular extends Spine.Controller
  
     
   reset: () =>
+    Spine.socketManager.pushToFeed("Anule un Pago")
+    
     @resetBindings()
     Pago.destroyAll()
     @navigate "/apps"

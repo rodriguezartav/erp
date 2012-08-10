@@ -89,6 +89,11 @@ class FacturasProveedor extends Spine.Controller
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
   after_send: =>
+    proveedor = @src_proveedor.find("input").val()
+    Spine.socketManager.pushToFeed("He ingresado Cuentas por Pagar de #{proveedor}")
+    Spine.throttle ->
+      Spine.socketManager.pushToProfile("Presidencia" , "He ingresado Cuentas por Pagar")
+    , 100000
     @reset(false)
  
   customReset: ->

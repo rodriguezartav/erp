@@ -47,6 +47,7 @@ class FacturasAnular extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @anularSuccess   
 
   anularSuccess: =>
+    Spine.socketManager.pushToFeed("Anule una factura")    
     @doc.destroy()
     @renderDocumentos()
 

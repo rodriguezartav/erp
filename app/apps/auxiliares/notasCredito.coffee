@@ -53,7 +53,7 @@ class NotasCredito extends Spine.Controller
     Spine.trigger "show_lightbox" , "insert" , data , @after_send
 
   after_send: =>
-    Spine.socketManager.pushToFeed("Hice un NC para #{Cliente.current.Name}")
+    Spine.socketManager.pushToFeed("Hice un Nota de Credito para #{Cliente.current.Name}")
     
     @reset(false)
     

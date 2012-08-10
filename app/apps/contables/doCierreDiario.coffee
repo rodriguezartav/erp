@@ -33,6 +33,7 @@ class DoCierreDiario extends Spine.Controller
     
 
   onCierreComplete: (success,results) =>
+    Spine.socketManager.pushToFeed( "Hice un corte exitoso en el Cierre Diario")
     #HACKING REST TO CIERRE , WE DONT USE CIERRE YET.....
     @render(    JSON.parse results.results[0].Data__c )
     

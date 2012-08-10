@@ -156,8 +156,8 @@ class EmitirPago extends Spine.Controller
 
   after_send: =>
     cliente = Cliente.find @pago.Cliente
-    monto = @pago.Monto?.toMoney() || "N/D"
-    Spine.socketManager.pushToFeed( "Aplique un pago de #{cliente.Name}")
+    #monto = @pago.Monto?.toMoney() || "N/D"
+    Spine.socketManager.pushToFeed("#{cliente.Name} hizo un pago")
     @minor_reset()
 
   reset: ->

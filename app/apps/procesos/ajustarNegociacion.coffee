@@ -148,6 +148,7 @@ class AjustarNegociacion extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @after_send   
 
   after_send: =>
+    Spine.socketManager.pushToFeed("He ingresado nueva negociaciones fijas.")
     @reset()
 
   reset: =>
