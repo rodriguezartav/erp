@@ -42,7 +42,6 @@ class Menu extends Spine.Controller
         html += require("views/controllers/menu/app")(app: app , header: index)
       html += "</ul>"
       @menuContainer.append html
-  
 
   renderNotificaciones: =>
     feeds = []
@@ -52,18 +51,14 @@ class Menu extends Spine.Controller
     all = Notificacion.all().sort (a,b) ->
       return b.date.getTime() - a.date.getTime()
   
-    console.log all
     for noti in all
       if noti.type == "feed"
         feeds.push noti
+
       else if noti.type == 'profile'
         profiles.push noti
-      else if noti.type == 'dm'
-        dms.push noti
       
     @hasNots.removeClass "has"
-    
-
     if feeds.length > 0
       @hasNotFeed.addClass "has" 
       $('.tabHeader .feed').tab('show');
@@ -72,13 +67,9 @@ class Menu extends Spine.Controller
       @hasNotProfile.addClass "has"
       $('.tabHeader .profile').tab('show');
     
-    if dms.length > 0
-      @hasNotDm.addClass "has" 
-      $('.tabHeader .dm').tab('show');
       
 
     @feeds_list.html require("views/controllers/menu/notificacion")(feeds)
-    @dms_list.html require("views/controllers/menu/notificacion")(dms)
     @profiles_list.html require("views/controllers/menu/notificacion")(profiles)
       
   on_click: (e) =>

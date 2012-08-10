@@ -37,17 +37,10 @@ class PusherController
       authUrl: process.env.PUSHER_AUTH_URL
     JSON.stringify apiKeys
 
-  auth: (socketId, channel, channelData) =>
-    returnHash = {}
-    channelDataStr = ''
-    if channelData
-      channelData = JSON.stringify(channelData);
-      channelDataStr = ':' + channelData;
-      returnHash['channel_data'] = channelData;
-
-    stringToSign = socketId + ':' + channel + channelDataStr;
-    returnHash['auth'] = process.env.PUSHER_KEY + ':' + crypto.createHmac('sha256', process.env.PUSHER_SECRET).update(stringToSign).digest('hex');
-    returnHash
-  
+  auth: (socket_id, channel, user_details) =>
+    channelData = {user_id: user_details.id , user_info: user_details }
+    console.log "#{socket_id} ::: #{channel}: #{channelData}"
+    return @pusher.auth(socket_id, channel, channelData);
+    
 
 module.exports= PusherController

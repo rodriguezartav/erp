@@ -7,8 +7,17 @@
         <a href="https://na7.salesforce.com/00O/o" target="_blank" class="pull-left"><i class="icon-cloud"></i> To Salesforce</a>
 
          <div class="actionButtons pull-right">          
-             <a><i data-placement="left"class="tipable icon-refresh icon-large update" rel="tooltip" data-original-title="Actualizar Clientes,Productos y Saldos"></i></a>
-             <a><i  data-placement="left"  style="color: red"  class="tipable icon-off icon-large reset" rel="tooltip" data-original-title="Master Reset del APP"></i></a>
+          
+            <a>
+              <i class="tipable icon-pause icon-large pause"></i>
+            </a>
+          
+             <a>
+              <i data-placement="left"class="tipable icon-refresh icon-large update" rel="tooltip" data-original-title="Actualizar Clientes,Productos y Saldos"></i>
+            </a>
+          
+             <a><i  data-placement="left" class="tipable active icon-off icon-large reset" rel="tooltip" data-original-title="Master Reset del APP"></i></a>
+          
            </div>
            
     </div>

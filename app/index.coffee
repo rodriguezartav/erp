@@ -49,22 +49,6 @@ class App extends Spine.Controller
 
     Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 
-    $('.tipable').tooltip({})
-
-    @clicked = false
-    
-    setInterval =>
-      return @clicked = false if @clicked or !Spine.session
-      @navigate "/apps"
-    , 60000
-
-    $("body").click =>
-      @clicked = true
-      
-    $(".appCanvas").click =>
-      Spine.trigger "appClick"
-      
-
     @routes
       "/apps": =>
         @currentApp?.reset()
@@ -87,6 +71,21 @@ class App extends Spine.Controller
 
   loginComplete: =>
     Spine.statManager.identify Spine.session.user.Name
+    Spine.clicked = false
+
+
+    setInterval =>
+      return Spine.clicked = false if Spine.clicked or Spine.paused
+      @navigate "/apps"
+    , 60000
+
+    #TODO CHANGE VAR NAME AND MOVE
+    $("body").click =>
+      Spine.clicked = true
+      
+    $(".appCanvas").click =>
+      Spine.trigger "appClick"
+      
     @navigate "/apps"
 
 
@@ -97,6 +96,14 @@ class App extends Spine.Controller
       console.log arguments
       fn.apply(@, arguments);
     , delay
+
+
+  Spine.setCookie= (c_name,value,exdays) ->
+    exdate=new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    c_value=escape(value)
+    document.cookie=c_name + "=" + c_value;
+  
 
 
 module.exports = App

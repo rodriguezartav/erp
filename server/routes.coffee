@@ -1,5 +1,5 @@
 #Cliente = require("../app/models/cliente")
-Notificacion = require("../app/models/notificacion")
+
 
 class Routes
 
@@ -8,13 +8,13 @@ class Routes
 
   setupRoutes: ->
     @app.get '/' , (req, res) ->
-      res.render "app" , {useManifest: false, app: "" , pusherKeys: req.pusherController.keys(), parseKeys: req.parseController.keys() }
+      res.render "app" , {useManifest: false, app: ""  , pusherKeys: req.pusherController.keys(), parseKeys: req.parseController.keys() }
 
     @app.get '/test' , (req, res) -> 
       res.render "app" , {layout: "test",  app: "" , pusherKeys: req.pusherController.keys() , parseKeys: req.parseController.keys() }
 
     @app.get '/remote' , (req, res) ->
-      res.render "app" , {useManifest: true,  app: "" , pusherKeys: req.pusherController.keys() , parseKeys: req.parseController.keys() }
+      res.render "app" , {useManifest: true,  app: ""  , pusherKeys: req.pusherController.keys() , parseKeys: req.parseController.keys() }
 
     @app.all "/parse/users/?*" , (req,res) ->
       req.parseController.handleProxy(req,res)
@@ -22,8 +22,8 @@ class Routes
     @app.post "/pusherAuth" , (req,res) ->
       channel_name = req.body.channel_name
       socket_id = req.body.socket_id
-      res.send req.pusherController.auth(socket_id,channel_name)
-
+      user_details = JSON.parse req.cookies.user_details
+      res.send req.pusherController.auth(socket_id,channel_name , user_details )
 
   @varsToString: (vars) ->
     str= ""

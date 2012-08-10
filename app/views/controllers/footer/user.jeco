@@ -1,6 +1,0 @@
-<li>
-  <a>
-    <img src="<%= @SmallPhotoUrl %>" />
-    <%= @FirstName %>
-  </a>
-</li>

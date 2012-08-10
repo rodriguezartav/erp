@@ -3,7 +3,6 @@
 
 Spine = require('spine')
 
-StatManager = require("managers/statManager")
 
 Spine.salesforceQueryQueue = 0
 
@@ -194,7 +193,6 @@ Spine.Model.Salesforce =
 
       on_query_success: (raw_results) =>
         Spine.trigger "query_complete"
-        
         results = @parseSalesforceJSON(raw_results)
         @destroyAll() if @destroyBeforeRefresh
         @refresh(results)        

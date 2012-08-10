@@ -27,7 +27,7 @@ html(lang="en")
     //if lt IE 9
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   
-    script(src="http://js.pusher.com/1.11/pusher.min.js")
+    script(src="http://js.pusher.com/1.12/pusher.min.js")
     
     script(src='/application.js', type='text/javascript', charset='utf-8')
 
@@ -59,7 +59,7 @@ html(lang="en")
         //var server= "http://api2s.heroku.com";
         
         var instance_url = "https://cs11.salesforce.com";
-        exports.app =  new App({ el: $(".appCanvas") , options: {statApi: statApi , salesforceSession: null , server: server , pusherKeys: pusherKeys, parseKeys: parseKeys} });
+        exports.app =  new App({ el: $(".appCanvas") ,  options: {statApi: statApi , salesforceSession: null , server: server , pusherKeys: pusherKeys, parseKeys: parseKeys} });
 
         window.onerror = function (msg, url, num) {
           ErrorManager.logError(msg)

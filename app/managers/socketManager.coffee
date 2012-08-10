@@ -25,7 +25,7 @@ class SocketManager
 
   handshake: =>
     try
-      Pusher.channel_auth_endpoint = Spine.pusherKeys.authUrl
+      Pusher.channel_auth_endpoint = "/pusherAuth" #Spine.pusherKeys.authUrl
       @pusher = new Pusher(Spine.pusherKeys.restKey) 
 
     catch error
@@ -33,7 +33,14 @@ class SocketManager
 
   subscribe: =>
     return false if !@pusher
+    user =
+      id:     Spine.session.user.Id
+      name:   Spine.session.user.Name
+      title:  Spine.session.user.Profile__c
+      photo:  Spine.session.user.SmallPhotoUrl
+    Spine.setCookie "user_details" , JSON.stringify user
     @salesforceSync()
+    @presenceEvents()
     @profileEvents()
     @appEvents()
 
@@ -41,6 +48,20 @@ class SocketManager
     @public_salesforce = @pusher.subscribe('public_salesforce-silent-push')
     for model in Spine.socketModels
       model.registerForUpdate @public_salesforce
+
+  presenceEvents: =>
+    @presence = @pusher.subscribe('presence-erp')
+    
+    @presence.bind 'pusher:subscription_succeeded' , (members) =>
+      console.log members
+
+    @presence.bind 'pusher:member_added' , (member) =>
+      console.log member
+
+    @presence.bind 'pusher:member_removed' , (member) =>
+      console.log member
+
+
 
   pushToProfile: (profile, text ) =>
     data = { user: Spine.session.userId , text: text}
@@ -88,26 +109,5 @@ class SocketManager
     @ascChannel.bind "client-custumer_aproval" , (message) ->
       if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito'])
         Notificacion.createFromMessage message , "Autorizado y enviado PIN #{message.user.name} de #{message.user.empresa}" , true
-    
-
-  salesforceEvents: =>
-    @channel.bind "PedidoPreparado" , (message) =>
-      results = PedidoPreparado.updateFromSocket(message)
-      #if Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Credito'])
-      cliente = Cliente.exists results?[0].Cliente
-      Notificacion.createFromMessage message , "Prepare un pedido de #{cliente?.Name}" , true
-
-    @channel.bind "PedidoAprobado" , (message) =>
-      results = PedidoPreparado.updateFromSocket(message)
-
-    @channel.bind "FacturaPreparada" , (message) =>
-      results = FacturaPreparada.updateFromSocket(message)
-      return false if !results or results?[0].IsContado or !Spine.session.hasPerfiles(['Platform System Admin','Ejecutivo Ventas' ])
-      console.log results
-      cliente = Cliente.exists results?[0].Cliente
-      Notificacion.createFromMessage message , "Pueden imprimir pedido de #{cliente.Name}" , true
-
-    @channel.bind "FacturaImpresa" , (message) =>
-      results = FacturaPreparada.updateFromSocket(message)
 
 module.exports = SocketManager

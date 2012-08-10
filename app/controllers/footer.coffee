@@ -10,18 +10,29 @@ class Footer  extends Spine.Controller
   elements:
     ".users" : "users"
     ".currentUser" : "currentUser"
+    ".pause"      : "pauseBtn"
   
   events:
     "click .reset"         : "reset"
     "click .update"        : "onUpdate"
-  
-  
+    "click .pause"         : "onPause"
   
   constructor: ->
     super
     @html require('views/controllers/footer/layout')
     Spine.bind "actualizar_ahora" , @onUpdate
     Spine.bind "master_reset" , @reset
+    @pauseTimer = null
+    @pauseTimerRun = 0
+
+  onPause: (e) =>
+    Spine.paused = true
+    @pauseBtn.addClass "active"
+    clearTimeout(@pauseTimer) if @pauseTimer
+    @pauseTimer = setTimeout =>
+      @pauseBtn.removeClass "active"
+      Spine.paused = false
+    , 120000
 
 
   onUpdate: =>
