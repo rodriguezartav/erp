@@ -54,7 +54,7 @@ class App extends Spine.Controller
     @clicked = false
     
     setInterval =>
-      return @clicked = false if @clicked
+      return @clicked = false if @clicked or !Spine.session
       @navigate "/apps"
     , 60000
 

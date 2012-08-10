@@ -35,6 +35,7 @@ class SocketManager
     return false if !@pusher
     @salesforceSync()
     @profileEvents()
+    @appEvents()
 
   salesforceSync: =>
     @public_salesforce = @pusher.subscribe('public_salesforce-silent-push')
@@ -45,12 +46,9 @@ class SocketManager
     data = { user: Spine.session.userId , text: text}
     @private_erp_profiles.trigger("client-#{profile}" , data );
 
-
   pushToFeed: ( text ) =>
     data = { user: Spine.session.userId , text: text}
     @private_erp_profiles.trigger("client-feed" , data );
-
-
 
   profileEvents: =>
     @private_erp_profiles = @pusher.subscribe('private-erp_profiles')
@@ -63,8 +61,17 @@ class SocketManager
       user = User.find message.user
       Notificacion.createForFeed( user , message.text )
 
+  appEvents: ->
+    @public_app_actions = @pusher.subscribe('public_app_actions')
 
+    @public_app_actions.bind "server-refresh" , (message) =>
+      window.location.reload()
 
+    @public_app_actions.bind "server-actualizar" , (message) =>
+      Spine.trigger "actualizar_ahora"
+
+    @public_app_actions.bind "server-reset" , (message) =>
+      Spine.trigger "master_reset"
 
   push: (eventName, data ) =>
     @ascChannel.trigger("client-#{eventName}", data );

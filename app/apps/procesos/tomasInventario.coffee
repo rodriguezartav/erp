@@ -38,7 +38,8 @@ class tomasInventario extends Spine.Controller
 
   onBtnFamilia: (e) =>
     familia = $(e.target).attr "data-familia"
-    productos = Producto.findAllByAttribute("Familia" , familia )
+    productos = Producto.select (item) => 
+      return true if item.Familia == familia and item.Activo
     productos.sort (a,b) ->
       a.Grupo = 'N/D' if !a.Grupo
       b.Grupo = 'N/D' if !b.Grupo

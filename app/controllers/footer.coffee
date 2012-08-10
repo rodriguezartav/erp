@@ -20,8 +20,11 @@ class Footer  extends Spine.Controller
   constructor: ->
     super
     @html require('views/controllers/footer/layout')
+    Spine.bind "actualizar_ahora" , @onUpdate
+    Spine.bind "master_reset" , @reset
 
-  onUpdate: ->
+
+  onUpdate: =>
     Saldo.bind "bulk_deleted" , @onDeleteDone
     Spine.trigger "show_lightbox" , "showWait" , error: "Esto puede tomar varios minutos, cuando se complete el proceso se refrescara la pagina."
     Saldo.bulkDelete()

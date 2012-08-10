@@ -1,6 +1,8 @@
 Pusher = require('node-pusher');
 crypto = require("crypto")
 
+Notificacion = require("../../app/models/notificacion")
+
 class PusherController
 
   constructor: (@app) ->
@@ -12,6 +14,20 @@ class PusherController
     return (req,res,next)  =>
       req.pusherController = @
       next()
+
+
+  register: =>
+    #private-erp-feed
+    #private-erp-profile
+
+
+  listenFeed: =>
+    #handleNotificaciones
+
+
+  listenProfile: =>
+    #create notifiacion , creareParse
+    
 
   keys: =>
     apiKeys=
