@@ -4,7 +4,7 @@ Notificacion = require "models/notificacion"
 class NotificationManager
   
   constructor: ->
-    setInterval @showNotification , 60000
+    setInterval @showNotification , 45000
 
   checkPermision: ->
     if window.webkitNotifications?.checkPermission?() != 0
@@ -22,6 +22,6 @@ class NotificationManager
     setTimeout =>
       @notificacion.close() 
       @notificacion = null
-      4000
+      8000
 
 module.exports = NotificationManager

@@ -31,6 +31,9 @@ class Productos  extends Spine.Controller
     Producto.bind "refresh" , @onFirstLoad
     Producto.bind "current_reset" , @productoSet
     @keepOpen = true
+    
+    Spine.bind "appClick" , =>
+      @close()
 
   onFirstLoad: =>
     Producto.unbind "refresh" , @onFirstLoad

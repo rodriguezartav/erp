@@ -55,14 +55,18 @@ class EmitirPago extends Spine.Controller
     ".lbl_total"         : "lbl_total"
     ".validatable"       : "inputs_to_validate"
     ".info_popover"      : "info_popover"
+    ".btn_forma_pago"    : "btn_forma_pago"
+    ".selectFormaPago"   : "selectFormaPago"
     
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
+    "click .btn_forma_pago" : "onBtnFormaPagoClick"
 
   setVariables: ->
     @items = []
     @pago = Pago.create { Fecha: new Date() }
+    @formaPago = null
 
   setBindings: ->
     Documento.bind 'query_success' , @onDocumentoLoaded
@@ -110,9 +114,16 @@ class EmitirPago extends Spine.Controller
       total+= item.Monto
     @lbl_total.html total.toMoney()
 
+  onBtnFormaPagoClick: (e) =>
+    target = $(e.target)
+    @btn_forma_pago.removeClass "btn-primary"
+    target.addClass "btn-primary"
+    @formaPago = target.attr "data-forma-pago"
+
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pago.Cliente == null
     @validationErrors.push "El pago debe tener al menos 1 pago" if PagoItem.count() == 0
+    @validationErrors.push "Escoja una forma de pago" if @formaPago == null
     hasFactura = false
     total = 0
     for item in @items
@@ -146,7 +157,7 @@ class EmitirPago extends Spine.Controller
   after_send: =>
     cliente = Cliente.find @pago.Cliente
     monto = @pago.Monto?.toMoney() || "N/D"
-    Spine.socketManager.pushToProfiles( "all" , "Aplique un pago de #{cliente.Name} por #{monto}")
+    Spine.socketManager.pushToFeed( "Aplique un pago de #{cliente.Name}")
     @minor_reset()
 
   reset: ->

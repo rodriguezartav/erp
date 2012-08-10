@@ -36,14 +36,16 @@
  </div>
 
   <div class="row-fluid">
-    <div class="span2">
+    <div class="span9">
       <h3>Forma de Pago</h3>
-      <select class=" validatable" data-type="FormaPago" id="txt_formapago">
-        <option value="Efectivo">Efectivo</span>
-        <option value="Cheque">Cheque</span>
-        <option value="Transferencia">Transferencia</span>
-        <option value="Nota de Credito">Nota de Credito</span>
-      </select>
+      <div class="row-fluid">
+        <span data-forma-pago="Efectivo" class="btn btn_forma_pago">Efectivo</span>
+        <span data-forma-pago="Cheque" class="btn  btn_forma_pago">Cheque</span>
+        <span data-forma-pago="Deposito" class="btn btn_forma_pago">Deposito</span>
+        <span data-forma-pago="Transferencia" class="btn btn_forma_pago">Electronico</span>
+        <span data-forma-pago="Nota Credito" class="btn btn_forma_pago">NC</span>
+      </div>
+
     </div>
 
      <div class="span3">

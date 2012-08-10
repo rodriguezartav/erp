@@ -60,6 +60,10 @@ class App extends Spine.Controller
 
     $("body").click =>
       @clicked = true
+      
+    $(".appCanvas").click =>
+      Spine.trigger "appClick"
+      
 
     @routes
       "/apps": =>
