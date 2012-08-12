@@ -25,8 +25,7 @@ Spine.Model.Salesforce =
 
 
     ##INSERT ***************************
-      
-      
+
       toSalesforce: (item) =>
         object = {}
         for attr of item.attributes()

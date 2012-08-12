@@ -17,7 +17,7 @@ class Saldo extends Spine.Model
   @onQuerySuccess: ->
     saldos = Saldo.select (saldo) ->
       return true if saldo.Saldo == 0
-    return alert("Debe usa la opcion Actualizar Ahora") if saldos.length > 500
+    return alert("Debe usa la opcion Actualizar Ahora") if saldos.length > 2000
     for saldo in saldos
       saldo.destroy()
 
