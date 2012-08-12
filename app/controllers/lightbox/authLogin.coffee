@@ -27,6 +27,7 @@ class AuthLogin extends Spine.Controller
     @callback()
 
   render: ->
-    @html require("views/modals/login/authLogin")    
+    @html require("views/controllers/lightbox/login/authLogin")
+    
 
 module.exports = AuthLogin
