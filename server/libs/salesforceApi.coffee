@@ -6,10 +6,9 @@ class RestApi
 
   @request: (options) ->
     restUrl = (if options.path.substr(0, 6) is "https:" then options.path else options.oauth.instance_url + "/services/data" + options.path)
-    console.log "SALESFORCE:RESTAPI:REQUEST ::>  Method: " + options.method
-    console.log "SALESFORCE:RESTAPI:REQUEST ::>  Url: " + restUrl + ", data: " + options.data
-    console.log "SALESFORCE:RESTAPI:REQUEST ::>  Data: " + options.data
-    
+    console.log "SALESFORCE:REST_API:REQUEST ::>  Method: " + options.method
+    console.log "SALESFORCE:REST_API:REQUEST ::>  Url: " + restUrl + ", data: " + options.data
+    console.log "SALESFORCE:REST_API:REQUEST ::>  Data: " + options.data
     reqOptions =
       method: options.method
       data: options.data
@@ -17,38 +16,21 @@ class RestApi
         Accept: "application/json"
         Authorization: "OAuth " + options.oauth.access_token
         "Content-Type": "application/json"
-    
     req = rest.request restUrl, reqOptions
 
     req.on "complete", (data, response) =>
       if response.statusCode >= 200 and response.statusCode < 300
-        console.log "SALESFORCE:RESTAPI:COMPLETE: "
+        console.log "SALESFORCE:REST_API:COMPLETE: "
         if data.length is 0
           options.callback()
         else
-          options.callback JSON.parse(data)
+          options.callback data
       else
-       # console.log arguments
         options.error data
     
     req.on "error", (data, response) =>
-      options.error arguments
-      
-      
       console.error "SALESFORCE:RESTAPI:ERROR: " + data
-      if response.statusCode is 401
-        console.log response
-        #if options.retry or not options.refresh
-         # console.log "Invalid session - we tried!"
-          #options.error data, response
-        #else
-        #console.log "Invalid session - trying a refresh"
-        #options.refresh (oauth) ->
-          #options.oauth.access_token = oauth.access_token
-          #options.retry = true
-          #request options
-      else
-        options.error data, response
+      options.error data, response
 
 
   @versions: (oauth,callback, error) ->

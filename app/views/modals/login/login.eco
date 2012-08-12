@@ -1,0 +1,36 @@
+
+<div class="modal-header">
+  <h3>Ingreso al Sistema</h3>
+</div>
+
+<div style="display:none" class="alert-box error alert-error alert">
+</div>
+
+<div class="modal-body">
+
+<form class="nice" autocomplete="on">
+    <label>Email </label>
+      <input class="input-text" id="txt_email" autocomplete name="email" type="email" value="<%= @username %>"/>
+   
+
+    <label>Token</label>
+    <input class="input-text" autocomplete  type="text" id="txt_token"  value="<%= @passwordToken %>"/>
+   
+
+    <label>Password</label>
+      <input class="input-text"  type="password" id="txt_password" value=""/>
+
+</form>
+
+</div>
+<div class="modal-footer">
+
+  <div style="display: none" class="progress progress-striped loader active">
+    <div class="bar" style="width: 100%;"></div>  
+  </div>
+
+  <a href="#" class="btn btn-primary login ">Ingresar</a>
+</div>
+
+
+

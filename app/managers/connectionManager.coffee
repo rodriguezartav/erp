@@ -1,5 +1,6 @@
 Spine = require('spine')
 Session = require('models/session')
+
 User = require('models/user')
 
 Lightbox = require("controllers/lightbox")
@@ -46,7 +47,7 @@ class ConnectionManager
     statusChanged = false
     @cyclesCount++
     
-    interval = Spine.session.updateInterval
+    interval = Spine.session?.updateInterval || 360
     if @cyclesCount > interval
       @cyclesCount = 0
       @fetchServerData()
@@ -72,7 +73,6 @@ class ConnectionManager
     
   fetchServerData: () =>
     if navigator.onLine
-      User.query() if User.count() ==0
       for model in Spine.socketModels
         model.query() if model.autoQuery
 

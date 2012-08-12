@@ -28,9 +28,17 @@ require('./bootstrap/bootstrap-button')
 require('./bootstrap/bootstrap-collapse')
 require('./bootstrap/bootstrap-tab')
 
+
+require('./modal')
+require('./modalController')
+
 require('./format')
 require('./datePicker')
 require('./parse')
+require('./salesforceAjax')
+require('./salesforceModel')
+
+require("./an.hour.ago")
 
 
 

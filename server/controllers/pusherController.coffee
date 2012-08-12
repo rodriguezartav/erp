@@ -33,9 +33,8 @@ class PusherController
     apiKeys=
       restKey: process.env.PUSHER_KEY
       appId: process.env.PUSHER_APP_ID
-      secret: process.env.PUSHER_SECRET
       authUrl: process.env.PUSHER_AUTH_URL
-    JSON.stringify apiKeys
+    
 
   auth: (socket_id, channel, user_details) =>
     channelData = {user_id: user_details.id , user_info: user_details }

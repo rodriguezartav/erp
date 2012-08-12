@@ -14,10 +14,18 @@ class Session extends Spine.SingleModel
     super
     @isSalesforce=false
 
+  createFromAuth: (keys) ->
+    @instance_url= keys.instance_url
+    @token= keys.access_token
+    @userId= keys.user.id
+    @user= keys.user
+    @lastLogin= new Date( parseInt( keys.issued_at ))
+    @save()
+
   hasPerfiles: (perfiles) ->
     has = false
     for perfil in perfiles
-      has = true if perfil == @user.Perfil__c
+      has = true if perfil == @user.Perfil
     return has
 
   resetLastUpdate: ->
@@ -60,12 +68,11 @@ class Session extends Spine.SingleModel
     @isSalesforce = true
     @save()
 
-  isExpired: () =>
-    return true if !@lastLogin
-    expireDate = new Date(@lastLogin.getTime() + 1000 * 60 * 60 * 2)
-    res = false
-    res= true if expireDate.getTime()  < new Date().getTime() 
-    return res
+  isExpired: =>
+    return false if @lastLogin.less_than(110.minutes).ago
+    console.log @lastLogin
+    console.log "session is expired"
+    return true
 
   login:  =>
     $.ajax

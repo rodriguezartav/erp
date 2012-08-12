@@ -1,0 +1,36 @@
+<% Spine = require('spine') %>
+
+  <div class="container">
+
+  <div class="row-fluid">
+    <div class="row-fluid span9 menu menuContainer">
+    </div>
+    
+    <div class="span3 notificationContainer">
+    
+      <div class="toolbar">
+        
+      </div>
+      
+      <ul class="tabHeader nav nav-tabs">
+          <li><a class="hasNots profile " href="#tabProfile" data-toggle="tab">Tarea <i class=" icon-tasks"></i></a></li>
+          <li class="active"><a class="hasNots feed " href="#tabFeed" data-toggle="tab">BI <i class="  icon-comments-alt"></i></a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tabProfile">
+            <ul  class="unstyled profiles_list notificacion_list">
+
+            </ul>
+          </div>
+          
+          <div class="tab-pane" id="tabFeed">
+            <ul  class="unstyled feeds_list notificacion_list">
+
+            </ul>
+          </div>
+        </div>
+    
+    </div>
+  </div>
+  
+</div>

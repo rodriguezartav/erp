@@ -74,7 +74,7 @@ class SocketManager
   profileEvents: =>
     @private_erp_profiles = @pusher.subscribe('private-erp_profiles')
 
-    @private_erp_profiles.bind "client-#{Spine.session.user.Perfil__c}" , (message) =>
+    @private_erp_profiles.bind "client-#{Spine.session.user.Perfil}" , (message) =>
       user = User.find message.user
       Notificacion.createForPerfil( user , message.text , true )
 

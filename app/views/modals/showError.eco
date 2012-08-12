@@ -1,0 +1,25 @@
+
+<div class="modal-header">
+  <h3>Error en el Sistema</h3>
+</div>
+
+
+
+<div class="modal-body">
+  <h4>Detalles del Error: </h4>
+  <p><%- String.replaceAll(@error || "N/D" , ',' , '<br/>') %></p>
+  <p><%= "Error de Internet " if !@error %></p>
+  
+  <br/>
+  <h5 class="label label-danger">Reportelo sino <strong>no</strong> comprende su causa!</h5>
+
+</div>
+
+<div class="modal-footer">
+  <a class="btn btn-primary  accept">Ok</a>
+</div>
+
+
+
+
+

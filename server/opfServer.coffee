@@ -18,6 +18,7 @@ app = express.createServer()
 app.use(express.logger())
 app.use(express.bodyParser())
 app.use express.cookieParser({httpOnly: false})
+app.use express.session({secret:"saimiri aesterdius"})
 
 app.set 'views' , './views'
 app.set 'view engine'  , 'jade'

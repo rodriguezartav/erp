@@ -1,0 +1,18 @@
+
+<div class="modal-header">
+  <h2>Se completo la operacion</h2>
+</div>
+
+<div class="modal-body">
+
+<h4><i class="icon-check modal_success"></i> Esta pantalla desaparece en 5 segundos</h4>
+
+</div>
+
+<div class="modal-footer">
+</div>
+
+
+
+
+

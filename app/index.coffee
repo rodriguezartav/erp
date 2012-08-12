@@ -13,7 +13,6 @@ Footer = require("controllers/footer")
 
 Lightbox = require("controllers/lightbox")
 
-User = require("models/user")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
 User = require("models/user")
@@ -33,6 +32,7 @@ class App extends Spine.Controller
     Spine.server = @options.server
     Spine.pusherKeys = @options.pusherKeys
     Spine.registerParse @options.parseKeys
+    User.refresh @options.users
 
     new Header(el: $("header"))
     new Productos(el: $(".productosToolbar"))
@@ -46,8 +46,6 @@ class App extends Spine.Controller
     Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
     Spine.statManager    =  StatManager
     Spine.statManager.registerManager(@options.statApi)
-
-    Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
 
     @routes
       "/apps": =>
@@ -68,32 +66,28 @@ class App extends Spine.Controller
         @html @currentApp
         @el.addClass "container"
         @el.removeClass "container-fluid"
+    
+    Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
 
   loginComplete: =>
+    @navigate "/apps"
     Spine.statManager.identify Spine.session.user.Name
     Spine.clicked = false
 
-
-    setInterval =>
-      return Spine.clicked = false if Spine.clicked or Spine.paused
-      @navigate "/apps"
-    , 60000
+    #setInterval =>
+      #return Spine.clicked = false if Spine.clicked or Spine.paused
+      #@navigate "/apps"
+    #, 60000
 
     #TODO CHANGE VAR NAME AND MOVE
-    $("body").click =>
-      Spine.clicked = true
+    #@el.bind "click" , =>
+      #Spine.clicked = true
       
-    $(".appCanvas").click =>
-      Spine.trigger "appClick"
-      
-    @navigate "/apps"
-
 
   #TODO PUT SOMEWHERE ELSE
   Spine.throttle= (fn,delay) ->
     clearTimeout(Spine.throttleTimer) if Spine.throttleTimer
     Spine.throttleTimer = setTimeout =>
-      console.log arguments
       fn.apply(@, arguments);
     , delay
 

@@ -34,10 +34,9 @@ class SalesforceLogin
   onLoginComplete: (d) =>
     @cb(true, @oauthToken)
     
-  onLoginError: (e) ->
-    @cb(false,@access_token)
+  onLoginError: (e) =>
+    @cb(false,e)
 
-  
   getPostOptions: (credentials,postData) ->
     host  = @getHostFromUsername(credentials.username)
     options = 

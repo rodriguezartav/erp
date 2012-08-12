@@ -1,0 +1,61 @@
+<% Spine   = require('spine') %>
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.find(@group.Cliente)  %>
+
+<div class="modal-header">
+  <% action = if @aprobar == 1 then "Aprobar" else "Archivar" %>
+  <h4><%= action %> Pedidos</h4>
+  <h3><a target="_blank" href="<%= Spine.session.instance_url %>/<%= cliente.id  %>"> <%= cliente.Name  %> </a> </h3>
+  <h6><a target="_blank" href="<%= Spine.session.instance_url %>/<%= cliente.id  %>"> Click para ver estado de cuenta en Salesforce </a></h6>
+</div>
+
+<div style="display:none" class="alert-box error alert-error alert">
+</div>
+
+<div class="modal-body show_wait">
+  <h4>Espere mientras recibimos la confirmacion...</h4>
+</div>
+
+<div class="modal-body show_input">
+    
+  <h3>No se puede aprobar el pedido por la siguiente razon: </h3>
+    
+  <ul class="list_info">
+    <li>
+       <strong>Saldo Actual:   </strong> <%= cliente.Saldo?.toMoney()  %>
+     </li>
+   
+    <li>
+      <strong>Monto del Pedido: </strong>  <%= @group.Total.toMoney()  %>
+    </li>
+    <li>
+      <strong>Saldo Resultante: </strong>  <%= (@group.Total + cliente.Saldo).toMoney()  %>
+    </li>
+    <li>
+      <strong>Limite de Credito: </strong>  <%= cliente.CreditoAsignado?.toMoney()  %>
+    </li>
+    <li>
+      <strong>Rating Crediticio: </strong> <%= cliente.Rating_Crediticio || "No Asignado"  %>
+    </li>
+  </ul>
+
+</div>
+
+<div class="modal-footer show_input">  
+  <a class="btn btn-danger pull-left cancel">Cancelar</a>
+</div>
+
+
+<div class="modal-footer show_wait">
+
+  <div class="progress progress-striped loader active">
+    <div class="bar" style="width: 100%;"></div>  
+  </div>
+
+  <a class="btn btn-primary show_on_error accept">Ok</a>
+</div>
+
+
+
+
+
