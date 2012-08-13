@@ -67,12 +67,12 @@ class SalesforceController
     req.session.salesforceToken
 
   startAuth: (req, res) =>
-    url = "#{@loginServer}/services/oauth2/authorize?response_type=code&client_id=#{@consumerKey}&redirect_uri=http://localhost:9294/sessions/salesforce/callback&display=touch"
+    url = "#{@loginServer}/services/oauth2/authorize?response_type=code&client_id=#{@consumerKey}&redirect_uri=#{@redirectUrl}&display=touch"
     console.log('redirecting: '+url);
     res.redirect(url);
 
   finishAuth: (req,res) =>
-    console.log('code: '+req.query.code);
+    console.log( 'code: ' + req.query.code );
     post = restler.post "#{@loginServer}/services/oauth2/token" ,
       data:
         code: req.query.code
