@@ -23,7 +23,7 @@ class Routes
       channel_name = req.body.channel_name
       socket_id = req.body.socket_id
       console.log "********************"
-      console.log user_details
+      console.log req.cookies.user_details
       user_details = unescape(req.cookies.user_details)
       console.log "********************"
       console.log user_details
