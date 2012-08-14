@@ -38,7 +38,7 @@ class SocketManager
       name:   Spine.session.user.Name
       title:  Spine.session.user.Profile__c
       photo:  Spine.session.user.SmallPhotoUrl
-    Spine.setCookie "user_details" , JSON.stringify user
+    Spine.setCookie "user_details" , user
     @salesforceSync()
     @presenceEvents()
     @profileEvents()
@@ -51,7 +51,7 @@ class SocketManager
 
   presenceEvents: =>
     @presence = @pusher.subscribe('presence-erp')
-    
+
     @presence.bind 'pusher:subscription_succeeded' , (members) =>
       console.log members
 
@@ -60,8 +60,6 @@ class SocketManager
 
     @presence.bind 'pusher:member_removed' , (member) =>
       console.log member
-
-
 
   pushToProfile: (profile, text ) =>
     data = { user: Spine.session.userId , text: text}
@@ -73,7 +71,6 @@ class SocketManager
 
   profileEvents: =>
     @private_erp_profiles = @pusher.subscribe('private-erp_profiles')
-
     @private_erp_profiles.bind "client-#{Spine.session.user.Perfil__c}" , (message) =>
       user = User.find message.user
       Notificacion.createForPerfil( user , message.text , true )
