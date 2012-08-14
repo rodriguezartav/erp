@@ -38,7 +38,7 @@ class SocketManager
       name:   Spine.session.user.Name
       title:  Spine.session.user.Profile__c
       photo:  Spine.session.user.SmallPhotoUrl
-    Spine.setCookie "user_details" , user
+    Spine.setCookie "user_details" , JSON.stringify user
     @salesforceSync()
     @presenceEvents()
     @profileEvents()
