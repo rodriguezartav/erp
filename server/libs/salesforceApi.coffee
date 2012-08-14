@@ -158,8 +158,18 @@ class RestApi
       path: "/v" + @apiVersion + "/query/?q=" + escape(data.soql)
       callback: callback
       error: error
-
     RestApi.request options
+
+  @rest: (oauth,data, callback, error) ->
+    options =
+      oauth: oauth
+      path: if data.method == "GET" then "services/apexrest/#{path}" else "/services/apexrest/#{path}/#{data}"
+      callback: callback
+      error: error
+    RestApi.request options
+    
+    result =  http_post("/services/apexrest/#{path}" , data)
+    
 
   @recordFeed: (oauth,data, callback, error) ->
     options =

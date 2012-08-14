@@ -23,8 +23,11 @@ class Routes
     @app.all "/parse/users/?*" , (req,res) ->
       req.parseController.handleProxy(req,res)
 
-    @app.all "/salesforce/?*" , (req,res) ->
+    @app.all "/salesforce/sobjects/?*" , (req,res) ->
       req.salesforceController.handleProxy(req,res)
+
+    @app.all "/salesforce/rest/?*" , (req,res) ->
+      req.salesforceController.rest(req,res)
 
     @app.post "/pusherAuth" , (req,res) ->
       channel_name = req.body.channel_name

@@ -86,7 +86,7 @@ class Collection extends Base
       params,
       type: 'GET',
       dataType: "text" ,
-      url:  "#{Ajax.getURL(@model)}?soql=#{@model.getQuery(filters)}"
+      url:  "salesforce/sobjects?soql=#{@model.getQuery(filters)}"
     ).success(@recordsResponse)
      .error(@errorResponse)
 
@@ -95,6 +95,18 @@ class Collection extends Base
       @model.refresh(records, options)
       @model.trigger "querySuccess"
       params.afterSuccess?()
+
+  rest: (params,options) =>
+    @beforeRest
+    request = @ajax(
+      params,
+      type:  params.method,
+      data:  { name: params.name , data: params.jsonObject }
+      url:   "/salesforce/rest"
+    ).success(@recordsResponse)
+     .error(@errorResponse)
+    request.success (records) =>
+      options.afterSuccess?()
 
   # Private
   customResponse: (options = {}) =>
@@ -198,7 +210,7 @@ class Singleton extends Base
       options.error?.apply(@record, [xhr, statusText, error] )
 
 # Ajax endpoint
-Model.host = '/salesforce'
+Model.host = '/salesforce/sobjects'
 
 Include =
   ajax: -> new Singleton(this)
@@ -231,8 +243,8 @@ Model.SalesforceAjax =
   query: ->
     @ajax().query(arguments...)
 
-  ajaxQuery: ->
-    @ajax().query(arguments...)
+  rest: ->
+    @ajax().rest(arguments...)
 
   ajaxChange: (record, type, options = {}) ->
     return if options.ajax is false

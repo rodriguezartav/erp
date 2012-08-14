@@ -2,9 +2,7 @@ Spine   = require('spine')
 User = require('models/user')
 Cliente = require("models/cliente")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
-
 Saldo = require("models/socketModels/saldo")
-
 $       = Spine.$
 
 class AprobarPedidos extends Spine.Controller

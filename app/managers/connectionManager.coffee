@@ -2,6 +2,8 @@ Spine = require('spine')
 Session = require('models/session')
 
 User = require('models/user')
+Cliente = require('models/cliente')
+
 
 Lightbox = require("controllers/lightbox")
 
@@ -70,11 +72,12 @@ class ConnectionManager
     if Spine.loggedIn
       Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
         window.location.reload();
-    
+
   fetchServerData: () =>
     if navigator.onLine
-      for model in Spine.socketModels
-        model.query() if model.autoQuery
+      #for model in Spine.socketModels
+        #model.query() if model.autoQuery
+      Cliente.query()
 
   fetchLocalData: =>
     Session.fetch()    

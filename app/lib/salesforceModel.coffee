@@ -9,6 +9,8 @@ Spine.Model.SalesforceModel =
       avoidInsertList: []
       standardObject: false
       overrideName: null
+      standardFields: ["LastModifiedDate","Name"]
+      lastUpdate: new Date(1000)
       
       fromJSON: (objects) ->
         return unless objects
@@ -19,16 +21,20 @@ Spine.Model.SalesforceModel =
         objects = objects.records if objects.records
 
         if Spine.isArray(objects)
-          (new @(value) for value in objects)
+          for value in objects
+            cDate = if value.LastModifiedDate then new Date(value.LastModifiedDate) else new Date(1000)
+            @lastUpdate = cDate if cDate > @lastUpdate.getTime()
+            obj = new @(value)
+            obj
         else
           new @(objects)
-      
+
       getQuery: (options) =>
         @queryOrderString  = ""
         @queryFilterString = ""
         @queryFilter(options)
         if @autoQueryTimeBased or ( options and !options.avoidQueryTimeBased )
-          @queryFilterAddCondition " LastModifiedDate >= #{Spine.session.getLastUpdateOr1970(@name).to_salesforce() }" 
+          @queryFilterAddCondition " LastModifiedDate >= #{@lastUpdate.to_salesforce()}" 
         return @queryString() + @queryFilterString + @queryOrderString
 
       queryOrderAddCondition: (order) =>
@@ -50,14 +56,12 @@ Spine.Model.SalesforceModel =
         for attribute in @attributes
           if @avoidQueryList?.indexOf(attribute) == -1            
             query += attribute
-            if @standardObject
-              query += ","
-            else if attribute.indexOf("Name") == 0 
+            if @standardObject or @standardFields.indexOf(attribute) > -1
               query += ","
             else
               query += "__c,"
 
-        query += "Id "
+        query += "Id  "
         query +=  "from #{className}" 
         query +=  "__c"  if !@standardObject 
         query += " "

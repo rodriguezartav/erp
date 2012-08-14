@@ -50,6 +50,10 @@ class SalesforceController
     return req.session.salesforceToken if req.session.salesforceToken
     return @token
 
+  rest: (req,res) =>
+    SalesforceApi.query token , soql: req.query['soql']  , (response) ->
+    
+
   handleProxy: (req,res) =>
     console.log "SALESFORCE PROXY"
     method = req.route.method

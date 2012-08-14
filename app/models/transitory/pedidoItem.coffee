@@ -3,14 +3,15 @@ Spine = require('spine')
 class PedidoItem extends Spine.Model
   @configure 'PedidoItem' , "Cliente" , "Producto" , "Cantidad" , "Precio" , "Impuesto_Monto" , "Impuesto", "Descuento" , 
   "Descuento_Monto" ,"SubTotal" , "Total" , "Referencia" , "Observacion" , "Fuente" , "Referencia" , "IsContado",
-  "Nombre", "Telefono", "Email" , "Identificacion" , "Orden" , "Transporte" , "Especial"
+  "Nombre", "Telefono", "Email" , "Identificacion" , "Orden" , "Transporte" , "Especial" , "LastModifiedDate"
     
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
   @extend Spine.Model.TransitoryModel
 
   @overrideName = "Oportunidad"
 
-  @avoidInsertList = ["Total","Descuento_Monto","Impuesto_Monto", "SubTotal"] 
+  @avoidInsertList = ["Total","Descuento_Monto","Impuesto_Monto", "SubTotal" , "LastModifiedDate"] 
 
   @createFromProducto: (producto ) ->
     pedido = PedidoItem.create

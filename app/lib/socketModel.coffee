@@ -5,8 +5,9 @@ Spine.Model.SocketModel =
 
   extended: ->
     @change @saveLocal
-    @bind "query_success" , @saveLocal
     @fetch @loadLocal
+    @bind "querySuccess" , @saveBulkLocal
+    
     Spine.socketModels.push @
     
     @extend
@@ -72,14 +73,19 @@ Spine.Model.SocketModel =
       forceDelete: ->
         localStorage[@className] = []
 
+  saveBulkLocal: ->
+    @beforeSaveLocal?()
+    result = JSON.stringify(@all())
+    localStorage[@className] = result
+
   saveLocal: ->
-    @beforeSaveLocal()
+    @beforeSaveLocal?()
     result = JSON.stringify(@)
     localStorage[@className] = result
 
   loadLocal: ->
     result = localStorage[@className]
     @refresh(result or [], clear: true)
-    @afterLoadLocal()
+    @afterLoadLocal?()
 
 module?.exports = Spine.Model.SocketModel
