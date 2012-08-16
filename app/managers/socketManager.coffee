@@ -25,7 +25,7 @@ class SocketManager
 
   handshake: =>
     try
-      Pusher.channel_auth_endpoint = "http://rodcoerp.herokuapp.com/pusherAuth" #Spine.pusherKeys.authUrl
+      Pusher.channel_auth_endpoint = "/pusherAuth" #"http://rodcoerp.herokuapp.com/pusherAuth" #Spine.pusherKeys.authUrl
       @pusher = new Pusher(Spine.pusherKeys.restKey) 
 
     catch error
@@ -38,6 +38,13 @@ class SocketManager
       name:   Spine.session.user.Name
       title:  Spine.session.user.Profile__c
       photo:  Spine.session.user.SmallPhotoUrl
+      
+    for pusher in Pusher.instances
+      pusher.options=
+        auth:
+          params:
+            user_details: JSON.stringify user
+          
     Spine.setCookie "user_details" , JSON.stringify user
     @salesforceSync()
     @presenceEvents()

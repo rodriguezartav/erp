@@ -15,19 +15,15 @@ class PusherController
       req.pusherController = @
       next()
 
-
   register: =>
     #private-erp-feed
     #private-erp-profile
 
-
   listenFeed: =>
     #handleNotificaciones
 
-
   listenProfile: =>
     #create notifiacion , creareParse
-    
 
   keys: =>
     apiKeys=
@@ -39,7 +35,7 @@ class PusherController
 
   auth: (socket_id, channel, user_details) =>
     channelData = {user_id: user_details.id , user_info: user_details }
-    console.log "#{socket_id} ::: #{channel}: #{channelData}"
+    #console.log "#{socket_id} ::: #{channel}: #{JSON.stringify channelData}"
     return @pusher.auth(socket_id, channel, channelData);
     
 

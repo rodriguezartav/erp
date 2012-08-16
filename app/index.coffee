@@ -102,7 +102,7 @@ class App extends Spine.Controller
     exdate=new Date();
     exdate.setDate(exdate.getDate() + exdays);
     c_value=escape(value)
-    document.cookie=c_name + "=" + c_value;
+    document.cookie=c_name + "=" + c_value
   
 
 

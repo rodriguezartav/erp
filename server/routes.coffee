@@ -22,15 +22,8 @@ class Routes
     @app.post "/pusherAuth" , (req,res) ->
       channel_name = req.body.channel_name
       socket_id = req.body.socket_id
-      console.log "********************"
-      console.log req.cookies
-      user_details = unescape(req.cookies.user_details)
-      console.log "********************"
-      console.log user_details
-      user_details = JSON.parse user_details
-      console.log "********************"
-      console.log user_details
-      res.send req.pusherController.auth(socket_id,channel_name , user_details )
+      user_details = JSON.parse req.body.user_details
+      res.send req.pusherController.auth( socket_id , channel_name , user_details )
 
   @varsToString: (vars) ->
     str= ""
