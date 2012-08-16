@@ -25,7 +25,7 @@ class SocketManager
 
   handshake: =>
     try
-      Pusher.channel_auth_endpoint = "/pusherAuth" #"http://rodcoerp.herokuapp.com/pusherAuth" #Spine.pusherKeys.authUrl
+      Pusher.channel_auth_endpoint = "http://rodcoerp.herokuapp.com/pusherAuth" #Spine.pusherKeys.authUrl
       @pusher = new Pusher(Spine.pusherKeys.restKey) 
 
     catch error

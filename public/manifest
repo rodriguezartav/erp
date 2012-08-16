@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v 0.2.11
+# v 0.2.13
 
 
 CACHE:
@@ -8,8 +8,9 @@ CACHE:
 ./images/furley_bg.png
 ./images/logo.png
 ./font/fontawesome-webfont.woff
-
 http://js.pusher.com/1.11/pusher.min.js
+http://js.pusher.com/1.12/pusher.min.js
+
 
 NETWORK:
 *
