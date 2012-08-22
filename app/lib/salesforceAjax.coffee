@@ -94,19 +94,21 @@ class Collection extends Base
     @all(filters , params).success (records) =>
       @model.refresh(records, options)
       @model.trigger "querySuccess"
-      params.afterSuccess?()
+      params.afterSuccess?(records)
 
-  rest: (params,options) =>
+  rest: (params,options = {}) =>
     @beforeRest
     request = @ajax(
       params,
-      type:  params.method,
-      data:  { name: params.name , data: params.jsonObject }
+      type:  params.restMethod,
+      data:  JSON.stringify { restRoute: params.restRoute , restData: params.restData , restMethod: params.restMethod }
       url:   "/salesforce/rest"
     ).success(@recordsResponse)
      .error(@errorResponse)
+     request.error (error) =>
+       options.afterError?(error)
     request.success (records) =>
-      options.afterSuccess?()
+      options.afterSuccess?(records)
 
   # Private
   customResponse: (options = {}) =>
@@ -130,54 +132,89 @@ class Collection extends Base
 class Singleton extends Base
   constructor: (@record) ->
     @model = @record.constructor
+    @obj = 
+       fields: @model.sobjectFormat(@record , false)
+       id: @record.id
+       objtype: "#{ @model.overrideName or @model.name}__c"
 
   custom: (method, data, options) ->
     @queue =>
-      @ajax(
+      request = @ajax(
         type: method
-        data: JSON.stringify( data )
+        data: JSON.stringify( @obj )
         url:  Ajax.getURL(@record)
       ).success(@recordResponse(options))
        .error(@errorResponse(options))
 
+      request.error (error) =>
+        options.afterError?()
+
+      request.success (records) =>
+        options.afterSuccess?()
+
   reload: (params, options) ->
     @queue =>
-      @ajax(
+      request = @ajax(
         params,
         type: 'GET'
         url:  Ajax.getURL(@record)
       ).success(@recordResponse(options))
        .error(@errorResponse(options))
 
-  create: (params, options) ->    
+      request.error (error) =>
+        options.afterError?()
+
+      request.success (records) =>
+        options.afterSuccess?()
+
+  create: (params, options) ->
     @queue =>
-      @ajax(
+      request = @ajax(
         params,
         type: 'POST'
-        data: JSON.stringify( @record )
+        data: JSON.stringify @obj
         url:  Ajax.getURL(@model)
       ).success(@recordResponse(options))
        .error(@errorResponse(options))
 
+      request.error (error) =>
+        options.afterError?()
+
+      request.success (records) =>
+        options.afterSuccess?()
+
   update: (params, options) ->
-    data = @record.forSave?()
     @queue =>
-      @ajax(
+      request = @ajax(
         params,
         type: 'PUT'
-        data: JSON.stringify( data || @record)
+        data: JSON.stringify(@obj)
         url:  Ajax.getURL(@record)
       ).success(@recordResponse(options))
        .error(@errorResponse(options))
 
+      request.error (error) =>
+        options.afterError?()
+
+      request.success (records) =>
+       options.afterSuccess?()
+    
+
   destroy: (params, options) ->
     @queue =>
-      @ajax(
+      request = @ajax(
         params,
         type: 'DELETE'
         url:  Ajax.getURL(@record)
       ).success(@recordResponse(options))
        .error(@errorResponse(options))
+
+      request.error (error) =>
+        options.afterError?()
+
+      request.success (records) =>
+        options.afterSuccess?()
+
 
   # Private
 
@@ -254,6 +291,9 @@ Model.SalesforceAjax.Methods =
   extended: ->
     @extend Extend
     @include Include
+    
+  rest: ->
+    @ajax().rest(arguments...)
 
 # Globals
 Ajax.defaults   = Base::defaults

@@ -5,7 +5,7 @@ class Pedido extends Spine.Model
   "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia"
   
   @extend Spine.Model.SalesforceModel
-  @extend Spine.Model.SalesforceAjax
+  @extend Spine.Model.SalesforceAjax.Methods
 
   @overrideName = "Oportunidad"
 

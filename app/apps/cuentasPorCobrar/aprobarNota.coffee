@@ -29,7 +29,7 @@ class AprobarNota extends Spine.Controller
     @render()
 
   reload: ->
-    Saldo.query({ autorizado: false, tipos: "'NC','ND'" } , false)    
+    Saldo.ajax().query( { autorizado: false, tipos: "'NC','ND'" } , afterSuccess: @renderPedidos )        
 
   render: =>
     notas = Saldo.select (item) ->
@@ -46,7 +46,7 @@ class AprobarNota extends Spine.Controller
       class: Saldo
       restRoute: "Saldo"
       restMethod: "POST"
-      restData: JSON.stringify( { "id" :  @saldo.id } )
+      restData: id :  @saldo.id
 
     Spine.trigger "show_lightbox" , "rest" , data , @onAprobarSuccess
 

@@ -68,7 +68,7 @@ class AjustarCredito extends Spine.Controller
       class: Cliente
       restRoute: "Cliente"
       restMethod: "PUT"
-      restData: JSON.stringify({ cliente: clienteSf })
+      restData: cliente: clienteSf
       
     Spine.trigger "show_lightbox" , "rest" , data , @after_send
  

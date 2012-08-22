@@ -128,6 +128,7 @@ class Credito extends Spine.Controller
     
   loadPedidoItems: =>
     items = PedidoItem.itemsInPedido(@pedido)
+    console.log items
     for pedidoItem in items
       item = new Items(pedidoItem: pedidoItem)
       @registerItem(item)
@@ -211,12 +212,13 @@ class Credito extends Spine.Controller
     callback = if target.attr then @after_send else @after_send_fast
     
     pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
-    
+
     data =
       class: PedidoItem
       restRoute: "Oportunidad"
       restMethod: "POST"
-      restData: '{"oportunidades" : ' + pedidos + '}'
+      restData: oportunidades: pedidos 
+
 
     Spine.trigger "show_lightbox" , "rest" , data , callback
 

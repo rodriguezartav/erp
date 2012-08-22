@@ -2,7 +2,9 @@ Spine = require('spine')
 
 class Cuenta extends Spine.Model
   @configure "Cuenta" , "Name" , "Codigo" , "Automatica"
-  @extend Spine.Model.Salesforce
+
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
 
   @queryFilter: (options) =>
     return "" if !options

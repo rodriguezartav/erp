@@ -40,7 +40,7 @@ class VerRegistros extends Spine.Controller
     data=
       restRoute: "Registros"
       restMethod: "POST"
-      restData: JSON.stringify( { year: date.getFullYear() , month: date.getMonth() + 1 , day: date.getDate() , tipos: Registro.getAllowedDepartamentos()  } )
+      restData: { year: date.getFullYear() , month: date.getMonth() + 1 , day: date.getDate() , tipos: Registro.getAllowedDepartamentos()  }
       class: Registro
 
     Spine.trigger "show_lightbox" , "rest" , data  , @onRegistroLoaded
@@ -53,8 +53,9 @@ class VerRegistros extends Spine.Controller
 
   onRegistroLoaded: (success , results) =>
     #Hack to use REST to load Data for Free Edition Limits
-    
-    Registro.refreshFromRest(results.results[0])
+
+    json  = JSON.stringify results
+    Registro.refresh(json)
     
     departamentos = Registro.uniqueDepartamentos()
     @departamentos_list.html require("views/apps/vistas/verRegistros/departamento")(departamentos)

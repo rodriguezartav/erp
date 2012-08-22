@@ -5,7 +5,9 @@ class Recibo extends Spine.Model
     "DocumentosList" , "MontosList" , "ConsecutivosList" , "DocumentosLinks"
   
   
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods  
+
   @extend Spine.Model.TransitoryModel
 
   @autoQuery = false;

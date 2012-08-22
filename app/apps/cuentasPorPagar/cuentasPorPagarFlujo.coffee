@@ -25,12 +25,11 @@ class FlujoDePago extends Spine.Controller
     super
     @html require("views/apps/cuentasPorPagar/cuentasPorPagarFlujo/layout")(FlujoDePago)
     @error.hide()
-    CuentaPorPagar.bind "query_success" , @renderCuentas
     CuentaPorPagar.bind "insert_error" , @onPagoProgramadoUpdateError
     @reload()
 
   reload: ->
-    CuentaPorPagar.query({ estado: "'Pendiente','Calendarizado'" , orderFechaVencimiento: true })    
+    CuentaPorPagar.query({ estado: "'Pendiente','Calendarizado'" , orderFechaVencimiento: true } ,  afterSuccess: @renderCuentas )        
 
   renderCuentas: =>
     cuentas = CuentaPorPagar.all()
@@ -94,7 +93,7 @@ class FlujoDePago extends Spine.Controller
       class: CuentaPorPagar
       restRoute: "Tesoreria"
       restMethod: "POST"
-      restData:   '{"cuentas":' +   cuentasSf  + '}'
+      restData:   cuentas: cuentasSf
 
     Spine.trigger "show_lightbox" , "rest" , data , @saveSuccess
 

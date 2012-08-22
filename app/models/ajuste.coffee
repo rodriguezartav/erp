@@ -2,7 +2,9 @@ Spine = require('spine')
 
 class Ajuste extends Spine.Model
   @configure "Ajuste" , "Cuenta" , "Monto" , "Descripcion" , "Tipo" , "Fecha"
-  @extend Spine.Model.Salesforce
+
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
 
   @queryFilter: (options) =>
     return "" if !options

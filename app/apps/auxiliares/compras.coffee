@@ -125,12 +125,15 @@ class Compras extends Spine.Controller
    
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)
-    
+
     data =
       class: Movimiento
-      restData: Movimiento.all()
+      restRoute: "Movimiento"
+      restMethod: "POST"
+      restData: 
+        movimientos: Movimiento.salesforceFormat( Movimiento.all() , false) 
 
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
   after_send: =>
     proveedor = @src_proveedor.find("input")

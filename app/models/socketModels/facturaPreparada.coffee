@@ -4,7 +4,9 @@ class FacturaPreparada extends Spine.Model
   @configure "Documento", "Total" , "Consecutivo" , "Referencia" , "Observacion" , 
    "Cliente" ,  "FechaFacturacion"  , "Tipo_de_Documento" , "IsContado" , "Estado"
 
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods  
+
   @extend Spine.Model.SocketModel
 
   @autoQueryTimeBased   :   false

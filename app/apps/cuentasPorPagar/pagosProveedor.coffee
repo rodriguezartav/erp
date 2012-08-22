@@ -48,7 +48,7 @@ class PagosProveedor extends Spine.Controller
     super
     @error.hide()
     CuentaPorPagar.destroyAll()
-    Cuenta.query({clases: "'Activo'" } )
+    Cuenta.query({clases: "'Activo'" } , afterSuccess: @onLoadCuenta )
     Proveedor.reset_current()
     Proveedor.query()
     @setBindings()
@@ -57,7 +57,7 @@ class PagosProveedor extends Spine.Controller
     
 
   onProveedorSet: =>
-    CuentaPorPagar.query({ proveedor: Proveedor.current.id ,  saldo: true , estado: "'Para Pagar'"})
+    CuentaPorPagar.ajax().query( { proveedor: Proveedor.current.id ,  saldo: true , estado: "'Para Pagar'"} , afterSuccess: @onLoadSaldos )
     
   onLoadCuenta: =>
     @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
@@ -124,7 +124,7 @@ class PagosProveedor extends Spine.Controller
     @pagoProveedor = PagoProveedor.create({Documentos: [], Montos: [] })
     @updateFromView(@pagoProveedor,@inputs_to_validate)
     @pagoProveedor.id = null
-    pagos = JSON.stringify( pagos: @pagoProveedor )
+    pagos = pagos: @pagoProveedor
     
     data =
       class: PagoProveedor

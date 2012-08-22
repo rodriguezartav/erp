@@ -82,11 +82,7 @@ class FacturasProveedor extends Spine.Controller
   send: (e) =>
     @updateFromView(@cuentaPorPagar,@inputs_to_validate)
 
-    data =
-      class: CuentaPorPagar
-      restData: [@cuentaPorPagar]
-
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    Spine.trigger "show_lightbox" , "insert" , @cuentaPorPagar , @after_send
 
   after_send: =>
     proveedor = @src_proveedor.find("input").val()

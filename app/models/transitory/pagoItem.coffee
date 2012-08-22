@@ -4,7 +4,8 @@ class PagoItem extends Spine.Model
   @configure "PagoItem" , "Cliente" , "Total" , "Tipo" , "Saldo" , "Consecutivo" , 
   "Documento" , "Tipo_de_Documento" , "Fecha" , "Monto","Recibo" , "FormaPago" , "Referencia"
  
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
 
   @avoidInsertList = ["Saldo","Total","Consecutivo"] 
   @overrideName: "Pago"

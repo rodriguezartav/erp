@@ -8,10 +8,26 @@ Spine.Model.SalesforceModel =
       avoidQueryList: []
       avoidInsertList: []
       standardObject: false
+      autoQueryTimeBased: false
       overrideName: null
       standardFields: ["LastModifiedDate","Name"]
       lastUpdate: new Date(1000)
-      
+
+      salesforceFormat: (items,includeId = false) =>
+        items = [items] if !Spine.isArray(items)
+        objects = []
+        for item in items
+          objects.push @sobjectFormat(item,includeId)
+        objects
+
+      sobjectFormat: (item, includeId=false) =>
+        object = {}
+        for attr of item.attributes()
+          if @avoidInsertList.indexOf(attr) == -1
+            object[attr + "__c" ] = item[attr] if @standardFields.indexOf(attr) == -1 and attr != "id"
+            object["Id"] = item[attr] if attr == "id" and includeId
+        return object
+
       fromJSON: (objects) ->
         return unless objects
         if typeof objects is 'string'
@@ -33,7 +49,7 @@ Spine.Model.SalesforceModel =
         @queryOrderString  = ""
         @queryFilterString = ""
         @queryFilter(options)
-        if @autoQueryTimeBased or ( options and !options.avoidQueryTimeBased )
+        if @autoQueryTimeBased or ( options and options.avoidQueryTimeBased == false )
           @queryFilterAddCondition " LastModifiedDate >= #{@lastUpdate.to_salesforce()}" 
         return @queryString() + @queryFilterString + @queryOrderString
 

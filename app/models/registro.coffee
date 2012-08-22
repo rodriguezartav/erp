@@ -6,7 +6,8 @@ Spine = require('spine')
 class Registro extends Spine.Model
   @configure "Registro" , "Name" , "Monto" , "Descripcion" , "Tipo" , "Departamento" , "Fecha" , "Responsable"
  
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
 
   @refreshFromRest: (raw_results) =>
     results = JSON.stringify(raw_results)  

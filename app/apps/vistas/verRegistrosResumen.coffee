@@ -34,7 +34,7 @@ class VerRegistrosResumen extends Spine.Controller
     data=
       restRoute: "Registros"
       restMethod: "POST"
-      restData: JSON.stringify( { year: date.getFullYear() , month: date.getMonth() + 1 , day: date.getDate() , tipos: Registro.getAllowedDepartamentos()  } )
+      restData: { year: date.getFullYear() , month: date.getMonth() + 1 , day: date.getDate() , tipos: Registro.getAllowedDepartamentos()  }
       class: Registro
 
     Spine.trigger "show_lightbox" , "rest" , data  , @onRegistroLoaded
@@ -52,8 +52,9 @@ class VerRegistrosResumen extends Spine.Controller
 
   onRegistroLoaded: (success , results) =>
     #Hack to use REST to load Data for Free Edition Limits
-    Registro.refreshFromRest(results.results[0])
-    
+    json  = JSON.stringify results
+    Registro.refresh(json)
+          
     departamentosList = Registro.uniqueDepartamentos()
     content1 = $("<div class='row-fluid'></div>")
     content2 = $("<div class='row-fluid'></div>")

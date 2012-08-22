@@ -38,7 +38,6 @@ class PusherController
 
   auth: (socket_id, channel, user_details) =>
     channelData = {user_id: user_details.id , user_info: user_details }
-    console.log "#{socket_id} ::: #{channel}: #{channelData}"
     return @pusher.auth(socket_id, channel, channelData);
     
 

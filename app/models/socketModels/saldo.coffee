@@ -2,9 +2,10 @@ Spine = require('spine')
 
 class Saldo extends Spine.Model
   @configure "Saldo" , "Total" , "Saldo" , "Consecutivo" ,  "Cliente" , "Plazo" , "PlazoActual" , "FechaFacturacion" , "FechaVencimiento" ,
-    "Tipo_de_Documento"  , "Autorizado" , "Observacion"
+    "Tipo_de_Documento"  , "Autorizado" , "Observacion" , "LastModifiedDate"
 
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
   @extend Spine.Model.SocketModel
 
   @autoQueryTimeBased = true
@@ -21,7 +22,7 @@ class Saldo extends Spine.Model
     for saldo in saldos
       saldo.destroy()
 
-  @queryFilter: (options ) =>
+  @queryFilter: (options = {}) =>
     filter = ""
     filter = @queryFilterAddCondition(" IsContable__c = 'true' and IsContado__c = false"    , filter)
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "              , filter)   if options.cliente

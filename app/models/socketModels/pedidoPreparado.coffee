@@ -5,7 +5,7 @@ class PedidoPreparado extends Spine.Model
   "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia","Estado" , "Especial" , "LastModifiedDate"
   
   @extend Spine.Model.SalesforceModel
-  @extend Spine.Model.SalesforceAjax
+  @extend Spine.Model.SalesforceAjax.Methods
   @extend Spine.Model.SocketModel
 
   @overrideName = "Oportunidad"

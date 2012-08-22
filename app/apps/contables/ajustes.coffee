@@ -150,9 +150,13 @@ class Ajustes extends Spine.Controller
 
     data =
       class: Ajuste
-      restData: Ajuste.all()
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send
-    
+      restRoute: "Ajuste"
+      restMethod: "POST"
+      restData: 
+        movimientos: Ajuste.salesforceFormat( Ajuste.all() , false) 
+
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
+
 
   after_send: =>
     @reset()

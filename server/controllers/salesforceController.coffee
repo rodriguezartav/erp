@@ -46,20 +46,62 @@ class SalesforceController
   onError: (error) ->
     console.log error
 
-  parseToken: (req) ->
+  parseToken: (req) =>
     return req.session.salesforceToken if req.session.salesforceToken
     return @token
 
   rest: (req,res) =>
-    SalesforceApi.query token , soql: req.query['soql']  , (response) ->
+    token = @parseToken(req)
+    #req.body = req.query if req.query
+    console.log req.body
+    SalesforceApi.rest token , req.body  , (response) ->
+      res.send response
+    , (error) ->
+      console.log error
+      res.statusCode = 500
+      res.send error
     
-
+    
   handleProxy: (req,res) =>
-    console.log "SALESFORCE PROXY"
     method = req.route.method
     path = req.route.path
+    if method == "GET" or method == "get"
+      @handleGet(req,res)
+    if method == "POST" or method == "post"
+      @handlePost(req,res)
+    if method == "PUT" or method == "put"
+      @handlePut(req,res)
+    
+
+  handlePut: (req,res) =>
     token = @parseToken(req)
-    console.log req.query
+    SalesforceApi.update token , req.body , (response) ->
+      res.statusCode >= 200
+      res.send response
+    , (error) ->
+      console.log error
+      res.statusCode = 500
+      res.send  error
+
+  handlePost: (req,res) =>
+    token = @parseToken(req)
+    SalesforceApi.create token , req.body , (response) ->
+      res.statusCode >= 201
+      res.send response
+    , (error) ->
+      console.log error
+      res.statusCode = 500
+      res.send  error
+
+  handleGet: (req,res) =>
+    token = @parseToken(req)
+    if req.query['soql']
+      @handleQuery(req,res,token)
+    else
+      res.statusCode = 500
+      res.send  "NOT YET IMPLEMENTED"
+
+  handleQuery: (req,res, token) =>
     SalesforceApi.query token , soql: req.query['soql']  , (response) ->
       res.send response
     , (error) ->

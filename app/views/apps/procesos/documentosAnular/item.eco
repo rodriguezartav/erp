@@ -6,7 +6,7 @@
 <tr>
   <td>
     <a target="_blank" href="<%= Spine.session.instance_url + "/" + @id %>">
-       <%= @Consecutivo || @Referencia %>
+       <%= @Consecutivo || "No Impreso :" + @Referencia %>
     </a> 
   </td>
   <td>

@@ -50,7 +50,7 @@ class AprobarPedidos extends Spine.Controller
     for pedido in @data.group.Pedidos
       ids.push pedido.id
 
-    data = JSON.stringify( { ids: ids , observacion: @observacion.val() , aprobar: @data.aprobar }  )
+    data = { ids: ids , observacion: @observacion.val() , aprobar: @data.aprobar }
     PedidoPreparado.rest( 'Oportunidad' , 'PUT' , data ) 
 
   on_success: (results) =>

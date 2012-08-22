@@ -5,6 +5,7 @@ class Pedido extends Spine.Model
     "Orden" , "Especial" , "LastModifiedDate"
 
   @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods  
 
   @extend Spine.Model.TransitoryModel
   

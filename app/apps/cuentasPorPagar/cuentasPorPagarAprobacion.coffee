@@ -23,11 +23,10 @@ class CuentasPorPagarAprobacion extends Spine.Controller
   constructor: ->
     super
     @html require("views/apps/cuentasPorPagar/cuentasPorPagarAprobacion/layout")(CuentasPorPagarAprobacion)
-    CuentaPorPagar.bind "query_success" , @renderCuentas
     @reload()
 
   reload: ->
-    CuentaPorPagar.query({ estado: "'Para Aprobar'" , orderFechaVencimiento: true })    
+    CuentaPorPagar.query({ estado: "'Para Aprobar'" , orderFechaVencimiento: true } , afterSuccess: @renderCuentas)    
 
   renderCuentas: =>
     cuentas = CuentaPorPagar.all()
@@ -40,15 +39,9 @@ class CuentasPorPagarAprobacion extends Spine.Controller
     @cuenta = CuentaPorPagar.find(target.attr("data-id"))
     @cuenta.Estado = "Para Pagar"
     @cuenta.save()    
-    cuentaSf = CuentaPorPagar.toSalesforce(@cuenta)
 
-    data =
-      class: CuentaPorPagar
-      restRoute: "Tesoreria"
-      restMethod: "POST"
-      restData: JSON.stringify( { "cuentas" :  [ cuentaSf ] } )
 
-    Spine.trigger "show_lightbox" , "rest" , data , @onAprobarSuccess
+    Spine.trigger "show_lightbox" , "update" , @cuenta , @onAprobarSuccess
 
 
   onAprobarSuccess: =>

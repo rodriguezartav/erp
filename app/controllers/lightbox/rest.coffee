@@ -21,27 +21,21 @@ class Rest extends Spine.Controller
   constructor: ->
     super
     @html require('views/controllers/lightbox/rest')(@data)
-    @data.class.bind "insert_error" , @on_error
-    @data.class.bind "insert_success" , @on_success
     @show_input.hide()
     @show_wait.show()
-    @data.class.rest( @data.restRoute , @data.restMethod , @data.restData ) 
+    @data.class.rest( @data , afterSuccess: @on_success, afterError: @on_error ) 
 
 
   on_success: (results) =>
-    @data.class.unbind "insert_error" , @on_error
-    @data.class.unbind "insert_success" , @on_success  
     @html require('views/controllers/lightbox/success')      
     @callback.apply @, [true,results]
     Spine.trigger "hide_lightbox" , 1300
-    
 
   on_error: (error_obj) =>
-    @data.class.unbind "insert_error" , @on_error
-    @data.class.unbind "insert_success" , @on_success
     @loader.hide()
     @el.addClass "error"
     @alert_box.show()
+    console.log error_obj
     error = JSON.stringify(error_obj) || error_obj
     index = error.lastIndexOf "caused by: "
     if index > -1

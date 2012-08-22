@@ -34,11 +34,17 @@ class SocketManager
   subscribe: =>
     return false if !@pusher
     user =
-      id:     Spine.session.user.Id
+      id:     Spine.session.user.id
       name:   Spine.session.user.Name
-      title:  Spine.session.user.Profile__c
+      title:  Spine.session.user.Profile
       photo:  Spine.session.user.SmallPhotoUrl
-    Spine.setCookie "user_details" , JSON.stringify user
+      
+    for pusher in Pusher.instances
+      pusher.options=
+        auth:
+          params:
+            user_details: JSON.stringify user
+
     @salesforceSync()
     @presenceEvents()
     @profileEvents()

@@ -27,9 +27,7 @@ class PedidoItem extends Spine.Model
     pedido.applyImpuesto()
     pedido.updateTotal()
     pedido.save()
-    
 
-    
   @itemsInPedido: (pedido) ->
     PedidoItem.findAllByAttribute("Referencia", pedido.Referencia )
     

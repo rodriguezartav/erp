@@ -24,14 +24,12 @@ class DocumentosAnular extends Spine.Controller
     @html require("views/apps/procesos/documentosAnular/layout")(@constructor)
     CuentaPorPagar.destroyAll()
     Documento.destroyAll()
-    Documento.bind "query_success" , @renderDocumentos
-    CuentaPorPagar.bind "query_success" , @renderCuentasPorPagar
     @list.empty()
     @reload()
 
   reload: ->
-    Documento.query( { fecha: "TODAY" } )
-    CuentaPorPagar.query( { fecha: "TODAY" } )
+    Documento.ajax().query( { fecha: "TODAY" } , afterSuccess: @renderDocumentos )
+    CuentaPorPagar.ajax().query( { fecha: "TODAY" } , afterSuccess: @renderCuentasPorPagar )
 
   renderDocumentos: =>
     for doc in Documento.all()
@@ -60,7 +58,7 @@ class DocumentosAnular extends Spine.Controller
        class: cls
        restRoute: "Anular"
        restMethod: "POST"
-       restData: JSON.stringify( { id: obj.id , tipo: typeName } )
+       restData: id: obj.id , tipo: typeName
     Spine.trigger "show_lightbox" , "rest" , data , @anularSuccess   
 
   anularSuccess: =>

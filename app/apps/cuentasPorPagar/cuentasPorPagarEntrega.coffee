@@ -23,11 +23,10 @@ class CuentasPorPagarEntrega extends Spine.Controller
   constructor: ->
     super
     @html require("views/apps/cuentasPorPagar/cuentasPorPagarEntrega/layout")(CuentasPorPagarEntrega)
-    CuentaPorPagar.bind "query_success" , @renderCuentas
     @reload()
 
   reload: ->
-    CuentaPorPagar.query({ estado: "'Preparado'" , orderFechaVencimiento: true })    
+    CuentaPorPagar.query({ estado: "'Preparado'" , orderFechaVencimiento: true } ,  afterSuccess: @renderCuentas )        
 
   renderCuentas: =>
     cuentas = CuentaPorPagar.all()
@@ -46,7 +45,7 @@ class CuentasPorPagarEntrega extends Spine.Controller
       class: CuentaPorPagar
       restRoute: "Tesoreria"
       restMethod: "POST"
-      restData: JSON.stringify( { "cuentas" :  [ cuentaSf ] } )
+      restData: cuentas: cuentaSf
 
     Spine.trigger "show_lightbox" , "rest" , data , @onAprobarSuccess
 

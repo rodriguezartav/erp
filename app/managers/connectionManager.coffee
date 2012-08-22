@@ -75,9 +75,9 @@ class ConnectionManager
 
   fetchServerData: () =>
     if navigator.onLine
-      #for model in Spine.socketModels
-        #model.query() if model.autoQuery
-      Cliente.query()
+      for model in Spine.socketModels
+        model.ajax().query() if model.autoQuery
+
 
   fetchLocalData: =>
     Session.fetch()    

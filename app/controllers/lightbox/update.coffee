@@ -21,28 +21,22 @@ class Update extends Spine.Controller
   constructor: ->
     super
     @html require('views/controllers/lightbox/update')(@data)
-    
-    @data.class.bind "insert_error" , @on_error
-    @data.class.bind "insert_success" , @on_success
+    @data.ajax().update {} , afterSuccess: @on_success , afterError: @on_error
     @show_input.hide()
     @show_wait.show()
-    @data.class.update( @data.documento) 
-
 
   on_success: (results) =>
-    @data.class.unbind "insert_error" , @on_error
-    @data.class.unbind "insert_success" , @on_success  
+
     @html require('views/controllers/lightbox/success')
     @callback.apply @, [true]
-    Spine.trigger "hide_lightbox"
+    Spine.trigger "hide_lightbox" , 1300
 
   on_error: (error_obj) =>
-    @data.class.unbind "insert_error" , @on_error
-    @data.class.unbind "insert_success" , @on_success
     @loader.hide()
     @el.addClass "error"
     @alert_box.show()
     error = JSON.stringify(error_obj) || error_obj
+    error = error || ""
     index = error.lastIndexOf "caused by: "
     if index > -1
       indexEnd = error.indexOf "Trigger"

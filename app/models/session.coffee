@@ -7,9 +7,12 @@ class Session extends Spine.SingleModel
     "lastLogin","lastUpdate"
     "error" , "isOnline","isSalesforce",
     "updateInterval"
-  
-  @extend Spine.Model.Salesforce
-  
+
+
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
+
+
   constructor: ->
     super
     @isSalesforce=false

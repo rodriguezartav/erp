@@ -32,13 +32,7 @@ class VerCierreDiario extends Spine.Controller
 
   reloadCierres: (date) ->
     Cierre.destroyAll()
-    data=
-      restRoute: "CierreDiario"
-      restMethod: "GET"
-      restData: date.to_salesforce_date()
-      class: Cierre
-
-    Spine.trigger "show_lightbox" , "rest" , data  , @onCierreLoaded
+    Cierre.ajax().query( { yesterday: true } , afterSuccess: @onCierreLoaded )
 
   render: ->
     @html require("views/apps/vistas/verCierreDiario/layout")(VerCierreDiario)
@@ -51,11 +45,9 @@ class VerCierreDiario extends Spine.Controller
     date = new Date(target.val())    
     @reloadCierres(date);
 
-  onCierreLoaded: (success , results) =>
-    #Hack to use REST to load Data for Free Edition Limits
-    fecha = results.results[0]?.Fecha__c
-    @fecha.html = fecha
-    parsed = JSON.parse results.results[0]?.Data__c
+  onCierreLoaded: () =>
+    return if Cierre.count() == 0
+    parsed = Cierre.first().Data
     values = []
     if parsed
       for index,value of parsed
