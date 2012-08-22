@@ -9,7 +9,7 @@ CACHE:
 ./images/logo.png
 ./font/fontawesome-webfont.woff
 
-http://js.pusher.com/1.11/pusher.min.js
+http://js.pusher.com/1.12/pusher.min.js
 
 NETWORK:
 *
