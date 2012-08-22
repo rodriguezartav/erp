@@ -132,8 +132,7 @@ class SalesforceController
       userId = data.id.substring(lastS + 1) 
       data.user = User.exists userId
       req.session.salesforceToken =  data
-
-      res.redirect("/test");
+      res.redirect("/");
 
     post.on "error" , ->
       console.log arguments
