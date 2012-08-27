@@ -59,13 +59,13 @@ class SocketManager
     @presence = @pusher.subscribe('presence-erp')
     
     @presence.bind 'pusher:subscription_succeeded' , (members) =>
-      console.log members
+      console.log "pusher:subscription_succeeded #{members.toString()}"
 
     @presence.bind 'pusher:member_added' , (member) =>
-      console.log member
+      console.log "pusher:member_added #{member}"
 
     @presence.bind 'pusher:member_removed' , (member) =>
-      console.log member
+      console.log "pusher:member_removed #{member}"
 
 
 

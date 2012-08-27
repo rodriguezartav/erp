@@ -51,12 +51,14 @@ class SalesforceController
   onError: (error) ->
     console.log error
 
-  parseToken: (req) =>
+  parseToken: (req,res) =>
     return req.session.salesforceToken if req.session.salesforceToken
-    return null
-
+    res.status = 500
+    return false
+    
   rest: (req,res) =>
-    token = @parseToken(req)
+    token = @parseToken(req,res)
+    return res.send "Error de login, favor volver a cargar" if !token
     #req.body = req.query if req.query
     SalesforceApi.rest token , req.body  , (response) ->
       res.send response
@@ -78,7 +80,8 @@ class SalesforceController
     
 
   handlePut: (req,res) =>
-    token = @parseToken(req)
+    token = @parseToken(req,res)
+    return res.send "Error de login, favor volver a cargar" if !token
     SalesforceApi.update token , req.body , (response) ->
       res.statusCode >= 200
       res.send response
@@ -88,7 +91,9 @@ class SalesforceController
       res.send  error
 
   handlePost: (req,res) =>
-    token = @parseToken(req)
+    token = @parseToken(req,res)
+    return res.send "Error de login, favor volver a cargar" if !token
+    
     SalesforceApi.create token , req.body , (response) ->
       res.statusCode >= 201
       res.send response
@@ -98,7 +103,9 @@ class SalesforceController
       res.send  error
 
   handleGet: (req,res) =>
-    token = @parseToken(req)
+    token = @parseToken(req,res)
+    return res.send "Error de login, favor volver a cargar" if !token
+    
     if req.query['soql']
       @handleQuery(req,res,token)
     else
