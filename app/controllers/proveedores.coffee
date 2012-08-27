@@ -19,9 +19,8 @@ class Proveedores  extends Spine.Controller
     super
     @html require("views/controllers/proveedores/layout")
     Proveedor.reset()
-    Proveedor.bind "query_success" , =>
-      @loadable.show()
-      @loader.hide()
+    @loadable.show()
+    @loader.hide()
 
     Proveedor.bind "current_reset" , =>
       @js_proveedor_search.val ""

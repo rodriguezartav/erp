@@ -29,7 +29,8 @@ class FlujoDePago extends Spine.Controller
     @reload()
 
   reload: ->
-    CuentaPorPagar.query({ estado: "'Pendiente','Calendarizado'" , orderFechaVencimiento: true } ,  afterSuccess: @renderCuentas )        
+    CuentaPorPagar.destroyAll()
+    CuentaPorPagar.ajax().query({ estado: "'Pendiente','Calendarizado'" , orderFechaVencimiento: true } ,  afterSuccess: @renderCuentas )        
 
   renderCuentas: =>
     cuentas = CuentaPorPagar.all()
@@ -98,14 +99,11 @@ class FlujoDePago extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @saveSuccess
 
   saveSuccess: =>
-    Spine.socketManager.pushToFeed("He ingresado CXP al Flujo de Pagos")
     Spine.socketManager.pushToProfile("Tesoreria" , "He ingresado CXP al Flujo")
     window.open("https://na7.salesforce.com/00OA0000004WuVF")
     @reset()
     
   reset: ->
-    CuentaPorPagar.unbind "query_success" , @onLoadPedidos
-    
     @release()
     @navigate "/apps"
 

@@ -20,14 +20,12 @@ class Facturas extends Spine.Controller
   constructor: ->
     super
     @html require("views/apps/print/layout")(@constructor)
-    FacturaPreparada.bind "query_success" , @renderDocumentos
     FacturaPreparada.bind "push_success" , @renderDocumentos
-    
     @renderDocumentos()
 
   reload: ->
     FacturaPreparada.destroyAll()
-    FacturaPreparada.query({})
+    FacturaPreparada.ajax().query( {} , afterSuccess: @renderDocumentos )
 
   renderDocumentos: =>    
     docs= FacturaPreparada.findAllByAttribute "Estado" , "Preparado"

@@ -1,7 +1,6 @@
 require('lib/setup')
 Spine = require('spine')
 CuentaPorPagar = require("models/cuentaPorPagar")
-Cuenta = require("models/cuenta")
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
 PagoProveedor = require("models/transitory/pagoProveedor")
@@ -33,34 +32,23 @@ class PagosProveedor extends Spine.Controller
     "click .excluir" : "onExcluir"
 
   setBindings: =>
-    CuentaPorPagar.bind "query_success" , @onLoadSaldos
-    Cuenta.bind "query_success" , @onLoadCuenta
     Proveedor.bind "current_set", @onProveedorSet
-    
-    
+
+
   resetBindings: =>
-    CuentaPorPagar.unbind "query_success" , @onLoadSaldos
-    Cuenta.unbind "query_success" , @onLoadCuenta
     Proveedor.unbind "current_set", @onProveedorSet
-  
 
   constructor: ->
     super
     @error.hide()
     CuentaPorPagar.destroyAll()
-    Cuenta.query({clases: "'Activo'" } , afterSuccess: @onLoadCuenta )
     Proveedor.reset_current()
-    Proveedor.query()
     @setBindings()
     @html require("views/apps/cuentasPorPagar/pagosProveedor/layout")(@constructor)
     @proveedores = new Proveedores(el: @src_proveedor)
-    
 
   onProveedorSet: =>
     CuentaPorPagar.ajax().query( { proveedor: Proveedor.current.id ,  saldo: true , estado: "'Para Pagar'"} , afterSuccess: @onLoadSaldos )
-    
-  onLoadCuenta: =>
-    @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
     
   onLoadSaldos: =>
     @src_saldos.html require("views/apps/cuentasPorPagar/pagosProveedor/saldoItem")(CuentaPorPagar.all())
@@ -120,7 +108,6 @@ class PagosProveedor extends Spine.Controller
     throw "El monto del pago debe ser mayor que 0 y es #{total}" if total < 0
   
   send: (e) =>
-    @inputs_to_validate.push @cuentas   
     @pagoProveedor = PagoProveedor.create({Documentos: [], Montos: [] })
     @updateFromView(@pagoProveedor,@inputs_to_validate)
     @pagoProveedor.id = null

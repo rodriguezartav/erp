@@ -26,7 +26,7 @@ class CuentasPorPagarEntrega extends Spine.Controller
     @reload()
 
   reload: ->
-    CuentaPorPagar.query({ estado: "'Preparado'" , orderFechaVencimiento: true } ,  afterSuccess: @renderCuentas )        
+    CuentaPorPagar.ajax().query({ estado: "'Preparado'" , orderFechaVencimiento: true } ,  afterSuccess: @renderCuentas )        
 
   renderCuentas: =>
     cuentas = CuentaPorPagar.all()
@@ -55,7 +55,6 @@ class CuentasPorPagarEntrega extends Spine.Controller
     @renderCuentas()
 
   reset: ->
-    CuentaPorPagar.bind "query_success" , @renderCuentas
     @release()
     @navigate "/apps"
 

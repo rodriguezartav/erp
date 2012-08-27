@@ -2,8 +2,6 @@ require('lib/setup')
 Spine = require('spine')
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
-Cuenta = require("models/cuenta")
-
 CuentaPorPagar = require("models/cuentaPorPagar")
 
 class NotaCreditoProveedor extends Spine.Controller
@@ -35,24 +33,13 @@ class NotaCreditoProveedor extends Spine.Controller
     @cuentaPorPagar = CuentaPorPagar.create { FechaFacturacion: new Date()  }
 
   preset: ->
-    Cuenta.query({ clases: "'Gasto','Activo','Costo de Venta'" } )
-    
-    #Cuenta.query({tipos: ["'Bancaria'"] } )
 
   constructor: ->
     super
     @setVariables()
     @preset()
-    Cuenta.bind "query_success" , @onLoadCuenta
-    Proveedor.bind "current_set" , @onProveedorSet
     @render()
 
-  onProveedorSet: =>
-    @cuentas.val(Proveedor.current.Cuenta).attr("selected", "selected")
-
-  onLoadCuenta: =>
-    Proveedor.query()
-    @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
 
   render: =>  
     @html require("views/apps/cuentasPorPagar/notasProveedor/layout")(@constructor)

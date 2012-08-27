@@ -32,10 +32,11 @@ class PedidosAprobacion extends Spine.Controller
     PedidoPreparado.bind "push_success" , @renderPedidos
 
   reload: ->
-    PedidoPreparado.ajax().query( { especial: false }   , afterSuccess: @renderPedidos)    
+    PedidoPreparado.ajax().query( { especial: false }   , afterSuccess: @renderPedidos )    
 
   renderPedidos: =>
     pedidos = PedidoPreparado.select (pedido) ->
+      console.log pedido
       return true if pedido.Estado == "Pendiente" and !pedido.Especial
     @groups = PedidoPreparado.group_by_referencia(pedidos)
     @src_pedidos.empty()
@@ -87,6 +88,7 @@ class PedidosAprobacion extends Spine.Controller
   reset: ->
     PedidoPreparado.unbind "push_success" , @renderPedidos
     @el.find('.popable').popover("hide")
+    $('.popover').hide()
     @release()
     @navigate "/apps"
 

@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class User extends Spine.Model
   @configure "User", "Name" , "SmallPhotoUrl", "Perfil" ,  "FirstName"
-  @extend Spine.Model.SalesforceModel 
+  @extend Spine.Model.SalesforceModel
   
   @standardObject = true
 

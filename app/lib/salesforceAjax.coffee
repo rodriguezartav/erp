@@ -91,9 +91,14 @@ class Collection extends Base
      .error(@errorResponse)
 
   query: (filters , params = {}, options = {}) ->
+    Spine.trigger "queryBegin"
+    Spine.queries = if Spine.queries then Spine.queries++ else 1
     @all(filters , params).success (records) =>
+      @model.destroyAll() if @model.destroyBeforeRefresh
       @model.refresh(records, options)
       @model.trigger "querySuccess"
+      Spine.trigger "queryComplete"
+      Spine.queries -= 1
       params.afterSuccess?(records)
 
   rest: (params,options = {}) =>
@@ -121,6 +126,7 @@ class Collection extends Base
     @model.trigger('ajaxSuccess', data, status, xhr)
 
   errorResponse: (xhr, statusText, error) =>
+    Spine.trigger "queryComplete"
     @model.trigger('ajaxError', null, xhr, statusText, error)
 
   customErrorResponse: (options = {}) =>

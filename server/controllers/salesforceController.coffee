@@ -3,6 +3,7 @@ SalesforceLogin = require("../libs/salesforceLogin")
 SalesforceApi = require("../libs/salesforceApi")
 SalesforceModel = require("../../app/lib/salesforceModel")
 User = require("../../app/models/user")
+Proveedor = require("../../app/models/proveedor")
 
 #async = require "async"
 
@@ -21,16 +22,21 @@ class SalesforceController
 
   middleware: =>
     return (req , res , next)  =>
+      console.log "salesforce pass"
       req.salesforceController = @
       return @startAuth(req,res) if(req.url?.indexOf("/sessions/salesforce/login")     == 0)
       return @finishAuth(req,res) if(req.url?.indexOf("/sessions/salesforce/callback")  == 0)
       next()
+
+  keys: (req) ->
+    req.session.salesforceToken
 
   doUpdate: ->
     sf = new SalesforceLogin (success,response) =>
       if success
         @token = response
         @updateUsers()
+        @updateProveedores()
       else
         console.log response
       #async.parallel [@updateClientes , @updateDocumentos] , @onUpdateComplete
@@ -43,6 +49,11 @@ class SalesforceController
       User.refresh response
     , @onError
 
+  updateProveedores: (cb) =>
+    SalesforceApi.query @token , soql: "select id , Name , Codigo__c, Plazo__c  from Proveedor__c" , (response) ->
+      Proveedor.refresh response
+    , @onError
+  
   onError: (error) ->
     console.log error
 
@@ -109,9 +120,6 @@ class SalesforceController
       res.statusCode = 500
       res.send  error
 
-  keys: (req) ->
-    req.session.salesforceToken
-
   startAuth: (req, res) =>
     url = "#{@loginServer}/services/oauth2/authorize?response_type=code&client_id=#{@consumerKey}&redirect_uri=#{@redirectUrl}&display=touch"
     console.log('redirecting: '+url);
@@ -131,8 +139,8 @@ class SalesforceController
       lastS = data.id.lastIndexOf "/"
       userId = data.id.substring(lastS + 1) 
       data.user = User.exists userId
-      req.session.salesforceToken =  data
-      res.redirect("/");
+      req.session.salesforceToken = data
+      res.redirect("/online");
 
     post.on "error" , ->
       console.log arguments

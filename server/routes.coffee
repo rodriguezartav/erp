@@ -1,5 +1,6 @@
 #Cliente = require("../app/models/cliente")
 User = require("../app/models/user")
+Proveedor = require("../app/models/proveedor")
 
 
 class Routes
@@ -13,9 +14,9 @@ class Routes
     @app.get '/' , (req, res) =>
       res.render "app" , { jsvars: @getJsVars(req) }
 
-    @app.get '/test' , (req, res) => 
+    @app.get '/online' , (req, res) => 
       console.log req.session.salesforceToken
-      res.render "app" , {layout: "test", jsvars: @getJsVars(req)   }
+      res.render "app" , {layout: "online", jsvars: @getJsVars(req)   }
 
     @app.get '/remote' , (req, res) =>
       res.render "app" , { jsVars: @getJsVars(req) }
@@ -45,6 +46,7 @@ class Routes
       instance_url: "https://na7.salesforce.com"
       apiServer: "http://api2s.heroku.com"
       users: User.all()
+      proveedores: Proveedor.all()
       
     return Routes.varsToString jsvars
       

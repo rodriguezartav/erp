@@ -16,8 +16,6 @@
               <i data-placement="left"class="tipable icon-refresh icon-large update" rel="tooltip" data-original-title="Actualizar Clientes,Productos y Saldos"></i>
             </a>
           
-             <a><i  data-placement="left" class="tipable active icon-off icon-large reset" rel="tooltip" data-original-title="Master Reset del APP"></i></a>
-          
            </div>
            
     </div>

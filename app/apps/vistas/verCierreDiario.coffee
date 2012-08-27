@@ -22,7 +22,7 @@ class VerCierreDiario extends Spine.Controller
   resetBindings: ->
 
   preset: ->
-    @reloadCierres(new Date())
+    @reloadCierres()
     
   constructor: ->
     super
@@ -32,7 +32,8 @@ class VerCierreDiario extends Spine.Controller
 
   reloadCierres: (date) ->
     Cierre.destroyAll()
-    Cierre.ajax().query( { yesterday: true } , afterSuccess: @onCierreLoaded )
+    Cierre.ajax().query( { yesterday: true } , afterSuccess: @onCierreLoaded ) if !date
+    Cierre.ajax().query( { fecha: data.to_salesforce_date() } , afterSuccess: @onCierreLoaded )
 
   render: ->
     @html require("views/apps/vistas/verCierreDiario/layout")(VerCierreDiario)
@@ -47,7 +48,8 @@ class VerCierreDiario extends Spine.Controller
 
   onCierreLoaded: () =>
     return if Cierre.count() == 0
-    parsed = Cierre.first().Data
+    parsed = JSON.parse Cierre.first().Data
+    console.log parsed
     values = []
     if parsed
       for index,value of parsed

@@ -9,6 +9,9 @@ class AuthLogin extends Spine.Controller
   className: 'login modal'
 
 
+  events:
+    "click .offline" : "onOffine"
+
   @type = "authLogin"
 
   constructor: ->
@@ -28,6 +31,14 @@ class AuthLogin extends Spine.Controller
 
   render: ->
     @html require("views/controllers/lightbox/login/authLogin")
+
+  onOffine: ->
+    return @render() if !Session.record
+    Spine.session = Session.record
+    console.log Spine.session
+    Spine.trigger "hide_lightbox"
+    Spine.trigger "login_complete"
+    @callback()
     
 
 module.exports = AuthLogin

@@ -5,7 +5,9 @@
 
 <div class="modal-body">
   
-  <a class="btn btn-primary" href="/sessions/salesforce/login">Login</a>
-  
+  <a class="btn btn-primary btn-large" href="/sessions/salesforce/login">Login</a>
+
+  <a class="btn btn-warning pull-right btn-large offline">Acceso Remoto</a>
+
 </div>
 

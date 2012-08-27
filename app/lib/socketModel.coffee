@@ -24,26 +24,18 @@ Spine.Model.SocketModel =
         channel.bind "#{name}__c" , (message) =>
           console.log "got message from #{@className}"
           console.log message
-          
           @updateFromSocket(message)
-
-      beforeSocketUpdate: (results) ->
-        for result in results
-          alert "REPORTE ESTE ERROR: Se esta actualizando sin ID : "  + JSON.stringify result if !result.id
-          result = {}
-        return true
 
       updateFromSocket: (message) =>
         for object in message.sobjects
           delete object.attributes
-        jsonLoop = JSON.stringify message.sobjects
-        results = @parseSalesforceJSON jsonLoop
-        if @beforeSocketUpdate(results)
-          @refresh results
-          @afterSocketUpdate(message,results)
-          @trigger "push_success"
-          return results
-        return false
+        data = message.sobjects || message.objects || message.object
+        results = JSON.stringify 
+        @refresh results
+        @afterSocketUpdate(message,results)
+        console.log @
+        @trigger "push_success"
+        return results
 
       afterSocketUpdate: (message,results) =>
         console.log "updated #{@className}"

@@ -16,6 +16,8 @@ Lightbox = require("controllers/lightbox")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
 User = require("models/user")
+Proveedor = require("models/proveedor")
+
 
 Session = require('models/session')
 
@@ -33,6 +35,7 @@ class App extends Spine.Controller
     Spine.pusherKeys = @options.pusherKeys
     Spine.registerParse @options.parseKeys
     User.refresh @options.users
+    Proveedor.refresh @options.proveedores
 
     Proxino.key = "R4f9M9v5r63OtGW62AeHbw"
     Proxino.track_errors();

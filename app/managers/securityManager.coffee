@@ -92,8 +92,7 @@ class SecurityManager
 
   onLoginComplete: =>
     Spine.status = "loggedIn"
-        
-        
+
     Spine.options =
       locationType : if Spine.session.hasPerfiles(["Vendedor"]) then "Ruta" else "Planta" 
       aprobacion   : if Spine.session.hasPerfiles(["Ejecutivo Credito","Platform System Admin"])  then true else false
@@ -101,49 +100,48 @@ class SecurityManager
 
     Movimiento.attributes.push('ProductoCosto') if Spine.session.hasPerfiles(["Platform System Admin" , "Presidencia" , "SubGerencia"])
     
-    Cliente.autoReQuery = false
-    Producto.autoReQuery = false
+    Cliente.autoReQuery     = false
+    Producto.autoReQuery    = false
     
     Spine.session.updateInterval = 360
     if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
-      Saldo.autoQuery = true
-      Cliente.autoQuery = true
-      PedidoPreparado.autoQuery    = true
+      Saldo.autoQuery            = true
+      Cliente.autoQuery          = true
+      PedidoPreparado.autoQuery  = true
       
     else if Spine.session.hasPerfiles([ "Ejecutivo Ventas" ])
-      Producto.autoQuery   = true
-      Cliente.autoQuery = true
-      FacturaPreparada.autoQuery   = true
+      Producto.autoQuery          = true
+      Cliente.autoQuery           = true
+      FacturaPreparada.autoQuery  = true
 
     else if Spine.session.hasPerfiles([ "Encargado Ventas" ])
       Producto.autoQuery   = true
-      Cliente.autoQuery = true
+      Cliente.autoQuery    = true
 
     else if Spine.session.hasPerfiles([ "Vendedor" ])
-      Producto.autoQuery   = true
-      Cliente.autoQuery = true
-      Saldo.autoQuery = false
+      Producto.autoQuery  = true
+      Cliente.autoQuery   = true
+      Saldo.autoQuery     = false
 
     else if Spine.session.hasPerfiles([ "Tesoreria" ])
-      Saldo.autoQuery = true
+      Saldo.autoQuery           = true
       PedidoPreparado.autoQuery = true
 
     else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia" ])
-      Cliente.autoQuery = true
-      Producto.autoQuery = true
-      Saldo.autoQuery = true
+      Cliente.autoQuery         = true
+      Producto.autoQuery        = true
+      Saldo.autoQuery           = true
       PedidoPreparado.autoQuery = true
 
     else if Spine.session.hasPerfiles([ "Platform System Admin" ])
-      Cliente.autoQuery = true
-      Producto.autoQuery = true
-      Saldo.autoQuery = true
-      Saldo.autoReQuery = true
+      Cliente.autoQuery         = true
+      Producto.autoQuery        = true
+      Saldo.autoQuery           = true
+      Saldo.autoReQuery         = true
+      PedidoPreparado.autoQuery = true
 
     Spine.session.save()
 
-
     Spine.apps = @profiles[Spine.session.user.Perfil]
-
 
 module.exports = SecurityManager
