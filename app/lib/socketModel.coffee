@@ -22,23 +22,21 @@ Spine.Model.SocketModel =
       registerForUpdate: (channel) =>
         name = @overrideName || @className
         channel.bind "#{name}__c" , (message) =>
-          console.log "got message from #{@className}"
-          console.log message
           @updateFromSocket(message)
 
       updateFromSocket: (message) =>
         for object in message.sobjects
           delete object.attributes
+        console.log @
+        console.log message
         data = message.sobjects || message.objects || message.object
         results = JSON.stringify 
         @refresh results
         @afterSocketUpdate(message,results)
-        console.log @
         @trigger "push_success"
         return results
 
       afterSocketUpdate: (message,results) =>
-        console.log "updated #{@className}"
         return true
 
       beforeSaveLocal: ->

@@ -17,7 +17,6 @@ class DoCierreDiario extends Spine.Controller
     "click .cancel" : "reset"
     "click .save"   : "onSaveCierre"
 
-    
   constructor: ->
     super
     @doCierre()

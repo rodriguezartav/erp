@@ -36,7 +36,6 @@ class PedidosAprobacion extends Spine.Controller
 
   renderPedidos: =>
     pedidos = PedidoPreparado.select (pedido) ->
-      console.log pedido
       return true if pedido.Estado == "Pendiente" and !pedido.Especial
     @groups = PedidoPreparado.group_by_referencia(pedidos)
     @src_pedidos.empty()
