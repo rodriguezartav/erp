@@ -219,7 +219,6 @@ class Credito extends Spine.Controller
       restMethod: "POST"
       restData: oportunidades: pedidos 
 
-
     Spine.trigger "show_lightbox" , "rest" , data , callback
 
   after_send: =>

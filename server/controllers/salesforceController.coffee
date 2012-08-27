@@ -34,23 +34,17 @@ class SalesforceController
   doUpdate: ->
     sf = new SalesforceLogin (success,response) =>
       if success
-        @token = response
+        @serverToken = response
         @updateUsers()
         @updateProveedores()
-      else
-        console.log response
-      #async.parallel [@updateClientes , @updateDocumentos] , @onUpdateComplete
-
-  onUpdateComplete: (error,results) =>
-    #TODO HANDLE ERROR
 
   updateUsers: (cb) =>
-    SalesforceApi.query @token , soql: "select id , Name , SmallPhotoUrl, Perfil__c , FirstName from User where IsActive = true" , (response) ->
+    SalesforceApi.query @serverToken , soql: "select id , Name , SmallPhotoUrl, Perfil__c , FirstName from User where IsActive = true" , (response) ->
       User.refresh response
     , @onError
 
   updateProveedores: (cb) =>
-    SalesforceApi.query @token , soql: "select id , Name , Codigo__c, Plazo__c  from Proveedor__c" , (response) ->
+    SalesforceApi.query @serverToken , soql: "select id , Name , Codigo__c, Plazo__c  from Proveedor__c" , (response) ->
       Proveedor.refresh response
     , @onError
   
@@ -59,12 +53,11 @@ class SalesforceController
 
   parseToken: (req) =>
     return req.session.salesforceToken if req.session.salesforceToken
-    return @token
+    return null
 
   rest: (req,res) =>
     token = @parseToken(req)
     #req.body = req.query if req.query
-    console.log req.body
     SalesforceApi.rest token , req.body  , (response) ->
       res.send response
     , (error) ->
