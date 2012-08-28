@@ -39,7 +39,6 @@ class App extends Spine.Controller
 
     Proxino.key = "R4f9M9v5r63OtGW62AeHbw"
     Proxino.track_errors();
-    Proxino.log "Logins Errors"
 
     new Header(el: $("header"))
     new Productos(el: $(".productosToolbar"))
