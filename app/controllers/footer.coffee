@@ -28,10 +28,9 @@ class Footer  extends Spine.Controller
       @updateBtn.addClass "loading"      
     
     Spine.bind "queryComplete" , =>
-      return false if Spine.queries > 0
+      return false if Spine.queries == 0
       @updateBtn.removeClass "loading"
-    
-    
+
     @pauseTimer = null
     @pauseTimerRun = 0
 
@@ -46,16 +45,19 @@ class Footer  extends Spine.Controller
 
 
   onUpdate: =>
-    Saldo.bind "bulk_deleted" , @onDeleteDone
     Spine.trigger "show_lightbox" , "showWait" , error: "Esto puede tomar varios minutos, cuando se complete el proceso se refrescara la pagina."
+    Cliente.ajax().query({  credito: true , avoidQueryTimeBased: true} )
+    Cliente.ajax().query({  contado: true , avoidQueryTimeBased: true })
+    Producto.ajax().query({ avoidQueryTimeBased: true } )
+    Saldo.bind "bulk_deleted" , @onDeleteDone
     Saldo.bulkDelete()
-    Cliente.ajax().query({credito: true} , false)
-    Cliente.ajax().query({contado: true} , false)
-    Producto.ajax().query({},false)
+    
 
   onDeleteDone: =>
-    Saldo.ajax().query( { saldo: true } , afterSuccess:  @onUpdateDone )
-
+    Saldo.ajax().query( { saldo: true } )
+    Spine.bind "queryComplete" , =>
+      return false if Spine.queries > 0
+      @onDeleteDone()
 
   onUpdateDone: ->
     window.location.reload()

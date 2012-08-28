@@ -92,13 +92,13 @@ class Collection extends Base
 
   query: (filters , params = {}, options = {}) ->
     Spine.trigger "queryBegin"
-    Spine.queries = if Spine.queries then Spine.queries++ else 1
+    Spine.queries += 1
     @all(filters , params).success (records) =>
       @model.destroyAll() if @model.destroyBeforeRefresh
       @model.refresh(records, options)
+      Spine.queries -= 1
       @model.trigger "querySuccess"
       Spine.trigger "queryComplete"
-      Spine.queries -= 1
       params.afterSuccess?(records)
 
   rest: (params,options = {}) =>
@@ -305,4 +305,5 @@ Model.SalesforceAjax.Methods =
 Ajax.defaults   = Base::defaults
 Spine.SalesforceAjax      = Ajax
 Spine.SalesforceAjaxUtil = new Collection()
+Spine.queries = 0
 module?.exports = Ajax
