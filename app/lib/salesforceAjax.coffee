@@ -96,7 +96,7 @@ class Collection extends Base
     @all(filters , params).success (records) =>
       @model.destroyAll() if @model.destroyBeforeRefresh
       @model.refresh(records, options)
-      Spine.queries -= 1
+      Spine.queries -= 1 
       @model.trigger "querySuccess"
       Spine.trigger "queryComplete"
       params.afterSuccess?(records)

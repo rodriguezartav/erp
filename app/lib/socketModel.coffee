@@ -54,7 +54,7 @@ Spine.Model.SocketModel =
         start = @source.length - 20
         start = 0 if start < 0
         to_work = @source.slice(start)
-        console.log "Starting from " + start + " of " + @source.length
+        Spine.trigger "bulkProgress" , [start , @source.length]
         @source = @source.slice(0,start)
         for item in to_work
           item.destroy()
