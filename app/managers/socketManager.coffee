@@ -7,6 +7,9 @@ Cliente  =  require("models/cliente")
 Producto  =  require("models/producto")
 User  =  require("models/user")
 
+Feed = require "models/notifications/feed"
+Task = require "models/notifications/task"
+
 
 # There are 1 channel/s
 # public_salesforce-silent-push
@@ -60,11 +63,13 @@ class SocketManager
     @presence = @pusher.subscribe('presence-erp')
     
     @presence.bind 'pusher:subscription_succeeded' , (members) =>
-       for index,member of members._members_map
-          people = User.exists member.id
-          if people
-            people.Online = true
-            people.save()
+      console.log members
+      
+      for index,member of members._members_map
+        people = User.exists member.id
+        if people
+          people.Online = true
+          people.save()
       
     @presence.bind 'pusher:member_added' , (member) =>
       people = User.exists member.id
@@ -96,11 +101,11 @@ class SocketManager
 
     @private_erp_profiles.bind "client-#{Spine.session.user.Perfil}" , (message) =>
       user = User.find message.user
-      Notificacion.createForPerfil( user , message.text , true )
+      Task.createForPerfil( user , message.text , true )
 
     @private_erp_profiles.bind "client-feed" , (message) =>
       user = User.find message.user
-      Notificacion.createForFeed( user , message.text )
+      Feed.createForFeed( user , message.text )
 
   appEvents: ->
     @public_app_actions = @pusher.subscribe('public_app_actions')

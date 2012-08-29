@@ -11,6 +11,9 @@ class NotificationManager
       window.webkitNotifications?.requestPermission?()
 
   showNotification: () =>
+    return false
+    
+  otherFun: ->
     pendingNotifications = Notificacion.findAllByAttribute "status" , "pending"
     return false if pendingNotifications.length == 0
     return false if @notificacion
