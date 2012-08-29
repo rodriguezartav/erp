@@ -26,13 +26,10 @@ Main = require("controllers/main")
 class App extends Spine.Controller
   className: "app"
 
-  
-
   constructor: ->
     super
     @navigate "/"
     
-    #StatManager.registerManager(@options.statApi)
 
     Spine.server = @options.server
     Spine.pusherKeys = @options.pusherKeys

@@ -1,7 +1,7 @@
 Spine = require('spine')
 Feed = require "models/notifications/feed"
 Task = require "models/notifications/task"
-People = require "models/notifications/people"
+User = require "models/user"
 
 
 class Notificaciones extends Spine.Controller
@@ -24,7 +24,7 @@ class Notificaciones extends Spine.Controller
     @render()
     Feed.bind "create destroy" , @renderFeeds
     Task.bind "create destroy" , @renderTasks
-    People.bind "create destroy" , @renderPeople
+    User.bind "create change" , @renderPeople
     
 
   render: =>
@@ -44,9 +44,10 @@ class Notificaciones extends Spine.Controller
     @tasks_list.html require("views/controllers/notificaciones/notificacion")(all)
 
   renderPeople: =>
-    all = People.all().sort (a,b) ->
-      return b.date.getTime() - a.date.getTime()
-    $(".people_list").html require("views/controllers/notificaciones/people")(all)
+    online  = []
+    for user in User.all()
+      online.push user if user.Online
+    $(".people_list").html require("views/controllers/notificaciones/user")(online)
 
   onHasNotTabClick: (e) =>
     target = $(e).target

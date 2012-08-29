@@ -1,0 +1,12 @@
+<li data-id="<%= @id  %>" class="notificacion_item">
+  <div class="row-fluid">
+    <img src="<%= @SmallPhotoUrl %>"/>
+    
+    <h6><%= @Perfil %></h6>
+    
+    <p class="text">""</p>
+    
+
+  </div>
+
+</li>

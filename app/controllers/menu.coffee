@@ -10,6 +10,7 @@ class Menu extends Spine.Controller
     super
 
   render: =>
+    @menuContainer.empty()
     group = {}
     for app in Spine.apps
       appList = group[app.departamento] || []

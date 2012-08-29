@@ -6,7 +6,6 @@ Notificacion = require "models/notificacion"
 Cliente  =  require("models/cliente")
 Producto  =  require("models/producto")
 User  =  require("models/user")
-People  =  require("models/notifications/people")
 
 
 # There are 1 channel/s
@@ -61,16 +60,26 @@ class SocketManager
     @presence = @pusher.subscribe('presence-erp')
     
     @presence.bind 'pusher:subscription_succeeded' , (members) =>
-      People.createFromChannel members
+       for index,member of members._members_map
+          people = User.exists member.id
+          if people
+            people.Online = true
+            people.save()
       
     @presence.bind 'pusher:member_added' , (member) =>
+      people = User.exists member.id
+      if people
+        people.Online = true
+        people.save()        
       console.log member
-      #People.createFromChannel members
       
     
     @presence.bind 'pusher:member_removed' , (member) =>
+      people = User.exists member.id
+      if people
+        people.Online = false
+        people.save()        
       console.log member
-      #People.createFromChannel members
 
 
 
