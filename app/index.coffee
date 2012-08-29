@@ -21,10 +21,12 @@ Proveedor = require("models/proveedor")
 
 Session = require('models/session')
 
-Menu = require("controllers/menu")
+Main = require("controllers/main")
 
 class App extends Spine.Controller
   className: "app"
+
+  
 
   constructor: ->
     super
@@ -52,31 +54,12 @@ class App extends Spine.Controller
     Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
     Spine.statManager    =  StatManager
     Spine.statManager.registerManager(@options.statApi)
-
-    @routes
-      "/apps": =>
-        @currentApp?.reset()
-        @currentApp = new Menu(apps: Spine.apps)
-        @el.removeClass "container"
-        @el.addClass "container-fluid"
-        @html @currentApp
-
-      "/apps/:label": (params) =>
-        @currentApp?.reset()
-        for app in Spine.apps
-          @currentApp = app if app.label.replace(/\s/g,'') == params.label
-
-        ##STAT    
-        StatManager.sendEvent "Used #{@currentApp.name}"
-        @currentApp = new @currentApp
-        @html @currentApp
-        @el.addClass "container"
-        @el.removeClass "container-fluid"
-    
     Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
 
+    new Main(el: $(".appCanvas") )
+    
+
   loginComplete: =>
-    @navigate "/apps"
     Spine.statManager.identify Spine.session.user.Name
     Spine.clicked = false
 

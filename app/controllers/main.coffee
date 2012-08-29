@@ -5,18 +5,21 @@ Notificaciones = require("controllers/notificaciones")
 class Principal extends Spine.Controller
 
   elements:
-    ".menuContainer"     : "menuContainer"
+    ".menu"     : "menuDiv"
     ".noticationContainer" : "noticationContainer"
 
   constructor: ->
     super
     @html require("views/controllers/main/layout")
     @notificaciones = new Notificaciones(el: @noticationContainer)
-    @menu = new Menu(el: @menuContainer)
+    @menu           = new Menu(el: @menuDiv)
 
   render: =>
     @menu.render()
+    @notificaciones.render()
     @
+
+  reset: =>
 
 class Main extends Spine.Controller
 

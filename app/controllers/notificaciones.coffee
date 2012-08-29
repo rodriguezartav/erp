@@ -1,12 +1,15 @@
 Spine = require('spine')
-Notificacion = require "models/notificacion"
+Feed = require "models/notifications/feed"
+Task = require "models/notifications/task"
+People = require "models/notifications/people"
+
 
 class Notificaciones extends Spine.Controller
  
   elements:
     ".feeds_list" : "feeds_list"
-    ".profiles_list" : "profiles_list"
-    ".dms_list" : "dms_list"
+    ".tasks_list" : "tasks_list"
+    ".people_list" : "people_list"
     ".hasNots"     : "hasNots"
     ".hasNots.dm"  :  "nasNotDm"
     ".hasNots.profile"  :  "hasNotProfile"
@@ -19,37 +22,31 @@ class Notificaciones extends Spine.Controller
   constructor: ->
     super
     @render()
-    Notificacion.bind "create destroy" , @renderNotificaciones
+    Feed.bind "create destroy" , @renderFeeds
+    People.bind "create destroy" , @renderPeople
+    Task.bind "create destroy" , @renderTasks
+    
 
   render: =>
-    feeds = []
-    profiles =[]
-    dms = []
-    
-    all = Notificacion.all().sort (a,b) ->
+    @renderTasks()
+    @renderFeeds()
+    @renderPeople()
+
+
+  renderFeeds: =>
+    all = Feed.all().sort (a,b) ->
       return b.date.getTime() - a.date.getTime()
-  
-    for noti in all
-      if noti.type == "feed"
-        feeds.push noti
+    @feeds_list.html require("views/controllers/notificaciones/notificacion")(all)
 
-      else if noti.type == 'profile'
-        profiles.push noti
-      
-    @hasNots.removeClass "has"
-    if feeds.length > 0
-      @hasNotFeed.addClass "has" 
-      $('.tabHeader .feed').tab('show');
+  renderTasks: =>
+    all = Task.all().sort (a,b) ->
+      return b.date.getTime() - a.date.getTime()
+    @tasks_list.html require("views/controllers/notificaciones/notificacion")(all)
 
-    if profiles.length > 0
-      @hasNotProfile.addClass "has"
-      $('.tabHeader .profile').tab('show');
-    
-      
-
-    @feeds_list.html require("views/controllers/notificaciones/notificacion")(feeds)
-    @profiles_list.html require("views/controllers/notificaciones/notificacion")(profiles)
-      
+  renderPeople: =>
+    all = People.all().sort (a,b) ->
+      return b.date.getTime() - a.date.getTime()
+    @people_list.html require("views/controllers/notificaciones/notificacion")(all)
 
   onHasNotTabClick: (e) =>
     target = $(e).target

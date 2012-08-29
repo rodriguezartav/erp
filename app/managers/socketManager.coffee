@@ -58,8 +58,9 @@ class SocketManager
   presenceEvents: =>
     @presence = @pusher.subscribe('presence-erp')
     
-    #@presence.bind 'pusher:subscription_succeeded' , (members) =>
-
+    @presence.bind 'pusher:subscription_succeeded' , (members) =>
+      console.log members
+      
     #@presence.bind 'pusher:member_added' , (member) =>
 
     #@presence.bind 'pusher:member_removed' , (member) =>
