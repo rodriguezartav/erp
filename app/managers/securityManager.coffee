@@ -144,6 +144,5 @@ class SecurityManager
     Spine.session.save()
 
     Spine.apps = @profiles[Spine.session.user.Perfil]
-    Spine.trigger "apps_ready"
 
 module.exports = SecurityManager

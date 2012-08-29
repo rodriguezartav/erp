@@ -30,7 +30,7 @@ class App extends Spine.Controller
 
   constructor: ->
     super
-
+    @navigate "/"
     
     #StatManager.registerManager(@options.statApi)
 
@@ -54,7 +54,7 @@ class App extends Spine.Controller
     Spine.security       =  new SecurityManager()
     Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()
-    #Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
+    Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
     Spine.statManager    =  StatManager
     Spine.statManager.registerManager(@options.statApi)
     Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
@@ -64,8 +64,6 @@ class App extends Spine.Controller
     Spine.statManager.identify Spine.session.user.Name
     Spine.clicked = false
     @navigate "/apps"
-    
-    
 
     #setInterval =>
       #return Spine.clicked = false if Spine.clicked or Spine.paused
