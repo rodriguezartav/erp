@@ -23,8 +23,8 @@ class Notificaciones extends Spine.Controller
     super
     @render()
     Feed.bind "create destroy" , @renderFeeds
-    People.bind "create destroy" , @renderPeople
     Task.bind "create destroy" , @renderTasks
+    People.bind "create destroy" , @renderPeople
     
 
   render: =>
@@ -46,7 +46,7 @@ class Notificaciones extends Spine.Controller
   renderPeople: =>
     all = People.all().sort (a,b) ->
       return b.date.getTime() - a.date.getTime()
-    @people_list.html require("views/controllers/notificaciones/notificacion")(all)
+    $(".people_list").html require("views/controllers/notificaciones/people")(all)
 
   onHasNotTabClick: (e) =>
     target = $(e).target

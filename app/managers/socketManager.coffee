@@ -6,6 +6,8 @@ Notificacion = require "models/notificacion"
 Cliente  =  require("models/cliente")
 Producto  =  require("models/producto")
 User  =  require("models/user")
+People  =  require("models/notifications/people")
+
 
 # There are 1 channel/s
 # public_salesforce-silent-push
@@ -59,11 +61,16 @@ class SocketManager
     @presence = @pusher.subscribe('presence-erp')
     
     @presence.bind 'pusher:subscription_succeeded' , (members) =>
-      console.log members
+      People.createFromChannel members
       
-    #@presence.bind 'pusher:member_added' , (member) =>
-
-    #@presence.bind 'pusher:member_removed' , (member) =>
+    @presence.bind 'pusher:member_added' , (member) =>
+      console.log member
+      #People.createFromChannel members
+      
+    
+    @presence.bind 'pusher:member_removed' , (member) =>
+      console.log member
+      #People.createFromChannel members
 
 
 

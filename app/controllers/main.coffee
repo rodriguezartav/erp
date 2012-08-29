@@ -44,6 +44,5 @@ class Main extends Spine.Controller
         @el.addClass "container"
         @el.removeClass "container-fluid"
 
-    Spine.Route.setup()
 
 module.exports = Main

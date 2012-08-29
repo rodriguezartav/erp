@@ -10,9 +10,12 @@ class Routes
 
   setupRoutes: ->
     
-    
     @app.get '/' , (req, res) =>
       res.render "app" , { jsvars: @getJsVars(req) }
+
+    @app.get '/update' , (req, res) => 
+      console.log req.session.salesforceToken
+      res.render "app" , {layout: "update"}
 
     @app.get '/online' , (req, res) => 
       console.log req.session.salesforceToken

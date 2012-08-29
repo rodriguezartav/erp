@@ -1,36 +1,26 @@
 Spine = require('spine')
 
 class People extends Spine.Model
-  @configure 'People' , "image" , "title" ,  "text" , "date" , "status" , "userId"
+  @configure 'People' , "image" , "title" ,  "text" , "date"
 
-  @createFromMessage: (image = "images/logo_icon.png" , title , text , notifyBrowser = false  , userId = null) ->
-    nots = Notificacion.create 
-      date    :   new Date()
-      image   :   image
-      text    :   text
-      title   :   title
-      userId  :   userid
-      status  :   if notifyBrowser then "pending" else "complete"
+  @createFromChannel: (members) ->
+    
+    
+    for people in People.all()
+      p = members[people.id]
+      people.destroy() if !p
+    
+    for index,member of members._members_map
+      people = People.exists member.id
+      if !people
+        People.create
+          date    :   new Date()
+          image   :   member.photo
+          text    :   ""
+          title   :   member.name
+          id      :   member.id
+          online  :   true
 
-  @createForPerfil: (user , text , notifyBrowser = false ) ->
-    nots = Notificacion.create 
-      date    :   new Date()
-      image   :   user.SmallPhotoUrl
-      title   :   user.Name
-      type    :   "profile"
-      text    :   text
-      status  :   if notifyBrowser then "pending" else "complete"
-      userId  :   user.id
-
-
-  @createForFeed: (user , text , notifyBrowser = false ) ->
-    nots = Notificacion.create 
-      date    :   new Date()
-      image   :   user.SmallPhotoUrl
-      title   :   user.Name
-      text    :   text
-      type    :   "feed"
-      status  :   if notifyBrowser then "pending" else "complete"
-      userId  :   user.id
+    console.log People.all()
 
 module.exports = People

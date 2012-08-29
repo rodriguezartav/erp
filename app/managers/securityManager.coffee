@@ -117,6 +117,7 @@ class SecurityManager
     else if Spine.session.hasPerfiles([ "Encargado Ventas" ])
       Producto.autoQuery   = true
       Cliente.autoQuery    = true
+      Saldo.autoQuery     = false
 
     else if Spine.session.hasPerfiles([ "Vendedor" ])
       Producto.autoQuery  = true
@@ -143,5 +144,6 @@ class SecurityManager
     Spine.session.save()
 
     Spine.apps = @profiles[Spine.session.user.Perfil]
+    Spine.trigger "apps_ready"
 
 module.exports = SecurityManager

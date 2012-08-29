@@ -30,6 +30,7 @@ class App extends Spine.Controller
 
   constructor: ->
     super
+
     
     #StatManager.registerManager(@options.statApi)
 
@@ -47,21 +48,24 @@ class App extends Spine.Controller
     
     new Footer(el: $("footer")) 
     new Lightbox(el: $(".lightboxCanvas"))
-
+    new Main(el: $(".appCanvas") )
+    Spine.Route.setup()
+    
     Spine.security       =  new SecurityManager()
     Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()
-    Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
+    #Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
     Spine.statManager    =  StatManager
     Spine.statManager.registerManager(@options.statApi)
     Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
 
-    new Main(el: $(".appCanvas") )
-    
 
   loginComplete: =>
     Spine.statManager.identify Spine.session.user.Name
     Spine.clicked = false
+    @navigate "/apps"
+    
+    
 
     #setInterval =>
       #return Spine.clicked = false if Spine.clicked or Spine.paused
