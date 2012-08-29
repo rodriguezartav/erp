@@ -4,7 +4,7 @@ class Task extends Spine.Model
   @configure 'Task' , "image" , "title" ,  "text" , "date" , "status" , "userId"
 
   @createFromMessage: (image = "images/logo_icon.png" , title , text , notifyBrowser = false  , userId = null) ->
-    nots = Notificacion.create 
+    nots = Task.create 
       date    :   new Date()
       image   :   image
       text    :   text
@@ -13,7 +13,7 @@ class Task extends Spine.Model
       status  :   if notifyBrowser then "pending" else "complete"
 
   @createForPerfil: (user , text , notifyBrowser = false ) ->
-    nots = Notificacion.create 
+    nots = Task.create 
       date    :   new Date()
       image   :   user.SmallPhotoUrl
       title   :   user.Name
@@ -24,7 +24,7 @@ class Task extends Spine.Model
 
 
   @createForFeed: (user , text , notifyBrowser = false ) ->
-    nots = Notificacion.create 
+    nots = Task.create 
       date    :   new Date()
       image   :   user.SmallPhotoUrl
       title   :   user.Name
