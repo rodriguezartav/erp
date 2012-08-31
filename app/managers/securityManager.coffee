@@ -78,7 +78,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ClienteAccess, EstadoCuenta , VerCierreMensual,  VerCierreDiario , DoCierreDiario, DoCierreMensual ,  VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota  , TomasInventario , Ajustes ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
+    apps = [ EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion ]
     @profiles["Presidencia"] =  [ DoCierreDiario  , AjustarNegociacion ,   Compras , CuentasPorPagarFlujo , CuentasPorPagarAprobacion  , TomasInventario , VerRegistrosResumen  ]

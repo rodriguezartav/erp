@@ -2,10 +2,10 @@
   <div class="row-fluid">
     <img src="<%= @SmallPhotoUrl %>"/>
     
-    <h6><%= @Perfil %></h6>
     
-    <p class="text">""</p>
-    
+    <h6><%= @Name %></h6>
+
+    <p class="text"><%= @Perfil %></p>
 
   </div>
 

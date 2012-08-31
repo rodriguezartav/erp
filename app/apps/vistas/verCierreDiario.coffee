@@ -17,29 +17,22 @@ class VerCierreDiario extends Spine.Controller
   events:
     "click .cancel" : "reset"
 
-  setBindings: ->
-  
-  resetBindings: ->
-
-  preset: ->
-    @reloadCierres()
-    
   constructor: ->
     super
-    @preset()
+    @reloadCierres()
     @render()
-    @setBindings()
 
   reloadCierres: (date) ->
+    @cierres_list.empty()
     Cierre.destroyAll()
-    Cierre.ajax().query( { yesterday: true } , afterSuccess: @onCierreLoaded ) if !date
-    Cierre.ajax().query( { fecha: data.to_salesforce_date() } , afterSuccess: @onCierreLoaded )
+    return Cierre.ajax().query( { yesterday: true } , afterSuccess: @onCierreLoaded ) if !date
+    Cierre.ajax().query( { fecha: date.to_salesforce_date() } , afterSuccess: @onCierreLoaded )
 
   render: ->
     @html require("views/apps/vistas/verCierreDiario/layout")(VerCierreDiario)
-    @viewDate.val new Date().to_salesforce()
     pickers =  @viewDate.datepicker({autoclose: true})
     pickers.on("change",@onDateChange)
+    @viewDate.val "Ayer"
 
   onDateChange: (e) =>
     target = $(e.target)
@@ -60,7 +53,6 @@ class VerCierreDiario extends Spine.Controller
 
   reset: ->
     Cierre.destroyAll()
-    @resetBindings()
     @navigate "/apps"
 
 module.exports = VerCierreDiario
