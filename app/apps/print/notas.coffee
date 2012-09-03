@@ -21,7 +21,6 @@ class Notas extends Spine.Controller
     super
     @html require("views/apps/print/layoutNota")(@constructor)
     Documento.destroyAll()
-    Documento.bind "query_success" , @renderDocumentos
     @renderDocumentos()
     @reload()
     
@@ -31,7 +30,7 @@ class Notas extends Spine.Controller
 
   reload: =>
     Documento.destroyAll()
-    Documento.query( { tipos: "'NC','ND'" , estado: "Preparado" } )
+    Documento.ajax().query( { tipos: "'NC','ND'" , estado: "Preparado" } , afterSuccess: @renderDocumentos )
 
   on_print: (e) =>
     target = $(e.target)
