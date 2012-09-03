@@ -27,19 +27,16 @@ class DoCierreDiario extends Spine.Controller
       restMethod: "POST"
       restData: {} 
       class: Cierre
-
     Spine.trigger "show_lightbox" , "rest" , data  , @onCierreComplete
     
 
   onCierreComplete: (success,results) =>
     Spine.socketManager.pushToFeed( "Hice un corte exitoso en el Cierre Diario")
-
     #HACKING REST TO CIERRE , WE DONT USE CIERRE YET.....
-    @render(    JSON.parse results.Data__c )
-    
+    @render( JSON.parse results.Data__c )
+
   render: (results) ->
     @html require("views/apps/contables/doCierre/layout")(app: DoCierreDiario , cierre: results)
-    
 
   reset: ->
     @navigate "/apps"

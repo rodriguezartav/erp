@@ -78,7 +78,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
+    apps = [ VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion ]
     @profiles["Presidencia"] =  [ DoCierreDiario  , AjustarNegociacion ,   Compras , CuentasPorPagarFlujo , CuentasPorPagarAprobacion  , TomasInventario , VerRegistrosResumen  ]
@@ -87,7 +87,7 @@ class SecurityManager
     @profiles["Encargado de Ventas"] = [ Pedidos  , FacturasImpresion  , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosAprobacion,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Vendedor"] = [ Pedidos , VerClientes ]
-    @profiles["Contabilidad"] = [ Ajustes , VerCierreMensual ,  VerCierreDiario , DoCierreDiario , DoCierreMensual ,CuentasPorPagarFlujo , VerRegistros ,  VerRegistrosResumen ]
+    @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario,CuentasPorPagarFlujo , VerRegistros ,  VerRegistrosResumen ]
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>
