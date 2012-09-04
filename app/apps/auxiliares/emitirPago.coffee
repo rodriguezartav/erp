@@ -142,7 +142,7 @@ class EmitirPago extends Spine.Controller
     for item in PagoItem.all()
       item.Recibo = @pago.Recibo
       item.Cliente = @pago.Cliente
-      item.FormaPago = @pago.FormaPago
+      item.FormaPago = @formaPago
       item.Fecha = @pago.Fecha.to_salesforce_date()
       item.Referencia = @pago.Referencia
       item.setTipo()
