@@ -1,27 +1,17 @@
 Spine = require('spine')
-
 class Session extends Spine.SingleModel
-  @configure "Session" , "instance_url", "token" , "userId",
-    "username" , "password" ,"passwordToken" ,
-    "user"
-    "lastLogin","lastUpdate"
-    "error" , "isOnline","isSalesforce",
-    "updateInterval"
-
-
+  @configure "Session" , "instance_url", "userId" , "lastLogin" , "lastUpdate" , "isOnline" , "isSalesforce" , "user"
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
-
 
   constructor: ->
     super
     @isSalesforce=false
 
   createFromAuth: (keys) ->
+    lastSlash = keys.id.lastIndexOf "/"
+    @userId = keys.id.substring(lastSlash + 1)
     @instance_url= keys.instance_url
-    @token= keys.access_token
-    @userId= keys.user.id
-    @user= keys.user
     @lastLogin= new Date( parseInt( keys.issued_at ))
     @save()
 

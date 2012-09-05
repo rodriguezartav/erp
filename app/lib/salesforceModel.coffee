@@ -30,6 +30,7 @@ Spine.Model.SalesforceModel =
 
       fromJSON: (objects) ->
         return unless objects
+
         if typeof objects is 'string'
           objects = objects.replace(new RegExp("__c", 'g'),"")
           objects = objects.replace(new RegExp("Id", 'g'),"id")

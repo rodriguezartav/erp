@@ -5,24 +5,23 @@ User = require("models/user")
 
 
 class Header  extends Spine.Controller
-  
-  
+
   elements:
     ".users" : "users"
     ".currentUser" : "currentUser"
 
   events:
-    "click .home"          : "onHome"
+    "click img"          : "onHome"
     "click .currentUser"   : "onCurrentUserClick"
   
   constructor: ->
     super
     @html require('views/controllers/header/layout')
     $('.dropdown-toggle').dropdown()
-    User.bind "refresh" , @onUserFresh
+    Spine.bind "login_complete" , @onUserFresh
+    
 
   onUserFresh: =>
-    
     user = User.exists Spine.session.userId
     @currentUser.html require("views/controllers/header/user")([user])
 

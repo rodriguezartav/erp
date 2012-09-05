@@ -13,16 +13,12 @@ class Routes
     @app.get '/' , (req, res) =>
       res.render "app" , { jsvars: @getJsVars(req) }
 
-    @app.get '/update' , (req, res) => 
-      console.log req.session.salesforceToken
-      res.render "app" , {layout: "update"}
-
-    @app.get '/online' , (req, res) => 
-      console.log req.session.salesforceToken
-      res.render "app" , {layout: "online", jsvars: @getJsVars(req)   }
-
-    @app.get '/remote' , (req, res) =>
-      res.render "app" , { jsVars: @getJsVars(req) }
+    @app.get '/checkStatus' , (req, res) =>
+      if req.session.salesforceToken then return res.send
+        id: req.session.salesforceToken.id
+        instance_url: req.session.salesforceToken.instance_url
+        issued_at: req.session.salesforceToken.issued_at
+      res.send 500
 
     @app.all "/parse/users/?*" , (req,res) ->
       req.parseController.handleProxy(req,res)
@@ -41,7 +37,6 @@ class Routes
     
   getJsVars: (req) ->
     jsvars = 
-      salesforceKeys: req.salesforceController.keys(req)
       pusherKeys: req.pusherController.keys()
       parseKeys: req.parseController.keys()
       statApi: "7fe222080e1ae26d9f89ba1ba8f320b2"
@@ -50,7 +45,6 @@ class Routes
       apiServer: "http://api2s.heroku.com"
       users: User.all()
       proveedores: Proveedor.all()
-      
     return Routes.varsToString jsvars
       
   @varsToString: (vars) ->

@@ -74,7 +74,7 @@ class VerCierreMensual extends Spine.Controller
     console.log @firstCierre
     console.log value
 
-    for day in [@selectedDia..31]
+    for day in [1..31]
       row = {dia: "" , registro: 0 , cierre: 0 , prueba: 0}
       row.dia = day
       if @registros[day] && @cierres[day]

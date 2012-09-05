@@ -1,5 +1,7 @@
 Spine   = require('spine')
 Session = require('models/session')
+User = require('models/user')
+
 $       = Spine.$
 StatManager = require("managers/statManager")
 
@@ -16,7 +18,6 @@ class AuthLogin extends Spine.Controller
 
   constructor: ->
     super
-    
     permision = window.webkitNotifications?.checkPermission?() == 0
     if !permision
       @html require("views/controllers/lightbox/login/notificationPermision")
@@ -24,19 +25,24 @@ class AuthLogin extends Spine.Controller
       @loginProcess()
     
   loginProcess:->
-    return @continue() if @data.salesforceKeys
-    @render()
+    checkStatusRequest = $.get "/checkStatus"
+    checkStatusRequest.success (data) =>
+      Spine.session = Session.record || Session.create()
+      Spine.session.createFromAuth(data)
+      user = User.find Spine.session.userId
+      Spine.session.user = user;
+      Spine.session.save()
+      return @render() if Spine.session.isExpired()
+      @continue()
+    
+    checkStatusRequest.error =>
+      @render()
 
   requestPermision: =>
     @loginProcess()
     window.webkitNotifications?.requestPermission?()
 
   continue: =>
-    Spine.session = Session.record || Session.create()
-    
-    Spine.session.createFromAuth(@data.salesforceKeys)
-
-    return @render() if Spine.session.isExpired()
     Spine.trigger "hide_lightbox"
     Spine.trigger "login_complete"
     @callback()

@@ -104,7 +104,9 @@ class SalesforceController
 
   handleGet: (req,res) =>
     token = @parseToken(req,res)
-    return res.send "Error de login, favor volver a cargar" if !token
+    if !token
+      res.statusCode = 500
+      return res.send "Error de login, favor volver a cargar" 
     
     if req.query['soql']
       @handleQuery(req,res,token)
@@ -140,7 +142,7 @@ class SalesforceController
       userId = data.id.substring(lastS + 1) 
       data.user = User.exists userId
       req.session.salesforceToken = data
-      res.redirect("/online");
+      res.redirect("/");
 
     post.on "error" , ->
       console.log arguments

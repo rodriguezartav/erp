@@ -24,6 +24,9 @@ class Login extends Spine.Controller
 
   constructor: ->
     super
+    
+
+      
     Spine.session = Session.record || Session.create()
     
     return @renderOffLine() if Spine.session.token and !navigator.onLine

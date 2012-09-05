@@ -89,6 +89,9 @@ class Collection extends Base
       url:  "salesforce/sobjects?soql=#{@model.getQuery(filters)}"
     ).success(@recordsResponse)
      .error(@errorResponse)
+     .error =>
+       Spine.queries -= 1
+       Spine.trigger "queryComplete"
 
   query: (filters , params = {}, options = {}) ->
     Spine.trigger "queryBegin"
@@ -126,7 +129,6 @@ class Collection extends Base
     @model.trigger('ajaxSuccess', data, status, xhr)
 
   errorResponse: (xhr, statusText, error) =>
-    Spine.trigger "queryComplete"
     @model.trigger('ajaxError', null, xhr, statusText, error)
 
   customErrorResponse: (options = {}) =>

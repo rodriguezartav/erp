@@ -29,7 +29,6 @@ class App extends Spine.Controller
   constructor: ->
     super
     @navigate "/"
-    
 
     Spine.server = @options.server
     Spine.pusherKeys = @options.pusherKeys
@@ -54,8 +53,8 @@ class App extends Spine.Controller
     Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
     Spine.statManager    =  StatManager
     Spine.statManager.registerManager(@options.statApi)
-    Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
 
+    Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
 
   loginComplete: =>
     Spine.statManager.identify Spine.session.user.Name
