@@ -50,7 +50,7 @@ Spine.Model.SalesforceModel =
         @queryOrderString  = ""
         @queryFilterString = ""
         @queryFilter(options)
-        return @queryString() + @queryFilterString + @queryOrderString if options.avoidQueryTimeBased
+        return @queryString() + @queryFilterString + @queryOrderString if options?.avoidQueryTimeBased
         if @autoQueryTimeBased or ( options and options.avoidQueryTimeBased == false )
           @queryFilterAddCondition " LastModifiedDate >= #{@lastUpdate.to_salesforce()}" 
         return @queryString() + @queryFilterString + @queryOrderString
