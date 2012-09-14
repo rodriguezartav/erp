@@ -19,11 +19,11 @@ class AuthLogin extends Spine.Controller
   constructor: ->
     super
     permision = window.webkitNotifications?.checkPermission?() == 0
-    if !permision
+    if !permision and  /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) == false
       @html require("views/controllers/lightbox/login/notificationPermision")
     else
       @loginProcess()
-    
+
   loginProcess:->
     checkStatusRequest = $.get "/checkStatus"
     checkStatusRequest.success (data) =>
@@ -41,6 +41,8 @@ class AuthLogin extends Spine.Controller
   requestPermision: =>
     @loginProcess()
     window.webkitNotifications?.requestPermission?()
+    
+    
 
   continue: =>
     Spine.trigger "hide_lightbox"
