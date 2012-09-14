@@ -80,7 +80,7 @@ class SecurityManager
     @profiles = {}
     apps = [ VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion ]
+    @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion , TomasInventario ]
     @profiles["Presidencia"] =  [ DoCierreDiario  , AjustarNegociacion ,   Compras , CuentasPorPagarFlujo , CuentasPorPagarAprobacion  , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacionGerencia , VerRegistrosResumen ]
     @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , VerRegistrosResumen , VerRegistros  , VerClientes ]
