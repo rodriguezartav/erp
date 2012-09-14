@@ -27,7 +27,7 @@
             </li>
           </ul>
 
-            <input class="hidden-phone" type="text" class=" span5 js_search_productos" placeholder="Productos de Calidad"/>
+            <input type="text" class=" span5 js_search_productos hidden-phone" placeholder="Productos de Calidad"/>
             <i class="icon-search productIcon hidden-phone"></i>
 
         </div>
