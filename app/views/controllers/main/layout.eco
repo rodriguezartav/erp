@@ -8,7 +8,7 @@
       <div class="menuContainer"></div>
     </div>
     
-    <div class="span3 notificationContainer">
+    <div class="span3 notificationContainer hidden-phone">
     
       <div class="toolbar">
       </div>

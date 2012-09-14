@@ -832,7 +832,7 @@ header .navbar .brand{vertical-align:top;padding:0px;font-size:50px;color:#fff;t
 header .nav .dropdown .userWrapper{max-height:350px;width:200px;overflow-y:scroll;}
 header .nav .dropdown .currentUser img{width:36px;height:36px;}
 header .nav .dropdown .users li img{width:25px;height:25px;}
-footer .navbar .nav>li>a{padding:0px 0px 5px 0px;}
+@media (max-width:480px){.navbar .brand img{margin-left:10px;width:100%;width:95px;}}footer .navbar .nav>li>a{padding:0px 0px 5px 0px;}
 footer .navbar-inner{background:none;background-color:#f5f5f5;background-image:-moz-linear-gradient(top, #ffffff, #e6e6e6);background-image:-ms-linear-gradient(top, #ffffff, #e6e6e6);background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));background-image:-webkit-linear-gradient(top, #ffffff, #e6e6e6);background-image:-o-linear-gradient(top, #ffffff, #e6e6e6);background-image:linear-gradient(top, #ffffff, #e6e6e6);background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);*background-color:#e6e6e6;filter:progid:DXImageTransform.Microsoft.gradient(enabled = false);border-top:#ddd;padding-bottom:5px;}footer .navbar-inner:hover,footer .navbar-inner:active,footer .navbar-inner.active,footer .navbar-inner.disabled,footer .navbar-inner[disabled]{background-color:#e6e6e6;*background-color:#d9d9d9;}
 footer .navbar-inner:active,footer .navbar-inner.active{background-color:#cccccc \9;}
 footer .actionButtons{padding-top:10px;}footer .actionButtons a{color:#999;display:inline-block;margin:5px 7px;}footer .actionButtons a:hover{color:#9d261d;text-decoration:none;}

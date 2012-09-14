@@ -1,0 +1,9 @@
+<tr>
+
+  <td>
+    <a  class="item_grupo" data-name="<%= @ %>">
+      <%= @ %>
+    </a>
+  </td>
+
+</tr>

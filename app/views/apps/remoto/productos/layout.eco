@@ -1,0 +1,19 @@
+  
+  <a class="btn btn-primary btn_back">
+    < Atras
+  </a>
+
+<br/>  <br/>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+      </tr>
+    </thead>
+    <tbody class="productosList">
+    
+    </tbody>
+  </table>
+
+
+
