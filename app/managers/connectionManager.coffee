@@ -23,11 +23,15 @@ class ConnectionManager
         model.ajax().query( {} ) if model.autoQuery
 
   fetchLocalData: =>
-    Session.fetch()    
-    for model in Spine.socketModels
-      model.fetch()
+    try
+      Session.fetch()    
+      for model in Spine.socketModels
+        model.fetch()
 
-    for model in Spine.transitoryModels
-      model.fetch()
+      for model in Spine.transitoryModels
+        model.fetch()
+
+    catch e
+      
 
 module.exports = ConnectionManager
