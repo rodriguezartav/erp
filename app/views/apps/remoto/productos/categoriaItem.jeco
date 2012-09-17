@@ -1,7 +1,9 @@
-<tr>
+<tr class="item_categoria">
   <td>
-    <a class="item_categoria" data-name="<%= @ %>">
+    <h4>
+    <a class="" data-name="<%= @ %>">
       <%= @ %>
     </a>
+  </h4>
   </td>
 </tr>

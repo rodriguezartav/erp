@@ -18,6 +18,7 @@ class AuthLogin extends Spine.Controller
 
   constructor: ->
     super
+    console.log "auth"
     permision = window.webkitNotifications?.checkPermission?() == 0
     if !permision and  /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) == false
       @html require("views/controllers/lightbox/login/notificationPermision")

@@ -44,6 +44,7 @@ class VerProductos extends Spine.Controller
  
   onCategoriaClick: (e) =>
     target= $(e.target)
+    target = target.find "a" if !target.attr("data-name")
     name = target.attr "data-name"
     @last = ["categoria",name]
     @renderGrupos(name)
@@ -57,6 +58,7 @@ class VerProductos extends Spine.Controller
 
   onGrupoClick: (e) =>
     target= $(e.target)
+    target = target.find "a" if !target.attr("data-name")
     name = target.attr "data-name"
     @last[0] = "grupo"
     @renderProductos(name)
