@@ -6,10 +6,6 @@ class NotificationManager
   constructor: ->
     setInterval @showNotification , 45000
 
-  checkPermision: ->
-    if window.webkitNotifications?.checkPermission?() != 0
-      window.webkitNotifications?.requestPermission?()
-
   showNotification: () =>
     return false
     

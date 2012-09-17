@@ -30,7 +30,31 @@ class App extends Spine.Controller
     super
     @navigate "/"
 
+    Spine.server = @options.server
+    Spine.pusherKeys = @options.pusherKeys
+    Spine.registerParse @options.parseKeys
+    User.refresh @options.users
+    Proveedor.refresh @options.proveedores
 
+    Proxino.key = "R4f9M9v5r63OtGW62AeHbw"
+    Proxino.track_errors();
+
+    new Header(el: $("header"))
+    new Productos(el: $(".productosToolbar"))
+    
+    new Footer(el: $("footer")) 
+    new Lightbox(el: $(".lightboxCanvas"))
+    new Main(el: $(".appCanvas") )
+    Spine.Route.setup()
+    
+    Spine.security       =  new SecurityManager()
+    Spine.connection     =  new ConnectionManager()
+    Spine.notifications  =  new NotificationManager()
+    Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
+    Spine.statManager    =  StatManager
+    Spine.statManager.registerManager(@options.statApi)
+
+    Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
 
   loginComplete: =>
     Spine.statManager.identify Spine.session.user.Name
