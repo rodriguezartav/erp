@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v 0.2.31
+# v 0.2.32
 
 CACHE:
 ./application.css
@@ -12,5 +12,4 @@ http://js.pusher.com/1.11/pusher.min.js
 http://js.pusher.com/1.12/pusher.min.js
 
 NETWORK:
-
 *
