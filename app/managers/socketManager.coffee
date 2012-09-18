@@ -77,11 +77,11 @@ class SocketManager
 
   pushToProfile: (profile, text ) =>
     data = { user: Spine.session.userId , text: text}
-    @private_erp_profiles.trigger("client-#{profile}" , data );
+    @private_erp_profiles?.trigger("client-#{profile}" , data );
 
   pushToFeed: ( text ) =>
     data = { user: Spine.session.userId , text: text}
-    @private_erp_profiles.trigger("client-feed" , data );
+    @private_erp_profiles?.trigger("client-feed" , data );
 
   profileEvents: =>
     @private_erp_profiles = @pusher.subscribe('private-erp_profiles')
