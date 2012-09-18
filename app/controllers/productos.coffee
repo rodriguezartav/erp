@@ -96,7 +96,6 @@ class Productos  extends Spine.Controller
     producto = Producto.find(id)
     Producto.set_current producto
     @close() if !@keepOpen
-  
 
   onInputType: (e) =>
     if e.keyCode == 13
@@ -116,7 +115,7 @@ class Productos  extends Spine.Controller
     val = parseFloat(target.val())
     val = 1 if isNaN(val)
     posibleError = "El producto #{producto.Name} solo tiene #{producto.InventarioActual}"
-    return Spine.trigger("show_lightbox" , "showWarning" , error: posibleError) if val > producto.InventarioActual
+    return Spine.trigger("show_lightbox" , "showWarning" , error: posibleError) if val > producto.InventarioActual and !Producto.bypassInventario
     $(":input:eq(" + ($(":input").index(target) + 1) + ")").focus();
     return false if val == 0
     Producto.set_current producto , val

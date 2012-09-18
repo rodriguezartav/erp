@@ -1,0 +1,6 @@
+<tr>
+  <td><%= @dia %></td>
+  <td><%= @registro.toMoney() %></td>
+  <td><%= @cierre.toMoney() %></td>
+  <td><%= @prueba.toMoney() %></td>
+</tr>

@@ -1,0 +1,15 @@
+<tr>
+
+  <td>
+    <p><%= @Name %></p>
+  </td>
+  
+  <td>
+  <%= @InventarioActual.toMoney(0) %>
+  </td>
+  
+  <td>
+    c<%= @Precio_Distribuidor.toMoney(0) %>
+  </td>
+  
+</tr>

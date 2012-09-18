@@ -2,13 +2,17 @@ Spine = require('spine')
 
 class Producto extends Spine.Model
   @configure 'Producto', 'Name', 'CodigoExterno', 'InventarioActual', 'Precio_Distribuidor' ,'Precio_Industria',
-  'Precio_Retail' , 'DescuentoMaximo' ,'Familia', 'Impuesto' , "Activo" , "SubFamilia", "Grupo" , "Categoria"
+  'Precio_Retail' , 'DescuentoMaximo' ,'Familia', 'Impuesto' , "Activo" , "SubFamilia", "Grupo" , "Categoria" , "LastModifiedDate"
 
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax
+  
   @extend Spine.Model.SelectableModel
   @extend Spine.Model.SocketModel
 
   @autoQueryTimeBased = true;
+
+  @bypassInventario = false
 
   @queryFilter: (options ) =>
     return "" if !options

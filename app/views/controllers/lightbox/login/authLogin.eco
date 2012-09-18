@@ -1,0 +1,16 @@
+
+<div class="modal-header">
+  <img src="images/logo_horizontal.png"/>
+  <h1 class="pull-right">ERP</h1>
+  <h4> Trabajar juntos es alcanzar el exito</h4>
+
+</div>
+
+<div class="modal-body">
+  
+  <a class="btn btn-primary btn-large" href="/sessions/salesforce/login"><i class="icon-cloud icon-large"></i> Salesforce Login</a>
+
+  <a class="btn btn-error pull-right btn-large offline"><i class="icon-power icon-large"></i> Acceso Offline</a>
+
+</div>
+

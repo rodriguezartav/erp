@@ -29,11 +29,10 @@ class PedidosAprobacion extends Spine.Controller
     @error.hide()
     @html require("views/apps/pedidos/pedidosAprobacion/layout")(PedidosAprobacion)
     @renderPedidos()
-    PedidoPreparado.bind "query_success" , @renderPedidos
     PedidoPreparado.bind "push_success" , @renderPedidos
 
   reload: ->
-    PedidoPreparado.query({ especial: false })
+    PedidoPreparado.ajax().query( { especial: false }   , afterSuccess: @renderPedidos )    
 
   renderPedidos: =>
     pedidos = PedidoPreparado.select (pedido) ->
@@ -56,7 +55,17 @@ class PedidosAprobacion extends Spine.Controller
     return false if !group
     @aprovedGroup = group
     @aprobar = aprobar
-    Spine.trigger "show_lightbox" , "aprobarPedidos" , {group: group , aprobar: aprobar , allowOverDraft: false , allowOver60: false} , @aprobarSuccess
+    
+    ids = []
+    ids.push pedido.id for pedido in group.Pedidos
+
+    data =
+      class: PedidoPreparado
+      restRoute: "Oportunidad"
+      restMethod: "PUT"
+      restData: ids: ids , observacion: "" , aprobar: aprobar
+
+    Spine.trigger "show_lightbox" , "rest" , data , @aprobarSuccess
 
   aprobarSuccess: =>
     @notify()
@@ -76,9 +85,9 @@ class PedidosAprobacion extends Spine.Controller
     , 15000
 
   reset: ->
-    PedidoPreparado.unbind "query_success" , @onLoadPedidos
     PedidoPreparado.unbind "push_success" , @renderPedidos
     @el.find('.popable').popover("hide")
+    $('.popover').hide()
     @release()
     @navigate "/apps"
 

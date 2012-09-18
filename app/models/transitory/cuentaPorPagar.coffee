@@ -4,7 +4,9 @@ class CuentaPorPagar extends Spine.Model
   @configure "CuentaPorPagar" , "Saldo" , "Referencia" , "Observacion" , "FechaFacturacion", "FechaVencimiento" , "FechaPagoProgramado" , 
   "TipoCambio" , "NombreProveedor", "Estado",  "FlagedToSave" , "ReferenciaFormaPago" , "FormaPago"
   
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods  
+
 
   @avoidInsertList = ["FlagedToSave" , "FechaVencimiento" , "ReferenciaFormaPago" , "FormaPago" ,"FechaFacturacion" ,  "Referencia", "NombreProveedor", "Observacion", "Saldo",
   "TipoCambio"]

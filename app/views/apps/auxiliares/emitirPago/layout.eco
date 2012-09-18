@@ -42,7 +42,6 @@
         <span data-forma-pago="Efectivo" class="btn btn_forma_pago">Efectivo</span>
         <span data-forma-pago="Cheque" class="btn  btn_forma_pago">Cheque</span>
         <span data-forma-pago="Deposito" class="btn btn_forma_pago">Deposito</span>
-        <span data-forma-pago="Transferencia" class="btn btn_forma_pago">Electronico</span>
         <span data-forma-pago="Nota Credito" class="btn btn_forma_pago">NC</span>
       </div>
 

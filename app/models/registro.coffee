@@ -6,7 +6,14 @@ Spine = require('spine')
 class Registro extends Spine.Model
   @configure "Registro" , "Name" , "Monto" , "Descripcion" , "Tipo" , "Departamento" , "Fecha" , "Responsable"
  
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
+
+
+  getDia: ->
+    date = new Date(Date.parse(@Fecha,"yyyy/MM/dd"));
+    date.getDate()
+    date.getDate()
 
   @refreshFromRest: (raw_results) =>
     results = JSON.stringify(raw_results)  
@@ -18,6 +25,16 @@ class Registro extends Spine.Model
     for registro in Registro.all()
       departamentos.push registro.Departamento if departamentos.indexOf(registro.Departamento) == -1
     return departamentos
+
+  @groupByDepartamento: (registros)  ->
+    tiposMap = {}
+    for registro in registros
+      group = tiposMap[registro.Departamento] || {Registros: [] , Departamento: registro.Departamento, Monto: 0 }
+      group.Monto += registro.Monto
+      group.Registros.push registro
+      tiposMap[registro.Departamento] = group
+    tiposMap
+
 
   @groupByTipo: (registros)  ->
     tiposMap = {}

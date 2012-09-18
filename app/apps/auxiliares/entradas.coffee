@@ -108,9 +108,12 @@ class Entradas extends Spine.Controller
     
     data =
       class: Movimiento
-      restData: Movimiento.all()
+      restRoute: "Movimiento"
+      restMethod: "POST"
+      restData: 
+        movimientos: Movimiento.salesforceFormat( Movimiento.all() , false) 
 
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
     
 
   after_send: =>

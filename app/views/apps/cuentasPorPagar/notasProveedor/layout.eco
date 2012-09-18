@@ -11,11 +11,6 @@
       <div class="src_proveedor"></div>
     </div>
 
-    <div class="span3">
-      <h3>Cuenta</h3>
-      <select class="validatable cuentas" data-type="Cuenta">
-      </select>
-    </div>
 
     <div class="span2">
       <h3>Referencia (#)</h3>
@@ -80,7 +75,7 @@
       <h3>TC</h3>
       <input data-type="TipoCambio" data-numeric="true" value="1" data-positive="true" class=" validatable"  placeholder="Tipo Cambio" />
     </div>
-  
+  </div>
 </div>
 
 <div class="action_footer">

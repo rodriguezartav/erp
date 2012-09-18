@@ -3,7 +3,8 @@ Spine = require('spine')
 class PagoProveedor extends Spine.Model
   @configure "PagoProveedor" , "Cuenta" , "FormaPago", "Referencia" ,"Observacion" , "Documentos", "Montos","TipoCambio"
   
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
 
 module.exports = PagoProveedor
 

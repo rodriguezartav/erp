@@ -1,23 +1,24 @@
 Spine = require('spine')
-
 class Session extends Spine.SingleModel
-  @configure "Session" , "instance_url", "token" , "userId",
-    "username" , "password" ,"passwordToken" ,
-    "user"
-    "lastLogin","lastUpdate"
-    "error" , "isOnline","isSalesforce",
-    "updateInterval"
-  
-  @extend Spine.Model.Salesforce
-  
+  @configure "Session" , "instance_url", "userId" , "lastLogin" , "lastUpdate" , "isOnline" , "isSalesforce" , "user"
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
+
   constructor: ->
     super
     @isSalesforce=false
 
+  createFromAuth: (keys) ->
+    lastSlash = keys.id.lastIndexOf "/"
+    @userId = keys.id.substring(lastSlash + 1)
+    @instance_url= keys.instance_url
+    @lastLogin= new Date( parseInt( keys.issued_at ))
+    @save()
+
   hasPerfiles: (perfiles) ->
     has = false
     for perfil in perfiles
-      has = true if perfil == @user.Perfil__c
+      has = true if perfil == @user.Perfil
     return has
 
   resetLastUpdate: ->
@@ -60,12 +61,11 @@ class Session extends Spine.SingleModel
     @isSalesforce = true
     @save()
 
-  isExpired: () =>
-    return true if !@lastLogin
-    expireDate = new Date(@lastLogin.getTime() + 1000 * 60 * 60 * 2)
-    res = false
-    res= true if expireDate.getTime()  < new Date().getTime() 
-    return res
+  isExpired: =>
+    return false if @lastLogin.less_than(110.minutes).ago
+    console.log @lastLogin
+    console.log "session is expired"
+    return true
 
   login:  =>
     $.ajax

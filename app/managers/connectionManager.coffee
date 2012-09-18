@@ -1,87 +1,37 @@
 Spine = require('spine')
 Session = require('models/session')
 User = require('models/user')
-
-Lightbox = require("controllers/lightbox")
+Cliente = require('models/cliente')
 
 class ConnectionManager
 
   constructor: ->
-
-    @connectionStatus= "online"
-    @startupSequence()
-    Spine.bind "login_complete" , @loginSequence
-    window.setInterval( @checkOverallStatus , 10000 )
-    @cyclesCount = 0
-
-  startupSequence: ->
     @fetchLocalData()
-
-  updateSequence: ->
-    @fetchServerData()
-
-  loginSequence: =>
-    @updateSequence()
-
-  goOnlineSequence: ->
-    Spine.trigger "status_changed" , @connectionStatus
-    
-    if Spine.session.isExpired()
-      @refreshSession()
-    else
-      Spine.trigger "show_lightbox" , "showWarning" , error: "Informacion: Regreso el Internet, Continue Normalmente"
-      @updateSequence()
-      @resetSocketSequence()
- 
-  goOfflineSequence: ->
-    Spine.trigger "status_changed" , @connectionStatus
-    Spine.trigger "show_lightbox" , "showWarning" , error: "Informacion: Esta trabajando sin internet,No podra enviar ni recibir informacion,Cuando se reconecte el sistema se actualizara solo"
-
-  resetSocketSequence: =>
-    ciclesCount = 0
-    Spine.socketManager.handshake()
-    Spine.socketManager.subscribe()
+    Spine.bind "login_complete" , @fetchServerData
+    window.setInterval( @checkOverallStatus , 1000000 )
 
   checkOverallStatus: =>
-    statusChanged = false
-    @cyclesCount++
-    
-    interval = Spine.session.updateInterval
-    if @cyclesCount > interval
-      @cyclesCount = 0
-      @fetchServerData()
- 
-    if navigator.onLine and @connectionStatus != "online"
-      @connectionStatus = "online"
-      statusChanged=true
+    @fetchServerData()
 
-    else if !navigator.onLine and @connectionStatus == "online"
-      @connectionStatus = "offline"
-      statusChanged=true
-
-    if statusChanged
-      if navigator.onLine then @goOnlineSequence() else @goOfflineSequence()
-    
-    else if Spine.session?.isExpired() and navigator.onLine
-      @refreshSession()
-
-  refreshSession: =>
-    if Spine.loggedIn
+    if Spine.session?.isExpired() and navigator.onLine
       Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
         window.location.reload();
-    
+
   fetchServerData: () =>
     if navigator.onLine
-      User.query() if User.count() ==0
       for model in Spine.socketModels
-        model.query() if model.autoQuery
+        model.ajax().query( {} ) if model.autoQuery
 
   fetchLocalData: =>
-    Session.fetch()    
-    for model in Spine.socketModels
-      model.fetch()
+    try
+      Session.fetch()    
+      for model in Spine.socketModels
+        model.fetch()
 
-    for model in Spine.transitoryModels
-      model.fetch()
+      for model in Spine.transitoryModels
+        model.fetch()
+
+    catch e
+      
 
 module.exports = ConnectionManager

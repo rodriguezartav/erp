@@ -31,7 +31,10 @@ class Recibo extends Spine.Model
   
   # cualquier diferencia o error, se nota en el cierre diario: total de saldos contables vrs el total de saldos auxiliar...
   
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
+  
+  
   @extend Spine.Model.SocketModel
 
   @autoQuery = false;

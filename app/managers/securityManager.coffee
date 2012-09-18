@@ -40,8 +40,6 @@ FacturasImpresion = require("apps/print/facturas")
 
 NotasImpresion = require("apps/print/notas")
 DocumentosAnular = require("apps/procesos/documentosAnular")
-FacturasAnular = require("apps/procesos/facturasAnular")
-
 
 PagosAnular = require("apps/procesos/pagosAnular")
 
@@ -67,6 +65,8 @@ ClienteAccess = require("apps/asc/clienteAccess")
 
 
 VerClientes = require("apps/vistas/verClientes")
+VerProductos = require("apps/remoto/verProductos")
+
 
 #FOR PROFILE BASED CONFIGURATION
 Movimiento = require("models/movimiento")
@@ -80,21 +80,21 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ClienteAccess, EstadoCuenta , VerCierreMensual,  VerCierreDiario , DoCierreDiario, DoCierreMensual ,  VerRegistrosResumen , VerRegistros, ListasPrecio,AprobarNota  , TomasInventario , Ajustes ,  NotaCreditoProveedor, FacturasAnular,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
+    apps = [ VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,CuentasPorPagarFlujo, CuentasPorPagarAprobacion ,PagosProveedor, CuentasPorPagarEntrega , NotasDebito  ,EmitirPago ,FacturasImpresion  , PedidosAprobacion , PedidosAprobacionGerencia , PedidosAprobacionEspecial  , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion ]
+    @profiles["Tesoreria"] = [ AprobarNota , PedidosAprobacionGerencia , PedidosAprobacionEspecial ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion , TomasInventario ]
     @profiles["Presidencia"] =  [ DoCierreDiario  , AjustarNegociacion ,   Compras , CuentasPorPagarFlujo , CuentasPorPagarAprobacion  , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosAprobacionEspecial , CuentasPorPagarFlujo , CuentasPorPagarAprobacion , PedidosAprobacionGerencia , VerRegistrosResumen ]
-    @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , FacturasAnular , VerRegistrosResumen , VerRegistros  , VerClientes ]
-    @profiles["Encargado de Ventas"] = [ Pedidos  , FacturasImpresion , FacturasAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
-    @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito,EmitirPago,PedidosAprobacion,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
-    @profiles["Vendedor"] = [ Pedidos , VerClientes ]
-    @profiles["Contabilidad"] = [ Ajustes , VerCierreMensual ,  VerCierreDiario , DoCierreDiario , DoCierreMensual ,CuentasPorPagarFlujo , VerRegistros ,  VerRegistrosResumen ]
+    @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , VerRegistrosResumen , VerRegistros  , VerClientes ]
+    @profiles["Encargado de Ventas"] = [ Pedidos  , FacturasImpresion  , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosAprobacion,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Vendedor"] = [ VerProductos , Pedidos , VerClientes ]
+    @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario,CuentasPorPagarFlujo , VerRegistros ,  VerRegistrosResumen ]
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>
     Spine.status = "loggedIn"
-        
+
     Spine.options =
       locationType : if Spine.session.hasPerfiles(["Vendedor"]) then "Ruta" else "Planta" 
       aprobacion   : if Spine.session.hasPerfiles(["Ejecutivo Credito","Platform System Admin"])  then true else false
@@ -102,48 +102,49 @@ class SecurityManager
 
     Movimiento.attributes.push('ProductoCosto') if Spine.session.hasPerfiles(["Platform System Admin" , "Presidencia" , "SubGerencia"])
     
-    Cliente.autoReQuery = false
-    Producto.autoReQuery = false
+    Cliente.autoReQuery     = false
+    Producto.autoReQuery    = false
     
     Spine.session.updateInterval = 360
     if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
-      Saldo.autoQuery = true
-      Cliente.autoQuery = true
-      PedidoPreparado.autoQuery    = true
+      Saldo.autoQuery            = true
+      Cliente.autoQuery          = true
+      PedidoPreparado.autoQuery  = true
       
     else if Spine.session.hasPerfiles([ "Ejecutivo Ventas" ])
-      Producto.autoQuery   = true
-      Cliente.autoQuery = true
-      FacturaPreparada.autoQuery   = true
+      Producto.autoQuery          = true
+      Cliente.autoQuery           = true
+      FacturaPreparada.autoQuery  = true
 
     else if Spine.session.hasPerfiles([ "Encargado Ventas" ])
       Producto.autoQuery   = true
-      Cliente.autoQuery = true
+      Cliente.autoQuery    = true
+      Saldo.autoQuery     = false
 
     else if Spine.session.hasPerfiles([ "Vendedor" ])
-      Producto.autoQuery   = true
-      Cliente.autoQuery = true
-      Saldo.autoQuery = false
+      Producto.autoQuery  = true
+      Cliente.autoQuery   = true
+      Saldo.autoQuery     = false
 
     else if Spine.session.hasPerfiles([ "Tesoreria" ])
-      Saldo.autoQuery = true
+      Saldo.autoQuery           = true
       PedidoPreparado.autoQuery = true
 
     else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia" ])
-      Cliente.autoQuery = true
-      Producto.autoQuery = true
-      Saldo.autoQuery = true
+      Cliente.autoQuery         = true
+      Producto.autoQuery        = true
+      Saldo.autoQuery           = true
       PedidoPreparado.autoQuery = true
 
     else if Spine.session.hasPerfiles([ "Platform System Admin" ])
-      Cliente.autoQuery = true
-      Producto.autoQuery = true
-      Saldo.autoQuery = true
-      Saldo.autoReQuery = true
+      Cliente.autoQuery         = true
+      Producto.autoQuery        = true
+      Saldo.autoQuery           = true
+      Saldo.autoReQuery         = true
+      PedidoPreparado.autoQuery = true
 
     Spine.session.save()
 
-
-    Spine.apps = @profiles[Spine.session.user.Perfil__c]
+    Spine.apps = @profiles[Spine.session.user.Perfil]
 
 module.exports = SecurityManager

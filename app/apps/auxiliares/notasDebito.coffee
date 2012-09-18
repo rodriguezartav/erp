@@ -47,11 +47,8 @@ class NotasDebito extends Spine.Controller
 
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)
-    data =
-      class: Documento
-      restData: [@documento]
 
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send   
+    Spine.trigger "show_lightbox" , "insert" , @documento , @after_send
 
   after_send: =>
     Spine.socketManager.pushToFeed(  "Hice un Nota de Debito para #{Cliente.current.Name}")

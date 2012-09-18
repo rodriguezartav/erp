@@ -40,6 +40,7 @@ Spine.Model.SelectableModel =
       filterFunction: (query,item) =>
         return false if item.Activo == false
         myRegExp =new RegExp( @queryToRegex(query),'gi')
+        return false if !item.Name
         item.Name.search(myRegExp) > -1 or String(item.CodigoExterno).indexOf(query) == 0
 
       filter: (query,filterFunction=@filterFunction ) =>

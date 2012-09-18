@@ -6,6 +6,8 @@ Cliente = require('models/cliente')
 
 Login = require("controllers/lightbox/login")
 
+AuthLogin = require("controllers/lightbox/authLogin")
+
 AprobarPedidos = require("controllers/lightbox/aprobarPedidos")
 
 ShowWarning = require("controllers/lightbox/showWarning")
@@ -23,7 +25,7 @@ class Lightbox extends Spine.Controller
 
   constructor: ->
     super
-    @items = [Insert,Update,Rest,ShowError , ShowWarning , Login , AprobarPedidos , Wait ]
+    @items = [Insert,Update,Rest,ShowError , ShowWarning , Login , AprobarPedidos , Wait , AuthLogin ]
     
     Spine.bind "hide_lightbox" , @hide
     

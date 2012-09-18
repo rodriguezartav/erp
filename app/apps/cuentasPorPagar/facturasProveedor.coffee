@@ -2,8 +2,6 @@ require('lib/setup')
 Spine = require('spine')
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
-Cuenta = require("models/cuenta")
-
 CuentaPorPagar = require("models/cuentaPorPagar")
 
 class FacturasProveedor extends Spine.Controller
@@ -31,33 +29,19 @@ class FacturasProveedor extends Spine.Controller
     "click .save" : "send"
     "change .totales" : "onTotalesChange"
 
-  setVariables: ->
-    @cuentaPorPagar = CuentaPorPagar.create { FechaFacturacion: new Date()  }
-
-  preset: ->
-    Cuenta.query({ clases: "'Gasto','Activo','Costo de Venta'" } )
-
   constructor: ->
     super
-    @setVariables()
-    @preset()
-    Cuenta.bind "query_success" , @onLoadCuenta
-    Proveedor.bind "current_set" , @onProveedorSet
-
+    @cuentaPorPagar = CuentaPorPagar.create { FechaFacturacion: new Date()  }
     @render()
+    @proveedores = new Proveedores(el: @src_proveedor)
+    Proveedor.bind "current_set" , @onProveedorSet
 
   onProveedorSet: =>
     @txtPlazo.val(Proveedor.current.Plazo || 0)
-    @cuentas.val(Proveedor.current.Cuenta).attr("selected", "selected")
-
-  onLoadCuenta: =>
-    Proveedor.query()
-    @cuentas.html require("views/apps/cuentasPorPagar/pagosProveedor/itemCuentaGasto")(Cuenta.all())
 
   render: =>  
     @html require("views/apps/cuentasPorPagar/facturasProveedor/layout")(@constructor)
     @refreshView(@cuentaPorPagar,@inputs_to_validate)    
-    @proveedores = new Proveedores(el: @src_proveedor)
 
   #####
   # ACTIONS
@@ -74,23 +58,16 @@ class FacturasProveedor extends Spine.Controller
 
   beforeSend: (object) =>
     object.Proveedor = Proveedor.current.id
-    object.CuentaGasto = @cuentas.find("option:selected").val()
     object.Tipo_de_Documento = 'FA'
     object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
     object.FechaIngreso = new Date(Date.now()).to_salesforce_date()
 
   send: (e) =>
     @updateFromView(@cuentaPorPagar,@inputs_to_validate)
-
-    data =
-      class: CuentaPorPagar
-      restData: [@cuentaPorPagar]
-
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    Spine.trigger "show_lightbox" , "insert" , @cuentaPorPagar , @after_send
 
   after_send: =>
     proveedor = @src_proveedor.find("input").val()
-    Spine.socketManager.pushToFeed("He ingresado Cuentas por Pagar de #{proveedor}")
     Spine.throttle ->
       Spine.socketManager.pushToProfile("Presidencia" , "He ingresado Cuentas por Pagar")
     , 100000
@@ -98,7 +75,6 @@ class FacturasProveedor extends Spine.Controller
  
   customReset: ->
     Proveedor.reset_current()
-    Cuenta.unbind "query_success" , @onLoadCuenta
     Proveedor.unbind "current_set" , @onProveedorSet
     @cuentaPorPagar.destroy() if @cuentaPorPagar
     @navigate "/apps"

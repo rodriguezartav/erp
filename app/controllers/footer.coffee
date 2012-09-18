@@ -11,6 +11,7 @@ class Footer  extends Spine.Controller
     ".users" : "users"
     ".currentUser" : "currentUser"
     ".pause"      : "pauseBtn"
+    ".update"     : "updateBtn"
   
   events:
     "click .reset"         : "reset"
@@ -22,6 +23,14 @@ class Footer  extends Spine.Controller
     @html require('views/controllers/footer/layout')
     Spine.bind "actualizar_ahora" , @onUpdate
     Spine.bind "master_reset" , @reset
+    
+    Spine.bind "queryBegin" , =>
+      @updateBtn.addClass "loading"      
+    
+    Spine.bind "queryComplete" , =>
+      return false if Spine.queries > 0
+      @updateBtn.removeClass "loading"
+
     @pauseTimer = null
     @pauseTimerRun = 0
 
@@ -36,16 +45,21 @@ class Footer  extends Spine.Controller
 
 
   onUpdate: =>
-    Saldo.bind "bulk_deleted" , @onDeleteDone
     Spine.trigger "show_lightbox" , "showWait" , error: "Esto puede tomar varios minutos, cuando se complete el proceso se refrescara la pagina."
+    Cliente.ajax().query({  credito: true , avoidQueryTimeBased: true } )
+    Cliente.ajax().query({  contado: true , avoidQueryTimeBased: true })
+    Producto.ajax().query({ avoidQueryTimeBased: true } )
+    Saldo.bind "bulk_deleted" , @onDeleteDone
     Saldo.bulkDelete()
-    Cliente.query({credito: true} , false)
-    Cliente.query({contado: true} , false)
-    Producto.query({},false)
+    
 
   onDeleteDone: =>
-    Saldo.query( { saldo: true } , false)
-    Saldo.bind "query_success" , @onUpdateDone
+    Saldo.ajax().query( { saldo: true , avoidQueryTimeBased: true } ) if Saldo.autoQuery
+    return @onUpdateDone() if Spine.query == 0
+    Spine.bind "queryComplete" , =>
+      console.log Spine.queries
+      return false if Spine.queries > 0
+      @onUpdateDone()
 
   onUpdateDone: ->
     window.location.reload()

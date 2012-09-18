@@ -5,11 +5,10 @@ class RestApi
   @apiVersion = "24.0"
 
   @request: (options) ->
-    restUrl = (if options.path.substr(0, 6) is "https:" then options.path else options.oauth.instance_url + "/services/data" + options.path)
-    console.log "SALESFORCE:RESTAPI:REQUEST ::>  Method: " + options.method
-    console.log "SALESFORCE:RESTAPI:REQUEST ::>  Url: " + restUrl + ", data: " + options.data
-    console.log "SALESFORCE:RESTAPI:REQUEST ::>  Data: " + options.data
-    
+    restUrl = (if options.path.substr(0, 6) is "https:" then options.path else options.oauth.instance_url + options.path)
+    console.log "SALESFORCE:REST_API:REQUEST ::>  Method: " + options.method
+    console.log "SALESFORCE:REST_API:REQUEST ::>  Url: " + options.path 
+    console.log "SALESFORCE:REST_API:REQUEST ::>  Data: " + options.data
     reqOptions =
       method: options.method
       data: options.data
@@ -17,38 +16,23 @@ class RestApi
         Accept: "application/json"
         Authorization: "OAuth " + options.oauth.access_token
         "Content-Type": "application/json"
-    
     req = rest.request restUrl, reqOptions
 
     req.on "complete", (data, response) =>
+      return options.error data if !response
+
       if response.statusCode >= 200 and response.statusCode < 300
-        console.log "SALESFORCE:RESTAPI:COMPLETE: "
+        console.log "SALESFORCE:REST_API:COMPLETE: "
         if data.length is 0
           options.callback()
         else
-          options.callback JSON.parse(data)
+          options.callback data
       else
-       # console.log arguments
         options.error data
     
     req.on "error", (data, response) =>
-      options.error arguments
-      
-      
       console.error "SALESFORCE:RESTAPI:ERROR: " + data
-      if response.statusCode is 401
-        console.log response
-        #if options.retry or not options.refresh
-         # console.log "Invalid session - we tried!"
-          #options.error data, response
-        #else
-        #console.log "Invalid session - trying a refresh"
-        #options.refresh (oauth) ->
-          #options.oauth.access_token = oauth.access_token
-          #options.retry = true
-          #request options
-      else
-        options.error data, response
+      options.error data, response
 
 
   @versions: (oauth,callback, error) ->
@@ -63,7 +47,7 @@ class RestApi
   @resources: (oauth,callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/"
+      path: "/services/data/v" + @apiVersion + "/"
       callback: callback
       error: error
 
@@ -72,7 +56,7 @@ class RestApi
   @describeGlobal: (oauth,callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/sobjects/"
+      path: "/services/data/v" + @apiVersion + "/sobjects/"
       callback: callback
       error: error
 
@@ -81,7 +65,7 @@ class RestApi
   @identity: (oauth,callback, error) ->
     options =
       oauth: oauth
-      path: oauth.id
+      path: "/services/data/#{oauth.id}"
       callback: callback
       error: error
 
@@ -90,7 +74,7 @@ class RestApi
   @metadata: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/sobjects/" + data.objtype + "/"
+      path: "/services/data/v" + @apiVersion + "/sobjects/" + data.objtype + "/"
       callback: callback
       error: error
 
@@ -99,7 +83,7 @@ class RestApi
   @describe: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/sobjects/" + data.objtype + "/describe/"
+      path: "/services/data/v" + @apiVersion + "/sobjects/" + data.objtype + "/describe/"
       callback: callback
       error: error
 
@@ -108,7 +92,7 @@ class RestApi
   @create: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/sobjects/" + data.objtype + "/"
+      path: "/services/data/v" + @apiVersion + "/sobjects/" + data.objtype + "/"
       callback: callback
       error: error
       method: "POST"
@@ -123,7 +107,7 @@ class RestApi
       data.fields = null
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/sobjects/" + data.objtype + "/" + data.id + (if data.fields then "?fields=" + data.fields else "")
+      path: "/services/data/v" + @apiVersion + "/sobjects/" + data.objtype + "/" + data.id + (if data.fields then "?fields=" + data.fields else "")
       callback: callback
       error: error
 
@@ -132,7 +116,7 @@ class RestApi
   @upsert: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/sobjects/" + data.objtype + "/" + data.externalIdField + "/" + data.externalId
+      path: "/services/data/v" + @apiVersion + "/sobjects/" + data.objtype + "/" + data.externalIdField + "/" + data.externalId
       callback: callback
       error: error
       method: "PATCH"
@@ -143,7 +127,7 @@ class RestApi
   @update: (oauth, data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/sobjects/" + data.objtype + "/" + data.id
+      path: "/services/data/v" + @apiVersion + "/sobjects/" + data.objtype + "/" + data.id
       callback: callback
       error: error
       method: "PATCH"
@@ -154,7 +138,7 @@ class RestApi
   @del: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/sobjects/" + data.objtype + "/" + data.id
+      path: "/services/data/v" + @apiVersion + "/sobjects/" + data.objtype + "/" + data.id
       callback: callback
       error: error
       method: "DELETE"
@@ -164,7 +148,7 @@ class RestApi
   @search: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/search/?q=" + escape(data.sosl)
+      path: "/services/data/v" + @apiVersion + "/search/?q=" + escape(data.sosl)
       callback: callback
       error: error
 
@@ -173,16 +157,25 @@ class RestApi
   @query: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/query/?q=" + escape(data.soql)
+      path: "/services/data/v" + @apiVersion + "/query/?q=" + escape(data.soql)
       callback: callback
       error: error
+    RestApi.request options
 
+  @rest: (oauth,data, callback, error) ->
+    options =
+      oauth:     oauth
+      path:      "/services/apexrest/#{data.restRoute}"
+      method:    data.restMethod
+      data:      JSON.stringify(data.restData)
+      callback:  callback
+      error:     error
     RestApi.request options
 
   @recordFeed: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/chatter/feeds/record/" + data.id + "/feed-items"
+      path: "/services/data/v" + @apiVersion + "/chatter/feeds/record/" + data.id + "/feed-items"
       callback: callback
       error: error
 
@@ -191,7 +184,7 @@ class RestApi
   @newsFeed: (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/chatter/feeds/news/" + data.id + "/feed-items"
+      path: "/services/data/v" + @apiVersion + "/chatter/feeds/news/" + data.id + "/feed-items"
       callback: callback
       error: error
 
@@ -200,10 +193,9 @@ class RestApi
   @profileFeed : (oauth,data, callback, error) ->
     options =
       oauth: oauth
-      path: "/v" + @apiVersion + "/chatter/feeds/user-profile/" + data.id + "/feed-items"
+      path: "/services/data/v" + @apiVersion + "/chatter/feeds/user-profile/" + data.id + "/feed-items"
       callback: callback
       error: error
-
     RestApi.request options
-    
+
 module.exports = RestApi

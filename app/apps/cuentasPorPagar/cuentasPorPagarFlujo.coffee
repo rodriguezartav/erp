@@ -25,12 +25,12 @@ class FlujoDePago extends Spine.Controller
     super
     @html require("views/apps/cuentasPorPagar/cuentasPorPagarFlujo/layout")(FlujoDePago)
     @error.hide()
-    CuentaPorPagar.bind "query_success" , @renderCuentas
     CuentaPorPagar.bind "insert_error" , @onPagoProgramadoUpdateError
     @reload()
 
   reload: ->
-    CuentaPorPagar.query({ estado: "'Pendiente','Calendarizado'" , orderFechaVencimiento: true })    
+    CuentaPorPagar.destroyAll()
+    CuentaPorPagar.ajax().query({ estado: "'Pendiente','Calendarizado'" , orderFechaVencimiento: true } ,  afterSuccess: @renderCuentas )        
 
   renderCuentas: =>
     cuentas = CuentaPorPagar.all()
@@ -94,19 +94,16 @@ class FlujoDePago extends Spine.Controller
       class: CuentaPorPagar
       restRoute: "Tesoreria"
       restMethod: "POST"
-      restData:   '{"cuentas":' +   cuentasSf  + '}'
+      restData:   cuentas: cuentasSf
 
     Spine.trigger "show_lightbox" , "rest" , data , @saveSuccess
 
   saveSuccess: =>
-    Spine.socketManager.pushToFeed("He ingresado CXP al Flujo de Pagos")
     Spine.socketManager.pushToProfile("Tesoreria" , "He ingresado CXP al Flujo")
     window.open("https://na7.salesforce.com/00OA0000004WuVF")
     @reset()
     
   reset: ->
-    CuentaPorPagar.unbind "query_success" , @onLoadPedidos
-    
     @release()
     @navigate "/apps"
 

@@ -5,7 +5,8 @@ class Documento extends Spine.Model
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo", "PlazoActual" , "FechaFacturacion","FechaVencimiento" ,
    "Tipo_de_Documento" ,  "IsContado" ,"Estado" , "Autorizado"
   
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
 
   @avoidQueryList: [ "Fuente" ,"IsContado"]
 
@@ -27,7 +28,7 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" Proveedor__c = '#{options.proveedor}'"       ,  filter)  if options.proveedor
     filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) " ,  filter)  if options.tipos
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
-    filter = @queryFilterAddCondition(" FechaFacturacion__c = #{options.fecha} "     ,  filter)  if options.fecha
+    filter = @queryFilterAddCondition(" FechaFacturacion__c=#{options.fecha} "     ,  filter)  if options.fecha
     filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"            ,  filter)  if options.estado
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter = @queryFilterAddCondition(" Autorizado__c        = true"                ,  filter)  if options.autorizado

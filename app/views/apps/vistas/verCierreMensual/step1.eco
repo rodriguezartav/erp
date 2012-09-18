@@ -1,0 +1,33 @@
+<div class="row-fluid widgetHeader">
+  
+  <div class="span6">
+    <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+  </div>
+  
+  <div class="span6">
+    <div class="rightOptions">
+
+    </div>
+  </div>
+  
+</div>
+
+<div class="well">
+
+  <h3>Escoja un dia del mes para Analisizar</h3>
+  <input class="viewDate" />
+
+  <div class="well well-small">
+  <ul>
+    <li><h4>El analisis llegara hasta el ultimo dia del mes, o el ultimo dia disponible</h4></li>
+
+    <li><h4>Tomamos el Cierre del dia seleccionado, luego sumamos los registros hasta llegar al siguiente cierre; Esto de forma consecutiva hasta llegar al ultimo dia</h4></li>
+
+  </ul>
+  
+  </div>
+  
+</div>
+
+
+

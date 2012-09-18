@@ -4,8 +4,8 @@ class Pago extends Spine.Model
   @configure 'Pago', "Cliente", "Tipo" , "Documento",  "Monto" , "FormaPago"  , 
     "Referencia" , "Recibo","Fecha","Consecutivo"
 
-  @extend Spine.Model.Salesforce
-    
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods    
 
   @group_by_recibo: () ->
     pagos = Pago.all()

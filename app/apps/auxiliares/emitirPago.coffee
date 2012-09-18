@@ -98,7 +98,7 @@ class EmitirPago extends Spine.Controller
 
   onClienteSet: (cliente) =>
     Documento.destroyAll()
-    Documento.query({ saldo: true , cliente: cliente  , autorizado: true })
+    Documento.ajax().query( { saldo: true , cliente: cliente  , autorizado: true } , afterSuccess: @onDocumentoLoaded )    
     @pago.Cliente = Cliente.current.id
 
   onDocumentoLoaded: =>
@@ -142,17 +142,22 @@ class EmitirPago extends Spine.Controller
     for item in PagoItem.all()
       item.Recibo = @pago.Recibo
       item.Cliente = @pago.Cliente
-      item.FormaPago = @pago.FormaPago
+      item.FormaPago = @formaPago
       item.Fecha = @pago.Fecha.to_salesforce_date()
       item.Referencia = @pago.Referencia
       item.setTipo()
       pagoItems.push item if item.Monto and parseInt(item.Monto) != 0
 
+    
+
     data =
       class: PagoItem
-      restData: pagoItems
+      restRoute: "Pago"
+      restMethod: "POST"
+      restData: 
+        pagos: PagoItem.salesforceFormat( pagoItems , false) 
 
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
   after_send: =>
     cliente = Cliente.find @pago.Cliente

@@ -1,0 +1,16 @@
+
+<div class="modal-header">
+  <h3>Configuracion del Sistema</h3>
+</div>
+
+<div class="modal-body">
+  
+  <h4>De click en el siguiente boton para permitir notificaciones de este programa</h4>
+  <h5>Aparecera un barra en la parte superior donde debe dar Aceptar/Autorizar para continuar con el ingreso al sistema</h5>
+  
+  <a class="btn btn-primary btn-large requestPermision">Mostrar Autorizacion</a>
+
+  
+
+</div>
+

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container hidden-phone">
   <div class="options">
   
   <span class="tipable close minimize" rel="tooltip" data-original-title="Cierra la Ventana de Productos">

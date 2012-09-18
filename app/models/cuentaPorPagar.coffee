@@ -5,7 +5,8 @@ class CuentaPorPagar extends Spine.Model
   "SubTotal" , "Descuento" , "Impuesto", "Plazo" , "FechaFacturacion","FechaVencimiento" , "FechaPagoProgramado" , "TipoCambio" ,
   "CuentaGasto" , "CuentaBanco" , "NombreProveedor" , "FlagedToSave" , "Tipo_de_Documento" , "FechaIngreso","Estado"
   
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax.Methods
 
   @avoidInsertList = ["FlagedToSave"]
   @avoidQueryList =  ["FlagedToSave"]

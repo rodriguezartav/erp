@@ -54,12 +54,9 @@ class Compras extends Spine.Controller
     ".validatable"     : "inputs_to_validate"
     ".src_proveedor" : "src_proveedor"
 
-
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
-
-
 
   constructor: ->
     super
@@ -67,6 +64,7 @@ class Compras extends Spine.Controller
     ProductoCosto.destroyAll()
     Proveedor.query()
     ProductoCosto.query()
+    Producto.bypassInventario = true
     
     @documento = Documento.create {Tipo_de_Documento: "CO"}   
  
@@ -125,12 +123,15 @@ class Compras extends Spine.Controller
    
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)
-    
+
     data =
       class: Movimiento
-      restData: Movimiento.all()
+      restRoute: "Movimiento"
+      restMethod: "POST"
+      restData: 
+        movimientos: Movimiento.salesforceFormat( Movimiento.all() , false) 
 
-    Spine.trigger "show_lightbox" , "insert" , data , @after_send
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
   after_send: =>
     proveedor = @src_proveedor.find("input")
@@ -138,6 +139,7 @@ class Compras extends Spine.Controller
     @reset(false)
 
   customReset: =>
+    Producto.bypassInventario = false
     @proveedores.reset()
     @resetBindings()
     for items in @movimientos

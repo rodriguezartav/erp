@@ -17,45 +17,32 @@ class VerCierreDiario extends Spine.Controller
   events:
     "click .cancel" : "reset"
 
-  setBindings: ->
-  
-  resetBindings: ->
-
-  preset: ->
-    @reloadCierres(new Date())
-    
   constructor: ->
     super
-    @preset()
+    @reloadCierres()
     @render()
-    @setBindings()
 
   reloadCierres: (date) ->
+    @cierres_list.empty()
     Cierre.destroyAll()
-    data=
-      restRoute: "CierreDiario"
-      restMethod: "GET"
-      restData: date.to_salesforce_date()
-      class: Cierre
-
-    Spine.trigger "show_lightbox" , "rest" , data  , @onCierreLoaded
+    return Cierre.ajax().query( { yesterday: true } , afterSuccess: @onCierreLoaded ) if !date
+    Cierre.ajax().query( { fecha: date.to_salesforce_date() } , afterSuccess: @onCierreLoaded )
 
   render: ->
     @html require("views/apps/vistas/verCierreDiario/layout")(VerCierreDiario)
-    @viewDate.val new Date().to_salesforce()
     pickers =  @viewDate.datepicker({autoclose: true})
     pickers.on("change",@onDateChange)
+    @viewDate.val "Ayer"
 
   onDateChange: (e) =>
     target = $(e.target)
     date = new Date(target.val())    
     @reloadCierres(date);
 
-  onCierreLoaded: (success , results) =>
-    #Hack to use REST to load Data for Free Edition Limits
-    fecha = results.results[0]?.Fecha__c
-    @fecha.html = fecha
-    parsed = JSON.parse results.results[0]?.Data__c
+  onCierreLoaded: () =>
+    return if Cierre.count() == 0
+    parsed = JSON.parse Cierre.first().Data
+    console.log parsed
     values = []
     if parsed
       for index,value of parsed
@@ -66,7 +53,6 @@ class VerCierreDiario extends Spine.Controller
 
   reset: ->
     Cierre.destroyAll()
-    @resetBindings()
     @navigate "/apps"
 
 module.exports = VerCierreDiario

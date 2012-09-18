@@ -9,7 +9,6 @@ require('spine/lib/ajax')
 require('spine/lib/route')
 #require('spine/lib/tmpl')
 
-
 require("./socketModel")
 require('./salesforce')
 require('./singleModel')
@@ -28,9 +27,20 @@ require('./bootstrap/bootstrap-button')
 require('./bootstrap/bootstrap-collapse')
 require('./bootstrap/bootstrap-tab')
 
+require "async"
+
+require('./modal')
+require('./modalController')
+
 require('./format')
 require('./datePicker')
 require('./parse')
+require('./salesforceAjax')
+require('./salesforceModel')
+
+require("./an.hour.ago")
+
+require("./proxino")
 
 
 

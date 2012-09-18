@@ -10,12 +10,6 @@
       <div class="src_proveedor"></div>
     </div>
 
-    <div class="span3">
-      <h3>Cuenta</h3>
-      <select class="validatable cuentas" data-type="Cuenta">
-      </select>
-    </div>
-
     <div class="span2">
       <h3>Forma de Pago</h3>
       <select class=" validatable" data-type="FormaPago" id="txt_formapago">

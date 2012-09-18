@@ -3,7 +3,8 @@ Spine = require('spine')
 class ProductoCosto extends Spine.Model
   @configure 'Producto', "Costo" , "CostoAnterior"
 
-  @extend Spine.Model.Salesforce
+  @extend Spine.Model.SalesforceModel
+  @extend Spine.Model.SalesforceAjax
 
   @overrideName= "Producto"
 

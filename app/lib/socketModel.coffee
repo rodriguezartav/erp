@@ -5,8 +5,9 @@ Spine.Model.SocketModel =
 
   extended: ->
     @change @saveLocal
-    @bind "query_success" , @saveLocal
     @fetch @loadLocal
+    @bind "querySuccess" , @saveBulkLocal
+    
     Spine.socketModels.push @
     
     @extend
@@ -21,31 +22,22 @@ Spine.Model.SocketModel =
       registerForUpdate: (channel) =>
         name = @overrideName || @className
         channel.bind "#{name}__c" , (message) =>
-          console.log "got message from #{@className}"
-          console.log message
-          
+          console.log "getting message from #{name}__c"
           @updateFromSocket(message)
-
-      beforeSocketUpdate: (results) ->
-        for result in results
-          alert "REPORTE ESTE ERROR: Se esta actualizando sin ID : "  + JSON.stringify result if !result.id
-          result = {}
-        return true
 
       updateFromSocket: (message) =>
         for object in message.sobjects
           delete object.attributes
-        jsonLoop = JSON.stringify message.sobjects
-        results = @parseSalesforceJSON jsonLoop
-        if @beforeSocketUpdate(results)
-          @refresh results
-          @afterSocketUpdate(message,results)
-          @trigger "push_success"
-          return results
-        return false
+        #console.log @
+        #console.log message
+        data = message.sobjects || message.objects || message.object
+        results = JSON.stringify 
+        console.log @refresh(results)
+        @afterSocketUpdate(message,results)
+        @trigger "push_success"
+        return results
 
       afterSocketUpdate: (message,results) =>
-        console.log "updated #{@className}"
         return true
 
       beforeSaveLocal: ->
@@ -62,7 +54,7 @@ Spine.Model.SocketModel =
         start = @source.length - 20
         start = 0 if start < 0
         to_work = @source.slice(start)
-        console.log "Starting from " + start + " of " + @source.length
+        Spine.trigger "bulkProgress" , [start , @source.length]
         @source = @source.slice(0,start)
         for item in to_work
           item.destroy()
@@ -72,14 +64,19 @@ Spine.Model.SocketModel =
       forceDelete: ->
         localStorage[@className] = []
 
+  saveBulkLocal: ->
+    @beforeSaveLocal?()
+    result = JSON.stringify(@all())
+    localStorage[@className] = result
+
   saveLocal: ->
-    @beforeSaveLocal()
+    @beforeSaveLocal?()
     result = JSON.stringify(@)
     localStorage[@className] = result
 
   loadLocal: ->
     result = localStorage[@className]
     @refresh(result or [], clear: true)
-    @afterLoadLocal()
+    @afterLoadLocal?()
 
 module?.exports = Spine.Model.SocketModel

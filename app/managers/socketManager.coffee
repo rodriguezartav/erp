@@ -6,12 +6,9 @@ Notificacion = require "models/notificacion"
 Cliente  =  require("models/cliente")
 Producto  =  require("models/producto")
 User  =  require("models/user")
+Feed = require "models/notifications/feed"
+Task = require "models/notifications/task"
 
-# There are 1 channel/s
-# public_salesforce-silent-push
-#
-#
-#
 
 class SocketManager
   
@@ -34,9 +31,9 @@ class SocketManager
   subscribe: =>
     return false if !@pusher
     user =
-      id:     Spine.session.user.Id
+      id:     Spine.session.user.id
       name:   Spine.session.user.Name
-      title:  Spine.session.user.Profile__c
+      title:  Spine.session.user.Profile
       photo:  Spine.session.user.SmallPhotoUrl
       
     for pusher in Pusher.instances
@@ -44,8 +41,6 @@ class SocketManager
         auth:
           params:
             user_details: JSON.stringify user
-          
-    Spine.setCookie "user_details" , JSON.stringify user
     @salesforceSync()
     @presenceEvents()
     @profileEvents()
@@ -60,31 +55,43 @@ class SocketManager
     @presence = @pusher.subscribe('presence-erp')
 
     @presence.bind 'pusher:subscription_succeeded' , (members) =>
-      console.log members
-
+      for index,member of members._members_map
+        people = User.exists member.id
+        if people
+          people.Online = true
+          people.save()
+      
     @presence.bind 'pusher:member_added' , (member) =>
-      console.log member
-
+      people = User.exists member.id
+      if people
+        people.Online = true
+        people.save()        
+      
+    
     @presence.bind 'pusher:member_removed' , (member) =>
-      console.log member
+
+      people = User.exists member.id
+      if people
+        people.Online = false
+        people.save()        
 
   pushToProfile: (profile, text ) =>
     data = { user: Spine.session.userId , text: text}
-    @private_erp_profiles.trigger("client-#{profile}" , data );
+    @private_erp_profiles?.trigger("client-#{profile}" , data );
 
   pushToFeed: ( text ) =>
     data = { user: Spine.session.userId , text: text}
-    @private_erp_profiles.trigger("client-feed" , data );
+    @private_erp_profiles?.trigger("client-feed" , data );
 
   profileEvents: =>
     @private_erp_profiles = @pusher.subscribe('private-erp_profiles')
-    @private_erp_profiles.bind "client-#{Spine.session.user.Perfil__c}" , (message) =>
+    @private_erp_profiles.bind "client-#{Spine.session.user.Perfil}" , (message) =>
       user = User.find message.user
-      Notificacion.createForPerfil( user , message.text , true )
+      Task.createForPerfil( user , message.text , true )
 
     @private_erp_profiles.bind "client-feed" , (message) =>
       user = User.find message.user
-      Notificacion.createForFeed( user , message.text )
+      Feed.createForFeed( user , message.text )
 
   appEvents: ->
     @public_app_actions = @pusher.subscribe('public_app_actions')

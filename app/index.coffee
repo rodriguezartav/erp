@@ -13,33 +13,40 @@ Footer = require("controllers/footer")
 
 Lightbox = require("controllers/lightbox")
 
-User = require("models/user")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
 User = require("models/user")
+Proveedor = require("models/proveedor")
+
 
 Session = require('models/session')
 
-Menu = require("controllers/menu")
+Main = require("controllers/main")
 
 class App extends Spine.Controller
   className: "app"
 
   constructor: ->
     super
-    
-    #StatManager.registerManager(@options.statApi)
+    @navigate "/"
 
     Spine.server = @options.server
     Spine.pusherKeys = @options.pusherKeys
     Spine.registerParse @options.parseKeys
+    User.refresh @options.users
+    Proveedor.refresh @options.proveedores
+
+    Proxino.key = "R4f9M9v5r63OtGW62AeHbw"
+    Proxino.track_errors();
 
     new Header(el: $("header"))
     new Productos(el: $(".productosToolbar"))
     
     new Footer(el: $("footer")) 
     new Lightbox(el: $(".lightboxCanvas"))
-
+    new Main(el: $(".appCanvas") )
+    Spine.Route.setup()
+    
     Spine.security       =  new SecurityManager()
     Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()
@@ -47,53 +54,27 @@ class App extends Spine.Controller
     Spine.statManager    =  StatManager
     Spine.statManager.registerManager(@options.statApi)
 
-    Spine.trigger "show_lightbox" , "login" , @options , @loginComplete
-
-    @routes
-      "/apps": =>
-        @currentApp?.reset()
-        @currentApp = new Menu(apps: Spine.apps)
-        @el.removeClass "container"
-        @el.addClass "container-fluid"
-        @html @currentApp
-
-      "/apps/:label": (params) =>
-        @currentApp?.reset()
-        for app in Spine.apps
-          @currentApp = app if app.label.replace(/\s/g,'') == params.label
-
-        ##STAT    
-        StatManager.sendEvent "Used #{@currentApp.name}"
-        @currentApp = new @currentApp
-        @html @currentApp
-        @el.addClass "container"
-        @el.removeClass "container-fluid"
+    Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
 
   loginComplete: =>
     Spine.statManager.identify Spine.session.user.Name
     Spine.clicked = false
-
-
-    setInterval =>
-      return Spine.clicked = false if Spine.clicked or Spine.paused
-      @navigate "/apps"
-    , 60000
-
-    #TODO CHANGE VAR NAME AND MOVE
-    $("body").click =>
-      Spine.clicked = true
-      
-    $(".appCanvas").click =>
-      Spine.trigger "appClick"
-      
     @navigate "/apps"
 
+    #setInterval =>
+      #return Spine.clicked = false if Spine.clicked or Spine.paused
+      #@navigate "/apps"
+    #, 60000
+
+    #TODO CHANGE VAR NAME AND MOVE
+    #@el.bind "click" , =>
+      #Spine.clicked = true
+      
 
   #TODO PUT SOMEWHERE ELSE
   Spine.throttle= (fn,delay) ->
     clearTimeout(Spine.throttleTimer) if Spine.throttleTimer
     Spine.throttleTimer = setTimeout =>
-      console.log arguments
       fn.apply(@, arguments);
     , delay
 

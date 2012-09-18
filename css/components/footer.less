@@ -27,6 +27,14 @@ footer{
         &.active{
           color: @red;
         }
+        &.loading{
+          -webkit-animation-name:             loading; 
+          -webkit-animation-duration:         0.4s; 
+          -webkit-animation-iteration-count:  infinite;
+          -webkit-transition-timing-function: ease-in-out;
+              
+          color: @orange;
+        }      
       }
     }
   }
@@ -42,4 +50,13 @@ footer{
   
   
   
+}
+
+@-webkit-keyframes loading {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
 }

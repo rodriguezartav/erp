@@ -24,11 +24,9 @@ class PagosAnular extends Spine.Controller
   setVariables: ->
 
   setBindings: ->
-    Pago.bind 'query_success' , @onPagoLoaded
     Cliente.bind 'current_set' , @onClienteSet
 
   resetBindings: ->
-    Pago.unbind 'query_success' , @onPagoLoaded
     Cliente.unbind 'current_set' , @onClienteSet
 
   preset: ->
@@ -48,7 +46,7 @@ class PagosAnular extends Spine.Controller
 
   onClienteSet: (cliente) =>
     Pago.destroyAll()
-    Pago.query({ cliente: cliente ,fecha: "TODAY" })
+    Pago.ajax().query({ cliente: cliente ,fecha: "TODAY" } , afterSuccess: @onPagoLoaded )
     
   onPagoLoaded: =>
     @src_pagos.html require("views/apps/procesos/pagosAnular/item")(Pago.group_by_recibo())
@@ -61,7 +59,7 @@ class PagosAnular extends Spine.Controller
       class: Pago
       restRoute: "Anular"
       restMethod: "POST"
-      restData: JSON.stringify( { id: reciboId , tipo: "Pago" } )
+      restData: id: reciboId , tipo: "Pago"
 
     Spine.trigger "show_lightbox" , "rest" , data , @reset
  

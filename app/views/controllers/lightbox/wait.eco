@@ -10,12 +10,14 @@
   
   <h3>Favor espere un momento, el sistema esta haciendo una operacion que puede tomar varios minutos.</h3>
 
+
+
 </div>
 
 <div class="modal-footer">
 
   <div class="progress progress-striped loader active">
-    <div class="bar" style="width: 100%;"></div>  
+    <div class="bar" style="width: 0%;"></div>  
   </div>
 
 </div>

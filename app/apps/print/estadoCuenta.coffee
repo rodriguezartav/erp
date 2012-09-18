@@ -70,11 +70,10 @@ class EstadoCuenta extends Spine.Controller
     @items = []
 
   setBindings: ->
-    Documento.bind 'query_success' , @onDocumentoLoaded
     Cliente.bind 'current_set' , @onClienteSet
   
   resetBindings: ->
-    Documento.unbind 'query_success' , @onDocumentoLoaded
+
     Cliente.unbind 'current_set' , @onClienteSet
 
   preset: ->
@@ -95,7 +94,7 @@ class EstadoCuenta extends Spine.Controller
   onClienteSet: (cliente) =>
     @saldos_list.empty()
     Documento.destroyAll()
-    Documento.query({ saldo: true , cliente: cliente  , autorizado: true })
+    Documento.ajax().query({ saldo: true , cliente: cliente  , autorizado: true } , afterSuccess: @onDocumentoLoaded)
     @clienteName.html cliente.Name
     @clienteId.html cliente.id
 

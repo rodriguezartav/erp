@@ -6,14 +6,12 @@
        <div class="headerWrapper">
 
        <div class="brand pull-left">
-         <span class="home">
-           <i class="icon-home"></i>
-         </span>
-         
-          <span class="first">R</span>odco
-          <span class="version">1.4</span>
-    
-         </div>
+         <img src="images/logo_horizontal.png"/>         
+        </div>
+       
+        <div class=" pull-left">
+           1.6.2
+        </div>
        
           <ul class="nav pull-right">
             <li class="dropdown">
@@ -29,11 +27,8 @@
             </li>
           </ul>
 
-   
-
-
-          <input type="text" class=" span5 js_search_productos" placeholder="Busque los productos aqui!!!"/>
-          <i class="icon-search productIcon"></i>
+            <input type="text" class=" span5 js_search_productos hidden-phone" placeholder="Productos de Calidad"/>
+            <i class="icon-search productIcon hidden-phone"></i>
 
         </div>
       </div>
