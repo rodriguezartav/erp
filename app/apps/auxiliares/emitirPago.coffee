@@ -128,9 +128,10 @@ class EmitirPago extends Spine.Controller
     total = 0
     for item in @items
       hasFactura = true if item.pagoItem.Monto and parseInt(item.pagoItem.Monto) != 0 and item.documento.Tipo_de_Documento == 'FA'
+      hasFactura = true if item.pagoItem.Monto and parseInt(item.pagoItem.Monto) != 0 and item.documento.Tipo_de_Documento == 'ND'
       total += item.pagoItem.Monto if item.pagoItem.Monto and parseInt(item.pagoItem.Monto) != 0
       item.checkItem()
-    @validationErrors.push "El pago debe tener al menos una factura " if !hasFactura
+    @validationErrors.push "El pago debe tener al menos una factura o nota de debito" if !hasFactura
     @validationErrors.push "El pago debe ser mayor o igual a 0" if total < 0
      
 
