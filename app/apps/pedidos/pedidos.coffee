@@ -230,6 +230,7 @@ class Credito extends Spine.Controller
     @customReset()
 
   notify: (now=false) =>
+    return false if !@pedido.Cliente
     cliente = Cliente.find @pedido.Cliente
     Spine.socketManager.pushToFeed "Ingrese un Pedido de #{cliente.Name}"
     if now
