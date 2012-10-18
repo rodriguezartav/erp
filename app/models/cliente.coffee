@@ -29,6 +29,9 @@ class Cliente extends Spine.Model
       names.push cliente.Name
     return names
 
+  validate: ->
+    unless @Name
+      "El nombre del cliente es obligatorio"
 
   willOverDraft: (monto) ->
     od = false
