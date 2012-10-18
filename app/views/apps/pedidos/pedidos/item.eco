@@ -9,7 +9,6 @@
   <%= @Precio?.toMoney() %>
   </h4>
   <span class="badge data-current-precio">1</span>
-  
 </td>
 
 <td><input class="span5 validatable" type="number" step="1" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @Cantidad %>" /></td>

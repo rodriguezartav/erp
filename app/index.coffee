@@ -18,7 +18,6 @@ Producto = require("models/producto")
 User = require("models/user")
 Proveedor = require("models/proveedor")
 
-
 Session = require('models/session')
 
 Main = require("controllers/main")
@@ -40,7 +39,7 @@ class App extends Spine.Controller
     Proxino.track_errors();
 
     new Header(el: $("header"))
-    new Productos(el: $(".productosToolbar"))
+    #new Productos(el: $(".productosToolbar"))
     
     new Footer(el: $("footer")) 
     new Lightbox(el: $(".lightboxCanvas"))

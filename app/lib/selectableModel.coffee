@@ -12,14 +12,10 @@ Spine.Model.SelectableModel =
     
       current: null
 
-      set_current: (item,lock = false) =>
-        result = false
-        if lock == false and @locked == false
-          @current = item
-          @trigger('current_set' , @current)
-          @locked = true if lock
-          result = true
-        return result
+      set_current: (item , params ) =>
+        @current = item
+        @trigger('current_set' , @current , params)
+        return true
 
       reset: =>
         @reset_current()

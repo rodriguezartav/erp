@@ -1,0 +1,22 @@
+<% Producto = require("models/producto")  %>
+<% producto = Producto.find(@Producto)  %>
+
+  <div class="view">
+    <h4 class="popable" rel="popover" data-content="<ul><li>Inventario <%= producto.InventarioActual.toMoney() %></li><li>Precio <%= producto.Precio_Distribuidor.toMoney() %></li><li>Descuento <%= producto.DescuentoMaximo %></li><ul>" data-original-title="<%= producto.Name %>"> <%= producto.Name.capitalize() %> </h4>
+  
+    <span> <i class="icon-chevron-up"></i><%= @Cantidad %> </span>
+    <span> 
+      <i class="icon-money"></i>
+      <span style="display: inline;" class="precio" data-current-precio="1" data-precio1="<%= producto.Precio_Distribuidor %>" data-precio2="<%= producto.Precio_Industria || 1 %>" data-precio3="<%= producto.Precio_Retail || 1 %>">
+        <%= @Precio?.toMoney() %>
+      </span>
+      <span class="badge data-current-precio">1</span>
+    </span>
+  
+    <span> 
+      <i class="icon-adjust"></i><%= @Descuento %>
+    </span>
+
+  <div class="edit">
+  
+  </div>

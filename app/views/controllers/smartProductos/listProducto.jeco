@@ -1,0 +1,22 @@
+<li class="span6 hideable" data-inventario="<%= @InventarioActual %>" data-id="<%= @id  %>">
+
+  <p class="productoName"> <%= @Name?.capitalize() %> </p>
+
+  <span class="hide_on_active"> 
+    <i class="icon-chevron-up "></i><%= @InventarioActual %>
+  </span>
+
+  <span class="show_on_active">
+    <i class="icon-chevron-up "></i>
+    <input class="txt_inventario  span2" value="<%= @InventarioActual %>" />
+  </span>
+
+  <span> 
+    <i class="icon-money"></i> <%= @Precio_Distribuidor?.toMoney() %>
+  </span>
+
+  <span> 
+    <i class="icon-adjust"></i><%= @DescuentoMaximo %>
+  </span>
+
+</li>

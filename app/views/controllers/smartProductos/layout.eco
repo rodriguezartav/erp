@@ -1,0 +1,33 @@
+
+
+<ul class="unstyled mobileList smartItemsList">
+</ul>
+
+<ul class="unstyled mobileList src_createItem">
+  <li class="inactive  productos">
+    <div class="row-fluid">
+      <div class="span4">
+        <input type="text" placeholder="Busque Productos" class="span12 js_producto_search" />
+      </div>
+      
+      <div class="span4 btn-group open">
+        <button class="btn btn-primary dropdown-toggle categoriaLabel" data-toggle="dropdown">Categorias <span class="caret"></span></button>
+        <ul class="dropdown-menu categoriasList">
+          
+        </ul>
+      </div>
+   
+        <a class="btn  pull-right btn-danger btn_closeList">x</a>
+        <a class="btn  pull-right btn-success btn_onHideEmpty"><i class="icon-magic"></i>
+        </a>
+
+
+    <ul class="smartGroups_list unstyled row-fluid">
+    </ul>
+
+    <ul class="smartProductos_list unstyled mobileList row-fluid">
+    </ul>
+
+  </li>
+  
+</ul>

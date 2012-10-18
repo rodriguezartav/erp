@@ -1,18 +1,3 @@
+<h1 class="btn_createPedido"><i class="<%= @icon %>"></i> <%= @label %></h1>
+<h6 class="btn_createPedido">click para crear nuevo pedido</h6>
 
-<div class="widgetHeader">
-
-  <div class="span6">
-    <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
-  </div>
-
-  <div class="span6">
-    <div class="rightOptions">
-    <a class="btn credito"><i class="icon-user "></i> Credito</a> 
-     <a class="btn contado"><i class="icon-shopping-cart "></i> Contado</a> 
-     <a class="btn especial"><i class="icon-magic "></i> Especial</a> 
-    </div>
-  </div>
-   
-   </br>
-   
-</div>
