@@ -2,7 +2,7 @@
 <td><%= @CodigoExterno %></td>
 <td><%= @Name %></td>
 <td><%= @DiasCredito %></td>
-<td><%= @CreditoAsignado.toMoney() %></td>
+<td><%= @CreditoAsignado?.toMoney() %></td>
 
 
 
