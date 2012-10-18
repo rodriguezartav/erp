@@ -1,10 +1,9 @@
 CACHE MANIFEST
-# v 0.2.45
+# v 0.2.47
 
 CACHE:
 ./application.css
 ./application.js
-./images/furley_bg.png
 ./images/logo.png
 ./font/fontawesome-webfont.woff
 ./font/fontawesome-webfont.ttf
