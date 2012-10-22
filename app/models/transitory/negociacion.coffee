@@ -10,7 +10,6 @@ class Negociacion extends Spine.Model
     negociacionProducto
 
   @createFromProducto: (producto ) ->
-    console.log producto
     negociacion = Negociacion.create
       Familia: producto.Familia
       SubFamilia: producto.SubFamilia
@@ -30,7 +29,7 @@ class Negociacion extends Spine.Model
         Familia: negociacion.Familia
         SubFamilia: negociacion.SubFamilia
         Descuento: negociacion.Descuento
-    
+    negociaciones
 
   @fromJson: (json) ->
     negociacion = JSON.parse json

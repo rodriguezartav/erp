@@ -3,7 +3,7 @@ Spine = require('spine')
 class PedidoItem extends Spine.Model
   @configure 'PedidoItem' , "Cliente" , "Producto" , "Cantidad" , "Precio" , "Impuesto_Monto" , "Impuesto", "Descuento" , 
   "Descuento_Monto" ,"SubTotal" , "Total" , "Referencia" , "Observacion" , "Fuente" , "Referencia" , "IsContado",
-  "Nombre", "Telefono", "Email" , "Identificacion" , "Orden" , "Transporte" , "Especial" , "LastModifiedDate"
+  "Nombre", "Telefono", "Email" , "Identificacion" , "Orden" , "Transporte" , "Especial" , "LastModifiedDate" , "DescuentoNegociacion"
     
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
@@ -11,7 +11,8 @@ class PedidoItem extends Spine.Model
 
   @overrideName = "Oportunidad"
 
-  @avoidInsertList = ["Total","Descuento_Monto","Impuesto_Monto", "SubTotal" , "LastModifiedDate"] 
+  @avoidQueryList = ["DescuentoNegociacion"]
+  @avoidInsertList = ["Total","Descuento_Monto","Impuesto_Monto", "SubTotal" , "LastModifiedDate" , "DescuentoNegociacion"] 
 
   @createFromProducto: (producto ) ->
     pedido = PedidoItem.create
@@ -48,8 +49,11 @@ class PedidoItem extends Spine.Model
     return false
 
   isEspecial: (producto) =>
-    @Especial = true if @Precio < producto.Precio_Distribuidor
     @Especial = true if @Descuento > producto.DescuentoMaximo
+    if @DescuentoNegociacion
+      @Especial = false if @Descuento == @DescuentoNegociacion
+
+    @Especial = true if @Precio < producto.Precio_Distribuidor
     @Especial = true if @Impuesto != producto.Impuesto
     @save()
 

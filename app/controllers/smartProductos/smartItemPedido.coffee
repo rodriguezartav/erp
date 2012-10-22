@@ -1,6 +1,7 @@
 Spine = require('spine')
 Producto = require("models/producto")
 PedidoItem = require("models/transitory/pedidoItem")
+Negociacion = require("models/transitory/negociacion")
 
 class SmartItemPedido extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
@@ -32,7 +33,9 @@ class SmartItemPedido extends Spine.Controller
 
   setNegociacion: (negociaciones) =>
     @negociacion = Negociacion.getFromProducto(@producto , negociaciones)
+    return if !@negociacion
     @dataItem.Descuento = @negociacion.Descuento
+    @dataItem.DescuentoNegociacion = @negociacion.Descuento
     @dataItem.save()
 
   validateCreation: =>

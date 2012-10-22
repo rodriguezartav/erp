@@ -1,6 +1,7 @@
 Spine = require('spine')
 Producto = require("models/producto")
 PedidoItem = require("models/transitory/pedidoItem")
+Negociacion = require("models/transitory/negociacion")
 
 
 class SmartProductos  extends Spine.Controller
@@ -56,7 +57,9 @@ class SmartProductos  extends Spine.Controller
   ###
 
   loadNegociaciones: (negociaciones) =>
-    #@negociaciones = negociaciones
+    @negociaciones = negociaciones
+    #for index,item in @smartItemMap
+      #item.setNegociacion?(@negociaciones)
 
   render: (productos , renderGroups=true  ) =>
     @smartProductos_list.html require("views/controllers/smartProductos/listProducto")(productos)
@@ -173,7 +176,7 @@ class SmartProductos  extends Spine.Controller
       item.updateCantidad(cantidad)
     else
      item = new @smartItem( producto: producto , cantidad:cantidad , referencia: @referencia )
-     #item.setNegociacion?(@negociaciones)
+     item.setNegociacion?(@negociaciones)
      if item.validateCreation()
        @smartItemMap[producto.id] = item
        @smartItemsList.append item.el

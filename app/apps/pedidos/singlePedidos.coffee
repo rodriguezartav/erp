@@ -35,6 +35,7 @@ class SinglePedidos extends Spine.Controller
 
   setVariables: =>
     Negociacion.destroyAll()
+    @negociaciones = []
     @pedidoItems = [] if !@pedidoItems
 
   setBindings: =>
@@ -61,8 +62,7 @@ class SinglePedidos extends Spine.Controller
     @clientes = new Clientes(el: @src_cliente , cliente: @pedido.Cliente )
     @smartProductos = new SmartProductos( el: @src_smartProductos , smartItem: SmartItemPedido , referencia: @pedido.Referencia )
     @setBindings()
-    Negociacion.destroyAll()
-    #@negociaciones = Negociacion.createFromCliente(Cliente.find @pedido.cliente)
+    @negociaciones = Negociacion.createFromCliente(Cliente.find @pedido.Cliente) if @pedido.Cliente
     for pedidoItem in @pedidoItems
       smartItem = new SmartItemPedido(dataItem: pedidoItem, producto: Producto.find(pedidoItem.Producto) )
       #smartItem.setNegociacion(@negociaciones)
@@ -105,7 +105,7 @@ class SinglePedidos extends Spine.Controller
   customValidation: =>
     movimientos = PedidoItem.itemsInPedido(@pedido)
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pedido.Cliente == null and !@pedido.IsContado
-    @validationErrors.push "Ingrese los detalles del Cliente" if @pedido.IsContado and ( !@pedido.Nombre or !@pedido.Identificacion )
+    @validationErrors.push "Ingrese los detalles del Cliente" if @pedido.IsContado and !pedido.Cliente and ( !@pedido.Nombre or !@pedido.Identificacion )
     @validationErrors.push "Ingrese al menos un producto" if movimientos.length == 0
     @checkItem(item) for item in movimientos
 
