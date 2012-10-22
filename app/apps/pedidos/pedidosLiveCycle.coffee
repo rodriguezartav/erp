@@ -132,7 +132,7 @@ class PedidosLiveCycle extends Spine.Controller
   notify: =>
     cliente = Cliente.find @cliente
     verb = if @aprobar == 2 then "Aprobe" else "Archive"
-    Spine.socketManager.pushToFeed("#{verb} un pedido de #{clinte.Name}") 
+    Spine.socketManager.pushToFeed("#{verb} un pedido de #{cliente.Name}") 
 
     #Spine.throttle ->
      # Spine.socketManager.pushToProfile("Ejecutivo Ventas" , "#{verb} varios pedidos, pueden proceder a revisarlos.")
