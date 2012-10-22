@@ -9,7 +9,7 @@ class CuentaPorPagar extends Spine.Model
 
 
   @avoidInsertList = ["FlagedToSave" , "FechaVencimiento" , "ReferenciaFormaPago" , "FormaPago" ,"FechaFacturacion" ,  "Referencia", "NombreProveedor", "Observacion", "Saldo",
-  "TipoCambio"]
+  "TipoCambio","Total","Fecha_de_Pago"]
   
   @avoidQueryList = ["FlagedToSave"]
 

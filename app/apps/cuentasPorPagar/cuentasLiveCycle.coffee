@@ -3,7 +3,6 @@ Spine = require('spine')
 Documento = require("models/documento")
 Cliente = require("models/cliente")
 Producto = require("models/producto")
-PedidoPreparado = require("models/socketModels/pedidoPreparado")
 Saldo = require("models/socketModels/saldo")
 CuentaPorPagar = require("models/transitory/cuentaPorPagar")
 
