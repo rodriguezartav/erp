@@ -22,42 +22,22 @@ class Notificaciones extends Spine.Controller
   constructor: ->
     super
     @render()
-    Feed.bind "create destroy" , @renderFeeds
-    Task.bind "create destroy" , @renderTasks
+    Feed.bind "create" , @renderFeeds
     User.bind "create change" , @renderPeople
-    
 
   render: =>
-    @renderTasks()
     @renderFeeds()
     @renderPeople()
 
 
-  renderFeeds: =>
-    all = Feed.all().sort (a,b) ->
-      return b.date.getTime() - a.date.getTime()
-    @feeds_list.html require("views/controllers/notificaciones/notificacion")(all)
-
-  renderTasks: =>
-    all = Task.all().sort (a,b) ->
-      return b.date.getTime() - a.date.getTime()
-    @tasks_list.html require("views/controllers/notificaciones/notificacion")(all)
+  renderFeeds: (feed) =>
+    
 
   renderPeople: =>
     online  = []
     for user in User.all()
-      online.push user if user.Online
+      online.push user if user.Active
     $(".people_list").html require("views/controllers/notificaciones/user")(online)
-
-  onHasNotTabClick: (e) =>
-    target = $(e).target
-    target.removeClass "has "
-
-  onNotificacionItemClick: (e) ->
-    target = $(e.target).parents ".notificacion_item"   
-    target.removeClass "pending"
-    notificacion= Notificacion.find target.attr "data-id"
-    notificacion.destroy()
 
   reset: =>
    @release()

@@ -124,19 +124,13 @@ class CuentasLiveCycle extends Spine.Controller
 
   aprobarSuccess: (sucess,results) =>
     @cuenta.save()
-    @cuenta=null
     @render()
     @notify()
-
+    @cuenta=null
 
   notify: =>
-    #cliente = Cliente.find @cliente
-    #verb = if @aprobar == 1 then "Aprobe" else "Archive"
-    #Spine.socketManager.pushToFeed("#{verb} un pedido de #{clinte.Name}") 
-
-    #Spine.throttle ->
-     # Spine.socketManager.pushToProfile("Ejecutivo Ventas" , "#{verb} varios pedidos, pueden proceder a revisarlos.")
-    #, 15000
+    Spine.socketManager.pushToFeed("Actualizamos la Cuenta a #{@cuenta.Estado}")
+  
 
   reset: ->
     @cuenta=null;

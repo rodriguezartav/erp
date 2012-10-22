@@ -60,7 +60,9 @@ class PedidosLiveCycle extends Spine.Controller
     groups = PedidoPreparado.group_by_referencia(PedidoPreparado.all())
     for group in groups
       if group.Estado == 'Pendiente'
-        saldos = Saldo.findAllByAttribute "Cliente" , group.Cliente
+        saldos = Saldo.select (item) ->
+          return true if item.Cliente == group.Cliente and item.Saldo != 0
+          return false
         pendientes.push group: group, saldos: saldos
       else
         aprobados.push group if group.Estado == "Aprobado"
@@ -103,7 +105,6 @@ class PedidosLiveCycle extends Spine.Controller
     return false;
 
   aprobarSuccess: (sucess,results) =>
-    console.log arguments
     @notify()
     showInvoice = false
     for pedido in @pedidos
@@ -129,9 +130,9 @@ class PedidosLiveCycle extends Spine.Controller
     window.open(url) if showInvoice
 
   notify: =>
-    #cliente = Cliente.find @cliente
-    #verb = if @aprobar == 1 then "Aprobe" else "Archive"
-    #Spine.socketManager.pushToFeed("#{verb} un pedido de #{clinte.Name}") 
+    cliente = Cliente.find @cliente
+    verb = if @aprobar == 2 then "Aprobe" else "Archive"
+    Spine.socketManager.pushToFeed("#{verb} un pedido de #{clinte.Name}") 
 
     #Spine.throttle ->
      # Spine.socketManager.pushToProfile("Ejecutivo Ventas" , "#{verb} varios pedidos, pueden proceder a revisarlos.")

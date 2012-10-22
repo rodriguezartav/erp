@@ -85,13 +85,16 @@ class SocketManager
 
   profileEvents: =>
     @private_erp_profiles = @pusher.subscribe('private-erp_profiles')
+    
     @private_erp_profiles.bind "client-#{Spine.session.user.Perfil}" , (message) =>
       user = User.find message.user
       Task.createForPerfil( user , message.text , true )
 
     @private_erp_profiles.bind "client-feed" , (message) =>
       user = User.find message.user
-      Feed.createForFeed( user , message.text )
+      feed = Feed.createForFeed( user , message.text )
+      console.log "Created Feed"
+      console.log feed
 
   appEvents: ->
     @public_app_actions = @pusher.subscribe('public_app_actions')

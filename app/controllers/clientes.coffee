@@ -56,6 +56,8 @@ class Clientes  extends Spine.Controller
       parent = t.parent(".clienteItem")
     id = parent.attr "data-id"
     cliente = Cliente.find(id)
+    Cliente.set_current cliente
+    console.log "Setting Current Cliente for Pagos"
     @trigger "credito_data_changed" , cliente
     parent.toggleClass("active")
     parent.siblings().removeClass("active")

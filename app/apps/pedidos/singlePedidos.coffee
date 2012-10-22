@@ -159,16 +159,10 @@ class SinglePedidos extends Spine.Controller
     @reset()
 
 
-  notify: (now=false) =>
+  notify: () =>
     return false if @pedido.IsContado
     cliente = Cliente.find @pedido.Cliente
     Spine.socketManager.pushToFeed "Ingrese un Pedido de #{cliente.Name}"
-    if now
-      Spine.socketManager.pushToProfile "Ejecutivo Credito" ,"ATENCION: Favor aprobar pedido de #{cliente.Name}"
-    else
-      Spine.throttle ->
-        Spine.socketManager.pushToProfile "Ejecutivo Credito" , "Hay Pedidos pendientes por aprobar"
-      , 65000
 
   onRemove: =>
     @resetBindings()

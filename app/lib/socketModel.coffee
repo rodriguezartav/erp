@@ -22,7 +22,6 @@ Spine.Model.SocketModel =
       registerForUpdate: (channel) =>
         name = @overrideName || @className
         channel.bind "#{name}__c" , (message) =>
-          console.log "getting message from #{name}__c"
           @updateFromSocket(message)
 
       updateFromSocket: (message) =>
@@ -31,9 +30,8 @@ Spine.Model.SocketModel =
         #console.log @
         #console.log message
         data = message.sobjects || message.objects || message.object
-        results = JSON.stringify
-        console.log results 
-        console.log @refresh(results)
+        results = JSON.stringify data
+        @refresh(results)
         @afterSocketUpdate(message,results)
         @trigger "push_success"
         return results
