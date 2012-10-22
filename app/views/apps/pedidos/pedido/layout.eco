@@ -1,10 +1,10 @@
 
 <div class="row-fluid widgetHeader">
     
-    <h1>Pedido</h1>  
+    <h1 class="pull-left">Pedido</h1>  
     
     <div class="rightOptions">
-      <span class="lbl_PedidoTipo btn pull-right">Credito</span>
+      <span class="lbl_PedidoTipo btn pull-right btn-primary">Credito</span>
     </div>
 
 </div>
@@ -21,14 +21,18 @@
 
         <div class="span2">
           <h4>Transporte</h4>
-          <div class="btn-group" data-toggle="buttons-checkbox">
-            <button type="button" class="btn">Si</button>
-          </div>
+          <textarea class="validatable" data-required="false" data-type="Transporte" placeholder="Transporte" ></textarea>
       </div>
 
-      <div class="span5">
+        <div class="span2">
+          <h4>Orden</h4>
+          <textarea class="validatable " data-required="false" data-type="Orden" placeholder="Orden" ></textarea>
+      </div>
+
+
+      <div class="span3">
         <h4>Observaciones</h4>
-        <textarea class="validatable" data-required="false" data-type="Observacion" placeholder="Observacion" />
+        <textarea class="validatable" data-required="false" data-type="Observacion" placeholder="Observacion" ></textarea>
       </div>
 
     </div>

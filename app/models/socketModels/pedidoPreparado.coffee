@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class PedidoPreparado extends Spine.Model
-  @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , "CreatedById", "Documento" ,
+  @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , "CreatedById", "Documento" , "Orden" ,
   "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Estado" , "Especial" , "LastModifiedDate"
   
   @extend Spine.Model.SalesforceModel
@@ -25,7 +25,7 @@ class PedidoPreparado extends Spine.Model
       for pedido in pedidos when pedido.Referencia == referencia
         pedidos_in_referencia.push pedido
         total += pedido.Total
-      groups.push {Referencia: referencia , Documento: pedidos_in_referencia[0].Documento,  Estado: pedidos_in_referencia[0].Estado ,  Especial: pedidos_in_referencia[0].Especial ,  CreatedById: pedidos_in_referencia[0].CreatedById ,  Pedidos: pedidos_in_referencia , Cliente: pedidos_in_referencia[0].Cliente , Total: total} if pedidos_in_referencia.length > 0
+      groups.push {Referencia: referencia , Orden: pedidos_in_referencia[0].Orden ,  Documento: pedidos_in_referencia[0].Documento,  Estado: pedidos_in_referencia[0].Estado ,  Especial: pedidos_in_referencia[0].Especial ,  CreatedById: pedidos_in_referencia[0].CreatedById ,  Pedidos: pedidos_in_referencia , Cliente: pedidos_in_referencia[0].Cliente , Total: total} if pedidos_in_referencia.length > 0
     groups
 
   @queryFilter: (options ) =>

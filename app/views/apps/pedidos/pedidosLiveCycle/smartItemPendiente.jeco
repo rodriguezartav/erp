@@ -3,13 +3,16 @@
 <% cliente = Cliente.exists(@group.Cliente)  %>
 <% Producto = require("models/producto")  %>
 
+<% referencia = if @group.Orden then "Orden: " + @group.Orden else @group.Referencia  %>
+
+
 <li class="pedidoItem" data-estado="<%= @group.Estado %>" data-referencia="<%= @group.Referencia %>"     data-cliente="<%= cliente.id %>">
 
   <h4>
     <% if @group.Especial:  %>
     <span class="badge badge-warning">E</span>&nbsp;
     <% end %>
-    <span class="badge badge-info"><%= @group.Referencia %></span>&nbsp;
+    <span class="badge badge-info"><%= referencia %></span>&nbsp;
     <%= cliente?.Name?.capitalize()  %>
   </h4>
   
