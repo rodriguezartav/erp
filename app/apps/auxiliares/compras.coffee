@@ -6,39 +6,8 @@ Movimiento = require("models/movimiento")
 Documento = require("models/documento")
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
-
-class Movimientos extends Spine.Controller
-  @extend Spine.Controller.ViewDelegation
-  
-  tag: "tr"
-
-  elements:
-    ".validatable" : "inputs_to_validate"
-
-  events:
-    "click .btn_remove" : "reset"
-    "change input" : "checkItem"
-    "click input" : "onItemClick"
-    
-  constructor: ->
-    super 
-    @movimiento = Movimiento.create_from_producto(@producto, @cantidad)
-    @html require("views/apps/auxiliares/compras/item")(movimiento: @movimiento , productoCosto: @productoCosto)
-
-  onItemClick: (e) =>
-    target = $(e.target)
-    target.select()
-
-  checkItem: (e) =>
-    @updateFromView(@movimiento,@inputs_to_validate)
-    if e and e.target
-      target = $(e.target)
-      $(":input:eq(" + ($(":input").index(target) + 1) + ")").focus();
-    
-  reset: ->
-    @movimiento.destroy()
-    @release()
-
+SmartProductos = require("controllers/smartProductos/smartProductos")
+SmartItemCompra = require("controllers/smartProductos/smartItemCompra")
 
 class Compras extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
@@ -50,7 +19,7 @@ class Compras extends Spine.Controller
   @icon = "icon-shopping-cart"
 
   elements:
-    ".movimientos_list" : "movimientos_list"
+    ".src_smartProductos" : "src_smartProductos"
     ".validatable"     : "inputs_to_validate"
     ".src_proveedor" : "src_proveedor"
 
@@ -60,53 +29,19 @@ class Compras extends Spine.Controller
 
   constructor: ->
     super
-    Producto.reset_current()
     ProductoCosto.destroyAll()
     Proveedor.query()
     ProductoCosto.query()
-    Producto.bypassInventario = true
-    
-    @documento = Documento.create {Tipo_de_Documento: "CO"}   
- 
+
+    @documento = Documento.create {Tipo_de_Documento: "CO"}    
     Movimiento.destroyAll()
-    @movimientos = []
-    @itemToControllerMap = {}
-
     @html require("views/apps/auxiliares/compras/layout")(@constructor)
+    @smartProductos = new SmartProductos( el: @src_smartProductos , smartItem: SmartItemCompra , referencia: "a")    
     @proveedores = new Proveedores(el: @src_proveedor)
-    @setBindings()
-
-  setBindings: =>
-    Producto.bind "current_set" , @addMovimiento
-    Movimiento.bind "beforeDestroy" , @removeMovimiento
-    
-  resetBindings: =>
-    Producto.unbind "current_set" , @addMovimiento
-    Movimiento.unbind "beforeDestroy" , @removeMovimiento
-
-  addMovimiento: (p,cantidad) =>
-    if ProductoCosto.count() > 0
-      movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
-      productoCosto = ProductoCosto.find Producto.current.id
-    
-      if(movimiento.length == 0)
-        item = new Movimientos(producto: Producto.current, cantidad: cantidad, productoCosto: productoCosto)
-        @itemToControllerMap[item.movimiento.id] = item
-        @movimientos.push item
-        @movimientos_list.append item.el
-    else
-      Spine.trigger "show_lightbox" , "showWarning" , error: "Cargando Costos, espere hasta que el cargador de la barra superior a la derecha se detenga"
-
-  removeMovimiento: (item) =>
-    item = @itemToControllerMap[item.id]
-    index = @movimientos.indexOf(item)
-    @movimientos.splice(index,1)
-    @itemToControllerMap[item.id] = null
 
   customValidation: =>
     @validationErrors.push "Ingrese al menos un producto" if Movimiento.count() == 0
     @validationErrors.push "Escoja el Proveedor" if Proveedor.current == null
-    item.checkItem() for item in @movimientos
 
   beforeSend: (object) ->
     for movimiento in Movimiento.all()
@@ -141,9 +76,7 @@ class Compras extends Spine.Controller
   customReset: =>
     Producto.bypassInventario = false
     @proveedores.reset()
-    @resetBindings()
-    for items in @movimientos
-      items?.reset()
+    @smartProductos.reset()
     @documento.destroy()
     @navigate "/apps"
     

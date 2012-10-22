@@ -1,8 +1,8 @@
 Spine = require('spine')
 
 class PedidoPreparado extends Spine.Model
-  @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , 
-  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia","Estado" , "Especial" , "LastModifiedDate"
+  @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , "CreatedById", "Documento" ,
+  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Estado" , "Especial" , "LastModifiedDate"
   
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
@@ -25,14 +25,12 @@ class PedidoPreparado extends Spine.Model
       for pedido in pedidos when pedido.Referencia == referencia
         pedidos_in_referencia.push pedido
         total += pedido.Total
-      groups.push {Referencia: referencia , Pedidos: pedidos_in_referencia , Cliente: pedidos_in_referencia[0].Cliente , Total: total} if pedidos_in_referencia.length > 0
+      groups.push {Referencia: referencia , Documento: pedidos_in_referencia[0].Documento,  Estado: pedidos_in_referencia[0].Estado ,  Especial: pedidos_in_referencia[0].Especial ,  CreatedById: pedidos_in_referencia[0].CreatedById ,  Pedidos: pedidos_in_referencia , Cliente: pedidos_in_referencia[0].Cliente , Total: total} if pedidos_in_referencia.length > 0
     groups
 
   @queryFilter: (options ) =>
     filter =""
-    filter = @queryFilterAddCondition(" Estado__c  = 'Pendiente'" , filter)
-    filter = @queryFilterAddCondition(" Especial__c  = true               "               , filter) if options.especial == true
-    filter = @queryFilterAddCondition(" Especial__c  = false               "              , filter) if options.especial == false
+    filter = @queryFilterAddCondition(" Estado__c  = 'Pendiente' or LastModifiedDate = TODAY" , filter)
     
     filter
 

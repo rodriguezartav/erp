@@ -4,30 +4,10 @@ Productos = require("controllers/productos")
 Documento = require("models/documento")
 Producto = require("models/producto")
 Movimiento = require("models/movimiento")
+SmartProductos = require("controllers/smartProductos/smartProductos")
+SmartItemEntrada = require("controllers/smartProductos/smartItemEntrada")
 
-class Movimientos extends Spine.Controller
-  @extend Spine.Controller.ViewDelegation
-  
-  tag: "tr"
 
-  elements:
-    ".validatable" : "inputs_to_validate"
-
-  events:
-    "click .js_btn_remove" : "reset"
-    "change input" : "checkItem"
-    
-  constructor: ->
-    super
-    @movimiento = Movimiento.create_from_producto(@producto)
-    @html require("views/apps/auxiliares/entradas/item")(@movimiento)
-  
-  checkItem: (e) =>
-    @updateFromView(@movimiento,@inputs_to_validate)
-    
-  reset: ->
-    @movimiento.destroy()
-    @release()
     
 
 class Entradas extends Spine.Controller
@@ -44,7 +24,7 @@ class Entradas extends Spine.Controller
   elements:
     ".error"              :  "error"
     ".validatable"        :  "inputs_to_validate"
-    ".movimientos_list"   :  "movimientos_list"
+    ".src_smartProductos" : "src_smartProductos"
 
   events:
     "click .cancel"       :  "reset"
@@ -54,41 +34,12 @@ class Entradas extends Spine.Controller
     super
     Producto.reset_current()
     Movimiento.destroyAll()
-    @movimientos = []
-    @itemToControllerMap = {}
-
     @documento = Documento.create {Tipo_de_Documento: "EN"}
     @html require("views/apps/auxiliares/entradas/layout")(@constructor)
-    @error.hide()
-    @setBindings()
-
-  setBindings: =>
-    Producto.bind "current_set" , @addMovimiento
-    Movimiento.bind "beforeDestroy" , @removeMovimiento
-
-  resetBindings: =>
-    Movimiento.unbind "beforeDestroy" , @removeMovimiento
-    Producto.unbind "current_set" , @addMovimiento
-    
-    
-  addMovimiento: =>
-    movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
-    if(movimiento.length == 0)
-      item = new Movimientos(producto: Producto.current)
-      @movimientos.push item
-      @itemToControllerMap[item.movimiento.id] = item
-      @movimientos_list.append item.el
-
-
-  removeMovimiento: (item) =>
-    item = @itemToControllerMap[item.id]
-    index = @movimientos.indexOf(item)
-    @movimientos.splice(index,1)
-    @itemToControllerMap[item.id] = null
+    @smartProductos = new SmartProductos( el: @src_smartProductos , smartItem: SmartItemEntrada , referencia: "a")
 
   customValidation: =>
     @validationErrors.push "Ingrese al menos un producto" if Movimiento.count() == 0
-    item.checkItem() for item in @movimientos
 
   beforeSend: (object) ->
     for movimiento in Movimiento.all()
@@ -121,10 +72,10 @@ class Entradas extends Spine.Controller
     @reset()
 
   customReset: =>
-    for items in @movimientos
-      items?.reset()
+    for item in Movimiento.all()
+      item.destroy()
+    @smartProductos.reset()
     @documento.destroy()
-    @resetBindings()
     @navigate "/apps"
     
   

@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class Movimiento extends Spine.Model
-  @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" ,
+  @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "ProductoCosto" , 
    "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Observacion" , "Cliente" ,
    "CodigoExterno" , "Descuento_Unitario" , "Impuesto_Unitario" ,"Plazo", "Proveedor"
   

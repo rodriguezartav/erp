@@ -10,6 +10,8 @@ SmartProductos = require("controllers/smartProductos/smartProductos")
 SmartItemPedido = require("controllers/smartProductos/smartItemPedido")
 
 class SinglePedidos extends Spine.Controller
+  @extend Spine.Controller.ViewDelegation
+  
   className: "row-fluid pedido list_item active"
 
   @departamento = "Pedidos"
@@ -25,10 +27,11 @@ class SinglePedidos extends Spine.Controller
     ".lbl_impuesto" : "lbl_impuesto"
     ".lbl_total" : "lbl_total"
     ".lbl_PedidoTipo" : "lbl_PedidoTipo"
+    ".validatable" : "inputs_to_validate"
 
   events:
     "click .cancel" : "onRemove"
-    "click .send" : "send"
+    "click .save" : "send"
 
   setVariables: =>
     Negociacion.destroyAll()
@@ -49,7 +52,9 @@ class SinglePedidos extends Spine.Controller
   constructor: ->
     super
     @pedidoItems = PedidoItem.itemsInPedido(@pedido) if @pedido
-    @pedido = Pedido.create( { Referencia: parseInt(Math.random() * 10000) , Tipo_de_Documento: "FA" , IsContado: false , Especial: false }) if !@pedido
+    referencia = Spine.session.getConsecutivoPedido()
+
+    @pedido = Pedido.create( { Referencia: referencia , Tipo_de_Documento: "FA" , IsContado: false , Especial: false }) if !@pedido
     @html require("views/apps/pedidos/pedido/layout")(Pedido)
     @el.attr "data-referencia" , @pedido.Referencia
     @setVariables()
@@ -91,10 +96,17 @@ class SinglePedidos extends Spine.Controller
     @pedido.save()
 
   customValidation: =>
+    movimientos = PedidoItem.itemsInPedido(@pedido)
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pedido.Cliente == null and !@pedido.IsContado
-    @validationErrors.push "Ingrese los detalles del Cliente" if @pedido.IsContado and !@pedido.Nombre or !@pedido.Identificacion
-    @validationErrors.push "Ingrese al menos un producto" if PedidoItem.itemsInPedido(@pedido).length == 0
-    item.checkItem() for item in @movimientos
+    @validationErrors.push "Ingrese los detalles del Cliente" if @pedido.IsContado and ( !@pedido.Nombre or !@pedido.Identificacion )
+    @validationErrors.push "Ingrese al menos un producto" if movimientos.length == 0
+    @checkItem(item) for item in movimientos
+
+  checkItem: (dataItem) =>
+    dataItem.updateSubTotal()
+    dataItem.applyDescuento()
+    dataItem.applyImpuesto()
+    dataItem.updateTotal()
 
   onContadoMode: (data={}) =>
     @pedido.IsContado=true;
@@ -105,7 +117,7 @@ class SinglePedidos extends Spine.Controller
 
   beforeSend: (object) ->
     nombre = @el.find('.nombre').val()
-    for pi in smartProductosPedidoItem.itemsInPedido(object)
+    for pi in PedidoItem.itemsInPedido(object)
       pi.Cliente = object.Cliente if object.Cliente
       pi.Referencia = object.Referencia
       pi.Orden = object.Orden
@@ -116,22 +128,14 @@ class SinglePedidos extends Spine.Controller
       pi.Especial = object.Especial || false
       pi.Estado = "Pendiente"
       if object.IsContado
-        pi.Nombre = nombre
+        pi.Nombre = object.Nombre
         pi.Identificacion = object.Identificacion
       pi.save()
 
-  save: (e = null)=>
-    @updateFromView(@pedido,@inputs_to_validate)
-    @pedido.save()
-    @alert_box.html require("views/alert")(message: "Listo! Se han guardado los cambios...")
-    window.setTimeout => 
-      @alert_box.empty()  
-    , 1400
-
   send: (e) =>
     target = $(e.target)
-    @save()
-    callback = if target.attr then @after_send else @after_send_fast
+    @updateFromView(@pedido,@inputs_to_validate)
+    @pedido.save()
     pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
 
     data =
@@ -140,17 +144,16 @@ class SinglePedidos extends Spine.Controller
       restMethod: "POST"
       restData: oportunidades: pedidos 
 
-    Spine.trigger "show_lightbox" , "rest" , data , callback
+    console.log data
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
   after_send: =>
     @notify()
-    @customReset()
+    @reset()
 
-  after_send_fast: =>
-    @notify(true)
-    @customReset()
 
   notify: (now=false) =>
+    return false if @pedido.IsContado
     cliente = Cliente.find @pedido.Cliente
     Spine.socketManager.pushToFeed "Ingrese un Pedido de #{cliente.Name}"
     if now
@@ -161,6 +164,7 @@ class SinglePedidos extends Spine.Controller
       , 65000
 
   onRemove: =>
+    @resetBindings()
     PedidoItem.deleteItemsInPedido(@pedido)
     @reset()
 

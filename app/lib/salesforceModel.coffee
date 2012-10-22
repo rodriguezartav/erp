@@ -10,7 +10,7 @@ Spine.Model.SalesforceModel =
       standardObject: false
       autoQueryTimeBased: false
       overrideName: null
-      standardFields: ["LastModifiedDate","Name"]
+      standardFields: ["LastModifiedDate","Name", "CreatedById"]
       lastUpdate: new Date(1000)
 
       salesforceFormat: (items,includeId = false) =>

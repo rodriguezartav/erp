@@ -48,7 +48,7 @@ class PagosProveedor extends Spine.Controller
     @proveedores = new Proveedores(el: @src_proveedor)
 
   onProveedorSet: =>
-    CuentaPorPagar.ajax().query( { proveedor: Proveedor.current.id ,  saldo: true , estado: "'Para Pagar'"} , afterSuccess: @onLoadSaldos )
+    CuentaPorPagar.ajax().query( { proveedor: Proveedor.current.id , paraPagar: true } , afterSuccess: @onLoadSaldos )
     
   onLoadSaldos: =>
     @src_saldos.html require("views/apps/cuentasPorPagar/pagosProveedor/saldoItem")(CuentaPorPagar.all())

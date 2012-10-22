@@ -202,10 +202,10 @@ class Singleton extends Base
        .error(@errorResponse(options))
 
       request.error (error) =>
-        options.afterError?()
+        options.afterError?(error)
 
       request.success (records) =>
-       options.afterSuccess?()
+       options.afterSuccess?(records)
     
 
   destroy: (params, options) ->

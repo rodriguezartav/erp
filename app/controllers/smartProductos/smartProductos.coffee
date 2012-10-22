@@ -33,7 +33,6 @@ class SmartProductos  extends Spine.Controller
     Spine.unbind "item_edit_start" , @onItemEdit
     Spine.unbind "item_edit_ended" , @onItemView
     Spine.unbind "item_deleted" , @onItemDeleted
-    
 
   setVariables: =>
     @smartItemMap = {}
