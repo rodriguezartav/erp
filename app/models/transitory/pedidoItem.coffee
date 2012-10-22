@@ -51,8 +51,8 @@ class PedidoItem extends Spine.Model
   isEspecial: (producto) =>
     @Especial = true if @Descuento > producto.DescuentoMaximo
     if @DescuentoNegociacion
-      @Especial = false if @Descuento == @DescuentoNegociacion
-
+      @Especial = false
+      @Especial = true if @Descuento > @DescuentoNegociacion
     @Especial = true if @Precio < producto.Precio_Distribuidor
     @Especial = true if @Impuesto != producto.Impuesto
     @save()

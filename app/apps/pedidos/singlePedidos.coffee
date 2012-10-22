@@ -65,7 +65,7 @@ class SinglePedidos extends Spine.Controller
     @negociaciones = Negociacion.createFromCliente(Cliente.find @pedido.Cliente) if @pedido.Cliente
     for pedidoItem in @pedidoItems
       smartItem = new SmartItemPedido(dataItem: pedidoItem, producto: Producto.find(pedidoItem.Producto) )
-      #smartItem.setNegociacion(@negociaciones)
+      smartItem.setNegociacion(@negociaciones)
       @smartProductos.loadItem(smartItem)
     @pedidoItemChanged()
 
@@ -78,8 +78,8 @@ class SinglePedidos extends Spine.Controller
     @pedido.save()
     @clientes.lock()
     Negociacion.destroyAll()
-    #@negociaciones = Negociacion.createFromCliente(cliente)
-    #@smartProductos.loadNegociaciones(@negociaciones)
+    @negociaciones = Negociacion.createFromCliente(cliente)
+    @smartProductos.loadNegociaciones(@negociaciones)
 
   onPedidoItemChange: (e) =>
     clearTimeout(@throttleTimer) if @throttleTimer
