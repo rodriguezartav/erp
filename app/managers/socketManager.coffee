@@ -58,6 +58,7 @@ class SocketManager
       for index,member of members._members_map
         people = User.exists member.id
         if people
+          people.LastUpdate = new Date();
           people.Online = true
           people.save()
       
@@ -65,6 +66,8 @@ class SocketManager
       people = User.exists member.id
       if people
         people.Online = true
+        people.LastUpdate = new Date();
+        people.Status = "Ingreso al Sistema"
         people.save()        
       
     
@@ -73,6 +76,7 @@ class SocketManager
       people = User.exists member.id
       if people
         people.Online = false
+        people.Status = 'Salio del Sistema'
         people.save()        
 
   pushToProfile: (profile, text ) =>
@@ -93,8 +97,6 @@ class SocketManager
     @private_erp_profiles.bind "client-feed" , (message) =>
       user = User.find message.user
       feed = Feed.createForFeed( user , message.text )
-      console.log "Created Feed"
-      console.log feed
 
   appEvents: ->
     @public_app_actions = @pusher.subscribe('public_app_actions')

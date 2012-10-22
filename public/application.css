@@ -813,11 +813,11 @@ i.modal_success{font-size:40px;color:#46a546;}
 .notificationContainer.span3{margin-left:0px;width:25.4%;}
 .notificationContainer .tabHeader .hasNots i{font-size:20px;}
 .notificationContainer .tabHeader .hasNots.has{color:#9d261d;}
-.notificationContainer .notificacion_list li{padding:0px 4px 0px 10px;margin-bottom:15px;border-right:1px solid #999;cursor:pointer;}.notificationContainer .notificacion_list li.pending{border-right:2px solid #049cdb;}
+.notificationContainer .notificacion_list li{cursor:pointer;padding-left:4px;}.notificationContainer .notificacion_list li.pending{border-right:2px solid #049cdb;}
 .notificationContainer .notificacion_list li:hover{border-right:2px solid #0064cd;}
 .notificationContainer .notificacion_list li img{float:left;border:1px solid #ddd;padding:1px;margin-right:4px;height:50px;}
-.notificationContainer .notificacion_list li h6{margin-bottom:1px;line-height:11px;color:#049cdb;}
-.notificationContainer .notificacion_list li .text{display:inline;margin-bottom:0px;padding-bottom:0px;font-weight:200;font-size:12px;line-height:12px;}
+.notificationContainer .notificacion_list li h6{margin-bottom:1px;line-height:11px;color:#46a546;}
+.notificationContainer .notificacion_list li .text{margin-bottom:0px;padding-bottom:0px;font-weight:200;font-size:12px;line-height:12px;}
 .notificationContainer .notificacion_list li .date{font-size:11px;color:#999;text-align:right;}
 header .navbar-inner{padding:0px 0px;background-image:url("/images/furley_bg.png");}
 header .headerWrapper{text-align:center;}header .headerWrapper input{color:#0064cd;margin-top:12px;background-color:#fff;display:inline-block;padding:7px 13px;-webkit-border-radius:25px;-moz-border-radius:25px;border-radius:25px;}

@@ -1,12 +1,16 @@
 <li data-id="<%= @id  %>" class="notificacion_item">
   <div class="row-fluid">
     <img src="<%= @SmallPhotoUrl %>"/>
+    <h6 style="<%= if !@Online then 'color: #333;' %>">
+      
+      
+    <%= @Name %>
+    </h6>
     
-    
-    <h6><%= @Name %></h6>
+    <% last = parseInt(@getLastUpdate().minutes_from_now())  %>
+    <%- if @Status then '<p class="text">hace ' + last + ' minutos</p>' %>
 
-    <p class="text"><%= @Perfil %></p>
-
+    <p class="text"><%= @Status or @Perfil %></p>
   </div>
 
 </li>

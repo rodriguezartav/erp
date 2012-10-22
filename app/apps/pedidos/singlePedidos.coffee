@@ -32,6 +32,7 @@ class SinglePedidos extends Spine.Controller
   events:
     "click .cancel" : "onRemove"
     "click .save" : "send"
+    "click .lbl_PedidoTipo" : "onTipoPedidoClick"
 
   setVariables: =>
     Negociacion.destroyAll()
@@ -121,6 +122,13 @@ class SinglePedidos extends Spine.Controller
     @pedido.Identificacion = data.cedula if data.cedula
     @pedido.save()
     @lbl_PedidoTipo.html "Contado"
+
+  ff: (e) =>
+    target = $(e.target)
+    if target.html() == "Credito"
+      target.html() == "Contado"
+      @pedido.IsContado=true;
+      @pedido.save()      
 
   beforeSend: (object) ->
     nombre = @el.find('.nombre').val()

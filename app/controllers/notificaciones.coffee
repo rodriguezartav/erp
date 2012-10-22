@@ -23,20 +23,25 @@ class Notificaciones extends Spine.Controller
     super
     @render()
     Feed.bind "create" , @renderFeeds
-    User.bind "create change" , @renderPeople
+    User.bind "change" , @renderPeople
 
   render: =>
-    @renderFeeds()
     @renderPeople()
 
-
   renderFeeds: (feed) =>
-    
+    user = User.find feed.userId
+    user.Status = feed.text
+    user.LastUpdate = new Date();
+    user.save()
 
   renderPeople: =>
     online  = []
     for user in User.all()
-      online.push user if user.Active
+      online.push user 
+      
+    online.sort (a,b) ->
+      return b.getLastUpdate() - a.getLastUpdate()
+
     $(".people_list").html require("views/controllers/notificaciones/user")(online)
 
   reset: =>

@@ -8,8 +8,8 @@
       <div class="menuContainer"></div>
     </div>
     
-    <div class="span3 notificationContainer hidden-phone">
-        <ul  class="unstyled people_list notificacion_list">
+    <div class="span3 notificationContainer hidden-phone ">
+        <ul  class="unstyled people_list notificacion_list mobileList">
 
         </ul>    
     </div>
