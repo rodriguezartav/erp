@@ -1,14 +1,13 @@
 <li class="item" data-id="<%= @id %>">
-  <h4><%=  @NombreProveedor %>
-  <span class="pull-right">en <%= Math.abs(@getFechaPagoProgramado().days_from_now())  %> dias</span>
-  </h4>
+  <h5><%=  @NombreProveedor %></h5>
   <div>
-    <span ><%= @Referencia  %></span>
+    <span class="">en <%= Math.abs(@getFechaPagoProgramado().days_from_now())  %> dias</span>
     <span class="pull-right"><%= @Saldo.toMoney()  %></span>
   </div>
   
   <div class="details" style="display:none">
     <ul class="unstyled mobileList">
+      <li><%= @Referencia %></li>
       <li><%= @Observacion %></li>
       <li>Vence: <%= @FechaVencimiento %></li>
       <li>Programado: <%= @FechaPagoProgramado %></li>

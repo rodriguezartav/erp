@@ -4,17 +4,17 @@
   
   <% dias = @getFecha_de_Pago().days_from_now() %>
   
-  <h4>
+  <h5>
     <%=  @NombreProveedor %>
-    <span class="pull-right">hace <%= dias  %> dia/s</span>
-  </h4>
+  </h5>
   <div>
-    <span ><%= @Referencia  %></span>
+  <span class="">hace <%= dias  %> dia/s</span>
     <span class="pull-right"><%= @Total.toMoney()  %></span>
   </div>
   
   <div class="details" style="display:none">
     <ul class="unstyled mobileList">
+      <li><%= @Referencia %></li>
       <li><%= @Observacion %></li>
       <li>Pagaso: <%= @Fecha_de_Pago %></li>
       <li>

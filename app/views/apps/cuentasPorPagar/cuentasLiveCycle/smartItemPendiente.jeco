@@ -1,19 +1,20 @@
 
+<% dias = @getFechaVencimiento().days_from_now()  %>
+<% pre = if dias < 0 then "en" else "hace"  %>
+
+
 <li class="item" data-id="<%= @id %>">
-  <h4><%=  @NombreProveedor %>
+  <h5><%=  @NombreProveedor %>
   
-  <% dias = @getFechaVencimiento().days_from_now()  %>
-  <% pre = if dias < 0 then "en" else "hace"  %>
-  
-  <span class="pull-right"><%=  pre %> <%= Math.abs(dias) %> dia/s</span>
-  </h4>
+  </h5>
   <div>
-    <span ><%= @Referencia  %></span>
-    <span class="pull-right"><%= @Saldo.toMoney()  %></span>
+  <span class=""><%=  pre %> <%= Math.abs(dias) %> dia/s</span>
+  <span class="pull-right"><%= @Saldo.toMoney()  %></span>
   </div>
   
   <div class="details" style="display:none">
     <ul class="unstyled mobileList">
+      <li><%= @Referencia %></li>
       <li><%= @Observacion %></li>
       <li>Vence: <%= @FechaVencimiento %></li>
       <li>

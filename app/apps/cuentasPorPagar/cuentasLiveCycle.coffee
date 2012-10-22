@@ -67,6 +67,18 @@ class CuentasLiveCycle extends Spine.Controller
         pagados.push cuenta
         totales[0]+= cuenta.Total
 
+    pendientes.sort (a,b) ->
+      return a.getFechaVencimiento().getTime() - b.getFechaVencimiento().getTime()
+
+    calendarizados.sort (a,b) ->
+      return a.getFechaPagoProgramado().getTime() - b.getFechaPagoProgramado().getTime()
+
+    paraPagar.sort (a,b) ->
+      return a.getFechaPagoProgramado().getTime() - b.getFechaPagoProgramado().getTime()
+
+    pagados.sort (a,b) ->
+      return b.getFecha_de_Pago().getTime() - a.getFecha_de_Pago().getTime()
+ 
     @src_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
     @src_pendientes.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
     @src_calendarizados.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemCalendarizado")( calendarizados ) if calendarizados.length > 0

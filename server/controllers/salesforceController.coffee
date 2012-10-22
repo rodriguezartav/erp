@@ -39,7 +39,7 @@ class SalesforceController
         @updateProveedores()
 
   updateUsers: (cb) =>
-    SalesforceApi.query @serverToken , soql: "select id , Name , SmallPhotoUrl, Perfil__c ,  , FirstName from User where IsActive = true" , (response) ->
+    SalesforceApi.query @serverToken , soql: "select id , Name , SmallPhotoUrl, Perfil__c , FirstName from User where IsActive = true" , (response) ->
       User.refresh response
     , @onError
 

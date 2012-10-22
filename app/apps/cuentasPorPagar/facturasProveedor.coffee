@@ -42,10 +42,22 @@ class FacturasProveedor extends Spine.Controller
   render: =>  
     @html require("views/apps/cuentasPorPagar/facturasProveedor/layout")(@constructor)
     @refreshView(@cuentaPorPagar,@inputs_to_validate)    
-
+    
+    pickerEl = @el.find('.txtFecha') 
+    pickers = pickerEl.datepicker({autoclose: true})
+    pickerEl.datepicker('setValue', @cuentaPorPagar.FechaFacturacion)
+    pickers.on("change",@onInputChange)
+    
   #####
   # ACTIONS
   #####
+
+  onInputChange: (e) =>
+    target = $(e.target)
+    fechaFacturacion = new Date(e.timeStamp)
+    @cuentaPorPagar.FechaFacturacion = fechaFacturacion;
+    @cuentaPorPagar.save()
+    return false;
 
   onTotalesChange: =>
     sub = parseFloat(@subtotal.val()) || 0
@@ -59,7 +71,7 @@ class FacturasProveedor extends Spine.Controller
   beforeSend: (object) =>
     object.Proveedor = Proveedor.current.id
     object.Tipo_de_Documento = 'FA'
-    object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
+    object.FechaFacturacion = object.FechaFacturacion
     object.FechaIngreso = new Date(Date.now()).to_salesforce_date()
 
   send: (e) =>

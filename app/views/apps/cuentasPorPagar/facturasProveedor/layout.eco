@@ -19,19 +19,9 @@
 
     <div class="span3  ">
         <h3>Fecha Factura</h3>
-        <div class="row-fluid">
-          <div class="span4">
-           <input class="validatable " data-writable="false" data-type="FechaFacturacion" date-part="date" date-name="FechaFacturacion" placeholder="Dia"/>
-         </div>
-
-          <div class="span4">
-           <input class="validatable "   data-writable="false" data-type="FechaFacturacion"  date-part="month" date-name="FechaFacturacion" placeholder="Mes"/>
-         </div>
-
-          <div class="span4">
-           <input class="validatable "   data-writable="false" data-type="FechaFacturacion"  date-part="year" date-name="FechaFacturacion"  placeholder="Año"/>
-          </div>
-          
+        <div class="input-append date txtFecha" data-date="<%= new Date() %>" data-date-format="yyyy-mm-dd">
+            <input placeholder="Escoja una Fecha" style="width: 55%" size="16" type="text" value="<%= new Date() %>">
+            <span class="add-on"><i class="icon-th"></i></span>
         </div>
      </div>
 
