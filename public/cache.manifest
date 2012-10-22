@@ -7,8 +7,9 @@ CACHE:
 ./font/fontawesome-webfont.woff
 ./font/fontawesome-webfont.ttf
 http://js.pusher.com/1.12/pusher.min.js
+./application.css
+./application.js
 
 NETWORK:
 *
-./application.css
-./application.js
+
