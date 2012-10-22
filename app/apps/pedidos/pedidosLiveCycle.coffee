@@ -44,7 +44,10 @@ class PedidosLiveCycle extends Spine.Controller
     PedidoPreparado.bind "push_success" , @renderPedidos
 
   reload: ->
-    PedidoPreparado.ajax().query( afterSuccess: @renderPedidos )    
+    PedidoPreparado.destroyAll()
+    @renderPedidos()
+    PedidoPreparado.bind "refresh" , @renderPedidos
+    PedidoPreparado.ajax().query(  )    
 
   renderPedidos: =>
     aprobados= []
