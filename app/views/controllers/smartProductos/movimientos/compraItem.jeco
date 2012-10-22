@@ -4,13 +4,13 @@
   <div class="view">
     <h4> <%= producto.Name.capitalize() %> </h4>
 
-    <span> <i class="icon-chevron-up"></i><%= @movimiento.ProductoCantidad %> </span>
+    <span> <strong>Cantidad: </strong> <%= @movimiento.ProductoCantidad %> </span>
 
-    <span> <strong>Costo: </strong><%= @movimiento.ProductoCosto?.toMoney() %> </span>
+    <span> <strong>Costo: </strong> <%= @movimiento.ProductoCosto?.toMoney() %> </span>
 
-    <span> <strong>Costo-1: </strong><%= @productoCosto.Costo?.toMoney() %> </span>
+    <span> <strong>Costo-1: </strong> <%= @productoCosto.Costo?.toMoney() %> </span>
 
-    <span> <strong>Costo-2: </strong><%= @productoCosto.CostoAnterior?.toMoney() %> </span>
+    <span> <strong>Costo-2: </strong> <%= @productoCosto.CostoAnterior?.toMoney() %> </span>
 
   </div>
   
@@ -26,7 +26,7 @@
     <div class="editLine">
       <h4>Cantidad </h4>
       
-      <input class="span3 validatable" type="number" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="ProductoCantidad" data-numeric="true" value="<%= @movimiento.ProductoCantidad %>" />
+      <input class="span3 validatable" type="number" data-min-value="1" data-max-value="9999999999" data-type="ProductoCantidad" data-numeric="true" value="<%= @movimiento.ProductoCantidad %>" />
      
     </div>
     
