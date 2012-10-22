@@ -74,11 +74,11 @@ class SecurityManager
     @profiles = {}
     apps = [ CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,PagosProveedor , NotasDebito  ,EmitirPago  , PedidosLiveCycle    , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Tesoreria"] = [ AprobarNota  ,PedidosLiveCycle  ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion , TomasInventario ]
-    @profiles["Presidencia"] =  [ DoCierreDiario  , AjustarNegociacion ,   Compras   , TomasInventario , VerRegistrosResumen  ]
+    @profiles["Tesoreria"] = [ CuentasLiveCycle , AprobarNota  ,PedidosLiveCycle  ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion , TomasInventario ]
+    @profiles["Presidencia"] =  [ CuentasLiveCycle , DoCierreDiario  , AjustarNegociacion ,   Compras   , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosLiveCycle   , VerRegistrosResumen ]
-    @profiles["Ejecutivo Ventas"] = [ Pedidos , FacturasImpresion , VerRegistrosResumen , VerRegistros  , VerClientes ]
-    @profiles["Encargado de Ventas"] = [ Pedidos  , FacturasImpresion  , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Ejecutivo Ventas"] = [ PedidosLiveCycle , Pedidos , FacturasImpresion , VerRegistrosResumen , VerRegistros  , VerClientes ]
+    @profiles["Encargado de Ventas"] = [ PedidosLiveCycle , Pedidos  , FacturasImpresion  , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosLiveCycle,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Vendedor"] = [ VerProductos , Pedidos , VerClientes ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
