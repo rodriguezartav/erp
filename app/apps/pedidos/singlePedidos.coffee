@@ -168,9 +168,12 @@ class SinglePedidos extends Spine.Controller
 
 
   notify: () =>
-    return false if @pedido.IsContado
-    cliente = Cliente.find @pedido.Cliente
-    Spine.socketManager.pushToFeed "Ingrese un Pedido de #{cliente.Name}"
+    try
+      return false if @pedido.IsContado
+      cliente = Cliente.find @pedido.Cliente
+      Spine.socketManager.pushToFeed "Ingrese un Pedido de #{cliente.Name}"
+    catch error
+      console.log error
 
   onRemove: =>
     @resetBindings()
