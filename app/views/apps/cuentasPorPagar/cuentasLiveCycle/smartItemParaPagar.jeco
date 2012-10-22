@@ -1,0 +1,34 @@
+
+<li class="item" data-id="<%= @id %>">
+
+  
+  <% dias = @getFechaPagoProgramado().days_from_now() %>
+  <% badge = if dias > 5 then "badge-error" else "badge-warning" %>
+  
+  <h4>
+    <span class="badge  <%= if dias >0 then badge else "badge-success" %> ">i</span>
+
+    <%=  @NombreProveedor %>
+    <span class="pull-right">hace <%= dias  %> dia/s</span>
+  </h4>
+  <div>
+    <span ><%= @Referencia  %></span>
+    <span class="pull-right"><%= @Saldo.toMoney()  %></span>
+  </div>
+  
+  <div class="details" style="display:none">
+    <ul class="unstyled mobileList">
+      <li><%= @Observacion %></li>
+      <li>Para Pagar: <%= @FechaPagoProgramado %></li>
+      <li>
+      </li>
+    </ul>
+    
+    <a data-id="<%= @id  %>" data-newEstado="Pendiente" class="btn btn-warning actionBtn">
+      <i class="icon-arrow-right"></i>
+      Pendiente
+    </a>
+
+  </div>
+  
+</li>

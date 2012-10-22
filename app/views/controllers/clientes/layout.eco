@@ -1,8 +1,25 @@
-<input type="text" placeholder="Busque Clientes" style="display: inline;"  class="js_cliente_search nombre loadable">
-<% if @contado: %>
-  <h6 class="help-block"><a class="mostrar_credito">solo contado</a></h6>
-<% end %>
+<ul class="unstyled mobileList clientesPanel">
+  <li class="editLine">
+    <input type="text" placeholder="Busque Clientes"  class="js_cliente_search nombre loadable" />
+    <div class="btn-group hideable" data-toggle="buttons-radio">
+      <button type="button" data-contado="false" class="btn btn_select_credito active">Credito</button>
+      <button type="button" data-contado="true" class="btn btn_select_credito">Contado</button>
+    </div>
 
-<ul class="clientes_list block-grid two-up nav nav-tabs">
+    <a class="btn btn-primary pull-right hideable showCreateContado">+</a>
+  </li>
+</ul>
+
+<ul class="createContado mobileList unstyled " style="display: none">
+  <li class="editLine">
+    <h4>Nombre </h4>
+    <input class="span6 validatable txt_nombre txt_data_contado" type="text" data-type="Name" data-numeric="false" ></input>
+
+    <h4>Cedula </h4>
+    <input class="span6 validatable txt_cedula txt_data_contado" type="text" data-type="Cedula" data-numeric="false" ></input>
+  </li>
+</ul>
+
+<ul class="clientes_list mobileList block-grid two-up hideable">
 </ul>
 

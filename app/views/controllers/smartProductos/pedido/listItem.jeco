@@ -1,0 +1,95 @@
+<% Producto = require("models/producto")  %>
+<% producto = Producto.find(@Producto)  %>
+
+  <div class="view">
+    <h4> <%= producto.Name.capitalize() %> </h4>
+
+    <span> <i class="icon-chevron-up"></i><%= @Cantidad %> </span>
+
+    <span> 
+      <i class="icon-money"></i>
+      <%= @Precio?.toMoney?() %>
+    </span>
+  
+    <span> 
+      <i class="icon-adjust"></i><%= @Descuento %>
+    </span>
+
+  </div>
+  
+  <div class="edit" style="display: none">
+    <h3><%= producto.Name.capitalize() %> </h3>
+    
+    <div class="editLine">
+    
+      <span> <i class="icon-chevron-up"></i>Disponible: <%= producto.InventarioActual %> </span>
+
+       <span> 
+         <i class="icon-money"></i> Precio Min:
+         <%= @Precio?.toMoney?() %>
+       </span>
+
+       <span> 
+         <i class="icon-adjust"></i>Descuento Max: <%= @Descuento %>
+       </span>
+       
+    </div>
+    
+    <div class="editLine">
+      <h4>Cantidad </h4>
+      
+      <input class="span3 validatable" type="number" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="Cantidad" data-numeric="true" value="<%= @Cantidad %>" />
+      
+   
+    </div>
+    
+    <div class="editLine">
+      <h4>Precio </h4>
+      <input type="text" class="span3 validatable txtPrecio" type="number" data-min-value="1" data-max-value="999999999999" data-type="Precio" data-numeric="true" value="<%= @Precio  %>"/>
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown">
+          <i class="icon-cogs"></i>
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="selectPrecio" data-precio="<%= producto.Precio_Distribuidor %>">Distribuidor <%= producto.Precio_Distribuidor.toMoney() %></a>
+          </li>
+          <li>
+            <a class="selectPrecio" data-precio="<%= producto.Precio_Industria %>">Industria <%= producto.Precio_Industria.toMoney() %></a>
+          </li>
+          <li>
+            <a class="selectPrecio" data-precio="<%= producto.Precio_Retail %>">Detalle <%= producto.Precio_Retail.toMoney() %></a>
+          </li>
+        </ul>
+      </div>
+    </div> 
+    
+    
+    <div class="editLine">
+       <h4>Descuento </h4>
+        <a class="btn" >-</a>
+       <input class="span2 validatable" type="number" step="1" data-min-value="0" data-max-value="99" data-type="Descuento" data-numeric="true" value="<%= @Descuento %>" />
+      <a class="btn"  >+</a>
+    </div>
+
+    <div class="editLine">
+       <h4>Impuesto </h4>
+      <input class="span2 validatable" type="number" step="1" data-min-value="0" data-max-value="99" data-type="Impuesto" data-numeric="true" value="<%= @Impuesto %>" />      
+      
+      
+      <div class="btn-group pull-right">
+        <a class="btn btn-primary btnSave">Ok</a>
+        <a class="btn btn-danger btnDelete">Borrar</a>      
+      </div>
+
+     </div>
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>

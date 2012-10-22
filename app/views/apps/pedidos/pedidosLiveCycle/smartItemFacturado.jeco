@@ -1,0 +1,52 @@
+<% Spine   = require('spine') %> 
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@Cliente)  %>
+<% Producto = require("models/producto")  %>
+
+<li data-documento="<%= @documento %>" class="pedidoItem" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
+
+  <h4>
+    <% if @Especial:  %>
+    <span class="badge badge-warning">E</span>&nbsp;
+    <% end %>
+    <span class="badge badge-info"><%= @Referencia %></span>&nbsp;
+    <%= cliente?.Name?.capitalize()  %>
+  </h4>
+  
+
+  <span><%= @CreatedById  %></span>
+
+  <a href="<%= Spine.session.instance_url + "/" + @Documento  %>">Ver Documento</a>
+
+  <span class="pull-right"><%= @Estado %></span>
+
+  <div class="pedidoDetails" style="display:none">
+    
+  <ul class="pedidoItems unstyled mobileList">
+    <% for pedido in @Pedidos:  %>
+    <% producto = Producto.find(pedido.Producto)  %>
+  
+    <li>
+      <h5><%= producto.Name?.capitalize() %></h5>
+       <span> <i class="icon-chevron-up"></i><%= pedido.Cantidad %> </span>
+
+        <span> 
+          <i class="icon-money"></i>
+          <%= pedido.Precio?.toMoney?() %>
+        </span>
+
+        <span> 
+          <i class="icon-adjust"></i><%= pedido.Descuento %>
+        </span>
+
+    </li>
+    <% end  %>
+  </ul>
+
+     <a data-cliente="<%= @Cliente  %>" data-referencia="<%= @Referencia %>" data-newEstado="-1"  class="btn btn-danger aprobar"><i class="icon-ok"></i> Anular</a>
+
+    
+  </div>
+
+</li>
+

@@ -1,0 +1,3 @@
+<li class=" badge">
+  <a class="groupItem" data-group="<%= @ %>"><%= @  %></a>
+</li>

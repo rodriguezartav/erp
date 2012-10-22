@@ -1,0 +1,41 @@
+.mobileList{
+  margin-bottom: 0px;
+  
+  .mobileList{
+    margin: 5px 0px;
+  }
+  
+    >li{    
+      background-color: @gray;
+      padding: 8px;
+      padding: 4px 10px 4px;
+      margin-bottom: 0; // For input.btn
+      font-size: @baseFontSize;
+      line-height: @baseLineHeight;
+      *line-height: 20px;
+      color: @grayDark;
+      text-shadow: 0 1px 1px rgba(255,255,255,.75);
+      vertical-align: middle;
+      .buttonBackground(@btnBackground, @btnBackgroundHighlight);
+      border: 1px solid @btnBorder;
+      .box-shadow(~"inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)");
+  
+      &:first-child{
+        .border-radius(4px 4px 0px 0px);
+      }
+      &:last-child{
+        .border-radius(0px 0px 4px 4px);
+      }
+      &.inactive{
+        background-color: lighten(@gray,10%);
+        opacity: 0.9;
+      }
+  
+      input{
+        margin: 0px;
+      }
+  
+    }
+    
+
+}

@@ -1,6 +1,6 @@
 Spine = require('spine')
 class Session extends Spine.SingleModel
-  @configure "Session" , "instance_url", "userId" , "lastLogin" , "lastUpdate" , "isOnline" , "isSalesforce" , "user"
+  @configure "Session" , "instance_url", "userId" , "lastLogin" , "lastUpdate" , "isOnline" , "isSalesforce" , "user" , "consecutivoPedido"
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
 
@@ -14,6 +14,12 @@ class Session extends Spine.SingleModel
     @instance_url= keys.instance_url
     @lastLogin= new Date( parseInt( keys.issued_at ))
     @save()
+
+  getConsecutivoPedido: =>
+    Spine.session.consecutivoPedido = parseInt(Math.random() * 10000)
+    Spine.session.save()
+    res= "#{@user.FirstName}-#{@consecutivoPedido}"
+    return res
 
   hasPerfiles: (perfiles) ->
     has = false
@@ -63,8 +69,6 @@ class Session extends Spine.SingleModel
 
   isExpired: =>
     return false if @lastLogin.less_than(110.minutes).ago
-    console.log @lastLogin
-    console.log "session is expired"
     return true
 
   login:  =>

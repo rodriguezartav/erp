@@ -1,0 +1,144 @@
+.smartProductos {
+  position: relative;
+  .js_cliente_search{
+    width: 100%;
+  }
+
+}
+.smartProductos .smartProductos_list {
+  max-height: 350px;
+  overflow-y: scroll;
+  background-color: #fff;
+  opacity:1;
+  top: 70px;
+  left: 0px;
+  z-index: 66;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.smartProductos .smartProductos_list li {
+  cursor: pointer;
+  height: 50px;
+  border-bottom: 1px solid #ded;
+  margin: 1px 2px 1px 4px;
+
+  &:first-child{
+    margin: 1px 2px 1px 4px;
+  }
+  .show_on_active{
+    display: none;
+  }
+
+  .productoName{
+    font-size: 14px;
+    color: @blueDark;
+    line-height: 12px;
+    min-height: 19px;
+    display: block;
+    margin-top: 2px;
+    font-weight: 400;
+    margin:4px 0px 0px;
+    text-shadow: 0 1px 1px rgba(33,33,33,.45);
+    padding: 0px;
+  }
+  
+  span{
+    text-shadow: 0 1px 1px rgba(33,33,33,.55);
+    padding-right: 10px;
+    color: @gray;
+    i{
+      color: @blue;
+    }
+  }
+
+  
+
+
+  input{
+    display: inline;
+    min-height: 23px;
+    height: 23px;
+  }
+}
+
+.smartProductos .smartProductos_list li.active {
+  background-color: #08c;
+  
+  .hide_on_active{
+    display: none;
+  }
+  
+  .show_on_active{
+    display: inline;
+  }
+  
+}
+.smartProductos .smartProductos_list li.active a {
+}
+.smartProductos .smartProductos_list li a {
+  text-transform: capitalize;
+}
+
+.smartProductos .smartGroups_list {
+  opacity:1;
+  overflow-x: hidden;
+
+  .badge{
+    text-shadow: 0 0 0;
+    cursor: pointer;
+    font-size: 13px;
+    margin: 1px 5px;
+    margin-top: 3px;
+    display: inline-block;
+    .border-radius(15px 0px 15px 15px);
+    background-color: #efefef;
+    color: @blueDark;
+    padding: 5px 9px;
+    border: 1px dotted #fff;
+    &:hover{
+      border: 1px solid @blueDark;
+    }
+    a.active{
+      color: @green;
+    }
+  }
+}
+
+
+.smartItemsList{
+  .view{
+    span{
+      text-shadow: 0 1px 1px rgba(33,33,33,.55);
+      padding-right: 10px;
+      color: @gray;
+      i{
+        color: @blue;
+      }
+      &.badge{
+        margin: 0px;
+        padding-right: 7px;
+      }
+    }
+  }
+  
+  .edit{
+    .editLine{
+      margin: 2px 0px;
+      >*{
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0px;
+      }
+      
+      h4{
+        width: 100px;
+      }
+    }
+    
+    
+    
+    
+  }
+  
+}

@@ -1,0 +1,30 @@
+
+<li class="item" data-id="<%= @id %>">
+
+  
+  <% dias = @getFecha_de_Pago().days_from_now() %>
+  
+  <h4>
+    <%=  @NombreProveedor %>
+    <span class="pull-right">hace <%= dias  %> dia/s</span>
+  </h4>
+  <div>
+    <span ><%= @Referencia  %></span>
+    <span class="pull-right"><%= @Total.toMoney()  %></span>
+  </div>
+  
+  <div class="details" style="display:none">
+    <ul class="unstyled mobileList">
+      <li><%= @Observacion %></li>
+      <li>Pagaso: <%= @Fecha_de_Pago %></li>
+      <li>
+      </li>
+    </ul>
+    
+    <a data-id="<%= @id  %>" data-newEstado="Pendiente" class="btn btn-warning actionBtn">
+       <i class="icon-arrow-right"></i>Entregado
+     </a>
+    
+  </div>
+  
+</li>

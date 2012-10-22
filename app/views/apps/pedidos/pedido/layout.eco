@@ -1,0 +1,64 @@
+
+<div class="row-fluid widgetHeader">
+    
+    <h1>Pedido</h1>  
+    
+    <div class="rightOptions">
+      <span class="lbl_PedidoTipo btn pull-right">Credito</span>
+    </div>
+
+</div>
+
+
+  <div class="content well">
+
+
+    <div class=" row-fluid">
+        <div class="span5">
+          <h4>Cliente</h4>
+        <div class="src_cliente"></div>
+      </div>
+
+        <div class="span2">
+          <h4>Transporte</h4>
+          <div class="btn-group" data-toggle="buttons-checkbox">
+            <button type="button" class="btn">Si</button>
+          </div>
+      </div>
+
+      <div class="span5">
+        <h4>Observaciones</h4>
+        <textarea class="validatable" data-required="false" data-type="Observacion" placeholder="Observacion" />
+      </div>
+
+    </div>
+
+    <hr/>
+
+    <div class=" row-fluid">
+      
+      <div class="span8 src_smartProductos smartProductos">
+
+      </div>
+      
+      <div class="span4">
+          <ul class="unstyled mobileList">
+            <li><span class="lbl_subTotal">0.00</span></li>
+            <li><span class="lbl_descuento">0.00</span></li>
+            <li><h4><span class="lbl_impuesto">0.00</span></li>
+            <li><h4><span class="lbl_total">0.00</span></li>
+          </ul>
+      </div>
+    </div>
+
+    <div class="alert_box">
+    </div>
+   
+</div>
+
+<div class="action_footer">
+  <div class="modal-footer">
+    <a class="btn btn-primary save">Guardar</a>
+    <a class="btn btn-danger cancel">Borrar</a>
+  </div>
+</div>

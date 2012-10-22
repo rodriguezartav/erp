@@ -1,0 +1,45 @@
+<% Producto = require("models/producto")  %>
+<% producto = Producto.find(@movimiento.Producto)  %>
+
+  <div class="view">
+    <h4> <%= producto.Name.capitalize() %> </h4>
+
+    <span> <i class="icon-chevron-up"></i><%= @movimiento.ProductoCantidad %> </span>
+
+    <span> <strong>Costo: </strong><%= @movimiento.ProductoCosto?.toMoney() %> </span>
+
+    <span> <strong>Costo-1: </strong><%= @productoCosto.Costo?.toMoney() %> </span>
+
+    <span> <strong>Costo-2: </strong><%= @productoCosto.CostoAnterior?.toMoney() %> </span>
+
+  </div>
+  
+  <div class="edit" style="display: none">
+    <h3><%= producto.Name.capitalize() %> </h3>
+
+    <div class="editLine">
+      <span> <i class="icon-chevron-up"></i>Disponible: <%= producto.InventarioActual %> </span>
+      <span> <strong>n</strong><%= @productoCosto.Costo %> </span>
+      <span> <strong>n-1</strong><%= @productoCosto.CostoAnterior %> </span>
+    </div>
+
+    <div class="editLine">
+      <h4>Cantidad </h4>
+      
+      <input class="span3 validatable" type="number" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="ProductoCantidad" data-numeric="true" value="<%= @movimiento.ProductoCantidad %>" />
+     
+    </div>
+    
+    <div class="editLine">
+      <h4>Costo </h4>
+      
+      <input class="span3 validatable" type="number" data-min-value="1" data-max-value="9999999999" data-type="ProductoCosto" data-numeric="true" value="<%= @movimiento.ProductoCosto %>" />
+
+        <div class="btn-group pull-right">
+          <a class="btn btn-primary btnSave">Ok</a>
+          <a class="btn btn-danger btnDelete">Borrar</a>      
+        </div>
+   
+    </div>
+    
+  </div>

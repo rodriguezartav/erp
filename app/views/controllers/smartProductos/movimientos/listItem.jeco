@@ -1,0 +1,31 @@
+<% Producto = require("models/producto")  %>
+<% producto = Producto.find(@Producto)  %>
+
+  <div class="view">
+    <h4> <%= producto.Name.capitalize() %> </h4>
+
+    <span> <i class="icon-chevron-up"></i><%= @ProductoCantidad %> </span>
+
+  </div>
+  
+  <div class="edit" style="display: none">
+    <h3><%= producto.Name.capitalize() %> </h3>
+
+    <div class="editLine">
+      <span> <i class="icon-chevron-up"></i>Disponible: <%= producto.InventarioActual %> </span>
+    </div>
+
+    <div class="editLine">
+      <h4>Cantidad </h4>
+      
+      <input class="span3 validatable" type="number" data-min-value="1" data-max-value="<%= producto.InventarioActual %>" data-type="ProductoCantidad" data-numeric="true" value="<%= @ProductoCantidad %>" />
+      
+   
+        <div class="btn-group pull-right">
+          <a class="btn btn-primary btnSave">Ok</a>
+          <a class="btn btn-danger btnDelete">Borrar</a>      
+        </div>
+   
+    </div>
+    
+  </div>

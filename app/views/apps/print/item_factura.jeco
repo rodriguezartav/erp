@@ -1,7 +1,6 @@
 <% Cliente = require("models/cliente")  %>
 <% cliente = Cliente.exists(@Cliente)  %>
 
-
 <tr>
   <td><%= @FechaFacturacion %></td>
   <td>

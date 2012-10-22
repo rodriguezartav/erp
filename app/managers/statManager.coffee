@@ -4,6 +4,9 @@ Spine = require('spine')
 class StatManager
   
   @registerManager: (api) ->
+    return false;
+    
+  @obsolete: ->
     ((d, c) ->
       a = undefined
       b = undefined
@@ -35,14 +38,14 @@ class StatManager
     false
   
   @identify: (user) =>
-    mixpanel.identify(user.Email);
+    mixpanel?.identify(user.Email);
     #mixpanel.name_tag(user.Email);
     #mixpanel.register({"Perfil": "#{user.Perfil__c}" });
   #  @kmq.push(['identify', user.Email]);
     
     
   @pushEvent: (name,properties) =>
-    mixpanel.track(name, properties)
+    mixpanel?.track(name, properties)
 
 
   @sendEvent: (name,properties) =>

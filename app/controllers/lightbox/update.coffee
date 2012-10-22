@@ -26,7 +26,6 @@ class Update extends Spine.Controller
     @show_wait.show()
 
   on_success: (results) =>
-
     @html require('views/controllers/lightbox/success')
     @callback.apply @, [true]
     Spine.trigger "hide_lightbox" , 1300

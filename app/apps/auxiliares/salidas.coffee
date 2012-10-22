@@ -4,39 +4,20 @@ Productos = require("controllers/productos")
 Documento = require("models/documento")
 Producto = require("models/producto")
 Movimiento = require("models/movimiento")
+SmartProductos = require("controllers/smartProductos/smartProductos")
+SmartItemEntrada = require("controllers/smartProductos/smartItemEntrada")
 
-class Movimientos extends Spine.Controller
+
+    
+
+class Entradas extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
-  
-  tag: "tr"
-
-  elements:
-    ".validatable" : "inputs_to_validate"
-
-  events:
-    "click .js_btn_remove" : "reset"
-    "change input" : "checkItem"
-    
-  constructor: ->
-    super
-    @movimiento = Movimiento.create_from_producto(@producto)
-    @html require("views/apps/auxiliares/salidas/item")(@movimiento)
-  
-  checkItem: (e) =>
-    @updateFromView(@movimiento,@inputs_to_validate)
-    
-  customReset: ->
-    @movimiento.destroy()
-    @release()
-    
-
-class Salidas extends Spine.Controller
-  @extend Spine.Controller.ViewDelegation
+  className: "row-fluid"
 
   @departamento = "Inventarios"
   @label = "Salidas"
   @icon = "icon-arrow-left"
-
+  
 
   className: "row-fluid"
 
@@ -44,6 +25,7 @@ class Salidas extends Spine.Controller
     ".error"              :  "error"
     ".validatable"        :  "inputs_to_validate"
     ".movimientos_list"   :  "movimientos_list"
+    ".src_smartProductos" : "src_smartProductos"
 
   events:
     "click .cancel"       :  "reset"
@@ -53,42 +35,14 @@ class Salidas extends Spine.Controller
     super
     Producto.reset_current()
     Movimiento.destroyAll()
-    @movimientos = []
-    @itemToControllerMap= []
-
     @documento = Documento.create {Tipo_de_Documento: "SA"}
     @html require("views/apps/auxiliares/salidas/layout")(@constructor)
+    @smartProductos = new SmartProductos( el: @src_smartProductos , smartItem: SmartItemEntrada , referencia: "a")
     @error.hide()
-    @setBindings()
-
-  setBindings: =>
-    Producto.bind "current_set" , @addMovimiento
-    Movimiento.bind "beforeDestroy" , @removeItem
-
-  resetBindings: =>
-    Movimiento.unbind "beforeDestroy" , @removeItem
-    Producto.unbind "current_set" , @addMovimiento
-
-
-  addMovimiento: =>
-    movimiento =  Movimiento.findAllByAttribute("Producto" , Producto.current.id)
-    if(movimiento.length == 0)
-      item = new Movimientos(producto: Producto.current)
-      @movimientos.push item
-      @movimientos_list.append item.el
-      @itemToControllerMap[item.movimiento.id] = item
-    
-
-  removeItem: (item) =>
-    item = @itemToControllerMap[item.id]
-    index = @movimientos.indexOf(item)
-    @movimientos.splice(index,1)
-    @itemToControllerMap[item.id] = null
 
   customValidation: =>
     @validationErrors.push "Ingrese al menos un producto" if Movimiento.count() == 0
-    item.checkItem() for item in @movimientos
-    
+
   beforeSend: (object) ->
     for movimiento in Movimiento.all()
       movimiento.Tipo             = object.Tipo_de_Documento
@@ -104,7 +58,7 @@ class Salidas extends Spine.Controller
     
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)
-   
+    
     data =
       class: Movimiento
       restRoute: "Movimiento"
@@ -113,18 +67,19 @@ class Salidas extends Spine.Controller
         movimientos: Movimiento.salesforceFormat( Movimiento.all() , false) 
 
     Spine.trigger "show_lightbox" , "rest" , data , @after_send
+    
 
   after_send: =>
     Spine.socketManager.pushToFeed("Hice la salida #{@documento.Referencia}")
     @reset()
 
   customReset: =>
-
-    for items in @movimientos
-      items?.reset()
+    for item in Movimiento.all()
+      item.destroy()
+    @smartProductos.reset()
     @documento.destroy()
-    @resetBindings()
     @navigate "/apps"
+    
   
 
-module.exports = Salidas
+module.exports = Entradas

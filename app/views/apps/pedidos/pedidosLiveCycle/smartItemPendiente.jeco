@@ -1,0 +1,55 @@
+<% Spine   = require('spine') %> 
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@group.Cliente)  %>
+<% Producto = require("models/producto")  %>
+
+<li class="pedidoItem" data-estado="<%= @group.Estado %>" data-referencia="<%= @group.Referencia %>"     data-cliente="<%= cliente.id %>">
+
+  <h4>
+    <% if @group.Especial:  %>
+    <span class="badge badge-warning">E</span>&nbsp;
+    <% end %>
+    <span class="badge badge-info"><%= @group.Referencia %></span>&nbsp;
+    <%= cliente?.Name?.capitalize()  %>
+  </h4>
+  
+
+  <span><%= @group.CreatedById  %></span>
+
+  <span>Total: <%= @group.Total.toMoney()  %></span>
+
+  <span class="pull-right"><%= @group.Estado %></span>
+
+  <div class="pedidoDetails" style="display:none">
+    
+    <ul class="unstyled mobileList">
+      <% for pedido in @saldos:  %>
+
+      <li class="pedido_detail_info">
+       
+        <strong><%= pedido.Tipo_de_Documento %> : <%= pedido.Consecutivo %></strong>
+        
+        <span><%= pedido.PlazoReal() %> Dias</span>
+        
+        <span class="pull-right"><%= pedido.Saldo.toMoney() %></span>
+        
+      </li>
+      
+      <% end  %>
+      
+      <li>
+        <span>Credito: <%= cliente.CreditoAsignado.toMoney() %></span>
+        <span class="pull-right"><strong><%= cliente.Saldo.toMoney() %></strong></span>
+      </li>
+      
+    </ul>
+    
+    <textarea class="txt_observacion" style="width: 96%" placeholder="Detalles para revision posterior"></textarea>
+
+     <a data-cliente="<%= @group.Cliente  %>" data-referencia="<%= @group.Referencia %>" data-newEstado="2"  class="btn btn-success aprobar"><i class="icon-ok"></i> Aprobar</a>
+      <a  data-cliente="<%= @group.Cliente  %>" data-referencia="<%= @group.Referencia %>" data-newEstado="0"  class="btn btn-danger archivar pull-right"><i class="icon-remove"></i> Archivar</a>
+    
+  </div>
+
+</li>
+

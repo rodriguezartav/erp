@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Pedido extends Spine.Model
   @configure 'Pedido', "Cliente" ,  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Observacion" , "IsContado" , "Transporte" ,
-    "Orden" , "Especial" , "LastModifiedDate"
+    "Orden" , "Especial" , "LastModifiedDate" , "Nombre" , "Identificacion"
 
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods  

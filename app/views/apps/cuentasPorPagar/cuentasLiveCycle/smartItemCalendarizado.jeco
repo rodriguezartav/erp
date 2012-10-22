@@ -1,0 +1,23 @@
+<li class="item" data-id="<%= @id %>">
+  <h4><%=  @NombreProveedor %>
+  <span class="pull-right">en <%= Math.abs(@getFechaPagoProgramado().days_from_now())  %> dias</span>
+  </h4>
+  <div>
+    <span ><%= @Referencia  %></span>
+    <span class="pull-right"><%= @Saldo.toMoney()  %></span>
+  </div>
+  
+  <div class="details" style="display:none">
+    <ul class="unstyled mobileList">
+      <li><%= @Observacion %></li>
+      <li>Vence: <%= @FechaVencimiento %></li>
+      <li>Programado: <%= @FechaPagoProgramado %></li>
+    </ul>
+    
+    <a data-id="<%= @id  %>" data-newEstado="Pendiente" class="btn btn-warning actionBtn">
+      <i class="icon-arrow-right"></i>
+      Pendiente
+    </a>
+
+  </div>
+</li>

@@ -1,1 +1,10 @@
-<li class="" data-id="<%= @id %>"><a><%= @Name?.capitalize() %></a></li>
+<li class="span6 clienteItem" data-id="<%= @id %>">
+
+  <h4><%= @Name.capitalize() %></h4>
+
+  <span> 
+    <i class="icon-money"></i>
+    <%= @Saldo?.toMoney() %>
+  </span>
+
+</li>

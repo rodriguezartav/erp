@@ -30,12 +30,28 @@ class PedidoItem extends Spine.Model
 
   @itemsInPedido: (pedido) ->
     PedidoItem.findAllByAttribute("Referencia", pedido.Referencia )
-    
+
+  @deleteItemsInPedido: (pedido) =>
+    items = @itemsInPedido(pedido)
+    for item in items
+      item.destroy()
+
+  @isProductoInList: (list, producto) ->
+    for item  in list
+      return true if item.Producto.id == producto.id
+    return false
+
   @isProductoInPedido: (producto,referencia) ->
     items  = PedidoItem.findAllByAttribute( "Referencia" , referencia )
     for item  in items
-      return true if item.Producto == producto.id
+      return true if item.Producto.id == producto.id
     return false
+
+  isEspecial: (producto) =>
+    @Especial = true if @Precio < producto.Precio_Distribuidor
+    @Especial = true if @Descuento > producto.DescuentoMaximo
+    @Especial = true if @Impuesto != producto.Impuesto
+    @save()
 
   updateSubTotal: ->
     @SubTotal = Math.round(@Precio * @Cantidad * 100 ) / 100
