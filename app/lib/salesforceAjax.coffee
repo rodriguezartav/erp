@@ -90,6 +90,7 @@ class Collection extends Base
     ).success(@recordsResponse)
      .error(@errorResponse)
      .error =>
+       console.log arguments
        Spine.queries -= 1
        Spine.trigger "queryComplete"
 

@@ -58,8 +58,10 @@ class SalesforceController
     
   rest: (req,res) =>
     token = @parseToken(req,res)
-    return res.send "Error de login, favor volver a cargar" if !token
-    #req.body = req.query if req.query
+    if !token
+      res.statusCode = 503
+      return res.send "Error de login, favor volver a cargar"
+      
     SalesforceApi.rest token , req.body  , (response) ->
       res.send response
     , (error) ->
@@ -81,7 +83,10 @@ class SalesforceController
 
   handlePut: (req,res) =>
     token = @parseToken(req,res)
-    return res.send "Error de login, favor volver a cargar" if !token
+    if !token
+      res.statusCode = 503
+      return res.send "Error de login, favor volver a cargar"
+
     SalesforceApi.update token , req.body , (response) ->
       res.statusCode >= 200
       res.send response
@@ -92,8 +97,10 @@ class SalesforceController
 
   handlePost: (req,res) =>
     token = @parseToken(req,res)
-    return res.send "Error de login, favor volver a cargar" if !token
-    
+    if !token
+      res.statusCode = 503
+      return res.send "Error de login, favor volver a cargar"
+          
     SalesforceApi.create token , req.body , (response) ->
       res.statusCode >= 201
       res.send response
@@ -105,7 +112,7 @@ class SalesforceController
   handleGet: (req,res) =>
     token = @parseToken(req,res)
     if !token
-      res.statusCode = 500
+      res.statusCode = 503
       return res.send "Error de login, favor volver a cargar" 
     
     if req.query['soql']
