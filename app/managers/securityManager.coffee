@@ -34,7 +34,6 @@ Ajustes  = require("apps/contables/ajustes")
 DoCierreMensual = require("apps/contables/doCierreMensual")
 DoCierreDiario = require("apps/contables/doCierreDiario")
 
-FacturasImpresion = require("apps/print/facturas")
 
 NotasImpresion = require("apps/print/notas")
 DocumentosAnular = require("apps/procesos/documentosAnular")
@@ -77,8 +76,8 @@ class SecurityManager
     @profiles["Tesoreria"] = [ CuentasLiveCycle , AprobarNota  ,PedidosLiveCycle  ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion , TomasInventario ]
     @profiles["Presidencia"] =  [ CuentasLiveCycle , DoCierreDiario  , AjustarNegociacion ,   Compras   , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosLiveCycle   , VerRegistrosResumen ]
-    @profiles["Ejecutivo Ventas"] = [ PedidosLiveCycle , Pedidos , FacturasImpresion , VerRegistrosResumen , VerRegistros  , VerClientes ]
-    @profiles["Encargado de Ventas"] = [ PedidosLiveCycle , Pedidos  , FacturasImpresion  , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Ejecutivo Ventas"] = [ PedidosLiveCycle , Pedidos , VerRegistrosResumen , VerRegistros  , VerClientes ]
+    @profiles["Encargado de Ventas"] = [ PedidosLiveCycle , Pedidos    , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosLiveCycle,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Vendedor"] = [ VerProductos , Pedidos , VerClientes ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
