@@ -42,12 +42,12 @@ class PedidosLiveCycle extends Spine.Controller
     @html require("views/apps/pedidos/pedidosLiveCycle/layout")(PedidosLiveCycle)
     @renderPedidos()
     PedidoPreparado.bind "push_success" , @renderPedidos
+    PedidoPreparado.bind "refresh" , @renderPedidos
 
   reload: ->
     PedidoPreparado.destroyAll()
     @renderPedidos()
-    PedidoPreparado.bind "refresh" , @renderPedidos
-    PedidoPreparado.ajax().query(  )    
+    PedidoPreparado.ajax().query( )    
 
   renderPedidos: =>
     aprobados= []
@@ -139,6 +139,7 @@ class PedidosLiveCycle extends Spine.Controller
 
   reset: ->
     PedidoPreparado.unbind "push_success" , @renderPedidos
+    PedidoPreparado.unbind "refresh" , @renderPedidos
     @el.find('.popable').popover("hide")
     $('.popover').hide()
     @release()
