@@ -105,7 +105,7 @@ class SinglePedidos extends Spine.Controller
   customValidation: =>
     movimientos = PedidoItem.itemsInPedido(@pedido)
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pedido.Cliente == null and !@pedido.IsContado
-    @validationErrors.push "Ingrese los detalles del Cliente" if @pedido.IsContado and !pedido.Cliente and ( !@pedido.Nombre or !@pedido.Identificacion )
+    @validationErrors.push "Ingrese los detalles del Cliente" if @pedido.IsContado and !@pedido.Cliente and ( !@pedido.Nombre or !@pedido.Identificacion )
     @validationErrors.push "Ingrese al menos un producto" if movimientos.length == 0
     @checkItem(item) for item in movimientos
 
