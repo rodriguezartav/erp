@@ -84,6 +84,8 @@ class App extends Spine.Controller
     c_value=escape(value)
     document.cookie=c_name + "=" + c_value
   
-
+  showUpdating: =>
+    Spine.trigger "show_lightbox" , "showWait"
+    $(".progress>.bar").css "width" , "100%"
 
 module.exports = App

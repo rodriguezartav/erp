@@ -33,6 +33,13 @@ html(lang="en" , manifest="cache.manifest")
 
     script(type='text/javascript', charset='utf-8')
       window.addEventListener('load', function(e) {
+        
+        window.applicationCache.addEventListener( 'progress', function(e) {
+          if(exports && exports.app){
+            exports.app.showUpdating();
+          }
+        });
+      
         window.applicationCache.addEventListener( 'updateready', function(e) {
             try{
               if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
@@ -55,10 +62,6 @@ html(lang="en" , manifest="cache.manifest")
         var ErrorManager = require("managers/errorManager");
        
         exports.app =  new App({ el: $(".appCanvas") , options: { key: "1ks"  !{jsvars} }});
- 
-        //window.onerror = function (msg, url, num) {
-          //ErrorManager.logError(msg)
-        //}
 
       });
 

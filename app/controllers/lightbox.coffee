@@ -14,11 +14,9 @@ ShowWarning = require("controllers/lightbox/showWarning")
 ShowError = require("controllers/lightbox/showError")
 Wait = require("controllers/lightbox/wait")
 
-
 Rest = require("controllers/lightbox/rest")
 Update = require("controllers/lightbox/update")
 Insert = require("controllers/lightbox/insert")
-
 
 class Lightbox extends Spine.Controller
   className: 'lightbox reveal-modal-bg'
