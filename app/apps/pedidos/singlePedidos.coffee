@@ -123,10 +123,10 @@ class SinglePedidos extends Spine.Controller
     @pedido.save()
     @lbl_PedidoTipo.html "Contado"
 
-  ff: (e) =>
+  onTipoPedidoClick: (e) =>
     target = $(e.target)
     if target.html() == "Credito"
-      target.html() == "Contado"
+      target.html("Contado")
       @pedido.IsContado=true;
       @pedido.save()      
 
