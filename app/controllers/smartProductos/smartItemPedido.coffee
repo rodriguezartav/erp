@@ -30,6 +30,11 @@ class SmartItemPedido extends Spine.Controller
     @checkItem()
     @render()
 
+  getNegociacion: (negociaciones) =>
+    @negociacion = Negociacion.getFromProducto(@producto , negociaciones)
+    @dataItem.Descuento = @negociacion.Descuento
+    @dataItem.save()
+
   validateCreation: =>
     if @producto.InventarioActual == 0 or @producto.InventarioActual - @cantidad < 0
       @reset()

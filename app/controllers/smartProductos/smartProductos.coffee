@@ -54,6 +54,9 @@ class SmartProductos  extends Spine.Controller
   # render
   ###
 
+  loadNegociaciones: (negociaciones) =>
+    @negociaciones = negociaciones
+
   render: (productos , renderGroups=true  ) =>
     @smartProductos_list.html require("views/controllers/smartProductos/listProducto")(productos)
     @smartProductos_list.show()
