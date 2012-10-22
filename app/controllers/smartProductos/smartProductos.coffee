@@ -36,6 +36,7 @@ class SmartProductos  extends Spine.Controller
 
   setVariables: =>
     @smartItemMap = {}
+    @negociaciones = []
 
   constructor: () ->
     super
@@ -55,7 +56,7 @@ class SmartProductos  extends Spine.Controller
   ###
 
   loadNegociaciones: (negociaciones) =>
-    @negociaciones = negociaciones
+    #@negociaciones = negociaciones
 
   render: (productos , renderGroups=true  ) =>
     @smartProductos_list.html require("views/controllers/smartProductos/listProducto")(productos)
@@ -172,6 +173,7 @@ class SmartProductos  extends Spine.Controller
       item.updateCantidad(cantidad)
     else
      item = new @smartItem( producto: producto , cantidad:cantidad , referencia: @referencia )
+     #item.setNegociacion?(@negociaciones)
      if item.validateCreation()
        @smartItemMap[producto.id] = item
        @smartItemsList.append item.el

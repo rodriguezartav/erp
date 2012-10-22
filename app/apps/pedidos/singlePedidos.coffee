@@ -61,18 +61,25 @@ class SinglePedidos extends Spine.Controller
     @clientes = new Clientes(el: @src_cliente , cliente: @pedido.Cliente )
     @smartProductos = new SmartProductos( el: @src_smartProductos , smartItem: SmartItemPedido , referencia: @pedido.Referencia )
     @setBindings()
+    Negociacion.destroyAll()
+    #@negociaciones = Negociacion.createFromCliente(Cliente.find @pedido.cliente)
     for pedidoItem in @pedidoItems
       smartItem = new SmartItemPedido(dataItem: pedidoItem, producto: Producto.find(pedidoItem.Producto) )
+      #smartItem.setNegociacion(@negociaciones)
       @smartProductos.loadItem(smartItem)
     @pedidoItemChanged()
 
   addCliente: (cliente) =>
     return false if !@el.hasClass "active"
     @pedido.Cliente = cliente.id
+    if cliente.DiasCredito == 0
+      @pedido.IsContado = true
+      @lbl_PedidoTipo.html "Contado"
+    @pedido.save()
     @clientes.lock()
     Negociacion.destroyAll()
-    @negociaciones = Negociacion.createFromCliente(cliente)
-    @pedido.save()
+    #@negociaciones = Negociacion.createFromCliente(cliente)
+    #@smartProductos.loadNegociaciones(@negociaciones)
 
   onPedidoItemChange: (e) =>
     clearTimeout(@throttleTimer) if @throttleTimer
