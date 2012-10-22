@@ -31,7 +31,8 @@ Spine.Model.SocketModel =
         #console.log @
         #console.log message
         data = message.sobjects || message.objects || message.object
-        results = JSON.stringify 
+        results = JSON.stringify
+        console.log results 
         console.log @refresh(results)
         @afterSocketUpdate(message,results)
         @trigger "push_success"

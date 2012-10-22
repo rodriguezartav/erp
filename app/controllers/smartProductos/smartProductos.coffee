@@ -49,7 +49,6 @@ class SmartProductos  extends Spine.Controller
     @renderCategorias()
     @smartProductos_list.hide()
     Producto.reset()
-    
     Spine.s = @
 
   ###
