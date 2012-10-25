@@ -2,7 +2,6 @@
 User = require("../app/models/user")
 Proveedor = require("../app/models/proveedor")
 
-
 class Routes
 
   constructor: (@app) ->    

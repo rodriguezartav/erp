@@ -6,9 +6,6 @@ class RestApi
 
   @request: (options) ->
     restUrl = (if options.path.substr(0, 6) is "https:" then options.path else options.oauth.instance_url + options.path)
-    console.log "SALESFORCE:REST_API:REQUEST ::>  Method: " + options.method
-    console.log "SALESFORCE:REST_API:REQUEST ::>  Url: " + options.path 
-    console.log "SALESFORCE:REST_API:REQUEST ::>  Data: " + options.data
     reqOptions =
       method: options.method
       data: options.data
@@ -22,7 +19,6 @@ class RestApi
       return options.error data if !response
 
       if response.statusCode >= 200 and response.statusCode < 300
-        console.log "SALESFORCE:REST_API:COMPLETE: "
         if data.length is 0
           options.callback()
         else
@@ -31,7 +27,6 @@ class RestApi
         options.error data
     
     req.on "error", (data, response) =>
-      console.error "SALESFORCE:RESTAPI:ERROR: " + data
       options.error data, response
 
 

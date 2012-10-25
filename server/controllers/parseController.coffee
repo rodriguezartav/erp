@@ -32,19 +32,25 @@ class ParseController
       req.parseController = @
       next()
 
-  logAudit: (messageObject) =>
-    return true if !@audit
+  logAudit: (type , userId , userName , data ) =>
+    return true if !@audit and type == "Audit"
+    
     Audit = Parse.Object.extend("Audit");
     audit = new Audit();
-
-    audit.set("message", JSON.stringify messageObject);
+    message=
+      type: type
+      userId: userId
+      userName: userName
+      data: data
+      env: process.env.NODE_ENV
+    audit.set("message", JSON.stringify message);
 
     audit.save null , error: (audit, error) ->  
-      console.log "Error Saving Audit"
+      console.log "Error Saving Audit " 
 
   
   handleProxy: (req,res) =>
-    console.log "HANDLGIN PROXU"
+    console.log "HANDLGIN PROXY"
     
     method = req.route.method
     if method == "get"

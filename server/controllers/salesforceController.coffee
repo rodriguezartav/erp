@@ -49,7 +49,7 @@ class SalesforceController
     , @onError
   
   onError: (error) ->
-    console.log error
+    req.parseController.logAudit "Error" , "Server" , "Server" , error
 
   parseToken: (req,res) =>
     return req.session.salesforceToken if req.session.salesforceToken
@@ -62,11 +62,11 @@ class SalesforceController
       res.statusCode = 503
       return res.send "Error de login, favor volver a cargar"
 
-    req.parseController.logAudit type: "rest" , details: req.body
+    req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
     SalesforceApi.rest token , req.body  , (response) ->
       res.send response
     , (error) ->
-      console.log error
+      req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send error
     
@@ -77,14 +77,13 @@ class SalesforceController
     
     if method == "GET" or method == "get"
       @handleGet(req,res)
+    else  
+      req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
+      if method == "POST" or method == "post"
+        @handlePost(req,res)
       
-    if method == "POST" or method == "post"
-      @handlePost(req,res)
-      req.parseController.logAudit type: method , details: req.body
-      
-    if method == "PUT" or method == "put"
-      @handlePut(req,res)
-      req.parseController.logAudit type: method , details: req.body
+      if method == "PUT" or method == "put"
+        @handlePut(req,res)
     
 
   handlePut: (req,res) =>
@@ -97,7 +96,7 @@ class SalesforceController
       res.statusCode >= 200
       res.send response
     , (error) ->
-      console.log error
+      req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send  error
 
@@ -111,7 +110,7 @@ class SalesforceController
       res.statusCode >= 201
       res.send response
     , (error) ->
-      console.log error
+      req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send  error
 
@@ -131,17 +130,15 @@ class SalesforceController
     SalesforceApi.query token , soql: req.query['soql']  , (response) ->
       res.send response
     , (error) ->
-      console.log error
+      req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send  error
 
   startAuth: (req, res) =>
     url = "#{@loginServer}/services/oauth2/authorize?response_type=code&client_id=#{@consumerKey}&redirect_uri=#{@redirectUrl}&display=touch"
-    console.log('redirecting: '+url);
     res.redirect(url);
 
   finishAuth: (req,res) =>
-    console.log( 'code: ' + req.query.code );
     post = restler.post "#{@loginServer}/services/oauth2/token" ,
       data:
         code: req.query.code
@@ -158,7 +155,7 @@ class SalesforceController
       res.redirect("/");
 
     post.on "error" , ->
-      console.log arguments
+      req.parseController.logAudit "Error" , "" , "Server - SF Controller" , error
 
 
 module.exports = SalesforceController
