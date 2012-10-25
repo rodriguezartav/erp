@@ -61,7 +61,8 @@ class SalesforceController
     if !token
       res.statusCode = 503
       return res.send "Error de login, favor volver a cargar"
-      
+
+    req.parseController.logAudit type: "rest" , details: req.body
     SalesforceApi.rest token , req.body  , (response) ->
       res.send response
     , (error) ->
@@ -73,12 +74,17 @@ class SalesforceController
   handleProxy: (req,res) =>
     method = req.route.method
     path = req.route.path
+    
     if method == "GET" or method == "get"
       @handleGet(req,res)
+      
     if method == "POST" or method == "post"
       @handlePost(req,res)
+      req.parseController.logAudit type: method , details: req.body
+      
     if method == "PUT" or method == "put"
       @handlePut(req,res)
+      req.parseController.logAudit type: method , details: req.body
     
 
   handlePut: (req,res) =>

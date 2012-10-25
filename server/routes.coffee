@@ -13,6 +13,9 @@ class Routes
     @app.get '/' , (req, res) =>
       res.render "app" , { jsvars: @getJsVars(req) }
 
+    @app.get '/dev' , (req, res) =>
+      res.render "app" , {layout: "dev" , jsvars: @getJsVars(req) }
+
     @app.get '/checkStatus' , (req, res) =>
       if req.session.salesforceToken then return res.send
         id: req.session.salesforceToken.id

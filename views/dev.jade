@@ -8,7 +8,7 @@
 //if IE 8
   <html class="no-js lt-ie9" lang="en">
 
-html(lang="en" , manifest="cache.manifest")
+html(lang="en" , manifest="manifest")
   
   head
     meta(charset='utf-8')
@@ -42,8 +42,10 @@ html(lang="en" , manifest="cache.manifest")
       
         window.applicationCache.addEventListener( 'updateready', function(e) {
             try{
+              if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
                 window.applicationCache.swapCache();
                 window.location.reload();
+              }
             }
             catch(error){
               window.location.reload();
