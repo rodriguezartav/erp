@@ -86,7 +86,7 @@ class Collection extends Base
       params,
       type: 'GET',
       dataType: "text" ,
-      url:  "salesforce/sobjects?soql=#{@model.getQuery(filters)}"
+      url:  "/salesforce/sobjects?soql=#{@model.getQuery(filters)}"
     ).success(@recordsResponse)
      .error(@errorResponse)
      .error =>
