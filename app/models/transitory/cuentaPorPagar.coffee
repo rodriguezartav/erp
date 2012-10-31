@@ -16,7 +16,7 @@ class CuentaPorPagar extends Spine.Model
   @queryFilter: (options ) =>
     return "" if !options
     filter =""
-    filter = @queryFilterAddCondition(" Estado__c   IN ('Pendiente','Calendarizado','Para Pagar') or Fecha_de_Pago__c = THIS_MONTH " ,  filter)  if options.forWorkflow
+    filter = @queryFilterAddCondition(" Estado__c   IN ('Pendiente','Calendarizado','Para Pagar') " ,  filter)  if options.forWorkflow
     filter = @queryFilterAddCondition(" Estado__c   IN (#{options.estado})"          ,  filter)  if options.estado
     filter = @queryFilterAddCondition(" Saldo__c   != 0"                             ,  filter)  if options.saldo
     filter = @queryFilterAddCondition(" Proveedor__c = '#{options.proveedor}'"       ,  filter)  if options.proveedor

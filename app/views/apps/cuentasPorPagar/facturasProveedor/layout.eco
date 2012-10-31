@@ -59,6 +59,7 @@
         <div class="span3">
           <h3>Total</h3>
           <input data-type="Total" data-numeric="true" data-positive="true" class=" validatable totales total"  placeholder="" />
+          <h4 class="lbl_total_format"></h4>
         </div>
         
       </div>

@@ -1,0 +1,4 @@
+<li>
+  <%= @semana * -1 %>
+  <span class="pull-right">  <%= @saldo.toMoney() %> </span>
+</li>

@@ -19,7 +19,7 @@ class CuentasLiveCycle extends Spine.Controller
     ".src_pendientes" : "src_pendientes" 
     ".src_calendarizados" : "src_calendarizados"
     ".src_paraPagar" : "src_paraPagar"
-    ".src_pagados" : "src_pagados"
+    ".src_pipeline" : "src_pipeline"
     ".txt_observacion" : "txt_observacion"
     ".src_list" : "src_list"
     ".lbl_totales":"lbl_totales"
@@ -42,47 +42,42 @@ class CuentasLiveCycle extends Spine.Controller
     CuentaPorPagar.ajax().query({ forWorkflow: true , orderFechaVencimiento: true } ,  afterSuccess: @render )        
 
   render: =>
-    totales=[0,0,0,0]
+    totales=[0,0,0]
     calendarizados= []
     paraPagar = []
     pendientes = []
-    pagados = []
+    semana = {}
     
     for cuenta in CuentaPorPagar.all()
+      cuenta.Estado = "Calendarizado" if cuenta.Estado == "Para Pagar"
+
       if cuenta.Estado == 'Pendiente'
         pendientes.push cuenta
-        totales[3]+= cuenta.Saldo
+        totales[2]+= cuenta.Saldo
+
       else if cuenta.Estado == "Calendarizado"
+        itemSemana = semana[cuenta.getFechaPagoProgramado().weeksFromToday()] || 0
+        itemSemana += cuenta.Saldo
+        semana[cuenta.getFechaPagoProgramado().weeksFromToday()] = itemSemana
+        
         if( cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() )
           paraPagar.push cuenta
-          totales[1]+= cuenta.Saldo
+          totales[0]+= cuenta.Saldo
         else
-          totales[2]+= cuenta.Saldo
+          totales[1]+= cuenta.Saldo
           calendarizados.push cuenta
-      else if cuenta.Estado == "Para Pagar"
-        paraPagar.push cuenta
-        totales[1]+= cuenta.Saldo
-      else if cuenta.Estado == "Preparado" or cuenta.Estado == "Entregado"
-        pagados.push cuenta
-        totales[0]+= cuenta.Total
 
-    pendientes.sort (a,b) ->
-      return a.getFechaVencimiento().getTime() - b.getFechaVencimiento().getTime()
-
-    calendarizados.sort (a,b) ->
-      return a.getFechaPagoProgramado().getTime() - b.getFechaPagoProgramado().getTime()
-
-    paraPagar.sort (a,b) ->
-      return a.getFechaPagoProgramado().getTime() - b.getFechaPagoProgramado().getTime()
-
-    pagados.sort (a,b) ->
-      return b.getFecha_de_Pago().getTime() - a.getFecha_de_Pago().getTime()
- 
     @src_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
-    @src_pendientes.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
-    @src_calendarizados.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemCalendarizado")( calendarizados ) if calendarizados.length > 0
-    @src_paraPagar.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemParaPagar")( paraPagar ) if paraPagar.length > 0
-    @src_pagados.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPagado")( pagados ) if pagados.length > 0
+    #@src_pendientes.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
+    
+    @renderByWeek(@src_pendientes,pendientes , "getFechaVencimiento" , "smartItemPendiente")
+    @renderByWeek(@src_calendarizados,calendarizados, "getFechaPagoProgramado" ,"smartItemCalendarizado")
+    @renderByWeek(@src_paraPagar,paraPagar, "getFechaPagoProgramado" ,"smartItemParaPagar")
+    
+    @src_pipeline.html "<li class='header'>Pagos por Semana</li>"
+    
+    for index,value of semana
+      @src_pipeline.append require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPipeline")(semana: index , saldo: value)
 
     @lbl_totales.each (index,lbl) =>
       lbl = $(lbl)
@@ -90,6 +85,27 @@ class CuentasLiveCycle extends Spine.Controller
 
     pickers = @el.find('.txtFecha').datepicker({autoclose: true})
     pickers.on("change",@onInputChange)
+
+  renderByWeek: (src , list , dateFnc , template) ->
+    src.empty()
+    return if list.length == 0
+    thisWeek = null
+    lastWeek = null
+    counter = 0
+    for item in list
+      thisWeek = item[dateFnc]().weeksFromToday()
+      if thisWeek != lastWeek
+        src.append "<li class='header'>#{ if thisWeek < 0 then 'En ' + Math.abs(thisWeek) + " Semanas" else "Atrasado"}</li>" 
+        
+      lastWeek = thisWeek
+      src.append require("views/apps/cuentasPorPagar/cuentasLiveCycle/#{template}")(item)
+    
+
+  
+  renderPipeline: (src) =>
+    #for cuenta in CuentaPorPagar.filterAllByAttribute("Estado" , "Calendarizado")
+      
+    
 
   onItemClick: (e) =>
     target = $(e.target)

@@ -23,6 +23,7 @@ class FacturasProveedor extends Spine.Controller
     ".descuento" : "descuento"
     ".impuesto" : "impuesto"
     ".total" : "total"
+    ".lbl_total_format" : "lbl_total_format"
 
   events:
     "click .cancel" : "reset"
@@ -64,6 +65,7 @@ class FacturasProveedor extends Spine.Controller
     desc = parseFloat(@descuento.val()) || 0
     imp = parseFloat(@impuesto.val()) || 0
     @total.val sub - desc + imp
+    @lbl_total_format.html (sub - desc + imp).toMoney()
 
   customValidation: =>
     @validationErrors.push "Escoja el Proveedor" if Proveedor.current == null

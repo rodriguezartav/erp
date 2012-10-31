@@ -107,11 +107,16 @@ Date.prototype.to_salesforce = ->
   return str
 
 
-
 Date.prototype.days_from_now = ->
   date =this 
   diff = (((new Date()).getTime() - date.getTime()) / 1000)
   day_diff = Math.floor(diff / 86400)
+
+Date.prototype.weeksFromToday= ->
+  date =this 
+  diff = (((new Date()).getTime() - date.getTime()) / 1000)
+  day_diff = Math.floor(diff / (86400 * 7 ) )
+
 
 Date.prototype.minutes_from_now = ->
 	date =this 

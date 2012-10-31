@@ -54,10 +54,9 @@
 
     <ul class="unstyled mobileList span3">
       <li>
-      <h4>Pagadas
-            <span class="lbl_totales pull-right"></span>
+      <h4>Pipeline de CXP
       </h4>
-    <ul class="src_pagados unstyled mobileList  src_list">
+    <ul class="src_pipeline unstyled mobileList  src_list">
       <li><h5>No hay pedidos facturados</h5></li>
     </ul>
       </li></ul>
