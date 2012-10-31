@@ -149,9 +149,6 @@ class CuentasLiveCycle extends Spine.Controller
 
   reset: ->
     @cuenta=null;
-    PedidoPreparado.unbind "push_success" , @renderPedidos
-    @el.find('.popable').popover("hide")
-    $('.popover').hide()
     @release()
     @navigate "/apps"
 
