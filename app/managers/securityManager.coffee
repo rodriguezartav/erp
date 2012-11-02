@@ -73,14 +73,14 @@ class SecurityManager
     @profiles = {}
     apps = [ CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,PagosProveedor , NotasDebito  ,EmitirPago  , PedidosLiveCycle    , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Tesoreria"] = [ CuentasLiveCycle , AprobarNota  ,PedidosLiveCycle  ,  FacturasProveedor , PagosProveedor , DocumentosAnular , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros , AjustarNegociacion , TomasInventario ]
     @profiles["Presidencia"] =  [ CuentasLiveCycle , DoCierreDiario  , AjustarNegociacion ,   Compras   , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosLiveCycle   , VerRegistrosResumen ]
-    @profiles["Ejecutivo Ventas"] = [ PedidosLiveCycle , Pedidos , VerRegistrosResumen , VerRegistros  , VerClientes ]
-    @profiles["Encargado de Ventas"] = [ PedidosLiveCycle , Pedidos    , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes ]
-    @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosLiveCycle,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
-    @profiles["Vendedor"] = [ PedidosLiveCycle , VerProductos , Pedidos , VerClientes ]
+    @profiles["Gerencia Comercial"] = [ PedidosLiveCycle , Pedidos  , AprobarNota , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes , AjustarNegociacion ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
+    @profiles["Tesoreria"] = [ CuentasLiveCycle  ,  FacturasProveedor , PagosProveedor , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros  ]
+    @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosLiveCycle,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Ejecutivo Ventas"] = [ PedidosLiveCycle , Pedidos , VerRegistrosResumen , VerRegistros  , VerClientes ]
+    @profiles["Vendedor"] = [ PedidosLiveCycle , VerProductos , Pedidos , VerClientes ]
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>
@@ -89,7 +89,7 @@ class SecurityManager
     Spine.options =
       locationType : if Spine.session.hasPerfiles(["Vendedor"]) then "Ruta" else "Planta" 
       aprobacion   : if Spine.session.hasPerfiles(["Ejecutivo Credito","Platform System Admin"])  then true else false
-      facturacion  : if Spine.session.hasPerfiles(["Recepcion","Encargado Ventas" , "Ejecutivo Ventas","Platform System Admin"]) then true else false
+      facturacion  : if Spine.session.hasPerfiles(["Recepcion","Gerencia Comercial" , "Ejecutivo Ventas","Platform System Admin"]) then true else false
 
     Movimiento.attributes.push('ProductoCosto') if Spine.session.hasPerfiles(["Platform System Admin" , "Presidencia" , "SubGerencia"])
     
