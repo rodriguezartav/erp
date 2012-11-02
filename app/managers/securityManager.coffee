@@ -75,9 +75,9 @@ class SecurityManager
     @profiles["Platform System Admin"] = apps
     @profiles["Presidencia"] =  [ CuentasLiveCycle , DoCierreDiario  , AjustarNegociacion ,   Compras   , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosLiveCycle   , VerRegistrosResumen ]
-    @profiles["Gerencia Comercial"] = [ PedidosLiveCycle , Pedidos  , AprobarNota , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes , AjustarNegociacion ]
+    @profiles["Gerencia Comercial"] = [ PedidosLiveCycle , Pedidos  , CuentasLiveCycle , AprobarNota , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes , AjustarNegociacion ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
-    @profiles["Tesoreria"] = [ CuentasLiveCycle  ,  FacturasProveedor , PagosProveedor , NotaCreditoProveedor , VerRegistrosResumen , VerRegistros  ]
+    @profiles["Tesoreria"] = [ CuentasLiveCycle  ,  FacturasProveedor , PagosProveedor , NotaCreditoProveedor , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
     @profiles["Ejecutivo Credito"] = [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosLiveCycle,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Ejecutivo Ventas"] = [ PedidosLiveCycle , Pedidos , VerRegistrosResumen , VerRegistros  , VerClientes ]
     @profiles["Vendedor"] = [ PedidosLiveCycle , VerProductos , Pedidos , VerClientes ]
