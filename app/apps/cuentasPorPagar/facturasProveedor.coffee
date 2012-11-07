@@ -46,7 +46,8 @@ class FacturasProveedor extends Spine.Controller
     
     pickerEl = @el.find('.txtFecha') 
     pickers = pickerEl.datepicker({autoclose: true})
-    pickerEl.datepicker('setValue', @cuentaPorPagar.FechaFacturacion)
+    
+    #pickerEl.datepicker('setValue', @cuentaPorPagar.FechaFacturacion)
     pickers.on("change",@onInputChange)
     
   #####
@@ -55,8 +56,7 @@ class FacturasProveedor extends Spine.Controller
 
   onInputChange: (e) =>
     target = $(e.target)
-    fechaFacturacion = new Date(e.timeStamp)
-    @cuentaPorPagar.FechaFacturacion = fechaFacturacion;
+    @cuentaPorPagar.FechaFacturacion = new Date(Date.parse(target.val()));
     @cuentaPorPagar.save()
     return false;
 
@@ -73,7 +73,6 @@ class FacturasProveedor extends Spine.Controller
   beforeSend: (object) =>
     object.Proveedor = Proveedor.current.id
     object.Tipo_de_Documento = 'FA'
-    object.FechaFacturacion = object.FechaFacturacion
     object.FechaIngreso = new Date(Date.now()).to_salesforce_date()
 
   send: (e) =>

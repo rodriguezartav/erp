@@ -18,7 +18,7 @@
       <li><%= @Observacion %></li>
       <li>Vence: <%= @FechaVencimiento %></li>
       <li>
-        <div class="input-append date txtFecha"  data-id="<%= @id  %>" data-date="<%= @FechaVencimiento%>" data-date-format="yyyy-mm-dd">
+        <div class="input-append date txtFecha"  data-id="<%= @id  %>" data-date="<%= @FechaVencimiento %>" data-date-format="yyyy-mm-dd">
             <span>Pagar: </span>
             <input data-newEstado="Calendarizado" data-id="<%= @id  %>" style="width: 54%" placeholder="Escoja una Fecha" class="span5" size="16" type="text" value="<%= @FechaVencimiento%>">
             <span class="add-on"><i class="icon-th"></i></span>

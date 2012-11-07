@@ -32,11 +32,6 @@
 
   <div class="row-fluid">
 
-  <div class="span12">
-    <h3>Observaciones del Pago</h3>
-    <textarea class=" validatable" data-required="false" data-type="Observacion"   placeholder="Observacion"/>
-  </div>
-
 </div>
 
 <hr/>

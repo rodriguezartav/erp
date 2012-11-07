@@ -104,8 +104,6 @@ class CuentasLiveCycle extends Spine.Controller
   
   renderPipeline: (src) =>
     #for cuenta in CuentaPorPagar.filterAllByAttribute("Estado" , "Calendarizado")
-      
-    
 
   onItemClick: (e) =>
     target = $(e.target)
@@ -117,7 +115,6 @@ class CuentasLiveCycle extends Spine.Controller
 
   onInputChange: (e) =>
     target = $(e.target)
-    fechaPagoProgramado = new Date(e.timeStamp)
     newEstado = target.attr("data-newEstado")
     @cuenta = CuentaPorPagar.find(target.attr("data-id"))
     @cuenta.FechaPagoProgramado = target.val()

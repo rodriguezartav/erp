@@ -20,7 +20,7 @@
     <div class="span3  ">
         <h3>Fecha Factura</h3>
         <div class="input-append date txtFecha" data-date="<%= new Date() %>" data-date-format="yyyy-mm-dd">
-            <input placeholder="Escoja una Fecha" style="width: 55%" size="16" type="text" value="<%= new Date() %>">
+            <input placeholder="Escoja una Fecha" style="width: 55%" size="16" type="text" >
             <span class="add-on"><i class="icon-th"></i></span>
         </div>
      </div>
