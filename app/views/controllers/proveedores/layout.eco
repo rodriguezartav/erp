@@ -1,9 +1,4 @@
 <input type="text" placeholder="Busque Proveedores"  class="js_proveedor_search loadable">
 
-<div class="progress progress-striped loader active">
-  <div class="bar" style="width: 100%">
-    Cargando...
-  </div>  
-</div>
 
 <ul class="proveedores_list block-grid two-up nav nav-tabs"></ul>

@@ -36,7 +36,6 @@ class SalesforceController
       if success
         @serverToken = response
         @updateUsers()
-        @updateProveedores()
 
   updateUsers: (cb) =>
     SalesforceApi.query @serverToken , soql: "select id , Name , SmallPhotoUrl, Perfil__c , FirstName from User where IsActive = true" , (response) ->
@@ -65,7 +64,7 @@ class SalesforceController
     req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
     SalesforceApi.rest token , req.body  , (response) ->
       res.send response
-    , (error) ->
+    , (error) =>
       req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send error
@@ -95,7 +94,7 @@ class SalesforceController
     SalesforceApi.update token , req.body , (response) ->
       res.statusCode >= 200
       res.send response
-    , (error) ->
+    , (error) =>
       req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send  error
@@ -109,7 +108,7 @@ class SalesforceController
     SalesforceApi.create token , req.body , (response) ->
       res.statusCode >= 201
       res.send response
-    , (error) ->
+    , (error) =>
       req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send  error
@@ -129,10 +128,11 @@ class SalesforceController
   handleQuery: (req,res, token) =>
     SalesforceApi.query token , soql: req.query['soql']  , (response) ->
       res.send response
-    , (error) ->
-      req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
-      res.statusCode = 500
-      res.send  error
+    , (error) =>
+      try
+        req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
+        res.statusCode = 503
+        res.send error
 
   startAuth: (req, res) =>
     url = "#{@loginServer}/services/oauth2/authorize?response_type=code&client_id=#{@consumerKey}&redirect_uri=#{@redirectUrl}&display=touch"

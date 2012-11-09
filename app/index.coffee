@@ -33,7 +33,6 @@ class App extends Spine.Controller
     Spine.pusherKeys = @options.pusherKeys
     Spine.registerParse @options.parseKeys
     User.refresh @options.users
-    Proveedor.refresh @options.proveedores
 
     Proxino.key = "R4f9M9v5r63OtGW62AeHbw"
     Proxino.track_errors();

@@ -66,6 +66,7 @@ Producto = require("models/producto")
 Saldo = require("models/socketModels/saldo")
 FacturaPreparada = require("models/socketModels/facturaPreparada")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
+Proveedor = require("models/proveedor")
 
 class SecurityManager
   
@@ -119,7 +120,6 @@ class SecurityManager
 
     else if Spine.session.hasPerfiles([ "Tesoreria" ])
       Saldo.autoQuery           = true
-      PedidoPreparado.autoQuery = true
 
     else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia" ])
       Cliente.autoQuery         = true
@@ -133,6 +133,8 @@ class SecurityManager
       Saldo.autoQuery           = true
       Saldo.autoReQuery         = true
       PedidoPreparado.autoQuery = true
+      Proveedor.autoQuery = true
+      
 
     Spine.session.save()
 

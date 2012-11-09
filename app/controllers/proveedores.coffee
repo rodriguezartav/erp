@@ -12,21 +12,21 @@ class Proveedores  extends Spine.Controller
     ".proveedores_list" : "proveedores_list"
     ".proveedores_list>li" : "proveedores_list_items"
     ".js_proveedor_search" : "js_proveedor_search"
-    ".loader" : "loader"
-    ".loadable" : "loadable"
+
 
   constructor: ->
     super
     @html require("views/controllers/proveedores/layout")
     Proveedor.reset()
-    @loadable.show()
-    @loader.hide()
+    if Proveedor.count() == 0
+      Proveedor.query()
+      @js_proveedor_search.hide()
+      
+      Proveedor.one "refresh" , =>
+        @js_proveedor_search.show()
 
     Proveedor.bind "current_reset" , =>
       @js_proveedor_search.val ""
-      
-    @loadable.hide() if Proveedor.count() == 0
-    @proveedores_list.hide()
 
   setProveedor: =>
     @js_proveedor_search.val Proveedor.current.Name
@@ -54,9 +54,7 @@ class Proveedores  extends Spine.Controller
     @render result
 
   reset: =>
-    Proveedor.unbind "query_success" , =>
-      @loadable.show()
-      @loader.hide()
+    Proveedor.unbind "refresh" , @render
 
     Proveedor.unbind "current_reset" , =>
       @js_proveedor_search.val ""

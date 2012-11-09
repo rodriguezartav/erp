@@ -38,6 +38,7 @@ class FacturasProveedor extends Spine.Controller
     Proveedor.bind "current_set" , @onProveedorSet
 
   onProveedorSet: =>
+    console.log Proveedor.current
     @txtPlazo.val(Proveedor.current.Plazo || 0)
 
   render: =>  
