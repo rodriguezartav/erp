@@ -13,7 +13,6 @@ class Proveedores  extends Spine.Controller
     ".proveedores_list>li" : "proveedores_list_items"
     ".js_proveedor_search" : "js_proveedor_search"
 
-
   constructor: ->
     super
     @html require("views/controllers/proveedores/layout")
@@ -44,6 +43,7 @@ class Proveedores  extends Spine.Controller
       parent.toggleClass("active")
       parent.siblings().removeClass("active")
       @setProveedor()
+      @js_proveedor_search.addClass uneditable-input
       @proveedores_list.hide()
     
   on_filter: (e) =>

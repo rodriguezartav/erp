@@ -1,0 +1,19 @@
+<% Documento = require("models/documento")  %>
+<% documento = Documento.find(@Documento)  %>
+
+
+<td class="info_popover" rel="popover" data-content="<%= documento.Observacion %>" data-original-title="Observacion del Documento">
+  <i class="icon-tag"></i>
+  <%= @Consecutivo %>
+</td>
+<td><%= @Tipo_de_Documento %></td>
+<td><%= @Total.toMoney() %></td>
+<td><%= @Saldo.toMoney() %></td>
+<td><%= documento.PlazoActual %></td>
+<td><input data-type="Monto" data-positive="false" data-id="<%= @id %>" data-numeric="true" data-min-value="<%= if @Saldo > 0 then 0 else @Saldo %>" data-max-value="<%= if @Saldo > 0 then @Saldo else 0 %>" value="<%= @Monto %>" class=" validatable"/></td>
+<td>
+  <div class="btn-group">
+    <a data-id="<%= @id %>" class="btn btn-success incluir">Incluir</a>
+    <a data-id="<%= @id %>" class="btn btn-danger excluir">Excluir</a>
+  </div>
+</td>

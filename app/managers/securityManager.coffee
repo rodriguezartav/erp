@@ -15,7 +15,9 @@ Compras = require("apps/auxiliares/compras")
 NotasCredito = require("apps/auxiliares/notasCredito")
 NotasDebito = require("apps/auxiliares/notasDebito")
 
-EmitirPago = require("apps/auxiliares/emitirPago")
+IngresarRecibo = require("apps/cuentasPorCobrar/ingresarRecibo")
+AprobarRecibo = require("apps/cuentasPorCobrar/aprobarRecibo")
+
 
 VerSaldos = require("apps/vistas/verSaldos")
 VerRegistros = require("apps/vistas/verRegistros")
@@ -68,7 +70,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,PagosProveedor , NotasDebito  ,EmitirPago  , PedidosLiveCycle    , NotasImpresion ,DocumentosAnular ]
+    apps = [ AprobarRecibo , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio, AprobarNota  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,PagosProveedor , NotasDebito  ,IngresarRecibo  , PedidosLiveCycle    , NotasImpresion ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Presidencia"] =  [ CuentasLiveCycle , DoCierreDiario  , AjustarNegociacion ,   Compras   , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosLiveCycle   , VerRegistrosResumen ]
@@ -107,7 +109,7 @@ class SecurityManager
     else if Spine.session.hasPerfiles([ "Vendedor" ])
       Producto.autoQuery  = true
       Cliente.autoQuery   = true
-      Saldo.autoQuery     = false
+      Saldo.autoQuery     = true
 
     else if Spine.session.hasPerfiles([ "Ejecutivo de Cuentas" ])
       Saldo.autoQuery            =  true

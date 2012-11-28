@@ -44,7 +44,7 @@ class AprobarNota extends Spine.Controller
     @saldo = Saldo.find(target.attr("data-id"))
     data =
       class: Saldo
-      restRoute: "Saldo"
+      restRoute: "Credito"
       restMethod: "POST"
       restData: id :  @saldo.id
 
