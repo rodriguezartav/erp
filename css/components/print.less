@@ -1,3 +1,7 @@
+.show_print{
+  display: none;
+}
+
 @media print {
   body{
     margin: 0px;
@@ -9,6 +13,17 @@
     }
   }
 
+  body {
+    padding-top: 0px;
+    background: none;
+    background-color: #fff;
+  }
+  
+  body .navbar,
+  body .action_footer {
+    display: none;
+  }
+
   .table-striped {
     tbody {
       tr:nth-child(odd) td,
@@ -16,6 +31,10 @@
         background-color: none;
       }
     }
+  }
+  
+  .show_print{
+    display: block;
   }
   
   .hide_print {

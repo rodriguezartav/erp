@@ -1,0 +1,40 @@
+
+
+<div class="row-fluid widgetHeader">
+  
+  <div class="span6">
+    <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+  </div>
+  
+  <div class="span6">
+    <div class="rightOptions">
+      <a class="btn btn-primary reload">
+        <i class="icon-refresh icon-white"></i>
+        </a>        
+    </div>
+  </div>
+  
+</div>
+
+<br/>
+
+<ul class="list_users list nav nav-pills">
+  
+</ul>
+
+<div class="row-fluid sections">
+
+  <div class="span4">
+    <ul class="unstyled mobileList section_aprobados section">
+      <li>
+      <h4>Recibos Aprobados</h4>
+    <ul class="list_aprobados unstyled mobileList list_">
+      <li><h5>No hay pedidos aprobados</h5></li>
+    </ul>
+    </li>
+    </ul>
+  </div>
+
+  </div>
+
+  <hr/>

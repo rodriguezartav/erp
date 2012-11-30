@@ -57,6 +57,7 @@ class IngresarRecibo extends Spine.Controller
     ".info_popover"      : "info_popover"
     ".btn_forma_pago"    : "btn_forma_pago"
     ".selectFormaPago"   : "selectFormaPago"
+    ".txtReferencia" : "txtReferencia"
     
   events:
     "click .cancel" : "reset"
@@ -98,7 +99,7 @@ class IngresarRecibo extends Spine.Controller
 
   onClienteSet: (cliente) =>
     Documento.destroyAll()
-    Documento.ajax().query( { saldo: true , cliente: cliente  , autorizado: true } , afterSuccess: @onDocumentoLoaded )    
+    Documento.ajax().query( { saldo: true , enRecibo: true , cliente: cliente  , autorizado: true } , afterSuccess: @onDocumentoLoaded )    
     @pago.Cliente = Cliente.current.id
 
   onDocumentoLoaded: =>
@@ -136,6 +137,7 @@ class IngresarRecibo extends Spine.Controller
      
 
   send: (e) =>
+    @txtReferencia.val "N/D" if @formaPago == "Efectivo" or @formaPago == "Nota Credito"
     @updateFromView(@pago,@inputs_to_validate)
     
     pagoItems = []
@@ -144,7 +146,7 @@ class IngresarRecibo extends Spine.Controller
       item.Recibo = @pago.Recibo
       item.Cliente = @pago.Cliente
       item.FormaPago = @formaPago
-      item.Fecha = @pago.Fecha.to_salesforce_date()
+      item.Fecha = new Date(Date.now()).to_salesforce_date()
       item.Referencia = @pago.Referencia
       item.setTipo()
       pagoItems.push item if item.Monto and parseInt(item.Monto) != 0

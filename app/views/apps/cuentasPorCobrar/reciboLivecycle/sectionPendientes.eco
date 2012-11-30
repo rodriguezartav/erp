@@ -1,0 +1,73 @@
+<% cheque = 0 %>
+<% efectivo = 0 %>
+<% deposito = 0 %>
+<% notaCredito = 0 %>
+
+<ul class="unstyled mobileList section_pendientes section span4">
+
+  <li>
+    <h4>Recibos Pendientes</h4>
+      <ul class="list_pendientes unstyled mobileList list">
+        
+        <%- "<li><h5>No hay pedidos pendientes</h5></li>" if @pagos.length == 0 %>
+        
+        <% for pago in @pagos:  %>
+          <% cheque += pago.Monto if pago.FormaPago == "Cheque" %>
+          <% efectivo += pago.Monto if pago.FormaPago == "Efectivo"  %>
+          <% deposito += pago.Monto if pago.FormaPago == "Deposito"  %>
+          <% notaCredito += pago.Monto if pago.FormaPago == "NotaCredito"  %>
+          
+          <%- require("views/apps/cuentasPorCobrar/reciboLivecycle/itemPendientes")(pago) %>
+        <% end %>
+        
+      </ul>
+  </li>
+
+  <li>
+    <h5>Resumen</h5>
+    <table class="table table-bordered">
+      <tr>
+        <td>Efectivo</td>
+        <td><%= efectivo.toMoney() %></td>
+      </tr>
+      
+      <tr>
+        <td>Cheque</td>
+        <td><%= cheque.toMoney() %></td>
+      </tr>
+      
+      <tr>
+        <td>Deposito</td>
+        <td><%= deposito.toMoney() %></td>
+      </tr>
+      
+      <tr>
+        <td>Nota Credito</td>
+        <td><%= notaCredito.toMoney() %></td>
+      </tr>
+      
+      <tr class="info">
+        <td>Total</td>
+        <td><%= (efectivo + deposito + cheque + notaCredito).toMoney() %></td>
+      </tr>
+      
+    </table>
+    <a class="btn btn_entregar">Generar Entrega</a>
+    <a class="btn btn-success pull-right">Aprobar Recibos</a>
+    
+    <div class="show_print">
+      <table class="table table-bordered"  style="margin-top:50px">
+        <tr>
+          <td style="height:50px"></td>
+          <td style="height:50px"></td>
+        </tr>
+
+        <tr>
+          <td>Entregado</td>
+          <td>Recibido</td>
+        </tr>
+
+      </table>
+    </div>
+  </li>
+</ul>

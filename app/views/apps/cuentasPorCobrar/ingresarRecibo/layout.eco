@@ -11,45 +11,32 @@
       <div class="src_cliente"></div>
    </div>
   
-    <div class="span3  ">
-        <h3>Fecha Pago</h3>
-        <div class="row-fluid">
-          <div class="span4">
-           <input class="validatable " data-writable="false" data-type="Fecha" date-part="date" date-name="Fecha" placeholder="Dia"/>
-         </div>
-
-          <div class="span4">
-           <input class="validatable "   data-writable="false" data-type="Fecha"  date-part="month" date-name="Fecha" placeholder="Mes"/>
-         </div>
-
-          <div class="span4">
-           <input class="validatable "   data-writable="false" data-type="Fecha"  date-part="year" date-name="Fecha"  placeholder="Año"/>
-          </div>
-        </div>
-     </div>
-  
-     <div class="span2">
+     <div class="span2" style="float:right;">
          <h3>Recibo</h3>
          <input class="validatable" data-numeric="true" data-type="Recibo" />
      </div>
     
+      
+    
  </div>
 
+ <br/>
+
   <div class="row-fluid">
-    <div class="span9">
+   <div class="span6">
       <h3>Forma de Pago</h3>
       <div class="row-fluid">
         <span data-forma-pago="Efectivo" class="btn btn_forma_pago">Efectivo</span>
         <span data-forma-pago="Cheque" class="btn  btn_forma_pago">Cheque</span>
         <span data-forma-pago="Deposito" class="btn btn_forma_pago">Deposito</span>
-        <span data-forma-pago="Nota Credito" class="btn btn_forma_pago">NC</span>
+        <span data-forma-pago="Nota Credito" class="btn btn_forma_pago">Nota Credito</span>
       </div>
 
     </div>
 
-     <div class="span3">
+     <div class="span2" style="float:right;">
         <h3>Referencia</h3>
-        <input class="validatable" data-type="Referencia" placeholder="# forma de pago"/>
+        <input class="validatable txtReferencia" data-type="Referencia" placeholder="# cheque/deposito"/>
       </div>
 
   </div>

@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Pago extends Spine.Model
   @configure 'Pago', "Cliente", "Tipo" , "Documento" ,  "Monto" , "FormaPago"  , 
-    "Referencia" , "Recibo" , "Fecha", "Consecutivo" , "Estado" , "Aprobado" , "CreatedById"
+    "Referencia" , "Recibo" , "Fecha", "Consecutivo" , "Estado" , "Aprobado" , "CreatedById" , "AprobadoPor"
 
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods    
@@ -28,7 +28,7 @@ class Pago extends Spine.Model
      filter =""
      filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
      filter = @queryFilterAddCondition(" Fecha__c = #{options.fecha} "     ,  filter)  if options.fecha
-     filter = @queryFilterAddCondition(" Aprobado__c = #{options.aprobado} "     ,  filter)  if options.aprobado != null
+     filter = @queryFilterAddCondition(" Aprobado__c = false or FechaAprobado__c = TODAY "     ,  filter)  if options.livecycle != null
      filter
 
 module.exports = Pago

@@ -32,6 +32,8 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" Estado__c  = '#{options.estado}'"            ,  filter)  if options.estado
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter = @queryFilterAddCondition(" Autorizado__c        = true"                ,  filter)  if options.autorizado
+    filter = @queryFilterAddCondition(" enRecibo__c        = false"                ,  filter)  if options.enRecibo
+    
     filter
 
   @markedPrinted: (documento) ->
