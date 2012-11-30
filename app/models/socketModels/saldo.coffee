@@ -27,7 +27,7 @@ class Saldo extends Spine.Model
     filter = @queryFilterAddCondition(" IsContable__c = 'true' and IsContado__c = false"    , filter)
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "              , filter)   if options.cliente
     filter = @queryFilterAddCondition(" Con_Saldo__c = 'true' "                             , filter)   if options.saldo
-    filter = @queryFilterAddCondition(" Autorizado__c   = #{options.autorizado }"           , filter)   if options.autorizado
+    filter = @queryFilterAddCondition(" Autorizado__c   = #{options.autorizado }"           , filter)   if options.autorizado == false or options.autorizado == true
     filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) "        , filter)   if options.tipos
     filter
 

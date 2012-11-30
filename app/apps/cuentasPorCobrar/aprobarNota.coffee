@@ -25,11 +25,11 @@ class AprobarNota extends Spine.Controller
     super
     @html require("views/apps/cuentasPorCobrar/aprobarNota/layout")(AprobarNota)
     Saldo.bind "query_success" , @render
-    Saldo.bind "push_success" , @render
     @render()
+    @reload()
 
   reload: ->
-    Saldo.ajax().query( { autorizado: false, tipos: "'NC','ND'" } , afterSuccess: @renderPedidos )        
+    Saldo.ajax().query( { autorizado: false, tipos: "'NC','ND'"  , avoidQueryTimeBased: true} , afterSuccess: @renderPedidos )        
 
   render: =>
     notas = Saldo.select (item) ->
