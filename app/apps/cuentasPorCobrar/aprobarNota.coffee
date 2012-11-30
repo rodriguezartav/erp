@@ -33,7 +33,7 @@ class AprobarNota extends Spine.Controller
 
   render: =>
     notas = Saldo.select (item) ->
-      return true if !item.Autorizado and (item.Tipo_de_Documento__c = 'NC' or item.Tipo_de_Documento__c = 'ND') 
+      return true if !item.Autorizado and (item.Tipo_de_Documento__c = 'NC' or item.Tipo_de_Documento__c = 'ND') and item.Total 
 
     @srcNotas.html require("views/apps/cuentasPorCobrar/aprobarNota/item")(notas)
     @el.find('.info_popover').popover()
