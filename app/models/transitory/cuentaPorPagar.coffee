@@ -2,14 +2,14 @@ Spine = require('spine')
 
 class CuentaPorPagar extends Spine.Model
   @configure "CuentaPorPagar" , "Saldo" , "Referencia" , "Observacion" , "FechaFacturacion", "FechaVencimiento" , "FechaPagoProgramado" , 
-  "TipoCambio" , "NombreProveedor", "Estado",  "FlagedToSave" , "ReferenciaFormaPago" , "FormaPago" , "Fecha_de_Pago" , "Total"
+  "TipoCambio" , "NombreProveedor", "Estado",  "FlagedToSave" , "ReferenciaFormaPago" , "FormaPago" , "Fecha_de_Pago" , "Total" , "Enviado"
   
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods  
 
 
-  @avoidInsertList = ["FlagedToSave" , "FechaVencimiento" , "ReferenciaFormaPago" , "FormaPago" ,"FechaFacturacion" ,  "Referencia", "NombreProveedor", "Observacion", "Saldo",
-  "TipoCambio","Total","Fecha_de_Pago"]
+  @avoidInsertList = ["FlagedToSave" , "FechaVencimiento" , "ReferenciaFormaPago" , "FormaPago" ,"FechaFacturacion" ,  "Referencia", "NombreProveedor",
+   "Observacion", "Saldo", "TipoCambio","Total","Fecha_de_Pago"]
   
   @avoidQueryList = ["FlagedToSave"]
 

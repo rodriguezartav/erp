@@ -60,7 +60,7 @@ class CuentasLiveCycle extends Spine.Controller
         itemSemana += cuenta.Saldo
         semana[cuenta.getFechaPagoProgramado().weeksFromToday()] = itemSemana
         
-        if( cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() )
+        if( cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() and cuenta.Saldo > 0 )
           paraPagar.push cuenta
           totales[0]+= cuenta.Saldo
         else
@@ -68,14 +68,13 @@ class CuentasLiveCycle extends Spine.Controller
           calendarizados.push cuenta
 
     @src_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
-    #@src_pendientes.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
-    
+
     @renderByWeek(@src_pendientes,pendientes , "getFechaVencimiento" , "smartItemPendiente")
     @renderByWeek(@src_calendarizados,calendarizados, "getFechaPagoProgramado" ,"smartItemCalendarizado")
     @renderByWeek(@src_paraPagar,paraPagar, "getFechaPagoProgramado" ,"smartItemParaPagar")
-    
+
     @src_pipeline.html "<li class='header'>Pagos por Semana</li>"
-    
+
     for index,value of semana
       @src_pipeline.append require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPipeline")(semana: index , saldo: value)
 
@@ -133,6 +132,28 @@ class CuentasLiveCycle extends Spine.Controller
   update: (data) =>
     Spine.trigger "show_lightbox" , "update" , data , @aprobarSuccess
     return false;
+
+  generarArchivo: =>
+    cuentas = CuentaPorPagar.select (item) =>
+      return true if cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() and cuenta.Saldo > 0 and !Enviado
+      return false
+    
+    $post "/integration/generarCXP" , JSON.stringify(cuentas)
+
+  aplicarGenerado: =>
+    cuentas = CuentaPorPagar.select (item) =>
+      return true if cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() and cuenta.Saldo > 0 and !Enviado
+      return false
+
+    cuentasSf = CuentaPorPagar.salesforceFormat(cuentas,true)
+    
+    data =
+      class: CuentaPorPagar
+      restRoute: "Tesoreria"
+      restMethod: "POST"
+      restData:   cuentas: cuentasSf
+
+    Spine.trigger "show_lightbox" , "rest" , data , @saveSuccess
 
   aprobarSuccess: (sucess,results) =>
     @cuenta.save()

@@ -7,6 +7,7 @@ Opf = require "opf"
 ParseController  = require('./controllers/parseController')
 PusherController = require('./controllers/pusherController')
 SalesforceController = require('./controllers/salesforceController')
+IntegrationController = require('./controllers/integrationController')
 
 Cors             = require ("./libs/cors")
 OpfDevUtil       = require("./libs/opfDevUtil")
@@ -26,6 +27,8 @@ new Cors(app)
 new ParseController(app)
 new PusherController(app)
 new SalesforceController(app)
+new IntegrationController(app)
+
 
 OpfDevUtil.setupCompilers(app) if process.env.NODE_ENV != "production"
 app.use(express.static("./public"))

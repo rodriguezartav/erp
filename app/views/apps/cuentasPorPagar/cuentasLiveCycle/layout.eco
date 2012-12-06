@@ -1,11 +1,10 @@
 
-
 <div class="row-fluid widgetHeader">
-  
+
   <div class="span6">
     <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
   </div>
-  
+
   <div class="span6">
     <div class="rightOptions">
       <a class="btn btn-primary reload">
@@ -13,7 +12,7 @@
         </a>        
     </div>
   </div>
-  
+
 </div>
 
   <br/>
@@ -40,28 +39,31 @@
    </li>
    </ul>
 
-  
   <ul class="unstyled mobileList span3">
+
     <li>
-    <h4>Para Pagar
-          <span class="lbl_totales pull-right"></span>
-    </h4>
-    <ul class="src_paraPagar unstyled mobileList  src_list">
-      <li><h5>No hay pedidos archivados</h5></li>
-    </ul>
-      </li></ul>
-    
+      <h4>Para Pagar
+            <span class="lbl_totales pull-right"></span>
+      </h4>
+      <ul class="src_paraPagar unstyled mobileList  src_list">
+        <li><h5>No hay pedidos archivados</h5></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="/integration/generarCXP" class="btn btn-success">Generar</a>
+      <a class="btn btn-success btn_aplicar_archivo pull-right">Aplicar</a>
+    </li>
+  </ul>
+
 
     <ul class="unstyled mobileList span3">
       <li>
-      <h4>Pipeline de CXP
-      </h4>
-    <ul class="src_pipeline unstyled mobileList  src_list">
-      <li><h5>No hay pedidos facturados</h5></li>
+        <h4>Pipeline de CXP</h4>
+        <ul class="src_pipeline unstyled mobileList  src_list">
+          <li><h5>No hay pedidos facturados</h5></li>
+        </ul>
+      </li>
     </ul>
-      </li></ul>
 
   </div>
-
- 
-
