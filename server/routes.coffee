@@ -37,6 +37,10 @@ class Routes
       user_details = JSON.parse req.body.user_details
       res.send req.pusherController.auth(socket_id,channel_name , user_details )
     
+    @app.post "/email/inbound" , (req,res) ->
+      console.log req.body
+      return 200;
+    
   getJsVars: (req) ->
     jsvars = 
       pusherKeys: req.pusherController.keys()

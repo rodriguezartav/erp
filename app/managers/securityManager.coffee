@@ -49,7 +49,6 @@ ListasPrecio = require("apps/procesos/listasPrecio")
 
 EstadoCuenta = require("apps/print/estadoCuenta")
 
-
 ClienteAccess = require("apps/asc/clienteAccess")
 
 VerClientes = require("apps/vistas/verClientes")
@@ -75,8 +74,8 @@ class SecurityManager
     @profiles["SubGerencia"] =  [ AprobarNota , AjustarNegociacion ,   Compras  , PedidosLiveCycle   , VerRegistrosResumen ]
     @profiles["Gerencia Comercial"] = [ PedidosLiveCycle , FacturasProveedor , PagosProveedor ,Pedidos  , NotaCreditoProveedor , CuentasLiveCycle , AprobarNota , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes , AjustarNegociacion ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
-    @profiles["Tesoreria"] = [ CuentasLiveCycle  ,  FacturasProveedor , PagosProveedor , NotaCreditoProveedor , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
-    @profiles["Ejecutivo Credito"] = [ FacturasProveedor , CuentasLiveCycle , EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosLiveCycle,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Ejecutivo de Cuentas"] = [ FacturasProveedor , CuentasLiveCycle , EstadoCuenta , PagosProveedor ,NotaCreditoProveedor , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosLiveCycle,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Ejecutivo Credito"] =    [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago , PedidosLiveCycle , NotasImpresion , VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Ejecutivo Ventas"] = [ PedidosLiveCycle , Pedidos , VerRegistrosResumen , VerRegistros  , VerClientes ]
     @profiles["Vendedor"] = [ PedidosLiveCycle , VerProductos , Pedidos , VerClientes ]
     Spine.bind "login_complete" , @onLoginComplete
@@ -105,18 +104,14 @@ class SecurityManager
       Cliente.autoQuery           = true
       FacturaPreparada.autoQuery  = true
 
-    else if Spine.session.hasPerfiles([ "Encargado Ventas" ])
-      Producto.autoQuery   = true
-      Cliente.autoQuery    = true
-      Saldo.autoQuery     = false
-
     else if Spine.session.hasPerfiles([ "Vendedor" ])
       Producto.autoQuery  = true
       Cliente.autoQuery   = true
       Saldo.autoQuery     = false
 
-    else if Spine.session.hasPerfiles([ "Tesoreria" ])
-      Saldo.autoQuery           = true
+    else if Spine.session.hasPerfiles([ "Ejecutivo de Cuentas" ])
+      Saldo.autoQuery            =  true
+      Cliente.autoQuery          =  true
 
     else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia" ])
       Cliente.autoQuery         = true
