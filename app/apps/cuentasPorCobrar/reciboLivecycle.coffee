@@ -14,54 +14,103 @@ class ReciboLivecycle extends Spine.Controller
   elements:
     ".list_users" : "list_users"
     ".sections"   : "sections"
+    ".section_standby" : "sectionStandBy"
+    ".section_digitados" : "sectionDigitados"
+    ".section_entregados" : "sectionEntregados"
+    ".section_contabilizados" : "sectionContabilizados"
+    ".section_aplicados" : "sectionAplicados"
+    ".section_depositados" : "sectionDepositados"
+    ".txt_search" : "txt_search"
 
   events:
     "click .cancel"    :  "reset"
     "click .btn_entregar"  : "onGenerarEntrega"
     "click .item" : "onItemClick"
-  #  "click .send"      :  "onSend"
-  #  "click .incluir"   :  "onIncluir"
-  #  "click .borrar"    :  "onBorrar"
-   # "click .reload"    :  "reload"
-  #  "click .userItem"  :  "onUserClick"
+    "click .btn_action"    :  "onAction"
+    "click .btn_bulk_action" : "onBulkAction"
+    "click .reload"    :  "reload"
+    "click .userItem"  :  "onUserClick"
 
+  setVariables: =>
+    @recibosStandby =[]    
+    @recibosDigitados = []
+    @recibosEntregados  = []
+    @recibosAplicados = []
+    @recibosContabilizados = []
+    @recibosDepositados = []
+    
   constructor: ->
     super
     @html require("views/apps/cuentasPorCobrar/reciboLivecycle/layout")(ReciboLivecycle)
     Pago.bind "query_success" , @render
-    @recibosPendientes = []
-    @recibosAprobados = []
+    @setVariables()
     @reload()
-    
 
-  reload: ->
-    @el.find(".list").empty()
-    Pago.ajax().query( { aprobado: false  } , afterSuccess: @render ) 
+  reload: =>
+    @sections.empty()
+    search = if @txt_search.val().length > 0 then @txt_search.val() else null
+    @txt_search.val ""
+    Pago.deleteAll()
+    Pago.ajax().query( { livecycle: true  , search: search } , afterSuccess: @render ) 
     @filterByUserId = null
-    
+
   render: =>
     users=[]
     usersId = []
-    @recibosPendientes =[]
-    @recibosAprobados = []
+    @recibosStandby =[]
+    @recibosDigitados = []
+    @recibosEntregados = []
+    @recibosContabilizados = []
+    @recibosAplicados = []
+    @recibosDepositados = []
+    
     pagos = Pago.select (item) =>
       return true if !@filterByUserId
       return true if item.CreatedByid and item.CreatedByid == @filterByUserId
       return false
 
     for pago in pagos
-      if pago.Aprobado == false then @recibosPendientes.push(pago) else @recibosAprobados.push(pago)
-      if usersId.indexOf(pago.CreatedByid) == -1
-        usersId.push pago.CreatedByid 
-        users.push User.find pago.CreatedByid 
+      if           pago.EstadoNumerico == 0                   then @recibosStandby.push(pago)
+      else if      pago.EstadoNumerico == 1                   then @recibosDigitados.push(pago)
+      else if      pago.EstadoNumerico == 2                   then @recibosEntregados.push(pago)
+      else if      pago.EstadoNumerico == 3                   then @recibosContabilizados.push(pago)
+      else if      pago.EstadoNumerico == 4                   then @recibosAplicados.push(pago)
+      else if      pago.EstadoNumerico == 5                   then @recibosDepositados.push(pago)
 
-    pendientesAgrupados = Pago.group_by_recibo(@recibosPendientes)
-    aprobadosAgrupados = Pago.group_by_recibo(@recibosAprobados)
+      if pago.Custodio and usersId.indexOf(pago.Custodio) == -1
+        usersId.push pago.Custodio 
+        users.push User.find pago.Custodio 
 
-    @sections.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionPendientes")(pagos: pendientesAgrupados)
-    @sections.append require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionPendientes")(pagos: aprobadosAgrupados)
+    standByAgrupados = Pago.group_by_recibo(@recibosStandby)
+    digitadosAgrupados = Pago.group_by_recibo(@recibosDigitados)
+    entregadosAgrupados = Pago.group_by_recibo(@recibosEntregados)
+    contabilizadosAgrupados = Pago.group_by_recibo(@recibosContabilizados)
+    aplicadosAgrupados = Pago.group_by_recibo(@recibosAplicados)
+    depositadosAgrupados = Pago.group_by_recibo(@recibosDepositados)
 
+    @sectionStandBy.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemStandby")(standByAgrupados ) if standByAgrupados.length > 0
+    @sectionDigitados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionDigitados")(pagos: digitadosAgrupados )
+    @sectionEntregados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionEntregados")(pagos: entregadosAgrupados )  
+    @sectionContabilizados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemContabilizado")( contabilizadosAgrupados )  if contabilizadosAgrupados.length > 0
+    @sectionAplicados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionAplicados")( pagos: aplicadosAgrupados )  
+    @sectionDepositados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemDepositado")( depositadosAgrupados )  if depositadosAgrupados.length > 0
     @list_users.html require("views/apps/cuentasPorCobrar/reciboLivecycle/user")(users)
+
+  onUserClick: (e) =>
+    target = $(e.target)
+    parent = target.parent()
+    @recibosIncluidos= []
+    @updateResults()
+
+    if parent.hasClass "active"
+      $(".userList>li").addClass "active"
+      parent.removeClass "active"
+      @filterByUserId = target.data "id"
+    else
+      parent.addClass "active"
+      @filterByUserId = null
+
+    @render()
 
   onItemClick: (e) =>
     target = $(e.target)
@@ -79,31 +128,38 @@ class ReciboLivecycle extends Spine.Controller
     section.removeClass "span4"
     window.print()
 
-
-  onUserClick: (e) =>
+  onAction: (e) =>
     target = $(e.target)
-    parent = target.parent()
-    @recibosIncluidos= []
-    @updateResults()
+    action = target.data "action"
+    recibo = target.data "recibo"
+    ids = []
+    ids.push recibo.id for recibo in Pago.findAllByAttribute("Recibo","#{recibo}")
+    data =
+      class: Pago
+      restRoute: "Pago"
+      restMethod: "PUT"
+      restData: ids: ids , action: action
+    Spine.trigger "show_lightbox" , "rest" , data , @reload
+   
+  onBulkAction: (e) =>
+    target = $(e.target)
+    action = target.data "action"
+    ref = target.data "ref"
+    ids = []
+    ids.push recibo.id for recibo in @["recibos#{ref}"]
+    data =
+      class: Pago
+      restRoute: "Pago"
+      restMethod: "PUT"
+      restData: ids: ids , action: action
+    Spine.trigger "show_lightbox" , "rest" , data , @reload
 
-    if parent.hasClass "active"
-      $(".userList>li").addClass "active"
-      parent.removeClass "active"
-      @filterByUserId = target.data "id"
-    else
-      parent.addClass "active"
-      @filterByUserId = null
-    
-
-    @render()
-  
   updateResults: =>
     cheque   = 0;
     nota     = 0;
     efectivo = 0;
     deposito = 0;
-    
-    
+
     for index,recibo  of @recibosIncluidos
       if recibo != null
         cheque    += recibo.Monto if recibo.FormaPago == "Cheque"
@@ -116,44 +172,18 @@ class ReciboLivecycle extends Spine.Controller
     @lblNotaCredito.html nota.toMoney()
     @lblEfectivo.html efectivo.toMoney()
 
-  onSend: (e) =>
-    ids = []
-    for index , recibo of @recibosIncluidos
-      ids.push recibo.id if recibo and recibo.id
-
+  onRetener: (e) =>
+    target = $(e.target)
+    ids = [ target.data "id" ]
     data =
       class: Pago
       restRoute: "Pago"
       restMethod: "PUT"
       restData: ids: ids , action: 1
-
-    Spine.trigger "show_lightbox" , "rest" , data , @onAprobarSuccess
-
-  onAprobarSuccess: =>
-    @recibosIncluidos = []
-    Spine.socketManager.pushToFeed( "Aprobe varios recibos")
-    @reload()
-
-  onBorrar: (e) =>
-    ids = []
-    recibo = target.attr "data-recibo"
-    pagos = Pago.findAllByAttribute "Recibo" , recibo
-    ids.push pago.id for pago in pagos
-
-    data =
-      class: Pago
-      restRoute: "Pago"
-      restMethod: "PUT"
-      restData: ids: ids , action: -1
-
-    Spine.trigger "show_lightbox" , "rest" , data , @onAprobarSuccess
-
-  onBorrarSuccess: =>
-    @recibosIncluidos = []
-    Spine.socketManager.pushToFeed( "Borre varios recibos")
-    @reload()
+    Spine.trigger "show_lightbox" , "rest" , data , @reload
 
   reset: ->
+    @setVariables()
     Pago.unbind "query_success" , @render
     @release()
     @navigate "/apps"

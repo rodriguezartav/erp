@@ -1,0 +1,34 @@
+
+<% Spine   = require('spine') %>
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@Cliente)  %>
+
+<% User = require("models/user")  %>
+<% user = User.exists(@Custodio)  %>
+
+
+<li class="item">
+  <div>
+    <strong class="">Recibo: </strong>
+    <span class=""><%= @Recibo  %> </span>
+    <span> <%= @FormaPago %></span>
+    <span class="pull-right"><%= @MontoPendiente?.toMoney() %></span>
+  </div>
+  
+  <div class="details" style="display:none">
+    <h5>Documentos: <%= @Consecutivos?.join " , " %></h5>
+    <%- '<h5>Referencia: @Referencia</h5>' if @Referencia %>
+
+
+    <br/>
+    
+  <div>
+    <a class="btn btn-success btn_action" data-recibo="<%= @Recibo %>" data-action="2">Entregar</a>
+    <a class="btn btn-danger btn_action pull-right" data-recibo="<%= @Recibo %>" data-action="-1">Anular</a>
+    <a class="btn btn-danger btn_action pull-right" data-recibo="<%= @Recibo %>" data-action="-2">Borrar</a>    
+  </div>
+  
+  </div>
+  
+  
+</li>

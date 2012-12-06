@@ -1,0 +1,22 @@
+<% Spine   = require('spine') %> 
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@Cliente)  %>
+
+
+
+<li class="item" ">
+
+  <h4><%= cliente?.Name?.capitalize()  %></h4>
+
+  <p>&nbsp;<span class="pull-right"><%= @Total.toMoney() %></span></p>
+
+  <div class="details" style="display:none">
+      
+      <p><%= @Observacion %><p>
+            
+     <a data-id="<%= @id %>"  class="btn btn-success btn_facturar"><i class="icon-ok"></i> Facturar</a>
+
+  </div>
+
+</li>
+

@@ -1,8 +1,9 @@
 Spine = require('spine')
 
 class Pago extends Spine.Model
-  @configure 'Pago', "Cliente", "Tipo" , "Documento" ,  "Monto" , "FormaPago"  , 
-    "Referencia" , "Recibo" , "Fecha", "Consecutivo" , "Estado" , "Aprobado" , "CreatedById" , "AprobadoPor"
+  @configure 'Pago', "Cliente", "Tipo" , "Documento" ,  "Monto" , "FormaPago"  , "MontoPendiente" ,
+    "Referencia" , "Recibo" , "Fecha", "Consecutivo" , "Estado" , "Aprobado" , "Contabilizado" , "Standby" , 
+     "CreatedById" , "AprobadoPor" , "Depositado" , "Custodio" , "EstadoNumerico"
 
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods    
@@ -14,13 +15,15 @@ class Pago extends Spine.Model
     for recibo in recibos
       pagos_in_recibo = []
       monto = 0
+      montoPendiente = 0
       consecutivos =[]
       for pago in pagos when pago.Recibo == recibo
         pagos_in_recibo.push pago
         consecutivos.push pago.Consecutivo
         monto += pago.Monto
+        montoPendiente += pago.MontoPendiente
 
-      groups.push {Recibo: recibo , CreatedByid: pagos_in_recibo[0].CreatedByid ,  FormaPago: pagos_in_recibo[0].FormaPago , Fecha: pagos_in_recibo[0].Fecha , Consecutivos: consecutivos, Pagos: pagos_in_recibo , Cliente: pagos_in_recibo[0].Cliente , Monto: monto} if pagos_in_recibo.length > 0
+      groups.push {Recibo: recibo , CreatedByid: pagos_in_recibo[0].CreatedByid ,  FormaPago: pagos_in_recibo[0].FormaPago , Fecha: pagos_in_recibo[0].Fecha , Consecutivos: consecutivos, Pagos: pagos_in_recibo , Cliente: pagos_in_recibo[0].Cliente , Monto: monto , MontoPendiente: montoPendiente , Custodio: pagos_in_recibo[0].Custodio } if pagos_in_recibo.length > 0
     groups
 
   @queryFilter: (options ) =>
@@ -28,7 +31,10 @@ class Pago extends Spine.Model
      filter =""
      filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
      filter = @queryFilterAddCondition(" Fecha__c = #{options.fecha} "     ,  filter)  if options.fecha
-     filter = @queryFilterAddCondition(" Aprobado__c = false or FechaAprobado__c = TODAY "     ,  filter)  if options.livecycle != null
+     filter = @queryFilterAddCondition(" Aprobado__c = false or Contabilizado__c = false or Standby__c = true or Depositado__c = 0 "     ,  filter)  if options.livecycle and !options.search
+     filter = @queryFilterAddCondition(" Recibo__c = '#{options.search}' or Referencia__c = '#{options.search}' "     ,  filter)  if options.search
+     #filter = @queryFilterAddCondition(" DepositadoFecha__c = LAST_N_DAYS:7 and CreatedById = '#{depositadosUsuario}'"     ,  filter)  if options.depositadosUsuario != null
+     
      filter
 
 module.exports = Pago
