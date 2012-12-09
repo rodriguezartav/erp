@@ -112,12 +112,18 @@ class SecurityManager
     else if Spine.session.hasPerfiles([ "Ejecutivo de Cuentas" ])
       Saldo.autoQuery            =  true
       Cliente.autoQuery          =  true
+      Producto.autoQuery         = true
+      Proveedor.autoQuery        = true
 
-    else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia" ])
+    else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia,Gerencia Comercial" ])
       Cliente.autoQuery         = true
       Producto.autoQuery        = true
-      Saldo.autoQuery           = true
-      PedidoPreparado.autoQuery = true
+      Proveedor.autoQuery       = true
+
+    else if Spine.session.hasPerfiles([ "Gerencia Comercial" ])
+      Cliente.autoQuery         = true
+      Producto.autoQuery        = true
+      Proveedor.autoQuery        = true
 
     else if Spine.session.hasPerfiles([ "Platform System Admin" ])
       Cliente.autoQuery         = true

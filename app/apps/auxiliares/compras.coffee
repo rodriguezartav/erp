@@ -30,7 +30,6 @@ class Compras extends Spine.Controller
   constructor: ->
     super
     ProductoCosto.destroyAll()
-    Proveedor.query()
     ProductoCosto.query()
 
     @documento = Documento.create {Tipo_de_Documento: "CO"}    

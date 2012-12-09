@@ -1,6 +1,5 @@
 #Cliente = require("../app/models/cliente")
 User = require("../app/models/user")
-Proveedor = require("../app/models/proveedor")
 
 class Routes
 
@@ -36,11 +35,7 @@ class Routes
       socket_id = req.body.socket_id
       user_details = JSON.parse req.body.user_details
       res.send req.pusherController.auth(socket_id,channel_name , user_details )
-    
-    @app.post "/email/inbound" , (req,res) ->
-      console.log req.body
-      return 200;
-    
+
   getJsVars: (req) ->
     jsvars = 
       pusherKeys: req.pusherController.keys()
@@ -50,7 +45,6 @@ class Routes
       instance_url: "https://na7.salesforce.com"
       apiServer: "http://api2s.heroku.com"
       users: User.all()
-      proveedores: Proveedor.all()
     return Routes.varsToString jsvars
       
   @varsToString: (vars) ->

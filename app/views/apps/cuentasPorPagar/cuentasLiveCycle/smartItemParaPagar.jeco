@@ -6,7 +6,9 @@
   
 
   <h5>
-    <span class="badge  <%= if dias >0 then badge else "badge-success" %> ">i</span>
+    <%- if !@Enviado then '<span class="badge badge-success">|</span>' %>
+
+    <%- if @Enviado then '<span class="badge badge-danger">--</span>' %>
     <%=  @NombreProveedor %>
   </h5>
   <div>
@@ -25,10 +27,7 @@
       </li>
     </ul>
     
-    <a data-id="<%= @id  %>" data-newEstado="Pendiente" class="btn btn-warning actionBtn">
-      <i class="icon-arrow-right"></i>
-      Pendiente
-    </a>
+    <%- if !@Enviado then '<a data-id="' + @id  + '" data-newEstado="Pendiente" class="btn btn-warning actionBtn"><i class="icon-arrow-right"></i>Pendiente</a>' %>
 
   </div>
   

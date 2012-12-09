@@ -3,7 +3,6 @@ SalesforceLogin = require("../libs/salesforceLogin")
 SalesforceApi = require("../libs/salesforceApi")
 SalesforceModel = require("../../app/lib/salesforceModel")
 User = require("../../app/models/user")
-Proveedor = require("../../app/models/proveedor")
 
 #async = require "async"
 

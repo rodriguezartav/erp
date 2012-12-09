@@ -5,7 +5,7 @@ Cliente = require("models/cliente")
 Producto = require("models/producto")
 Saldo = require("models/socketModels/saldo")
 CuentaPorPagar = require("models/transitory/cuentaPorPagar")
-
+Proveedor = require("models/proveedor")
 
 class CuentasLiveCycle extends Spine.Controller
   className: "row-fluid"
@@ -23,6 +23,8 @@ class CuentasLiveCycle extends Spine.Controller
     ".txt_observacion" : "txt_observacion"
     ".src_list" : "src_list"
     ".lbl_totales":"lbl_totales"
+    ".hiddenParaPagar" : "hiddenParaPagar"
+    ".hiddenParaAplicar" : "hiddenParaAplicar"
     
 
   events:
@@ -30,14 +32,16 @@ class CuentasLiveCycle extends Spine.Controller
     "click .actionBtn"  : "onActionClick"
     "click .reload" : "reload"
     "click .item"  : "onItemClick"
+    "click .btn_aplicar" : "onAplicarGenerado"
+    "click .hiddenParaPagar" : "onGenerar"
 
   constructor: ->
     super
     @html require("views/apps/cuentasPorPagar/cuentasLiveCycle/layout")(CuentasLiveCycle)
-    @render()
     @reload()
+    $('#toggle-button').toggleButtons();
 
-  reload: ->
+  reload: =>
     CuentaPorPagar.destroyAll()
     CuentaPorPagar.ajax().query({ forWorkflow: true , orderFechaVencimiento: true } ,  afterSuccess: @render )        
 
@@ -45,6 +49,7 @@ class CuentasLiveCycle extends Spine.Controller
     totales=[0,0,0]
     calendarizados= []
     paraPagar = []
+    @paraGenerar = []
     pendientes = []
     semana = {}
     
@@ -60,22 +65,25 @@ class CuentasLiveCycle extends Spine.Controller
         itemSemana += cuenta.Saldo
         semana[cuenta.getFechaPagoProgramado().weeksFromToday()] = itemSemana
         
-        if( cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() )
+        if( cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() and cuenta.Saldo > 0 )
           paraPagar.push cuenta
+          @paraGenerar.push cuenta if !cuenta.Enviado
           totales[0]+= cuenta.Saldo
         else
           totales[1]+= cuenta.Saldo
           calendarizados.push cuenta
 
     @src_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
-    #@src_pendientes.html require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
-    
+
     @renderByWeek(@src_pendientes,pendientes , "getFechaVencimiento" , "smartItemPendiente")
     @renderByWeek(@src_calendarizados,calendarizados, "getFechaPagoProgramado" ,"smartItemCalendarizado")
     @renderByWeek(@src_paraPagar,paraPagar, "getFechaPagoProgramado" ,"smartItemParaPagar")
     
-    @src_pipeline.html "<li class='header'>Pagos por Semana</li>"
     
+    @hiddenParaPagar.attr "href" , @generateArchive()
+
+    @src_pipeline.html "<li class='header'>Pagos por Semana</li>"
+
     for index,value of semana
       @src_pipeline.append require("views/apps/cuentasPorPagar/cuentasLiveCycle/smartItemPipeline")(semana: index , saldo: value)
 
@@ -99,11 +107,24 @@ class CuentasLiveCycle extends Spine.Controller
         
       lastWeek = thisWeek
       src.append require("views/apps/cuentasPorPagar/cuentasLiveCycle/#{template}")(item)
-    
 
-  
-  renderPipeline: (src) =>
-    #for cuenta in CuentaPorPagar.filterAllByAttribute("Estado" , "Calendarizado")
+  generateArchive: =>
+    csv = ''
+    for cuenta in @paraGenerar
+      proveedor = Proveedor.find cuenta.Proveedor
+      csv+= "#{proveedor.tipoCedulaNumeric()}," 
+      csv+= "#{proveedor.Cedula or ''},"
+      csv+= "#{proveedor.Name},"
+      csv+= "#{proveedor.CuentaCliente or ''},"
+      csv+= "#{cuenta.Saldo},"
+      csv+= "#{proveedor.Moneda or 0},"
+      csv+= "Pago Rodco,"
+      csv+= "0,"
+      csv+= "integracionbct@rodcocr.com,"
+      csv+= "#{cuenta.id}\n "
+    
+    @hiddenParaPagar.hide() if @paraGenerar.length == 0
+    return "data:application/octet-stream,#{csv}"
 
   onItemClick: (e) =>
     target = $(e.target)
@@ -134,6 +155,21 @@ class CuentasLiveCycle extends Spine.Controller
     Spine.trigger "show_lightbox" , "update" , data , @aprobarSuccess
     return false;
 
+  onGenerar: =>
+    @hiddenParaAplicar.show()
+
+  onAplicarGenerado: =>
+    cuenta.Enviado = true for cuenta in @paraGenerar
+    cuentasSf = CuentaPorPagar.salesforceFormat(@paraGenerar,true)
+
+    data =
+      class: CuentaPorPagar
+      restRoute: "Tesoreria"
+      restMethod: "POST"
+      restData:   cuentas: cuentasSf
+
+    Spine.trigger "show_lightbox" , "rest" , data , @reload
+
   aprobarSuccess: (sucess,results) =>
     @cuenta.save()
     @render()
@@ -142,9 +178,9 @@ class CuentasLiveCycle extends Spine.Controller
 
   notify: =>
     Spine.socketManager.pushToFeed("Actualizamos la Cuenta a #{@cuenta.Estado}")
-  
 
   reset: ->
+    @paraGenerar = []
     @cuenta=null;
     @release()
     @navigate "/apps"
