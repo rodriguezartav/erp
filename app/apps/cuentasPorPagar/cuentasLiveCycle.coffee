@@ -25,7 +25,7 @@ class CuentasLiveCycle extends Spine.Controller
     ".lbl_totales":"lbl_totales"
     ".hiddenParaPagar" : "hiddenParaPagar"
     ".hiddenParaAplicar" : "hiddenParaAplicar"
-    
+
 
   events:
     "click .cancel"   : "reset"
@@ -38,12 +38,13 @@ class CuentasLiveCycle extends Spine.Controller
   constructor: ->
     super
     @html require("views/apps/cuentasPorPagar/cuentasLiveCycle/layout")(CuentasLiveCycle)
+    @selectedTipo = "Local"
     @reload()
-    $('#toggle-button').toggleButtons();
 
-  reload: =>
+  reload: (fromClick) =>
+    @selectedTipo = null if fromClick
     CuentaPorPagar.destroyAll()
-    CuentaPorPagar.ajax().query({ forWorkflow: true , orderFechaVencimiento: true } ,  afterSuccess: @render )        
+    CuentaPorPagar.ajax().query({ forWorkflow: true , orderFechaVencimiento: true , tipo: @selectedTipo } ,  afterSuccess: @render )
 
   render: =>
     totales=[0,0,0]
@@ -78,8 +79,7 @@ class CuentasLiveCycle extends Spine.Controller
     @renderByWeek(@src_pendientes,pendientes , "getFechaVencimiento" , "smartItemPendiente")
     @renderByWeek(@src_calendarizados,calendarizados, "getFechaPagoProgramado" ,"smartItemCalendarizado")
     @renderByWeek(@src_paraPagar,paraPagar, "getFechaPagoProgramado" ,"smartItemParaPagar")
-    
-    
+
     @hiddenParaPagar.attr "href" , @generateArchive()
 
     @src_pipeline.html "<li class='header'>Pagos por Semana</li>"
@@ -93,6 +93,21 @@ class CuentasLiveCycle extends Spine.Controller
 
     pickers = @el.find('.txtFecha').datepicker({autoclose: true})
     pickers.on("change",@onInputChange)
+
+    if !@toggleRendered then @renderToggle()
+    
+
+  renderToggle: =>
+    $('#t1').toggleButtons
+      width: 250,
+      label:
+        enabled: "Internacional"
+        disabled: "Local"
+      onChange: ($el, status, e) =>
+        @selectedTipo = if status then "Internacional" else "Local"
+        @reload()
+        @toggleRendered = true
+        return true
 
   renderByWeek: (src , list , dateFnc , template) ->
     src.empty()

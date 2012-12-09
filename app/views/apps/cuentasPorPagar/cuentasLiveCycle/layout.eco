@@ -3,23 +3,28 @@
 
   <div class="span6">
     <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+
   </div>
 
   <div class="span6">
     <div class="rightOptions">
-      <a class="btn btn-primary reload">
-        <i class="icon-refresh icon-white"></i>
-      </a>
-      
-      <div id="toggle-button">
-          <input id="checkbox1" type="checkbox" value="value1" checked="checked">
+     
+     
+     
+      <div class="toggle-button" style="margin-top: 7px; margin-right: 11px" id="t1">
+        <input id="checkbox1" type="checkbox">
       </div>
-              
+
+       <a class="btn btn-primary pull-right reload" style="display: inline-block;margin-top: 6px;">
+          <i class="icon-refresh icon-white"></i>
+        </a>
+     
     </div>
   </div>
 
 
 </div>
+
 
   <br/>
   <div class="row-fluid">
