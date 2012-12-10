@@ -28,7 +28,7 @@ class Pago extends Spine.Model
 
   @queryFilter: (options ) =>
      return "" if !options
-     filter =""
+     filter = ""
      filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
      filter = @queryFilterAddCondition(" Fecha__c = #{options.fecha} "     ,  filter)  if options.fecha
      filter = @queryFilterAddCondition(" EstadoNumerico__c != 5 or CreatedDate = TODAY"     ,  filter)  if options.livecycle and !options.search
