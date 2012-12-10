@@ -12,7 +12,7 @@
   <div>
     <strong class="">Recibo: </strong>
     <span class=""><%= @Recibo  %> </span>
-    <span> <%= @FormaPago %></span>
+    <span> <%= @FormaPago %> : <%= @Referencia %></span>
     <span class="pull-right"><%= @Monto.toMoney() %></span>
   </div>
   

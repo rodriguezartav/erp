@@ -10,7 +10,7 @@
   </div>
 
   <div>
-    <span> <%= @FormaPago %></span>
+    <span> <%= @FormaPago %> : <%= @Referencia %></span>
     <span class="pull-right"><%= @Monto.toMoney() %></span>
   </div>
   
