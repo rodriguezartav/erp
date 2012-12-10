@@ -78,14 +78,11 @@ class SecurityManager
     @profiles["Gerencia Comercial"] = [ NotasLivecycle , PedidosLiveCycle , FacturasProveedor , PagosProveedor ,Pedidos  , NotaCreditoProveedor , CuentasLiveCycle  , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes , AjustarNegociacion ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
 
-#    @profiles["Ejecutivo de Cuentas"] = [ FacturasProveedor , CuentasLiveCycle , EstadoCuenta , PagosProveedor ,NotaCreditoProveedor , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago,PedidosLiveCycle,NotasImpresion ,VerRegistrosResumen , VerRegistros , VerClientes ]
-#    @profiles["Ejecutivo Credito"] =    [ EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,  EmitirPago , PedidosLiveCycle , NotasImpresion , VerRegistrosResumen , VerRegistros , VerClientes ]
-
     @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle  , PedidosLiveCycle ,ReciboLivecycle , FacturasProveedor , PagosProveedor , NotaCreditoProveedor , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
     @profiles["Ejecutivo Credito"] = [  NotasLivecycle ,  CuentasLiveCycle , FacturasProveedor , EstadoCuenta , PagosAnular , Entradas,Salidas ,NotasCredito,NotasDebito, DocumentosAnular ,PedidosLiveCycle ,VerRegistrosResumen , VerRegistros , VerClientes ]
-
-
+    @profiles["Ejecutivo de Logistica"] = [ Entradas , Salidas , ListasPrecio , TomasInventario , Pedidos , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes , VerProductos ]
     @profiles["Ejecutivo Ventas"] = [ Pedidos , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes ]
+
     @profiles["Vendedor"] = [ Pedidos , IngresarRecibo ,ReciboLivecycle ,  VerProductos  , VerClientes ]
     Spine.bind "login_complete" , @onLoginComplete
 
@@ -112,6 +109,9 @@ class SecurityManager
       Producto.autoQuery          = true
       Cliente.autoQuery           = true
       FacturaPreparada.autoQuery  = true
+
+    else if Spine.session.hasPerfiles([ "Ejecutivo de Logistica" ])
+      Producto.autoQuery          = true
 
     else if Spine.session.hasPerfiles([ "Vendedor" ])
       Producto.autoQuery  = true

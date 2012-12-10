@@ -153,7 +153,7 @@ class SalesforceController
       req.session.salesforceToken = data
       res.redirect("/");
 
-    post.on "error" , ->
+    post.on "error" , (error) ->
       req.parseController.logAudit "Error" , "" , "Server - SF Controller" , error
 
 
