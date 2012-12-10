@@ -1,0 +1,6 @@
+<div class="row-fluid">
+  <div style="padding-left: 30px;" class="hide_print row">
+    <a class="btn goBack hide_print btn-danger btn-print-complete">Atras</a>
+    <hr/>
+  </div>
+</div>

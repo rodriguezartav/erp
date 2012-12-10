@@ -1,5 +1,6 @@
 <% cheque = 0 %>
 <% efectivo = 0 %>
+<% liquido = 0 %>
 <% deposito = 0 %>
 <% notaCredito = 0 %>
 
@@ -16,10 +17,9 @@
           <% efectivo += pago.Monto if pago.FormaPago == "Efectivo"  %>
           <% deposito += pago.Monto if pago.FormaPago == "Deposito"  %>
           <% notaCredito += pago.Monto if pago.FormaPago == "NotaCredito"  %>
-          
           <% #require("views/apps/cuentasPorCobrar/reciboLivecycle/itemAplicado")(pago) %>
-          
         <% end %>
+        <% liquido = efectivo + cheque  %>
 
       </ul>
   </li>
@@ -38,16 +38,26 @@
       </tr>
       
       <tr>
+        <td><strong>Total Liquido</strong></td>
+        <td><strong><%= liquido.toMoney() %></strong></td>
+      </tr>
+      
+      <tr>
+        <td><strong>Total Contado</strong></td>
+        <td><strong><%= @totalContado.toMoney() %></strong></td>
+      </tr>
+      
+      <tr class="hide_print">
         <td>Deposito</td>
         <td><%= deposito.toMoney() %></td>
       </tr>
       
-      <tr>
+      <tr class="hide_print">
         <td>Nota Credito</td>
         <td><%= notaCredito.toMoney() %></td>
       </tr>
       
-      <tr class="info">
+      <tr class="info hide_print">
         <td>Total</td>
         <td><%= (efectivo + deposito + cheque + notaCredito).toMoney() %></td>
       </tr>
@@ -55,21 +65,6 @@
     </table>
 
     <a data-action="5" class="btn btn-success btn_bulk_action" data-ref="Aplicados">Depositar</a>
-    
 
-    <div class="show_print">
-      <table class="table table-bordered"  style="margin-top:50px">
-        <tr>
-          <td style="height:50px"></td>
-          <td style="height:50px"></td>
-        </tr>
-
-        <tr>
-          <td>Entregado</td>
-          <td>Recibido</td>
-        </tr>
-
-      </table>
-    </div>
   </li>
 </ul>

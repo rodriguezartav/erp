@@ -23,7 +23,7 @@ class Notas extends Spine.Controller
     Documento.destroyAll()
     @renderDocumentos()
     @reload()
-    
+
 
   renderDocumentos: =>
     @list.html require("views/apps/print/item")(Documento.all())

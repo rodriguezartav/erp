@@ -95,7 +95,7 @@ class CuentasLiveCycle extends Spine.Controller
     pickers.on("change",@onInputChange)
 
     if !@toggleRendered then @renderToggle()
-    
+
 
   renderToggle: =>
     $('#t1').toggleButtons

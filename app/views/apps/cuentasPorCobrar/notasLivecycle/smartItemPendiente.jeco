@@ -8,7 +8,7 @@
 
   <h4><%= cliente?.Name?.capitalize()  %></h4>
 
-  <p>&nbsp;<span class="pull-right"><%= @Total.toMoney() %></span></p>
+  <p>&nbsp;<span class="pull-right"><%= @Saldo.toMoney() %></span></p>
 
   <div class="details" style="display:none">
       

@@ -24,8 +24,9 @@ class Documento extends Spine.Model
   @queryFilter: (options ) =>
     return "" if !options
     filter =""
-    
-    filter = @queryFilterAddCondition("Tipo_de_Documento__c IN ('NC' , 'ND') and ( Autorizado__c = false or Estado__c != 'Impreso' or LastModifiedDate = THIS_MONTH )" ,  filter)  if options.livecycle
+
+    filter = @queryFilterAddCondition( "Tipo_de_Documento__c IN ('NC' , 'ND') and ( Autorizado__c = false or Estado__c != 'Impreso'  )" ,  filter)  if options.livecycle
+    filter = @queryFilterAddCondition( "Tipo_de_Documento__c = 'FA' and isContado__c = true and FechaFacturacion__c = TODAY" ,  filter)  if options.contadoDelDia
     filter = @queryFilterAddCondition(" Saldo__c   != 0"                             ,  filter)  if options.saldo
     filter = @queryFilterAddCondition(" Proveedor__c = '#{options.proveedor}'"       ,  filter)  if options.proveedor
     filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) " ,  filter)  if options.tipos
@@ -36,8 +37,9 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter = @queryFilterAddCondition(" Autorizado__c   = #{options.autorizado }"           , filter)   if options.autorizado == false or options.autorizado == true
     filter = @queryFilterAddCondition(" enRecibo__c        = false"                ,  filter)  if options.enRecibo
-    
+    filter = @queryOrderAddCondition(" order by Consecutivo__c "                   , filter)  
     filter
+    
 
   @markedPrinted: (documento) ->
     $.ajax

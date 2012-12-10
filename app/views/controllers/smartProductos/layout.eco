@@ -1,7 +1,6 @@
 
 
-<ul class="unstyled mobileList smartItemsList">
-</ul>
+
 
 <ul class="unstyled mobileList src_createItem">
   <li class="inactive  productos">
@@ -30,4 +29,7 @@
 
   </li>
   
+</ul>
+
+<ul class="unstyled mobileList smartItemsList">
 </ul>

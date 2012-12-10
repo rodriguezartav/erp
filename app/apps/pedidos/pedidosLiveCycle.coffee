@@ -9,7 +9,7 @@ Saldo = require("models/socketModels/saldo")
 class PedidosLiveCycle extends Spine.Controller
   className: "row-fluid"
 
-  @departamento = "Pedidos"
+  @departamento = "Credito y Cobro"
   @label = "Administracion de Pedidos"
   @icon = "icon-ok-sign"
 

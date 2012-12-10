@@ -6,7 +6,7 @@
 
 <li class="item" ">
 
-  <h4><%= cliente?.Name?.capitalize()  %></h4>
+  <h4><span class="label"><%= @Consecutivo %></span> <%= cliente?.Name?.capitalize()  %></h4>
 
   <p>&nbsp;<span class="pull-right"><%= @Total.toMoney() %></span></p>
 

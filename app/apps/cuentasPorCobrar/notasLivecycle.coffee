@@ -16,14 +16,16 @@ class NotasLivecycle extends Spine.Controller
     ".src_aprobados" : "srcAprobados"
     ".src_facturados" : "srcFacturados"
     ".src_list" : "srcList"
-    
+    ".view" : "view"
+    ".print" : "print"    
 
   events:
     "click .cancel"   : "reset"
     "click .btn_aprobar"  : "onAprobar"
-    "click .btn_facturar" : "onFacturar"
+    "click .btn-print" : "onPrint"
     "click .reload" : "reload"
     "click .item"  : "onItemClick"
+    "click .btn-print-complete" : "onPrintComplete"
 
   constructor: ->
     super
@@ -38,14 +40,20 @@ class NotasLivecycle extends Spine.Controller
     Documento.ajax().query( livecycle: true )
 
   render: =>
+    @view.show()
+    @print.hide()
+
     aprobados= []
     pendientes = []
     facturados = []
 
     for documento in Documento.all()
-      aprobados.push documento if documento.Autorizado == true
-      facturados.push documento if documento.Estado == "Impreso"
-      pendientes.push documento if documento.Autorizado == false
+      if documento.Estado == "Impreso"
+        facturados.push documento 
+      else if documento.Autorizado == true
+        aprobados.push documento
+      else if documento.Autorizado == false
+        pendientes.push documento 
 
     @srcList.html "<li><h5>No hay documentos en la lista</h5></li>"
     @srcPendientes.html require("views/apps/cuentasPorCobrar/notasLivecycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
@@ -60,50 +68,51 @@ class NotasLivecycle extends Spine.Controller
     @el.find(".details").hide()
     details.show() if !status
 
-  onAprobar: =>
+  onAprobar: (e) =>
     target = $(e.target)
     id = target.data "id"
     documento = Documento.find id
     documento.Autorizado = true;
     documento.save()
+
+    data =
+      class: Documento
+      restRoute: "Saldo"
+      restMethod: "POST"
+      restData: id :  documento.id
+
+    Spine.trigger "show_lightbox" , "rest" , data , @render
     
-  onFacturar: =>
+  onPrint: (e) =>
+    @view.hide()
+    @print.show()
     target = $(e.target)
     id = target.data "id"
-    documento = Documento.find id    
-    #send to print
+    @documento = Documento.find id    
+    @print.html require("views/apps/cuentasPorCobrar/notasLivecycle/printHeader")
+    @print.append require("views/apps/cuentasPorCobrar/notasLivecycle/printNota")(@documento)
+    @print.append require("views/apps/cuentasPorCobrar/notasLivecycle/printNota")(@documento)
 
-  on_action_click: (e) =>
-    target = $(e.target)
-    referencia = target.attr "data-referencia"
-    @newEstado = parseInt( target.attr("data-newEstado") )
-    @pedidos = PedidoPreparado.findAllByAttribute "Referencia" , referencia
-    @cliente = target.attr "data-cliente"
-    observacion = @txt_observacion.val() || ""
-    ids = []
-    ids.push pedido.id for pedido in @pedidos
 
-    #data =
-    #  class: PedidoPreparado
-    #  restRoute: "Oportunidad"
-    #  restMethod: "PUT"
-    #  restData: ids: ids , observacion: observacion, newEstado: @newEstado
 
-    #Spine.trigger "show_lightbox" , "rest" , data , @aprobarSuccess
-    #return false;
+  onPrintComplete: =>
+    @view.show()
+    @print.hide()
+    @documento.Estado = "Impreso";
+    @documento.save()
+    
+    data =
+      class: Documento
+      restRoute: "Saldo"
+      restMethod: "PUT"
+      restData: id :  @documento.id
 
-  aprobarSuccess: (sucess,results) =>
-    @notify()
-    @render()
+    Spine.trigger "show_lightbox" , "rest" , data , @render
 
-    url = Spine.session.instance_url + "/apex/invoice_topdf?Documento__c_id=" + results?.response
-    window.open(url) if showInvoice
-
-  notify: =>
-#    cliente = Cliente.find @cliente
- #   Spine.socketManager.pushToFeed("#{verb} un pedido de #{cliente.Name}") 
+    @documento = null;
 
   reset: ->
+    @documento = null;
     Documento.unbind "refresh" , @renderPedidos
     @release()
     @navigate "/apps"

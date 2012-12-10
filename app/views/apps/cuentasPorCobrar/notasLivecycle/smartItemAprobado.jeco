@@ -6,15 +6,17 @@
 
 <li class="item" ">
 
-  <h4><%= cliente?.Name?.capitalize()  %></h4>
 
-  <p>&nbsp;<span class="pull-right"><%= @Total.toMoney() %></span></p>
+  <h4><span class="label label-info"><%= @Consecutivo %></span>
+   <%= cliente?.Name?.capitalize()  %></h4>
+
+  <p>&nbsp;<span class="pull-right"><%= @Saldo.toMoney() %></span></p>
 
   <div class="details" style="display:none">
       
       <p><%= @Observacion %><p>
             
-     <a data-id="<%= @id %>"  class="btn btn-success btn_facturar"><i class="icon-ok"></i> Facturar</a>
+     <a data-id="<%= @id %>"  class="btn btn-success btn-print"><i class="icon-ok"></i> Imprimir</a>
 
   </div>
 

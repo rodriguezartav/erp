@@ -1,73 +1,80 @@
 
 
-<div class="row-fluid widgetHeader">
+<div class="view hide_on_print">
+
+  <div class="row-fluid widgetHeader">
   
-  <div class="span6">
-    <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
-  </div>
-  
-  <div class="span6">
-    <div class="rightOptions">
-      <input class="txt_search" type="text" placeholder="Cheque o Recibo" />
-      <a class="btn btn-primary reload">
-        <i class="icon-refresh icon-white"></i>
-        </a>        
+    <div class="span6">
+      <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
     </div>
+  
+    <div class="span6">
+      <div class="rightOptions">
+        <input class="txt_search" type="text" placeholder="Cheque o Recibo" />
+        <a class="btn btn-primary reload">
+          <i class="icon-refresh icon-white"></i>
+          </a>        
+      </div>
+    </div>
+  
   </div>
+
+  <br/>
+
+  <ul class="list_users list nav nav-pills">
   
-</div>
-
-<br/>
-
-<ul class="list_users list nav nav-pills">
-  
-</ul>
-
-<div class="row-fluid ">
-  <ul class="unstyled mobileList">
-    <li>
-      <h4>Recibos Standby</h4>
-      <ul class="section_standby unstyled mobileList list sections">
-          <li><h5>No hay recibos pendientes</h5></li>
-      </ul>
-    </li>
   </ul>
-</div>
 
-<br/>
-<br/>
-<div class="row-fluid ">
-
-  <div class="span4 section_digitados sections"></div>
-
-  <div class="span4 section_entregados sections"></div>
-
-  <div class="span4 ">
+  <div class="row-fluid ">
     <ul class="unstyled mobileList">
       <li>
-        <h4>Recibos Contabilizados</h4>
-        <ul class="section_contabilizados unstyled mobileList list sections">
-          <li><h5>No hay recibos pendientes</h5></li>
+        <h4>Recibos Standby</h4>
+        <ul class="section_standby unstyled mobileList list sections">
+            <li><h5>No hay recibos pendientes</h5></li>
         </ul>
       </li>
     </ul>
   </div>
 
-</div>
-<br/><br/>
-<div class="row-fluid ">
+  <br/>
+  <br/>
+  <div class="row-fluid ">
 
-  <div class="span6 section_aplicados sections"></div>
+    <div class="span4 section_digitados sections"></div>
 
-  <div class="span6 ">
-    <ul class="unstyled mobileList">
-      <li>
-        <h4>Recibos Depositado</h4>
-        <ul class="section_depositados unstyled mobileList list sections">
-          <li><h5>No hay recibos pendientes</h5></li>
-        </ul>
-      </li>
-    </ul>
+    <div class="span4 section_entregados sections"></div>
+
+    <div class="span4 ">
+      <ul class="unstyled mobileList">
+        <li>
+          <h4>Recibos Contabilizados</h4>
+          <ul class="section_contabilizados unstyled mobileList list sections">
+            <li><h5>No hay recibos pendientes</h5></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
   </div>
+  <br/><br/>
+  <div class="row-fluid ">
 
+    <div class="span6 section_aplicados sections"></div>
+
+    <div class="span6 ">
+      <ul class="unstyled mobileList">
+        <li>
+          <h4>Recibos Depositado</h4>
+          <ul class="section_depositados unstyled mobileList list sections">
+            <li><h5>No hay recibos pendientes</h5></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<div class="print show_print">
+  
 </div>

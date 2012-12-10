@@ -8,9 +8,7 @@
 
   <div class="span6">
     <div class="rightOptions">
-     
-     
-     
+
       <div class="toggle-button" style="margin-top: 7px; margin-right: 11px" id="t1">
         <input id="checkbox1" type="checkbox">
       </div>
@@ -18,7 +16,7 @@
        <a class="btn btn-primary pull-right reload" style="display: inline-block;margin-top: 6px;">
           <i class="icon-refresh icon-white"></i>
         </a>
-     
+
     </div>
   </div>
 
