@@ -26,7 +26,7 @@ class Documento extends Spine.Model
     filter =""
 
     filter = @queryFilterAddCondition( "Tipo_de_Documento__c IN ('NC' , 'ND') and ( Autorizado__c = false or Estado__c != 'Impreso'  )" ,  filter)  if options.livecycle
-    filter = @queryFilterAddCondition( "Tipo_de_Documento__c = 'FA' and isContado__c = true and FechaFacturacion__c = TODAY" ,  filter)  if options.contadoDelDia
+    filter = @queryFilterAddCondition( "Tipo_de_Documento__c = 'FA' and isContado__c = true and isEntregado__c = false" ,  filter)  if options.contadoDelDia
     filter = @queryFilterAddCondition(" Saldo__c   != 0"                             ,  filter)  if options.saldo
     filter = @queryFilterAddCondition(" Proveedor__c = '#{options.proveedor}'"       ,  filter)  if options.proveedor
     filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) " ,  filter)  if options.tipos

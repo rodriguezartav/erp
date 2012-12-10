@@ -55,7 +55,7 @@ class ReciboLivecycle extends Spine.Controller
     Pago.deleteAll()
     Documento.deleteAll()
     Pago.ajax().query( { livecycle: true  , search: search } , afterSuccess: @onPagoLoadSuccess ) 
-    Documento.ajax().query {contadoDelDia:true} , afterSuccess: @onDocumentoLoadSuccess
+    Documento.ajax().query { contadoDelDia: true} , afterSuccess: @onDocumentoLoadSuccess
     @filterByUserId = null
 
   onPagoLoadSuccess: =>
