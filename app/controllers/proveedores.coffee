@@ -43,7 +43,7 @@ class Proveedores  extends Spine.Controller
       parent.toggleClass("active")
       parent.siblings().removeClass("active")
       @setProveedor()
-      @js_proveedor_search.addClass uneditable-input
+      @js_proveedor_search.addClass "uneditable-input"
       @proveedores_list.hide()
     
   on_filter: (e) =>
