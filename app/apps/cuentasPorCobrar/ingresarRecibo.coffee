@@ -58,16 +58,19 @@ class IngresarRecibo extends Spine.Controller
     ".btn_forma_pago"    : "btn_forma_pago"
     ".selectFormaPago"   : "selectFormaPago"
     ".txtReferencia" : "txtReferencia"
+    ".txtRecibo" : "txtRecibo"
     
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
     "click .btn_forma_pago" : "onBtnFormaPagoClick"
+    "click .btn_banco>li>a" : "onBtnBancoClick"
 
   setVariables: ->
     @items = []
     @pago = Pago.create { Fecha: new Date() }
     @formaPago = null
+    @banco = ""
 
   setBindings: ->
     Documento.bind 'query_success' , @onDocumentoLoaded
@@ -94,12 +97,14 @@ class IngresarRecibo extends Spine.Controller
    
   render: ->
     @html require("views/apps/cuentasPorCobrar/ingresarRecibo/layout")(IngresarRecibo)
-    @refreshView(@pago,@inputs_to_validate)    
+    @refreshView(@pago,@inputs_to_validate)
+    recibo = parseInt localStorage[IngresarRecibo.label + "-Recibo"] || 0
+    @txtRecibo.val (recibo + 1)
     @clientes = new Clientes(el: @src_cliente)
 
   onClienteSet: (cliente) =>
     Documento.destroyAll()
-    Documento.ajax().query( { saldo: true , enRecibo: true , cliente: cliente  , autorizado: true } , afterSuccess: @onDocumentoLoaded )    
+    Documento.ajax().query( { saldo: true , cliente: cliente  , autorizado: true } , afterSuccess: @onDocumentoLoaded )    
     @pago.Cliente = Cliente.current.id
 
   onDocumentoLoaded: =>
@@ -121,6 +126,11 @@ class IngresarRecibo extends Spine.Controller
     target.addClass "btn-primary"
     @formaPago = target.attr "data-forma-pago"
 
+  onBtnBancoClick: (e) =>
+    target = $(e.target)
+    @txtReferencia.val target.html() + " "
+    @txtReferencia.focus()
+
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pago.Cliente == null
     @validationErrors.push "El pago debe tener al menos 1 pago" if PagoItem.count() == 0
@@ -138,6 +148,7 @@ class IngresarRecibo extends Spine.Controller
 
   send: (e) =>
     @txtReferencia.val "N/D" if @formaPago == "Efectivo" or @formaPago == "Nota Credito"
+
     @updateFromView(@pago,@inputs_to_validate)
     
     pagoItems = []
@@ -161,8 +172,8 @@ class IngresarRecibo extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
   after_send: =>
+    localStorage[IngresarRecibo.label + "-Recibo"] = @pago.Recibo
     cliente = Cliente.find @pago.Cliente
-    #monto = @pago.Monto?.toMoney() || "N/D"
     Spine.socketManager.pushToFeed("#{cliente.Name} hizo un pago")
     @minor_reset()
 

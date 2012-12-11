@@ -55,7 +55,7 @@
       
     </table>
 
-    <a data-action="3" class="btn btn-success btn_bulk_action pull-right" data-ref="Entregados">Contabilizar</a>
+    <a data-action="3" class="btn btn-success btn_bulk_action pull-right" data-ref="Entregados">Aceptar</a>
     
     <a data-action="1" class="btn btn-danger btn_bulk_action" data-ref="Entregados">Cancelar</a>
 

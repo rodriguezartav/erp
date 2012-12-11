@@ -37,16 +37,6 @@
         <td><%= cheque.toMoney() %></td>
       </tr>
       
-      <tr>
-        <td><strong>Total Liquido</strong></td>
-        <td><strong><%= liquido.toMoney() %></strong></td>
-      </tr>
-      
-      <tr>
-        <td><strong>Total Contado</strong></td>
-        <td><strong><%= @totalContado.toMoney() %></strong></td>
-      </tr>
-      
       <tr class="hide_print">
         <td>Deposito</td>
         <td><%= deposito.toMoney() %></td>

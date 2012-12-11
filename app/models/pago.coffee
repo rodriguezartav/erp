@@ -23,7 +23,7 @@ class Pago extends Spine.Model
         monto += pago.Monto
         montoPendiente += pago.MontoPendiente
 
-      groups.push {Recibo: recibo , CreatedByid: pagos_in_recibo[0].CreatedByid ,  FormaPago: pagos_in_recibo[0].FormaPago , Fecha: pagos_in_recibo[0].Fecha , Consecutivos: consecutivos, Pagos: pagos_in_recibo , Cliente: pagos_in_recibo[0].Cliente , Monto: monto , MontoPendiente: montoPendiente , Custodio: pagos_in_recibo[0].Custodio } if pagos_in_recibo.length > 0
+      groups.push {Recibo: recibo , CreatedByid: pagos_in_recibo[0].CreatedByid ,  FormaPago: pagos_in_recibo[0].FormaPago , Referencia: pagos_in_recibo[0].Referencia  , Fecha: pagos_in_recibo[0].Fecha , Consecutivos: consecutivos, Pagos: pagos_in_recibo , Cliente: pagos_in_recibo[0].Cliente , Monto: monto , MontoPendiente: montoPendiente , Custodio: pagos_in_recibo[0].Custodio } if pagos_in_recibo.length > 0
     groups
 
   @queryFilter: (options ) =>

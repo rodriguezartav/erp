@@ -1,7 +1,6 @@
 require('lib/setup')
 Spine = require('spine')
 Pago = require("models/pago")
-Documento = require("models/documento")
 Cliente = require("models/cliente")
 User = require("models/user")
 
@@ -48,23 +47,12 @@ class ReciboLivecycle extends Spine.Controller
     @reload()
 
   reload: =>
-    @doubleCheck = 0
     @sections.empty()
     search = if @txt_search.val().length > 0 then @txt_search.val() else null
     @txt_search.val ""
     Pago.deleteAll()
-    Documento.deleteAll()
-    Pago.ajax().query( { livecycle: true  , search: search } , afterSuccess: @onPagoLoadSuccess ) 
-    Documento.ajax().query { contadoDelDia: true} , afterSuccess: @onDocumentoLoadSuccess
+    Pago.ajax().query( { livecycle: true  , search: search } , afterSuccess: @render ) 
     @filterByUserId = null
-
-  onPagoLoadSuccess: =>
-    @doubleCheck++
-    @render() if @doubleCheck ==2
-
-  onDocumentoLoadSuccess: =>
-    @doubleCheck++    
-    @render() if @doubleCheck ==2
 
   render: =>
     users=[]
@@ -75,12 +63,7 @@ class ReciboLivecycle extends Spine.Controller
     @recibosContabilizados = []
     @recibosAplicados = []
     @recibosDepositados = []
-    
-    totalContado = 0
-    
-    for documento in Documento.all()
-      totalContado += documento.Total;
-    
+
     pagos = Pago.select (item) =>
       return true if !@filterByUserId
       return true if item.CreatedByid and item.CreatedByid == @filterByUserId
@@ -109,7 +92,7 @@ class ReciboLivecycle extends Spine.Controller
     @sectionDigitados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionDigitados")(pagos: digitadosAgrupados )
     @sectionEntregados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionEntregados")(pagos: entregadosAgrupados )  
     @sectionContabilizados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemContabilizado")( contabilizadosAgrupados )
-    @sectionAplicados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionAplicados")( pagos: aplicadosAgrupados , totalContado: totalContado )  
+    @sectionAplicados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionAplicados")( pagos: aplicadosAgrupados )  
     @sectionDepositados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemDepositado")( depositadosAgrupados )
     @list_users.html require("views/apps/cuentasPorCobrar/reciboLivecycle/user")(users)
 

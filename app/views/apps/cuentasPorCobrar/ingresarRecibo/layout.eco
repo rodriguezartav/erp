@@ -2,7 +2,6 @@
   <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
 </div>
 
-
 <div class="well ">
 
  <div class="row-fluid">
@@ -10,20 +9,18 @@
       <h3>Cliente</h3>
       <div class="src_cliente"></div>
    </div>
-  
+
      <div class="span2" style="float:right;">
          <h3>Recibo</h3>
-         <input class="validatable" data-numeric="true" data-type="Recibo" />
+         <input class="validatable txtRecibo" data-numeric="true" data-type="Recibo"  />
      </div>
-    
-      
-    
+
  </div>
 
  <br/>
 
   <div class="row-fluid">
-   <div class="span6">
+    <div class="span8">
       <h3>Forma de Pago</h3>
       <div class="row-fluid">
         <span data-forma-pago="Efectivo" class="btn btn_forma_pago">Efectivo</span>
@@ -34,7 +31,29 @@
 
     </div>
 
-     <div class="span2" style="float:right;">
+    <div class="span1 pull-right" style="margin-top: 8px;">
+      
+      <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+          Banco
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu btn_banco">
+          <li><a>Nacional</a></li>
+          <li><a>Costa Rica</a></li>
+          <li><a><BAC</a></li>
+          <li><a>Popular</a></li>
+          <li><a>Lafise</a></li>
+          <li><a>Scotiabank</a></li>
+          <li><a>Proamerica</a></li>
+          <li><a>BCT</a></li>
+          <li><a>BCAC</a></li>
+          <li><a>Cathay</a></li>
+        </ul>
+      </div>
+    </div>
+
+     <div class="span3" style="float:right;">
         <h3>Referencia</h3>
         <input class="validatable txtReferencia" data-type="Referencia" placeholder="# cheque/deposito"/>
       </div>

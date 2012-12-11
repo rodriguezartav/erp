@@ -9,10 +9,13 @@
 
 <li class="item">
   <div>
-    <strong class="">Recibo: </strong>
-    <span class=""><%= @Recibo  %> </span>
+    <div>
+      <strong class=""><%= cliente.Name %> </strong>
+      <span class="pull-right"><%= @MontoPendiente?.toMoney() %></span>
+    </div>
+    <div><strong>Recibo: </strong><span class=""><%= @Recibo  %> </span>
     <span> <%= @FormaPago %> : <%= @Referencia %></span>
-    <span class="pull-right"><%= @MontoPendiente?.toMoney() %></span>
+    </div>
   </div>
   
   <div class="details" style="display:none">
