@@ -145,8 +145,8 @@ class ReciboLivecycle extends Spine.Controller
       restData: ids: ids , action: action
     
     Spine.trigger "show_lightbox" , "rest" , data , =>
-      return setTimeout(@printEntrega , 2000 ) if action == 2
-      return setTimeout(@printDeposito , 2000 ) if action == 5
+      #return setTimeout(@printEntrega , 2000 ) if action == 2
+      #return setTimeout(@printDeposito , 2000 ) if action == 5
       return @reload()
       
   printEntrega: =>
