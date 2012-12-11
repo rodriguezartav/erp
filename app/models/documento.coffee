@@ -3,7 +3,7 @@ Spine = require('spine')
 class Documento extends Spine.Model
   @configure "Documento" , "Nombre_Contado" ,"Total" , "Saldo" , "Consecutivo" , "Referencia" , "Observacion" , 
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo", "PlazoActual" , "FechaFacturacion","FechaVencimiento" ,
-   "Tipo_de_Documento" ,  "IsContado" ,"Estado" , "Autorizado" , "SaldoEnRecibo"
+   "Tipo_de_Documento" ,  "IsContado" ,"Estado" , "Autorizado" , "MontoEnRecibos"
   
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods

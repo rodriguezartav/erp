@@ -43,6 +43,8 @@ class CuentasLiveCycle extends Spine.Controller
 
   reload: (fromClick) =>
     @selectedTipo = null if fromClick
+    
+    Proveedor.query() if Proveedor.count() == 0
     CuentaPorPagar.destroyAll()
     CuentaPorPagar.ajax().query({ forWorkflow: true , orderFechaVencimiento: true , tipo: @selectedTipo } ,  afterSuccess: @render )
 
@@ -80,7 +82,7 @@ class CuentasLiveCycle extends Spine.Controller
     @renderByWeek(@src_calendarizados,calendarizados, "getFechaPagoProgramado" ,"smartItemCalendarizado")
     @renderByWeek(@src_paraPagar,paraPagar, "getFechaPagoProgramado" ,"smartItemParaPagar")
 
-    @hiddenParaPagar.attr "href" , @generateArchive()
+    #@hiddenParaPagar.attr "href" , @generateArchive()
 
     @src_pipeline.html "<li class='header'>Pagos por Semana</li>"
 
@@ -95,7 +97,6 @@ class CuentasLiveCycle extends Spine.Controller
     pickers.on("change",@onInputChange)
 
     if !@toggleRendered then @renderToggle()
-
 
   renderToggle: =>
     $('#t1').toggleButtons
