@@ -26,7 +26,6 @@ class CuentasLiveCycle extends Spine.Controller
     ".hiddenParaPagar" : "hiddenParaPagar"
     ".hiddenParaAplicar" : "hiddenParaAplicar"
 
-
   events:
     "click .cancel"   : "reset"
     "click .actionBtn"  : "onActionClick"
@@ -45,7 +44,7 @@ class CuentasLiveCycle extends Spine.Controller
     @selectedTipo = null if fromClick
     Proveedor.query() if Proveedor.count() == 0
     CuentaPorPagar.destroyAll()
-    CuentaPorPagar.ajax().query({ forWorkflow: true , orderFechaVencimiento: true , tipo: @selectedTipo } ,  afterSuccess: @render )
+    CuentaPorPagar.ajax().query({ forWorkflow: true , orderFechaVencimiento: true  } ,  afterSuccess: @render )
 
   render: =>
     totales=[0,0,0]
@@ -58,22 +57,24 @@ class CuentasLiveCycle extends Spine.Controller
     for cuenta in CuentaPorPagar.all()
       cuenta.Estado = "Calendarizado" if cuenta.Estado == "Para Pagar"
 
-      if cuenta.Estado == 'Pendiente'
-        pendientes.push cuenta
-        totales[2]+= cuenta.Saldo
+      if cuenta.Proveedor__r.Tipo ==  @selectedTipo or !cuenta.Proveedor__r.Tipo
 
-      else if cuenta.Estado == "Calendarizado"
-        itemSemana = semana[cuenta.getFechaPagoProgramado().weeksFromToday()] || 0
-        itemSemana += cuenta.Saldo
-        semana[cuenta.getFechaPagoProgramado().weeksFromToday()] = itemSemana
+        if cuenta.Estado == 'Pendiente'
+          pendientes.push cuenta
+          totales[2]+= cuenta.Saldo
+
+        else if cuenta.Estado == "Calendarizado"
+          itemSemana = semana[cuenta.getFechaPagoProgramado().weeksFromToday()] || 0
+          itemSemana += cuenta.Saldo
+          semana[cuenta.getFechaPagoProgramado().weeksFromToday()] = itemSemana
         
-        if( cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() and cuenta.Saldo > 0 )
-          paraPagar.push cuenta
-          @paraGenerar.push cuenta if !cuenta.Enviado
-          totales[0]+= cuenta.Saldo
-        else
-          totales[1]+= cuenta.Saldo
-          calendarizados.push cuenta
+          if( cuenta.getFechaPagoProgramado().getTime() <= new Date().getTime() and cuenta.Saldo > 0 )
+            paraPagar.push cuenta
+            @paraGenerar.push cuenta if !cuenta.Enviado
+            totales[0]+= cuenta.Saldo
+          else
+            totales[1]+= cuenta.Saldo
+            calendarizados.push cuenta
 
     @src_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
 
