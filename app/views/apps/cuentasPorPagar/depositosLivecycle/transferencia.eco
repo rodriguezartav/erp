@@ -1,0 +1,10 @@
+<li>
+  </div>
+    <%= @Recibo %>
+    <span class="pull-right">  <%=  @Monto.toMoney() %></span>
+  </div>
+  
+  <h5><%= "#{@FormaPago} : #{@Referencia}" %></h5>
+  
+  
+</li>

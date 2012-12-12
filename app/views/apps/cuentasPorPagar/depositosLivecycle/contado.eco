@@ -1,0 +1,4 @@
+<li>
+  <%= @Consecutivo %>
+  <span class="pull-right">  <%=  @Total.toMoney() %></span>
+</li>

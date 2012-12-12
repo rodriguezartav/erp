@@ -1,0 +1,27 @@
+<% total = 0 %>
+<% items = "" %>
+<% fechas = {} %>
+
+ <% for documento in @documentos:  %>
+    <% if !fechas[documento.FechaFacturacion] then  fechas[documento.FechaFacturacion] = 0 %>
+    <% total += documento.Total %>
+    <% items +=  require("views/apps/cuentasPorPagar/depositosLivecycle/contado")(documento) %>
+    <% fechas[documento.FechaFacturacion] += documento.Total  %>
+  <% end %>
+
+<li>
+ <h4> Contado
+   <span class="lbl_totales pull-right"><%= total?.toMoney() %></span>
+ </h4>
+ <% for fecha , monto of fechas : %>
+  <h5><%- "#{fecha} : <span class='pull-right'>#{monto.toMoney()}" %></span></h5>
+ <% end %>
+
+<a data-name="Contado" data-monto="<%= monto %>" class="btn btn-success btn_create_deposit">Crear Deposito</a>
+
+<ul class=" unstyled mobileList src_list">
+
+  <%- items %>
+
+</ul>
+</li>

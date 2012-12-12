@@ -12,6 +12,10 @@
     <span class="pull-right"><%= @MontoPendiente.toMoney() %></span>
   
   <div class="details" style="display:none">
+  
+    <h5> <%= @FormaPago %> : <%= @Referencia %></h5>
+  
+  
     <h5>Documentos: <%= @Consecutivos.join " , " %></h5>
     
     <a data-action="-2" class="btn btn-danger btn_action" data-recibo="<%= @Recibo %>">Borrar</a>

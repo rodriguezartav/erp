@@ -1,0 +1,5 @@
+<li>
+ 
+  <input type="text" class="span5" style="display: inline-block" placeholder="Nombre" value="<%= @Name  %>"/>
+  <input type="text" class="span5 pull-right"  style="display: inline-block"  placeholder="Monto" value="<%= @Monto  %>"/>
+</li>

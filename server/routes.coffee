@@ -9,6 +9,7 @@ class Routes
   setupRoutes: ->
     
     @app.get '/' , (req, res) =>
+      res.redirect "/dev" if process.env.NODE_ENV == 'development'
       res.render "app" , { jsvars: @getJsVars(req) }
 
     @app.get '/dev' , (req, res) =>

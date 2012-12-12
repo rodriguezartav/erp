@@ -27,39 +27,22 @@
   <br/>
   <div class="row-fluid">
   
-  <ul class="unstyled mobileList span3">
-     <li>
-     <h4>Pendiente de Depositar
-      <span class="lbl_totales pull-right"></span>
-     </h4>
-   <ul class="src_pendientes unstyled mobileList src_list">
-     <li><h5>No hay pedidos pendientes</h5></li>
-   </ul>
-   </li></ul>
-
-  <ul class="unstyled mobileList span3">
-
-    <li>
-      <h4>Enviado a Depositar
-            <span class="lbl_totales pull-right"></span>
-      </h4>
-      <ul class="src_paraPagar unstyled mobileList  src_list">
-        <li><h5>No hay pedidos archivados</h5></li>
-      </ul>
-    </li>
-
-    <li>
-        <a download="cxp.txt" class="btn btn-success hiddenParaPagar">Generar</a>
-        <a style="display: none;" class="btn btn-success hiddenParaAplicar pull-right btn_aplicar">Aplicar</a>
-    </li>
+  <ul class="unstyled mobileList span3 src_contado">
   </ul>
 
+  <ul class="unstyled mobileList span3 src_valores">
+
+   
+  </ul>
+
+    <ul class="unstyled mobileList span3 src_transferencias">
+      
+    </ul>
 
     <ul class="unstyled mobileList span3">
       <li>
-        <h4>Depositado</h4>
-        <ul class="src_pipeline unstyled mobileList  src_list">
-          <li><h5>No hay pedidos facturados</h5></li>
+        <h4>Depositos <a class="btn btn-success pull-right btn_deposito">+</a></h4>
+        <ul class="src_depositos unstyled mobileList">
         </ul>
       </li>
     </ul>

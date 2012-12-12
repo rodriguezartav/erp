@@ -1,0 +1,24 @@
+<% total = 0 %>
+<% items = "" %>
+<% formas = {} %>
+
+ <% for pago in @pagos:  %>
+    <% if !formas[pago.FormaPago] then  formas[pago.FormaPago] = 0 %>
+    <% total += pago.Monto %>
+    <% items +=  require("views/apps/cuentasPorPagar/depositosLivecycle/valor")(pago) %>
+    <% formas[pago.FormaPago] += pago.Monto  %>
+  <% end %>
+
+<li>
+ <h4> Transferencias
+   <span class="lbl_totales pull-right"><%= total?.toMoney() %></span>
+ </h4>
+ <% for forma , monto of formas : %>
+  <h5><%- "#{forma} : <span class='pull-right'>#{monto.toMoney()}" %></span></h5>
+ <% end %>
+
+  <ul class=" unstyled mobileList src_list">
+    <%- items %>
+  </ul>
+
+</li>
