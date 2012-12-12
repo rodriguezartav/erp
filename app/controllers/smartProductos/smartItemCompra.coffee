@@ -53,11 +53,11 @@ class SmartItemCompra extends Spine.Controller
     @edit.hide()
     @view.show()
     @render()
-    Spine.trigger "item_edit_ended"
+   # Spine.trigger "item_edit_ended"
 
   onDelete: (e) =>
     @reset()
-    Spine.trigger "item_deleted" , @producto.id
+    #Spine.trigger "item_deleted" , @producto.id
 
   checkItem: (e) =>
     @updateFromView(@dataItem,@inputs_to_validate) if e
