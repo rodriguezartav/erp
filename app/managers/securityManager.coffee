@@ -20,7 +20,6 @@ NotasDebito = require("apps/auxiliares/notasDebito")
 IngresarRecibo = require("apps/cuentasPorCobrar/ingresarRecibo")
 ReciboLivecycle = require("apps/cuentasPorCobrar/reciboLivecycle")
 
-
 VerSaldos = require("apps/vistas/verSaldos")
 VerRegistros = require("apps/vistas/verRegistros")
 VerRegistrosResumen = require("apps/vistas/verRegistrosResumen")
@@ -45,6 +44,8 @@ AjustarNegociacion = require("apps/procesos/ajustarNegociacion")
 FacturasProveedor = require("apps/cuentasPorPagar/facturasProveedor")
 PagosProveedor = require("apps/cuentasPorPagar/pagosProveedor")
 CuentasLiveCycle = require("apps/cuentasPorPagar/cuentasLiveCycle")
+DepositosLivecycle = require("apps/cuentasPorPagar/depositosLivecycle")
+
 
 NotaCreditoProveedor = require("apps/cuentasPorPagar/notaCreditoProveedor")
 TomasInventario = require("apps/procesos/tomasInventario")
@@ -71,7 +72,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ ReciboLivecycle , NotasLivecycle ,FacturasProveedor , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,PagosProveedor , NotasDebito  , IngresarRecibo  , PedidosLiveCycle ,DocumentosAnular ]
+    apps = [ DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle ,FacturasProveedor , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , NotasCredito , FacturasProveedor ,PagosProveedor , NotasDebito  , IngresarRecibo  , PedidosLiveCycle ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Presidencia"] =  [ CuentasLiveCycle , DoCierreDiario  , AjustarNegociacion ,   Compras   , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ NotasLivecycle , AjustarNegociacion ,   Compras  , PedidosLiveCycle   , VerRegistrosResumen ]

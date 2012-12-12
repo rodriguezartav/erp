@@ -90,10 +90,10 @@ class ReciboLivecycle extends Spine.Controller
 
     @sectionStandBy.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemStandby")(standByAgrupados )
     @sectionDigitados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionDigitados")(pagos: digitadosAgrupados )
-    @sectionEntregados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionEntregados")(pagos: entregadosAgrupados )  
+    #@sectionEntregados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionEntregados")(pagos: entregadosAgrupados )  
     @sectionContabilizados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemContabilizado")( contabilizadosAgrupados )
-    @sectionAplicados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionAplicados")( pagos: aplicadosAgrupados )  
-    @sectionDepositados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemDepositado")( depositadosAgrupados )
+    #@sectionAplicados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionAplicados")( pagos: aplicadosAgrupados )  
+    #@sectionDepositados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemDepositado")( depositadosAgrupados )
     @list_users.html require("views/apps/cuentasPorCobrar/reciboLivecycle/user")(users)
 
   onUserClick: (e) =>
@@ -145,18 +145,21 @@ class ReciboLivecycle extends Spine.Controller
       restData: ids: ids , action: action
     
     Spine.trigger "show_lightbox" , "rest" , data , =>
-      #return setTimeout(@printEntrega , 2000 ) if action == 2
+      return setTimeout(@printEntrega , 2000 ) if action == 3
       #return setTimeout(@printDeposito , 2000 ) if action == 5
       return @reload()
       
   printEntrega: =>
     @print.html @sectionDigitados.html()
+    @print.append '<br/><br/><hr/><br/><br/>'
+    @print.append @sectionDigitados.html()
     window.print()
     @reload()
 
   printDeposito: =>
     html = @sectionAplicados.html()
     @print.html require("views/apps/cuentasPorCobrar/reciboLivecycle/printDeposito")(html)
+    @print.append require("views/apps/cuentasPorCobrar/reciboLivecycle/printDeposito")(html)
     window.print()
     @reload()
 

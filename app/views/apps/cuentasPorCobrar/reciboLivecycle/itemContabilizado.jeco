@@ -16,7 +16,8 @@
   <h5>Documentos: <%= @Consecutivos.join " , " %></h5>
   
   <div>
-    <a class="btn btn-success btn_action" data-recibo="<%= @Recibo %>" data-action="4">Aplicar Recibo</a>
+    <a class="btn btn-success btn_action pull-right" data-recibo="<%= @Recibo %>" data-action="4">Aplicar Recibo</a>
+    <a class="btn btn-danger btn_action" data-recibo="<%= @Recibo %>" data-action="1">Cancelar</a>
   </div>
 
   

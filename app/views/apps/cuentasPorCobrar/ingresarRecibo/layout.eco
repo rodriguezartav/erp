@@ -39,9 +39,9 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu btn_banco">
-          <li><a>Nacional</a></li>
-          <li><a>Costa Rica</a></li>
-          <li><a><BAC</a></li>
+          <li><a>BN</a></li>
+          <li><a>BCR</a></li>
+          <li><a>BAC</a></li>
           <li><a>Popular</a></li>
           <li><a>Lafise</a></li>
           <li><a>Scotiabank</a></li>
