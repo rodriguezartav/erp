@@ -1,0 +1,69 @@
+<div class="widgetHeader">
+  <div class="span6">
+    <h1><i class="<%= @icon %>"></i> Notas de <%= @label %></h2>
+  </div>
+  
+  <div class="span6">
+    <div class="rightOptions">
+      <div class="toggle-button nota_toggle" style="margin-top: 7px; margin-right: 11px" >
+        <input id="checkbox1" type="checkbox" checked="checked">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="well widget">
+  <div class="row-fluid">
+
+    <div class="span5">
+      <h3>Cliente</h3>
+      <div class="src_cliente">
+      </div>
+    </div>
+
+      <div class="span7">
+        <h3>Explicacion del Credito</h3>
+          <textarea class="validatable" data-type="Observacion" placeholder="Observacion" />
+      </div>
+
+</div>
+
+<hr/>
+
+<div class="row-fluid">
+
+<div class="span3 ">
+    <h3>SubTotal</h3>
+    <input data-type="SubTotal" id="txtSubTotal" data-numeric="true" class=" validatable subtotal totales"  placeholder="" />
+  </div>
+  
+  <div class="span3 ">
+      <h3>Descuento</h3>
+      <input data-type="Descuento" data-numeric="true" value="0" class=" validatable descuento totales"  placeholder="" />
+    </div>
+
+    <div class="span3 ">
+        <h3>Impuesto</h3>
+        <input data-type="Impuesto" data-numeric="true" value="0" class=" validatable impuesto totales"  placeholder="" />
+      </div>
+
+    <div class="span3 ">
+        <h3>Total</h3>
+        <input data-type="Total" data-numeric="true" class=" validatable total totales"  placeholder="" />
+        <h4 class="lbl_total_format"></h4>
+    </div>
+
+    </div>
+
+</div>
+
+<div class="action_footer">
+    <div class="modal-footer">
+      <a class="btn btn-primary btn-large save">Guardar</a>
+      <a class="btn btn-danger cancel">Regresar</a>
+
+    </div>
+</div>
+
