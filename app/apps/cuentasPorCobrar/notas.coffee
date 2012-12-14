@@ -28,7 +28,6 @@ class Notas extends Spine.Controller
     "click .save" : "send"
     "change .totales" : "onTotalesChange"
 
-
   constructor: ->
     super
     @error.hide()

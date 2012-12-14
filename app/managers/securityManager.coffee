@@ -70,7 +70,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ Notas , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle ,FacturasProveedor , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras  , Notas , FacturasProveedor ,PagosProveedor , Notas  , IngresarRecibo  , PedidosLiveCycle ,DocumentosAnular ]
+    apps = [ Notas , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle ,FacturasProveedor , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,  NotaCreditoProveedor,PagosAnular , Pedidos , AjustarNegociacion , VerClientes,  Entradas , Salidas  , Compras   , FacturasProveedor ,PagosProveedor  , IngresarRecibo  , PedidosLiveCycle ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Presidencia"] =  [ CuentasLiveCycle , DoCierreDiario  , AjustarNegociacion ,   Compras   , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ NotasLivecycle , AjustarNegociacion ,   Compras  , PedidosLiveCycle   , VerRegistrosResumen ]
