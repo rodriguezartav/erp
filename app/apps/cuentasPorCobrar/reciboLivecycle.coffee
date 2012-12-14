@@ -66,7 +66,7 @@ class ReciboLivecycle extends Spine.Controller
 
     pagos = Pago.select (item) =>
       return true if !@filterByUserId
-      return true if item.CreatedByid and item.CreatedByid == @filterByUserId
+      return true if item.Custodio and item.Custodio == @filterByUserId
       return false
 
     for pago in pagos

@@ -26,7 +26,7 @@
     <br/>
     
   <div>
-    <a class="btn btn-success btn_action" data-recibo="<%= @Recibo %>" data-action="2">Entregar</a>
+    <a class="btn btn-success btn_action" data-recibo="<%= @Recibo %>" data-action="3">Entregar</a>
     <a class="btn btn-danger btn_action pull-right" data-recibo="<%= @Recibo %>" data-action="-1">Anular</a>
     <a class="btn btn-danger btn_action pull-right" data-recibo="<%= @Recibo %>" data-action="-2">Borrar</a>    
   </div>
