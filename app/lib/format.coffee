@@ -50,6 +50,12 @@ String.prototype.capitalize = ->
   str = str.replace('s.a.','')
   return str.replace( /(^|\s)([a-z])/g , (m,p1,p2) -> return p1+p2.toUpperCase() )
 
+
+String.prototype.getWeek = ->
+  date = new Date(Date.parse(this))
+  onejan = new Date(date.getFullYear(),0,1);
+  return Math.ceil((((date - onejan) / 86400000) + onejan.getDay()+1)/7);
+
 Date.prototype.toSimple = ->
   months = this.getMonth() + 1
   months = "0" + months if months < 10
@@ -105,6 +111,11 @@ Date.prototype.to_salesforce = ->
   str += ":"
   str += "00Z"
   return str
+
+
+Date.prototype.getWeek = ->
+  onejan = new Date(this.getFullYear(),0,1);
+  return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 
 
 Date.prototype.days_from_now = ->

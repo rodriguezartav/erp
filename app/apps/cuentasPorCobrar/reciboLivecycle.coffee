@@ -88,13 +88,19 @@ class ReciboLivecycle extends Spine.Controller
     aplicadosAgrupados = Pago.group_by_recibo(@recibosAplicados)
     depositadosAgrupados = Pago.group_by_recibo(@recibosDepositados)
 
-    @sectionStandBy.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemStandby")(standByAgrupados )
+    standByAgrupados = standByAgrupados.sort (a,b) =>
+      return new Date(a.Fecha) - new Date(b.Fecha)
+
+    @sectionStandBy.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionStandBy")(pagos: standByAgrupados )
     @sectionDigitados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionDigitados")(pagos: digitadosAgrupados )
     #@sectionEntregados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionEntregados")(pagos: entregadosAgrupados )  
     @sectionContabilizados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemContabilizado")( contabilizadosAgrupados )
     #@sectionAplicados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionAplicados")( pagos: aplicadosAgrupados )  
     #@sectionDepositados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemDepositado")( depositadosAgrupados )
     @list_users.html require("views/apps/cuentasPorCobrar/reciboLivecycle/user")(users)
+
+    pickers = @el.find('.txtFecha').datepicker({autoclose: true})
+    pickers.on("change",@onStandbyDateChange)
 
   onUserClick: (e) =>
     target = $(e.target)
@@ -117,6 +123,21 @@ class ReciboLivecycle extends Spine.Controller
     status = details.is(":visible")
     @el.find(".details").hide()
     target.find(".details").show() if !status
+
+  onStandbyDateChange: (e) =>
+    target = $(e.target)
+    action = Date.parse(target.val())
+    recibo = target.data "recibo"
+    ids = []
+    ids.push recibo.id for recibo in Pago.findAllByAttribute("Recibo","#{recibo}")
+    data =
+      class: Pago
+      restRoute: "Pago"
+      restMethod: "PUT"
+      restData: ids: ids , action: action
+    Spine.trigger "show_lightbox" , "rest" , data , @reload
+
+
 
   onAction: (e) =>
     target = $(e.target)

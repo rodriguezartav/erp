@@ -59,6 +59,7 @@ class IngresarRecibo extends Spine.Controller
     ".selectFormaPago"   : "selectFormaPago"
     ".txtReferencia" : "txtReferencia"
     ".txtRecibo" : "txtRecibo"
+    ".txtFecha>input" : "txtFechaInput"
     
   events:
     "click .cancel" : "reset"
@@ -68,7 +69,7 @@ class IngresarRecibo extends Spine.Controller
 
   setVariables: ->
     @items = []
-    @pago = Pago.create { Fecha: new Date() }
+    @pago = Pago.create()
     @formaPago = null
     @banco = ""
 
@@ -102,7 +103,9 @@ class IngresarRecibo extends Spine.Controller
     @txtRecibo.val (recibo + 1)
     @clientes = new Clientes(el: @src_cliente)
     
-    pickers = @el.find('.txtFecha').datepicker({autoclose: true})
+    picker = @el.find('.txtFecha')
+    pickers =  picker.datepicker({autoclose: true})
+    picker.datepicker('setValue', new Date() )
     pickers.on("change",@onDateChange)
 
   onClienteSet: (cliente) =>
@@ -157,7 +160,7 @@ class IngresarRecibo extends Spine.Controller
 
   send: (e) =>
     @txtReferencia.val "N/D" if @formaPago == "Efectivo" or @formaPago == "Nota Credito"
-
+    @pago.Fecha = @txtFechaInput.val() if !@pago.Fecha
     @updateFromView(@pago,@inputs_to_validate)
     
     pagoItems = []

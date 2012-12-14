@@ -1,0 +1,42 @@
+<% Spine   = require('spine') %>
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@Cliente)  %>
+
+<% User = require("models/user")  %>
+<% user = User.exists(@CreatedByid)  %>
+
+
+
+
+<li class="item">
+  <h5 class=""><%= cliente.Name %> </h5>
+  
+  <div class="row-fluid">
+    <div class="span9">
+      <div class="input-append date txtFecha"  data-recibo="<%= @Recibo %>"  data-id="<%= @id  %>" data-date="<%= @Fecha %>" data-date-format="yyyy-mm-dd">
+          <input data-recibo="<%= @Recibo %>" data-id="<%= @id  %>" style="width: 54%" placeholder="Escoja una Fecha" class="span5" size="16" type="text" value="<%= @Fecha%>">
+          <span class="add-on"><i class="icon-th"></i></span>
+      </div>
+    </div>
+  
+    <span class="span3 label label-info"><%= @Recibo %></span>
+    </div>
+  </div>
+  
+  <div class="details" style="display:none">
+    <h5> <%= @FormaPago %> : <%= @Referencia %></h5>
+    <div class="row-fluid">
+      <span class="span8">Documentos: <%= @Consecutivos?.join " , " %></span>
+      <span class="span4 "><%= @MontoPendiente?.toMoney() %></span>
+    </div>
+    
+  <div class="row-fluid">
+    <a class="btn btn-success btn_action pull-right" data-recibo="<%= @Recibo %>" data-action="3">Entregar</a>
+    <a class="btn btn-danger btn_action " data-recibo="<%= @Recibo %>" data-action="-2">Borrar</a>    
+    <a class="btn btn-warning btn_action " data-recibo="<%= @Recibo %>" data-action="-1">Anular</a>
+  </div>
+  
+  </div>
+  
+  
+</li>
