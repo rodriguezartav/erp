@@ -101,6 +101,9 @@ class IngresarRecibo extends Spine.Controller
     recibo = parseInt localStorage[IngresarRecibo.label + "-Recibo"] || 0
     @txtRecibo.val (recibo + 1)
     @clientes = new Clientes(el: @src_cliente)
+    
+    pickers = @el.find('.txtFecha').datepicker({autoclose: true})
+    pickers.on("change",@onDateChange)
 
   onClienteSet: (cliente) =>
     Documento.destroyAll()
@@ -113,6 +116,12 @@ class IngresarRecibo extends Spine.Controller
       @items.push ri
       @saldos_list.append ri.el
     $('.info_popover').popover()
+
+  onDateChange: (e) =>
+    target = $(e.target)
+    @pago.Fecha = target.val()
+    @pago.save()
+    return false;
 
   updateTotal: =>
     total =0
@@ -157,7 +166,7 @@ class IngresarRecibo extends Spine.Controller
       item.Recibo = @pago.Recibo
       item.Cliente = @pago.Cliente
       item.FormaPago = @formaPago
-      item.Fecha = new Date(Date.now()).to_salesforce_date()
+      item.Fecha = @pago.Fecha
       item.Referencia = @pago.Referencia
       item.setTipo()
       pagoItems.push item if item.Monto and parseInt(item.Monto) != 0
