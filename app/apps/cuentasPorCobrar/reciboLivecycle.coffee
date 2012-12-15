@@ -22,6 +22,7 @@ class ReciboLivecycle extends Spine.Controller
     ".section_depositados" : "sectionDepositados"
     ".txt_search" : "txt_search"
     ".print"    : "print"
+    ".list_search" : "listSearch"
 
   events:
     "click .cancel"    :  "reset"
@@ -30,6 +31,8 @@ class ReciboLivecycle extends Spine.Controller
     "click .btn_bulk_action" : "onBulkAction"
     "click .reload"    :  "reload"
     "click .userItem"  :  "onUserClick"
+    "click .btn_selected" : "onBtnSelectedClick"
+    "click .btn_aplicar"  : "onBtnAplicar"
 
   setVariables: =>
     @recibosStandby =[]    
@@ -38,6 +41,7 @@ class ReciboLivecycle extends Spine.Controller
     @recibosAplicados = []
     @recibosContabilizados = []
     @recibosDepositados = []
+    @recibosParaAplicar = []
     
   constructor: ->
     super
@@ -48,11 +52,19 @@ class ReciboLivecycle extends Spine.Controller
 
   reload: =>
     @sections.empty()
-    search = if @txt_search.val().length > 0 then @txt_search.val() else null
-    @txt_search.val ""
-    Pago.deleteAll()
-    Pago.ajax().query( { livecycle: true  , search: search } , afterSuccess: @render ) 
     @filterByUserId = null
+    Pago.deleteAll()    
+    return @search() if @txt_search.val().length > 0
+    Pago.ajax().query( { livecycle: true  } , afterSuccess: @render ) 
+
+  search: =>
+    search = @txt_search.val() 
+    @txt_search.val ""
+    Pago.ajax().query( { search: search } , afterSuccess: @renderSearch ) 
+    
+  renderSearch: =>
+    console.log @listSearch
+    @listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemSearch")( Pago.group_by_recibo(Pago.all()) )
 
   render: =>
     users=[]
@@ -63,6 +75,7 @@ class ReciboLivecycle extends Spine.Controller
     @recibosContabilizados = []
     @recibosAplicados = []
     @recibosDepositados = []
+    @recibosParaAplicar = []
 
     pagos = Pago.select (item) =>
       return true if !@filterByUserId
@@ -93,10 +106,7 @@ class ReciboLivecycle extends Spine.Controller
 
     @sectionStandBy.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionStandBy")(pagos: standByAgrupados )
     @sectionDigitados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionDigitados")(pagos: digitadosAgrupados )
-    #@sectionEntregados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionEntregados")(pagos: entregadosAgrupados )  
-    @sectionContabilizados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemContabilizado")( contabilizadosAgrupados )
-    #@sectionAplicados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionAplicados")( pagos: aplicadosAgrupados )  
-    #@sectionDepositados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemDepositado")( depositadosAgrupados )
+    @sectionContabilizados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionContabilizados")(pagos: contabilizadosAgrupados )
     @list_users.html require("views/apps/cuentasPorCobrar/reciboLivecycle/user")(users)
 
     pickers = @el.find('.txtFecha').datepicker({autoclose: true})
@@ -137,7 +147,20 @@ class ReciboLivecycle extends Spine.Controller
       restData: ids: ids , action: action
     Spine.trigger "show_lightbox" , "rest" , data , @reload
 
-
+  onBtnSelectedClick: (e) =>
+    target = $(e.target)
+    recibo = target.data "recibo"
+    selectedClass = "btn-primary paraAplicar"
+    if target.hasClass selectedClass
+      target.removeClass selectedClass 
+      index = @recibosParaAplicar.indexOf recibo
+      @recibosParaAplicar.splice index , 1
+    else
+      target.addClass selectedClass
+      @recibosParaAplicar.push recibo
+    
+    console.log @recibosParaAplicar
+    return false;
 
   onAction: (e) =>
     target = $(e.target)
@@ -169,7 +192,11 @@ class ReciboLivecycle extends Spine.Controller
       return setTimeout(@printEntrega , 2000 ) if action == 3
       #return setTimeout(@printDeposito , 2000 ) if action == 5
       return @reload()
-      
+
+
+
+
+
   printEntrega: =>
     @print.html @sectionDigitados.html()
     @print.append '<br/><br/><hr/><br/><br/>'

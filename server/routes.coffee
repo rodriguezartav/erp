@@ -22,6 +22,10 @@ class Routes
         issued_at: req.session.salesforceToken.issued_at
       res.send 500
 
+    @app.get "/logout" , (req,res) =>
+      
+      res.redirect "/"
+      
     @app.all "/parse/users/?*" , (req,res) ->
       req.parseController.handleProxy(req,res)
 

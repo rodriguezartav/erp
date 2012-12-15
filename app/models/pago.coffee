@@ -32,8 +32,8 @@ class Pago extends Spine.Model
      filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
      filter = @queryFilterAddCondition(" Fecha__c = #{options.fecha} "     ,  filter)  if options.fecha
      filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 4) "     ,  filter)  if options.deposito
-     filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 0 , 1 , 3 ) "     ,  filter)  if options.livecycle and !options.search
-     filter = @queryFilterAddCondition(" Recibo__c = '#{options.search}' or Referencia__c = '#{options.search}' "     ,  filter)  if options.search
+     filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 0 , 1 , 3 ) "     ,  filter)  if options.livecycle
+     filter = @queryFilterAddCondition(" Recibo__c='#{options.search}'"     ,  filter)  if options.search
      #filter = @queryFilterAddCondition(" DepositadoFecha__c = LAST_N_DAYS:7 and CreatedById = '#{depositadosUsuario}'"     ,  filter)  if options.depositadosUsuario != null
      filter
 
