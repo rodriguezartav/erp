@@ -1,0 +1,43 @@
+<% Producto = require("models/producto")  %>
+
+<li class="item">
+  <div class="row-fluid">
+    <div class="span3">
+      <strong><%= @Tipo + "-" + @Boleta %></strong>
+    </div>
+    <div class="span9">
+      <%= @Observacion %>
+    </div>
+  </div>
+  
+  <div class="details" style="display: none;">
+    <ul class="mobileList unstyled">
+      <% for movimiento in @Movimientos : %>
+        <% producto = Producto.find(movimiento.Producto)  %>
+        <li >
+          <div class="row-fluid">
+            <span class="span8">
+              <strong><%=movimiento.ProductoCantidadPendiente  %></strong>
+              
+              <%= producto.Name %>
+            </span>
+            
+            <% if producto.Costo != null and producto.Costo != undefined and movimiento.Tipo == 'CO' : %>
+              <span class="span4">
+                <input style="display:inline-block" data-id="<%= movimiento.id %>"  class="span7  costoInput" value="<%= producto.CostoAnterior || 0 %>"    />
+                <h6  class="pull-right"><%= producto.Costo?.toMoney() %><h6>            
+              </span>
+            <% end %>
+            
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    
+    <a data-boleta="<%= @Boleta %>" data-action="update" class="btn btn-success pull-right btn_bulk">Aprobar</a>
+    <a  data-boleta="<%= @Boleta %>" data-action="delete"  class="btn btn-danger btn_bulk">Borrar</a>
+
+    
+  </div>
+
+</li>
