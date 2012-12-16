@@ -1,0 +1,52 @@
+<div class="row-fluid widgetHeader">
+  <h1>Movimiento Nuevo</h1>
+</div>
+
+<div class="well">
+  <div class=" row-fluid">
+
+    <div class="span5">
+      <h3>Proveedor</h3>
+      <div class="src_proveedor"></div>
+    </div>
+
+    <div class="span2">
+      <h3>Referencia</h3>
+      <input class="validatable" data-type="Referencia" data-numeric="true" data-length="3"  id="txt_referencia" placeholder="# boleta" />
+    </div>
+
+    <div class="span3">
+      <h3>Tipo</h3>
+      <div class="toggle-button entrada_toogle " >
+         <input id="checkbox1" type="checkbox" checked="checked">
+       </div>
+     </div>
+
+     <div class="span2">
+       <h3>Compra</h3>
+       <div class="toggle-button compra_toogle " >
+          <input id="checkbox1" type="checkbox" >
+        </div>
+      </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2"><h3>Detalles</h3>
+    </div>
+  
+     <div class="span10">
+        <textarea style="width: 90%,height: 27px;margin-bottom: 0px;" class="validatable " data-required="true" data-type="Observacion" placeholder="# de Factura" />
+      </div>
+  </div>
+
+  <hr/>
+
+  <div class="src_smartProductos smartProductos"></div>
+</div>
+
+<div class="action_footer create"  >
+  <div class="modal-footer">
+    <a class="btn btn-primary save">Guardar</a>
+    <a class="btn btn-danger cancel">Regresar</a>
+  </div>
+</div>

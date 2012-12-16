@@ -9,7 +9,7 @@ SmartProductos = require("controllers/smartProductos/smartProductos")
 SmartItemEntrada = require("controllers/smartProductos/smartItemEntrada")
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
-
+Movimiento = require("apps/auxiliares/movimiento")
 
 class MovimientoLivecycle extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
@@ -18,25 +18,16 @@ class MovimientoLivecycle extends Spine.Controller
   @departamento = "Inventarios"
   @label = "Movimientos"
   @icon = "icon-arrow-left"
-  
-
-  className: "row-fluid"
 
   elements:
     ".panel" : "panel"
-    ".create" : "create"
-    ".src_proveedor" : "src_proveedor"
-    
-    ".validatable"        :  "inputs_to_validate"
+    ".create" : "create"    
     ".movimientos_list"   :  "movimientos_list"
-    ".src_smartProductos" : "src_smartProductos"
     ".list_pendientes" : "list_pendientes"
     ".list_aplicados" : "list_aplicados"
 
   events:
-    "click .save"         :  "send"
     "click .btn_create"       : "onCreate"
-    "click .cancel"       : "onCancel"
     "click .item" :       "onItemClick"
     "click .costoInput" : "onInputClick"
     "click .reload"  : "reload"
@@ -64,9 +55,6 @@ class MovimientoLivecycle extends Spine.Controller
     @isCompra= false
     Producto.reset_current()
     @html require("views/apps/auxiliares/movimientoLivecycle/layout")(@constructor)
-    @smartProductos = new SmartProductos( el: @src_smartProductos , smartItem: SmartItemEntrada , referencia: "a")
-    @proveedores = new Proveedores(el: @src_proveedor)
-    @renderToggle()
     @reload()
 
   reload: =>
@@ -80,35 +68,20 @@ class MovimientoLivecycle extends Spine.Controller
     movimientos = MovimientoItem.findAllByAttribute "IsAplicado" , true
     @list_aplicados.html require("views/apps/auxiliares/movimientoLivecycle/itemAprobado")(MovimientoItem.group_by_boleta(movimientos))
 
-
-  renderToggle: =>
-    @el.find('.entrada_toogle').toggleButtons
-      width: 200,
-      label:
-        enabled: "Entrada"
-        disabled: "Salida"
-      onChange: ($el, status, e) =>
-        @tipo = if status then "EN" else "SA"
-        return true
-
-     @el.find('.compra_toogle').toggleButtons
-        width: 100,
-        label:
-          enabled: "Si"
-          disabled: "No"
-        onChange: ($el, status, e) =>
-          @isCompra = status
-          return true
-
   onCreate: =>
     @panel.hide()
-    @create.show()    
-    @inputs_to_validate.val ""
-    @smartProductos.clear()
+    create = $("<div class='create'></div>")
+    @el.append create
+    @movimiento.reset() if @movimiento
+    @movimiento = new Movimiento 
+      el: create
+      onSuccess: =>
+        @reload()
+        @onCreateComplete()
+      onCancel: @onCreateComplete
 
-  onCancel: =>
+  onCreateComplete: =>
     @panel.show()
-    @create.hide()
 
   onItemClick: (e) =>
     target = $(e.target)
@@ -118,35 +91,7 @@ class MovimientoLivecycle extends Spine.Controller
     @el.find(".details").hide()
     target.find(".details").show() if !status    
 
-  customValidation: =>
-    @validationErrors.push "Ingrese al menos un producto" if Movimiento.count() == 0
-    @validationErrors.push "Escoja el Proveedor" if @el.find(".js_proveedor_search").val().length == 0
 
-  beforeSend: (object) ->
-    for movimiento in Movimiento.all()
-      movimiento.Tipo             = if @isCompra then "CO" else @tipo
-      movimiento.Nombre_Contado   = @el.find(".js_proveedor_search").val()
-      movimiento.Precio           = 0
-      movimiento.Impuesto         = 0
-      movimiento.Descuento        = 0
-      movimiento.SubTotal         = 0
-      movimiento.Observacion      = object.Observacion
-      movimiento.Referencia       = object.Referencia
-      movimiento.save()
-      object.Observacion = ""
-    
-  send: (e) =>
-    @updateFromView({},@inputs_to_validate)
-    
-    data =
-      class: Movimiento
-      restRoute: "Movimiento"
-      restMethod: "POST"
-      restData: 
-        movimientos: Movimiento.salesforceFormat( Movimiento.all(), false ) 
-
-    Spine.trigger "show_lightbox" , "rest" , data , @after_send
-  
   onBulkAction: (e) =>
     target = $(e.target)
     boleta = target.data "boleta"
@@ -175,11 +120,8 @@ class MovimientoLivecycle extends Spine.Controller
     @reload()
 
   customReset: =>
-    for item in Movimiento.all()
-      item.destroy()
-    @smartProductos.reset()
+    @movimiento.reset() if @movimiento
     @navigate "/apps"
-    
-  
+
 
 module.exports = MovimientoLivecycle

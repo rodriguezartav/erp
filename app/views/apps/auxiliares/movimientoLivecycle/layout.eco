@@ -1,74 +1,26 @@
-<div class="row-fluid widgetHeader">
-  <div class="span6">
-    <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
-  </div>
 
-  <div class="span6">
-    <div class="rightOptions">
-      <a class="btn btn-primary reload">
-        <i class="icon-refresh icon-white"></i>
-      </a>
-      <a class="btn btn-primary btn_create">
-        <i class="icon-new icon-white"></i>
-      </a>    
+
+
+<div class="panel">
+
+  <div class="row-fluid widgetHeader">
+    <div class="span6">
+      <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
     </div>
-  </div>
-</div>
 
-<div class="well create" style="display: none;">
-
-  <div class=" row-fluid">
-
-      <div class="span5">
-        <h3>Proveedor</h3>
-        <div class="src_proveedor"></div>
+    <div class="span6">
+      <div class="rightOptions">
+        <a class="btn btn-primary reload">
+          <i class="icon-refresh icon-white"></i>
+        </a>
+        <a class="btn btn-primary btn_create">+
+          <i class="icon-new icon-white"></i>
+        </a>    
       </div>
-
-      <div class="span2">
-        <h3>Referencia</h3>
-        <input class="validatable" data-type="Referencia" data-numeric="true" data-length="3"  id="txt_referencia" placeholder="# boleta" />
-      </div>
-
-      <div class="span3">
-        <h3>Tipo</h3>
-        <div class="toggle-button entrada_toogle " >
-           <input id="checkbox1" type="checkbox" checked="checked">
-         </div>
-       </div>
-
-       <div class="span2">
-         <h3>Compra</h3>
-         <div class="toggle-button compra_toogle " >
-            <input id="checkbox1" type="checkbox" >
-          </div>
-        </div>
-  </div>
-
-  <div class="row-fluid">
-    <div class="span2"><h3>Detalles</h3>
     </div>
-    
-     <div class="span10">
-        <textarea style="width: 90%,height: 27px;margin-bottom: 0px;" class="validatable " data-required="true" data-type="Observacion" placeholder="# de Factura" />
-      </div>
   </div>
   
-  <hr/>
-
-  <div class="src_smartProductos smartProductos"></div>
-
-</div>
-
-<div class="action_footer create"  style="display: none;">
-  <div class="modal-footer">
-    <a class="btn btn-primary save">Guardar</a>
-    <a class="btn btn-danger cancel">Regresar</a>
-  </div>
-</div>
-</div>
-
-<div class="well panel">
-
+  <br/> 
   <div class="row-fluid ">
 
     <div class="span6 section_standby sections">

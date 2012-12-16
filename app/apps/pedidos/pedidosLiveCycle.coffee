@@ -5,6 +5,7 @@ Cliente = require("models/cliente")
 Producto = require("models/producto")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
 Saldo = require("models/socketModels/saldo")
+SinglePedido = require("apps/pedidos/singlePedidos")    
 
 class PedidosLiveCycle extends Spine.Controller
   className: "row-fluid"
@@ -27,14 +28,15 @@ class PedidosLiveCycle extends Spine.Controller
     ".txt_observacion" : "txt_observacion"
     ".pedido_detail_info" : "pedido_detail_info"
     ".src_pedidos_list" : "src_pedidos_list"
+    ".view" : "view"
     
 
   events:
-    "click .cancel"   : "reset"
     "click .aprobar"  : "on_action_click"
     "click .archivar" : "on_action_click"
     "click .reload" : "reload"
     "click .pedidoItem"  : "onItemClick"
+    "click .btn_create" : "onCreate"
 
   constructor: ->
     super
@@ -76,6 +78,21 @@ class PedidosLiveCycle extends Spine.Controller
     @src_pedidos_archivados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAnulado")( archivados ) if archivados.length > 0
     @src_pedidos_facturados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemFacturado")( facturados ) if facturados.length > 0
     @src_pedidos_anulados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAnulado")( anulados ) if anulados.length > 0
+
+  onCreate: =>
+    @view.hide()
+    create = $("<div class='create'></div>")
+    @el.append create
+    @singlePedido.reset() if @singlePedido
+    @singlePedido = new SinglePedido 
+      el: create
+      onSuccess: =>
+        @reload()
+        @onCreateComplete()
+      onCancel: @onCreateComplete
+
+  onCreateComplete: =>
+    @view.show()
 
   onItemClick: (e) =>
     target = $(e.target)
@@ -141,6 +158,7 @@ class PedidosLiveCycle extends Spine.Controller
   reset: ->
     PedidoPreparado.unbind "push_success" , @renderPedidos
     PedidoPreparado.unbind "refresh" , @renderPedidos
+    @singlePedido.reset() if @singlePedido
     @el.find('.popable').popover("hide")
     $('.popover').hide()
     @release()

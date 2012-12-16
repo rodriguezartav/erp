@@ -60,9 +60,7 @@ class NotaCreditoProveedor extends Spine.Controller
     @validationErrors.push "Escoja el Proveedor" if Proveedor.current == null
 
   beforeSend: (object) ->
-    object.Proveedor = Proveedor.current.id
-    object.CuentaGasto = @cuentas.find("option:selected").val()
-    
+    object.Proveedor = Proveedor.current.id    
     object.Tipo_de_Documento = 'NC'
     object.Plazo= 1
     object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()

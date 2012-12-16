@@ -164,8 +164,8 @@ class SinglePedidos extends Spine.Controller
 
   after_send: =>
     @notify()
+    @onSuccess?()
     @reset()
-
 
   notify: () =>
     try
@@ -178,6 +178,7 @@ class SinglePedidos extends Spine.Controller
   onRemove: =>
     @resetBindings()
     PedidoItem.deleteItemsInPedido(@pedido)
+    @onCancel?()
     @reset()
 
   lightReset: =>

@@ -8,7 +8,7 @@ class FacturasProveedor extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
 
   @departamento = "Tesoreria"  
-  @label = "Ingreso de Facturas"
+  @label = "Ingreso de Documentos"
   @icon = "icon-edit"
 
   className: "row-fluid"
@@ -36,9 +36,22 @@ class FacturasProveedor extends Spine.Controller
     @render()
     @proveedores = new Proveedores(el: @src_proveedor)
     Proveedor.bind "current_set" , @onProveedorSet
+    @renderToggle()
 
   onProveedorSet: =>
     @txtPlazo.val(Proveedor.current.Plazo || 0)
+
+  renderToggle: =>
+    @el.find('.factura_toggle').toggleButtons
+      width: 250,
+      label:
+        enabled: "Factura"
+        disabled: "Nota"
+      onChange: ($el, status, e) =>
+        selectedTipo = if status then "FA" else "NC"
+        @cuentaPorPagar.Tipo_de_Documento = selectedTipo
+        @cuentaPorPagar.save()
+        return true
 
   render: =>  
     @html require("views/apps/cuentasPorPagar/facturasProveedor/layout")(@constructor)
@@ -72,8 +85,10 @@ class FacturasProveedor extends Spine.Controller
 
   beforeSend: (object) =>
     object.Proveedor = Proveedor.current.id
-    object.Tipo_de_Documento = 'FA'
     object.FechaIngreso = new Date(Date.now()).to_salesforce_date()
+    if object.Tipo_de_Documento == "NC"
+      object.Plazo= 1
+      object.FechaFacturacion = object.FechaFacturacion.to_salesforce_date()
 
   send: (e) =>
     @updateFromView(@cuentaPorPagar,@inputs_to_validate)

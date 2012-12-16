@@ -2,6 +2,7 @@ require('lib/setup')
 Spine = require('spine')
 Documento = require("models/documento")
 Cliente = require("models/cliente")
+Notas = require("apps/cuentasPorCobrar/notas")
 
 class NotasLivecycle extends Spine.Controller
   className: "row-fluid"
@@ -11,25 +12,24 @@ class NotasLivecycle extends Spine.Controller
   @icon = "icon-ok-sign"
 
   elements:
-    ".error" : "error"
     ".src_pendientes" : "srcPendientes" 
     ".src_aprobados" : "srcAprobados"
     ".src_facturados" : "srcFacturados"
     ".src_list" : "srcList"
     ".view" : "view"
+    ".create" : "create"
     ".print" : "print"    
 
   events:
-    "click .cancel"   : "reset"
     "click .btn_aprobar"  : "onAprobar"
     "click .btn-print" : "onPrint"
     "click .reload" : "reload"
     "click .item"  : "onItemClick"
     "click .btn-print-complete" : "onPrintComplete"
+    "click .btn_create"  : "onCreate"
 
   constructor: ->
     super
-    @error.hide()
     @html require("views/apps/cuentasPorCobrar/notasLivecycle/layout")(NotasLivecycle)
     @render()
     @reload()
@@ -59,6 +59,21 @@ class NotasLivecycle extends Spine.Controller
     @srcPendientes.html require("views/apps/cuentasPorCobrar/notasLivecycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
     @srcAprobados.html require("views/apps/cuentasPorCobrar/notasLivecycle/smartItemAprobado")( aprobados) if aprobados.length > 0
     @srcFacturados.html require("views/apps/cuentasPorCobrar/notasLivecycle/smartItemFacturado")( facturados ) if facturados.length > 0
+
+  onCreate: =>
+    @view.hide()
+    create = $("<div class='create'></div>")
+    @el.append create
+    @notas.reset() if @notas
+    @notas = new Notas 
+      el: create
+      onSuccess: =>
+        @reload()
+        @onCreateComplete()
+      onCancel: @onCreateComplete
+
+  onCreateComplete: =>
+    @view.show()
 
   onItemClick: (e) =>
     target = $(e.target)
@@ -93,14 +108,12 @@ class NotasLivecycle extends Spine.Controller
     @print.append require("views/apps/cuentasPorCobrar/notasLivecycle/printNota")(@documento)
     @print.append require("views/apps/cuentasPorCobrar/notasLivecycle/printNota")(@documento)
 
-
-
   onPrintComplete: =>
     @view.show()
     @print.hide()
     @documento.Estado = "Impreso";
     @documento.save()
-    
+
     data =
       class: Documento
       restRoute: "Saldo"
@@ -113,6 +126,7 @@ class NotasLivecycle extends Spine.Controller
 
   reset: ->
     @documento = null;
+    @notas.reset() if @notas
     Documento.unbind "refresh" , @renderPedidos
     @release()
     @navigate "/apps"

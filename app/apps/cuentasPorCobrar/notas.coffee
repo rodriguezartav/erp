@@ -6,15 +6,9 @@ Cliente = require("models/cliente")
 
 class Notas extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
-
-  @departamento = "Credito y Cobro" 
-  @label = "Credito y Debito" 
-  @icon = "icon-envelope"
-
   className: "row-fluid"
 
   elements:
-    ".error" : "error"
     ".validatable" : "inputs_to_validate"
     ".src_cliente" : "src_cliente"
     ".subtotal" : "subtotal"
@@ -24,13 +18,12 @@ class Notas extends Spine.Controller
     ".lbl_total_format" : "lbl_total_format"
 
   events:
-    "click .cancel" : "reset"
+    "click .cancel" : "onCancel"
     "click .save" : "send"
     "change .totales" : "onTotalesChange"
 
   constructor: ->
     super
-    @error.hide()
     Cliente.reset_current()
     @documento = Documento.create( Tipo_de_Documento: "NC" )
     @html require("views/apps/cuentasPorCobrar/notas/layout")(Notas)
@@ -71,18 +64,23 @@ class Notas extends Spine.Controller
     
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)    
-
     Spine.trigger "show_lightbox" , "insert" , @documento , @after_send
 
   after_send: =>
     Spine.socketManager.pushToFeed("Hice un Nota de Credito para #{Cliente.current.Name}")
+    @onSuccess?()
     @reset(false)
-    
-  customReset: =>
+  
+  onCancel: =>
+    @onCancel?()
+    @reset(false)
+
+  reset: =>
+    @inputs_to_validate.val ""
     Cliente.reset_current()
     Cliente.unbind "current_set" , @onClienteSet
     @clientes.reset()
     @documento.destroy() if @documento
-    @navigate "/apps"
+    @release()
 
 module.exports = Notas
