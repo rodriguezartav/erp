@@ -1,5 +1,0 @@
-<li class="active userItems">
-  <a class="userItem" data-id="<%= @id %>">
-    <%= @Name %>
-  </a>
-</li>

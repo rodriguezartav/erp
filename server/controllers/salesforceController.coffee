@@ -47,7 +47,7 @@ class SalesforceController
     , @onError
   
   onError: (error) ->
-    req.parseController.logAudit "Error" , "Server" , "Server" , error
+    #req.parseController.logAudit "Error" , "Server" , "Server" , error
 
   parseToken: (req,res) =>
     return req.session.salesforceToken if req.session.salesforceToken

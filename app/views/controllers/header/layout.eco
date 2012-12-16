@@ -21,6 +21,9 @@
               <ul class="dropdown-menu">
                 <li class="userWrapper">
                   <ul class="users unstyled">
+                    <li>
+                      <a href="/logout">Logout</a>
+                    </li>
                   </ul>
                 </li>
               </ul>

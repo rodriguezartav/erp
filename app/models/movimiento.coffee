@@ -3,7 +3,7 @@ Spine = require('spine')
 class Movimiento extends Spine.Model
   @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "ProductoCosto" , 
    "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Observacion" , "Cliente" ,
-   "CodigoExterno" , "Descuento_Unitario" , "Impuesto_Unitario" ,"Plazo", "Proveedor"
+   "CodigoExterno" , "Descuento_Unitario" , "Impuesto_Unitario" ,"Plazo", "Proveedor" , "ProductoCantidadPendiente"
   
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
@@ -18,6 +18,7 @@ class Movimiento extends Spine.Model
     filter = @queryFilterAddCondition(" Fecha__c   = LAST_N_DAYS:#{options.diasAtras} " , filter) if options.diasAtras
     filter = @queryFilterAddCondition(" Tipo__c IN (#{options.tipos}) "               , filter) if options.tipos
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "        , filter) if options.cliente
+    filter = @queryFilterAddCondition(" IsAplicado__c = false  and Tipo__c IN ('EN','SA','CO') "        , filter) if options.livecycle
     filter
  
   @create_from_producto: (producto, cantidad = 1 ) ->
@@ -35,6 +36,18 @@ class Movimiento extends Spine.Model
     movimiento.applyImpuesto()
     movimiento.updateTotal()
     movimiento.save()
+
+  @group_by_boleta: (movimientos = Movimiento.all()) ->
+
+    boletas = (movimiento.Referencia for movimiento in movimientos).unique()
+    groups  = []
+    for boleta in boletas
+      movimientos_in_boleta = []
+      for movimiento in movimientos when movimiento.Referencia == boleta
+        movimientos_in_boleta.push movimiento
+
+      groups.push {Boleta: boleta, Tipo: movimientos_in_boleta[0].Tipo, Movimientos: movimientos_in_boleta } if movimientos_in_boleta.length > 0
+    groups
 
   updateSubTotal: ->
     @SubTotal = Math.round(@ProductoPrecio * @ProductoCantidad * 100 ) / 100

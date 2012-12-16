@@ -22,10 +22,6 @@ class Routes
         issued_at: req.session.salesforceToken.issued_at
       res.send 500
 
-    @app.get "/logout" , (req,res) =>
-      
-      res.redirect "/"
-      
     @app.all "/parse/users/?*" , (req,res) ->
       req.parseController.handleProxy(req,res)
 
@@ -40,6 +36,10 @@ class Routes
       socket_id = req.body.socket_id
       user_details = JSON.parse req.body.user_details
       res.send req.pusherController.auth(socket_id,channel_name , user_details )
+
+    @app.get "/logout" , (req,res) =>
+      req.session.destroy( =>  )
+      res.redirect "/"
 
   getJsVars: (req) ->
     jsvars = 

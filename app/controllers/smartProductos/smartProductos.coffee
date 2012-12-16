@@ -185,6 +185,11 @@ class SmartProductos  extends Spine.Controller
   onItemRemoved: (productoId) =>
     delete @smartItemMap[productoId]
 
+  clear: =>
+    for index , item of @smartItemMap
+      item.reset()
+    @smartItemMap = {}
+
   reset: =>
     Producto.unbind "query_success" , =>
       @loadable.show()
