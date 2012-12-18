@@ -54,10 +54,9 @@ class Footer  extends Spine.Controller
     
 
   onDeleteDone: =>
-    Saldo.ajax().query( { saldo: true , avoidQueryTimeBased: true } ) if Saldo.autoQuery
+    Saldo.ajax().query( { saldo: true , avoidQueryTimeBased: true } ) # if Saldo.autoQuery
     return @onUpdateDone() if Spine.query == 0
     Spine.bind "queryComplete" , =>
-      console.log Spine.queries
       return false if Spine.queries > 0
       @onUpdateDone()
 
