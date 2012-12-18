@@ -127,7 +127,7 @@ class SecurityManager
     else if Spine.session.hasPerfiles([ "Platform System Admin" ])
       Cliente.autoQuery         = true
       Producto.autoQuery        = true
-      #Saldo.autoQuery           = true
+      Saldo.autoQuery           = true
       #Saldo.autoReQuery         = true
       PedidoPreparado.autoQuery = true
       Proveedor.autoQuery = true
