@@ -76,7 +76,6 @@ class ReciboLivecycle extends Spine.Controller
   renderGuardados: =>
     @listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemGuardado")(LocalPago.all() )
 
-
   render: =>
     users=[]
     usersId = []

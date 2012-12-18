@@ -19,7 +19,7 @@ class Items extends Spine.Controller
 
   constructor: ->
     super
-    @pagoItem = PagoItem.createFromDocumento(@documento,@pago)
+    @pagoItem = PagoItem.createFromDocumento( @documento , @pago )
     @render()
 
   render: =>
@@ -92,26 +92,26 @@ class SinglePago extends Spine.Controller
     @html require("views/apps/cuentasPorCobrar/singlePago/layout")(SinglePago)
     @refreshView(@pago,@inputs_to_validate)
     @clientes = new Clientes(el: @src_cliente)
-    
     picker = @el.find('.txtFecha')
     pickers =  picker.datepicker({autoclose: true})
     picker.datepicker('setValue', new Date() )
     pickers.on("change",@onDateChange)
 
   onClienteSet: (cliente) =>
-    #Documento.destroyAll()
-    #Documento.ajax().query( { saldo: true , cliente: cliente  , autorizado: true } , afterSuccess: @onDocumentoLoaded )    
     @pago.Cliente = Cliente.current.id
     @pago.save()
     @onDocumentoLoaded()
 
   onDocumentoLoaded: =>
+    @resetBindings()
+    PagoItem.deleteItemsInPago(@pago)
     @documentos = Documento.findAllByAttribute "Cliente" , @pago.Cliente
     for documento in @documentos
       ri = new Items(documento: documento , pago: @pago )
       @items.push ri
       @saldos_list.append ri.el
-    #$('.info_popover').popover()
+    @setBindings()
+    @updateTotal()
 
   onDateChange: (e) =>
     target = $(e.target)
@@ -121,6 +121,9 @@ class SinglePago extends Spine.Controller
 
   updateTotal: =>
     total =0
+    if !@pago
+      console.log @
+      return false
     for item in PagoItem.itemsInPago(@pago)
       total+= item.Monto
     @pago.Monto = total;
@@ -175,7 +178,6 @@ class SinglePago extends Spine.Controller
       item.setTipo()
       item.UsedInPago = if item.Monto == 0 then false else true
       item.save()
-    
 
     #data =
     #  class: PagoItem
@@ -206,10 +208,12 @@ class SinglePago extends Spine.Controller
   minor_reset: () ->
     for item in @items
       item?.release()
-    @pago = null
-    for item in PagoItem.all()
-      item.destroy() if !item.UsedInPago 
+    @pago = null 
+    @destroyUnusedItems()
     @setVariables()
 
+  destroyUnusedItems: =>
+    for item in PagoItem.all()
+      item.destroy() if !item.UsedInPago
     
 module.exports = SinglePago

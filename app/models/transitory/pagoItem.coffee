@@ -18,7 +18,7 @@ class PagoItem extends Spine.Model
       @Tipo = "AB"
 
   @itemsInPago: (pago) ->
-    PagoItem.findAllByAttribute("PagoId", pago.id )
+    PagoItem.findAllByAttribute("Recibo", pago.Recibo )
 
   @deleteItemsInPago: (pago) =>
     items = @itemsInPago(pago)
