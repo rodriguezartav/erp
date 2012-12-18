@@ -82,9 +82,9 @@ class SinglePago extends Spine.Controller
 
   constructor: ->
     super
-    @setVariables()
     recibo = parseInt localStorage["SinglePago" + "-Recibo"] || 0
     @pago = Pago.create( UserStamp: Spine.session.getConsecutivoRecibo() , Recibo: recibo + 1)
+    @setVariables()
     @render()
     @setBindings()
 
@@ -117,10 +117,12 @@ class SinglePago extends Spine.Controller
     return false;
 
   updateTotal: =>
+    console.log "updatinh"
     total =0
     if !@pago
       console.log @
       return false
+
     for item in PagoItem.itemsInPago(@pago)
       total+= item.Monto
     @pago.Monto = total;
