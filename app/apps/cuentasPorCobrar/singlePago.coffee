@@ -103,15 +103,12 @@ class SinglePago extends Spine.Controller
     @onDocumentoLoaded()
 
   onDocumentoLoaded: =>
-    @resetBindings()
     PagoItem.deleteItemsInPago(@pago)
     @documentos = Documento.findAllByAttribute "Cliente" , @pago.Cliente
     for documento in @documentos
       ri = new Items(documento: documento , pago: @pago )
       @items.push ri
       @saldos_list.append ri.el
-    @setBindings()
-    @updateTotal()
 
   onDateChange: (e) =>
     target = $(e.target)
