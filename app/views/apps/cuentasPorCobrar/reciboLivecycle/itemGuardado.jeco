@@ -1,6 +1,5 @@
 <% Spine   = require('spine') %>
 <% Cliente = require("models/cliente")  %>
-<% Cliente = require("models/cliente")  %>
 <% PagoItem = require("models/transitory/pagoItem") %>
 <% cliente = Cliente.exists(@Cliente)  %>
 
@@ -30,8 +29,6 @@
         </li>
       <% end  %>
     </ul>
-    
-    <a class="btn btn-danger btn_borrar" data-id="<%= @id %>">Borrar</a>
 
   </div>
   

@@ -55,12 +55,15 @@ class SinglePago extends Spine.Controller
     ".txtReferencia" : "txtReferencia"
     ".txtRecibo" : "txtRecibo"
     ".txtFecha>input" : "txtFechaInput"
+    ".txt_diferencia" : "txtDiferencia"
+    ".lbl_diferencia" : "lblDiferencia"
     
   events:
     "click .cancel" : "onCancelar"
     "click .save" : "send"
     "click .btn_forma_pago" : "onBtnFormaPagoClick"
     "click .btn_banco>li>a" : "onBtnBancoClick"
+    "change .txt_diferencia" : "onTxtDifereciaChange"
 
   setVariables: ->
     Cliente.reset()
@@ -120,6 +123,8 @@ class SinglePago extends Spine.Controller
     total =0
     for item in PagoItem.itemsInPago(@pago)
       total+= item.Monto
+    @pago.Monto = total;
+    @pago.save()
     @lbl_total.html total.toMoney()
 
   onBtnFormaPagoClick: (e) =>
@@ -132,6 +137,13 @@ class SinglePago extends Spine.Controller
     target = $(e.target)
     @txtReferencia.val target.html() + " "
     @txtReferencia.focus()
+
+  onTxtDifereciaChange: (e) =>
+    target = $(e.target)
+    value = parseFloat(target.val())
+    @lblDiferencia.html (value - @pago.Monto).toMoney()
+    target.val value.toMoney()
+
 
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pago.Cliente == null

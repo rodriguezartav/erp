@@ -1,8 +1,30 @@
+<% Cliente = require("models/cliente")  %>
+<% PagoItem = require("models/transitory/pagoItem") %>
+<% cliente = Cliente.exists(@Cliente)  %>
+
+
 <div class="row-fluid">
-  <h2>Rodco S.A></h2>
-  <h5>Departamento de Credito y Cobro</h5>
+  <h1>Rodco S.A</h1>
+  <h6>Departamento de Credito y Cobro</h6>
   
   <h3>Recibo</h3>
+  <h4><%= cliente.Name %></h4>
+  <h4><%= @FormaPago %></h4>
+  <h4><%= @Referencia %></h4>  
+  
+  
+    <ul class="unstyled mobileList">
+      <% for item in PagoItem.itemsInPago(@) : %>
+        <li>
+          <%= item.Consecutivo %>
+          <span class="pull-right"><%= item.Monto.toMoney() %></span>
+        </li>
+      <% end  %>
+    </ul>
+  
+  
+  <h3><%= @Monto %></h3>
+  
   
   
 </div>
