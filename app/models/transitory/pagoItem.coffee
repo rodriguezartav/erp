@@ -2,13 +2,13 @@ Spine = require('spine')
 
 class PagoItem extends Spine.Model
   @configure "PagoItem" , "Cliente" , "Total" , "Tipo" , "Saldo" , "Consecutivo" , 
-  "Documento" , "Tipo_de_Documento" , "Fecha" , "Monto","Recibo" , "FormaPago" , "Referencia"
+  "Documento" , "Tipo_de_Documento" , "Fecha" , "Monto","Recibo" , "FormaPago" , "Referencia" , "UserStamp" , "UsedInPago"
  
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
   @extend Spine.Model.TransitoryModel
   
-  @avoidInsertList = ["Saldo","Total","Consecutivo"] 
+  @avoidInsertList = ["Saldo","Total","Consecutivo" , "UsedInPago","UserStamp"] 
   @overrideName: "Pago"
 
   setTipo: ->
@@ -18,7 +18,7 @@ class PagoItem extends Spine.Model
       @Tipo = "AB"
 
   @itemsInPago: (pago) ->
-    PagoItem.findAllByAttribute("Referencia", pago.Referencia )
+    PagoItem.findAllByAttribute("UserStamp", pago.UserStamp )
 
   @deleteItemsInPago: (pago) =>
     items = @itemsInPago(pago)
@@ -29,7 +29,7 @@ class PagoItem extends Spine.Model
     item = PagoItem.findByAttribute "Consecutivo" , saldo.Consecutivo
     return item || null
 
-  @createFromSaldo: (saldo) ->
+  @createFromSaldo: (saldo,pedido) ->
     PagoItem.create
       Total: saldo.Total
       Saldo : saldo.Saldo
@@ -40,9 +40,11 @@ class PagoItem extends Spine.Model
       PlazoActual: saldo.PlazoActual
       Tipo_de_Documento : saldo.Tipo_de_Documento
       Monto : 0
+      UsedInPago: false
+      UserStamp: pedido.UserStamp
+        
 
-
-  @createFromDocumento: (saldo) ->
+  @createFromDocumento: (saldo, pedido) ->
     PagoItem.create
       Total: saldo.Total
       Saldo : saldo.Saldo
@@ -53,6 +55,9 @@ class PagoItem extends Spine.Model
       PlazoActual: saldo.PlazoActual
       Tipo_de_Documento : saldo.Tipo_de_Documento
       Monto : 0
+      UsedInPago: false
+      UserStamp: pedido.UserStamp
+      
 
 module.exports = PagoItem
 

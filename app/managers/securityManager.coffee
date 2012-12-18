@@ -9,8 +9,6 @@ PedidosLiveCycle          = require("apps/pedidos/pedidosLiveCycle")
 
 NotasLivecycle = require("apps/cuentasPorCobrar/notasLivecycle")
 
-IngresarRecibo = require("apps/cuentasPorCobrar/ingresarRecibo")
-Recibos = require("apps/cuentasPorCobrar/recibos")
 
 ReciboLivecycle = require("apps/cuentasPorCobrar/reciboLivecycle")
 
@@ -63,7 +61,7 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [ Recibos , MovimientoLivecycle  , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle ,FacturasProveedor , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,PagosAnular  , AjustarNegociacion , VerClientes ,PagosProveedor  , IngresarRecibo  , PedidosLiveCycle ,DocumentosAnular ]
+    apps = [  MovimientoLivecycle  , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle ,FacturasProveedor , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,PagosAnular  , AjustarNegociacion , VerClientes ,PagosProveedor   , PedidosLiveCycle ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["Presidencia"] =  [ CuentasLiveCycle , MovimientoLivecycle , DoCierreDiario  , AjustarNegociacion    , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ MovimientoLivecycle , NotasLivecycle , AjustarNegociacion   , PedidosLiveCycle   , VerRegistrosResumen ]
@@ -71,11 +69,11 @@ class SecurityManager
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
 
     @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle , PedidosLiveCycle ,ReciboLivecycle , DepositosLivecycle , FacturasProveedor , PagosProveedor  , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
-    @profiles["Ejecutivo Credito"] = [  NotasLivecycle , IngresarRecibo ,  CuentasLiveCycle , ReciboLivecycle ,FacturasProveedor , EstadoCuenta , PagosAnular , DocumentosAnular ,PedidosLiveCycle ,VerRegistrosResumen , VerRegistros , VerClientes ]
+    @profiles["Ejecutivo Credito"] = [  NotasLivecycle  ,  CuentasLiveCycle , ReciboLivecycle ,FacturasProveedor , EstadoCuenta , PagosAnular , DocumentosAnular ,PedidosLiveCycle ,VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Ejecutivo de Logistica"] = [ MovimientoLivecycle , ListasPrecio , TomasInventario  , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes , VerProductos ]
     @profiles["Ejecutivo Ventas"] = [  PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes ]
 
-    @profiles["Vendedor"] = [ PedidosLiveCycle , IngresarRecibo ,ReciboLivecycle ,  VerProductos  , VerClientes ]
+    @profiles["Vendedor"] = [ PedidosLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes ]
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>

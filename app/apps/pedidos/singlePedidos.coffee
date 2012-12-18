@@ -179,6 +179,7 @@ class SinglePedidos extends Spine.Controller
   onRemove: =>
     @resetBindings()
     PedidoItem.deleteItemsInPedido(@pedido)
+    @pedido.destroy()
     @onCancel?()
     @reset()
 

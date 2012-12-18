@@ -41,7 +41,6 @@ class PedidosLiveCycle extends Spine.Controller
     "click .btn_create" : "onCreate"
     "click .btn_send" : "onBtnSend"
     "click .btn_borrar" : "onBtnBorrar"
-    "click .btn_delete_all" : "onBtnDeleteAll"
 
   constructor: ->
     super
@@ -127,10 +126,11 @@ class PedidosLiveCycle extends Spine.Controller
 
   onBtnDeleteAll: =>
     Pedido.destroyAll()
+    @renderPedidos()
 
   onItemClick: (e) =>
     target = $(e.target)
-    target = target.parent() until target.attr "data-cliente"
+    target = target.parent() until target.hasClass "pedidoItem"
     details = target.find(".pedidoDetails")
     status = details.is(":visible")
     @el.find(".pedidoDetails").hide()

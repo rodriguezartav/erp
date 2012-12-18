@@ -16,10 +16,6 @@
           <i class="icon-create icon-white"></i>
         </a>
 
-            <a class="btn btn-primary btn_delete_all">Borrar Todos
-              <i class="icon-create icon-white"></i>
-            </a>
-
       </div>
     </div>
   

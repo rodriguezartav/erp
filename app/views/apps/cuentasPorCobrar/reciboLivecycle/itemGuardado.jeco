@@ -1,0 +1,39 @@
+<% Spine   = require('spine') %>
+<% Cliente = require("models/cliente")  %>
+<% Cliente = require("models/cliente")  %>
+<% PagoItem = require("models/transitory/pagoItem") %>
+<% cliente = Cliente.exists(@Cliente)  %>
+
+<% User = require("models/user")  %>
+<% user = User.exists(@CreatedByid)  %>
+
+
+<li class="item">
+    <h4 style="display: inline-block;height: 29px;"><strong class="label label-info"><%= @Recibo  %></strong> <%= cliente.Name  %></h4>
+
+    <div class="pull-right">
+      <span class=""><%= @Monto?.toMoney() %></span>
+      <a class="btn btn-primary btn_enviar" data-id="<%= @id %>">Enviar</a>    
+    </div>
+    
+  
+  <div class="details" style="display:none">
+  
+    <h5> <%= @FormaPago %> : <%= @Referencia %></h5>
+  
+    
+    <ul class="unstyled mobileList">
+      <% for item in PagoItem.itemsInPago(@) : %>
+        <li>
+          <%= item.Consecutivo %>
+          <span class="pull-right"><%= item.Monto.toMoney() %></span>
+        </li>
+      <% end  %>
+    </ul>
+    
+    <a class="btn btn-danger btn_borrar" data-id="<%= @id %>">Borrar</a>
+
+  </div>
+  
+  
+</li>

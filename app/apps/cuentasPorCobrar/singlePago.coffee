@@ -1,14 +1,13 @@
 Spine = require('spine')
 Cliente = require("models/cliente")
 Clientes = require("controllers/clientes")
-Saldo = require("models/socketModels/saldo")
+Documento = require("models/socketModels/saldo")
 Pago = require("models/transitory/pago")
 PagoItem = require("models/transitory/pagoItem")
 
 class Items extends Spine.Controller  
   @extend Spine.Controller.ViewDelegation
   tag: "tr"
-  className: "pago"
 
   elements:
     ".validatable" : "inputs_to_validate"
@@ -20,7 +19,7 @@ class Items extends Spine.Controller
 
   constructor: ->
     super
-    @pagoItem = PagoItem.createFromDocumento(@documento) if !@pagoItem
+    @pagoItem = PagoItem.createFromDocumento(@documento,@pago)
     @render()
 
   render: =>
@@ -30,7 +29,7 @@ class Items extends Spine.Controller
     @pagoItem.Monto = @pagoItem.Saldo
     @pagoItem.save()
     @render()
-
+    
   remove_saldo: (e) =>
     @pagoItem.Monto = 0
     @pagoItem.save()
@@ -43,10 +42,6 @@ class SinglePago extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
   
   className: "row-fluid"
-  
-  @departamento = "Credito y Cobro"
-  @label = "Ingresar Recibo"
-  @icon = "icon-inbox"
 
   elements:
     ".src_cliente"       :  "src_cliente"
@@ -62,68 +57,58 @@ class SinglePago extends Spine.Controller
     ".txtFecha>input" : "txtFechaInput"
     
   events:
-    "click .cancel" : "onRemove"
+    "click .cancel" : "onCancelar"
     "click .save" : "send"
     "click .btn_forma_pago" : "onBtnFormaPagoClick"
     "click .btn_banco>li>a" : "onBtnBancoClick"
 
   setVariables: ->
+    Cliente.reset()
     @items = []
     @formaPago = null
     @banco = ""
-    @pagoItems = PagoItem.itemsInPago(@pago) if @pago
-    @pago = Pago.create() if !@pago
+    @documentos= []
 
-  setBindings: =>
+  setBindings: ->
     PagoItem.bind "create update" , @updateTotal
-    @clientes.bind "credito_data_changed"    , @onClienteSet
+    Cliente.bind 'current_set' , @onClienteSet
   
-  resetBindings: =>
+  resetBindings: ->
     PagoItem.unbind "create update" , @updateTotal
-    @clientes.unbind "credito_data_changed"    , @onClienteSet
- 
+    Cliente.unbind 'current_set' , @onClienteSet
+
   constructor: ->
     super
     @setVariables()
     @render()
     @setBindings()
-
+   
   render: ->
     @html require("views/apps/cuentasPorCobrar/singlePago/layout")(SinglePago)
+    recibo = parseInt localStorage["SinglePago" + "-Recibo"] || 0
+    @pago = Pago.create( UserStamp: Spine.session.getConsecutivoRecibo() , Recibo: recibo + 1)
     @refreshView(@pago,@inputs_to_validate)
-    @clientes = new Clientes(el: @src_cliente , cliente: @pago.Cliente )
-    @loadSaldos() if @pago.Cliente
-    @renderConsecutivo() if !@pago.Recibo
-    @renderPicker()
-
-  renderConsecutivo: =>
-    @pago.Recibo = parseInt Math.random() * 10000 # localStorage[SinglePago.label + "-Recibo"] || 0
-    @pago.save()
-    @txtRecibo.val (@pago.Recibo + 1)
-
-  renderPicker: =>
+    @clientes = new Clientes(el: @src_cliente)
+    
     picker = @el.find('.txtFecha')
     pickers =  picker.datepicker({autoclose: true})
     picker.datepicker('setValue', new Date() )
     pickers.on("change",@onDateChange)
 
   onClienteSet: (cliente) =>
-    @pago.Cliente = cliente.id
+    #Documento.destroyAll()
+    #Documento.ajax().query( { saldo: true , cliente: cliente  , autorizado: true } , afterSuccess: @onDocumentoLoaded )    
+    @pago.Cliente = Cliente.current.id
     @pago.save()
-    @loadSaldos()
+    @onDocumentoLoaded()
 
-  loadSaldos: =>
-    saldos = Saldo.findAllByAttribute "Cliente" , @pago.Cliente
-    for saldo in saldos
-      if saldo.Saldo == 0
-        saldo.destroy() 
-      else
-        savedItem = PagoItem.saldoExists(saldo)
-        ri = new Items
-          pagoItem: savedItem
-          documento:  saldo
-        @items.push ri
-        @saldos_list.append ri.el
+  onDocumentoLoaded: =>
+    @documentos = Documento.findAllByAttribute "Cliente" , @pago.Cliente
+    for documento in @documentos
+      ri = new Items(documento: documento , pago: @pago )
+      @items.push ri
+      @saldos_list.append ri.el
+    #$('.info_popover').popover()
 
   onDateChange: (e) =>
     target = $(e.target)
@@ -133,7 +118,7 @@ class SinglePago extends Spine.Controller
 
   updateTotal: =>
     total =0
-    for item in PagoItem.all()
+    for item in PagoItem.itemsInPago(@pago)
       total+= item.Monto
     @lbl_total.html total.toMoney()
 
@@ -161,45 +146,46 @@ class SinglePago extends Spine.Controller
       item.checkItem()
     @validationErrors.push "El pago debe tener al menos una factura o nota de debito" if !hasFactura
     @validationErrors.push "El pago debe ser mayor o igual a 0" if total < 0
-     
+    @pago.Monto = total;
+    @pago.Fecha = @txtFechaInput.val() if !@pago.Fecha
+    @pago.FormaPago = @formaPago
+    @pago.save()
 
   send: (e) =>
     @txtReferencia.val "N/D" if @formaPago == "Efectivo" or @formaPago == "Nota Credito"
-    @pago.Fecha = @txtFechaInput.val() if !@pago.Fecha
     @updateFromView(@pago,@inputs_to_validate)
-    
-    selectedPagoItems = []
-    
-    for item in @pagoItems
+    @resetBindings()
+    for item in PagoItem.itemsInPago(@pago)
       item.Recibo = @pago.Recibo
       item.Cliente = @pago.Cliente
-      item.FormaPago = @formaPago
+      item.FormaPago = @pago.FormaPago
       item.Fecha = @pago.Fecha
       item.Referencia = @pago.Referencia
       item.setTipo()
-      selectedPagoItems.push item if item.Monto and parseInt(item.Monto) != 0
+      item.UsedInPago = if item.Monto == 0 then false else true
+      item.save()
+    
 
-    data =
-      class: PagoItem
-      restRoute: "Pago"
-      restMethod: "POST"
-      restData: 
-        pagos: PagoItem.salesforceFormat( selectedPagoItems , false) 
+    #data =
+    #  class: PagoItem
+    #  restRoute: "Pago"
+    #  restMethod: "POST"
+    #  restData: 
+    #    pagos: PagoItem.salesforceFormat( pagoItems , false) 
 
-    Spine.trigger "show_lightbox" , "rest" , data , @after_send
+    #Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
-  after_send: =>
-    localStorage[IngresarRecibo.label + "-Recibo"] = @pago.Recibo
-    cliente = Cliente.find @pago.Cliente
-    Spine.socketManager.pushToFeed("#{cliente.Name} hizo un pago")
-    @minor_reset()
-
-  onRemove: =>
-    @resetBindings()
-    PagoItem.deleteItemsInPago(@pago)
-    @pago.destroy()
-    @onCancel?()
+  #after_send: =>
+    localStorage["SinglePago" + "-Recibo"] = @pago.Recibo
+    #cliente = Cliente.find @pago.Cliente
+    #Spine.socketManager.pushToFeed("#{cliente.Name} hizo un pago")
+    pagoId = @pago.id
     @reset()
+    @onSuccess?( pagoId )
+
+  onCancelar: =>
+    @reset()
+    @onCancel?()
 
   reset: ->
     @minor_reset()
@@ -209,9 +195,10 @@ class SinglePago extends Spine.Controller
   minor_reset: () ->
     for item in @items
       item?.release()
-    @clientes.reset()
+    @pago = null
+    for item in PagoItem.all()
+      item.destroy() if !item.UsedInPago 
     @setVariables()
-    @render()
 
     
 module.exports = SinglePago

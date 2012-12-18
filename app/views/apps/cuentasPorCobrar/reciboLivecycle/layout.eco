@@ -11,9 +11,15 @@
     <div class="span6">
       <div class="rightOptions">
         <input class="txt_search" type="text" placeholder="Cheque o Recibo" />
+        
         <a class="btn btn-primary reload">
           <i class="icon-refresh icon-white"></i>
-          </a>        
+        </a>        
+
+        <a class="btn btn-primary btn_create"> +
+          <i class="icon-create icon-white"></i>
+        </a>        
+
       </div>
     </div>
   

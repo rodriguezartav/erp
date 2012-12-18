@@ -1,6 +1,6 @@
 Spine = require('spine')
 class Session extends Spine.SingleModel
-  @configure "Session" , "instance_url", "userId" , "lastLogin" , "lastUpdate" , "isOnline" , "isSalesforce" , "user" , "consecutivoPedido"
+  @configure "Session" , "instance_url", "userId" , "lastLogin" , "lastUpdate" , "isOnline" , "isSalesforce" , "user" , "consecutivoPedido" , "consecutivoRecibo"
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
 
@@ -16,9 +16,17 @@ class Session extends Spine.SingleModel
     @save()
 
   getConsecutivoPedido: =>
-    Spine.session.consecutivoPedido = parseInt(Math.random() * 10000)
+    consecutivo = parseInt(@consecutivoPedido or (Math.random() * 10000) )
+    Spine.session.consecutivoPedido = @consecutivoPedido + 1
     Spine.session.save()
-    res= "#{@user.FirstName}-#{@consecutivoPedido}"
+    res= "#{@user.FirstName}-#{@consecutivoPedido }"
+    return res
+
+  getConsecutivoRecibo: =>
+    consecutivo = parseInt(@consecutivoRecibo or (Math.random() * 10000) )
+    Spine.session.consecutivoRecibo = @consecutivoRecibo + 1
+    Spine.session.save()
+    res= "#{@user.FirstName}-#{@consecutivoRecibo }"
     return res
 
   hasPerfiles: (perfiles) ->

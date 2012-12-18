@@ -4,6 +4,11 @@ Pago = require("models/pago")
 Cliente = require("models/cliente")
 User = require("models/user")
 
+LocalPago = require("models/transitory/pago")
+LocalPagoItem = require("models/transitory/pagoItem")
+
+SinglePago = require("apps/cuentasPorCobrar/singlePago")
+
 class ReciboLivecycle extends Spine.Controller
   className: "row-fluid"
 
@@ -12,7 +17,6 @@ class ReciboLivecycle extends Spine.Controller
   @icon = "icon-ok-sign"
 
   elements:
-    ".list_users" : "list_users"
     ".sections"   : "sections"
     ".section_standby" : "sectionStandBy"
     ".section_digitados" : "sectionDigitados"
@@ -20,12 +24,13 @@ class ReciboLivecycle extends Spine.Controller
     ".section_contabilizados" : "sectionContabilizados"
     ".section_aplicados" : "sectionAplicados"
     ".section_depositados" : "sectionDepositados"
-    ".txt_search" : "txt_search"
-    ".print"    : "print"
+    ".txt_search"  : "txt_search"
     ".list_search" : "listSearch"
+    ".list_users" : "listUsers"
+    ".view"        :  "view"
+    ".print"       : "print"
 
   events:
-    "click .cancel"    :  "reset"
     "click .item" : "onItemClick"
     "click .btn_action"    :  "onAction"
     "click .btn_bulk_action" : "onBulkAction"
@@ -33,6 +38,9 @@ class ReciboLivecycle extends Spine.Controller
     "click .userItem"  :  "onUserClick"
     "click .btn_selected" : "onBtnSelectedClick"
     "click .btn_aplicar"  : "onBtnAplicar"
+    "click .btn_create" : "onCreate"
+    "click .btn_borrar" : "onBorrar"
+    "click .btn_enviar" : "onEnviar"
 
   setVariables: =>
     @recibosStandby =[]    
@@ -46,12 +54,12 @@ class ReciboLivecycle extends Spine.Controller
   constructor: ->
     super
     @html require("views/apps/cuentasPorCobrar/reciboLivecycle/layout")(ReciboLivecycle)
-    Pago.bind "query_success" , @render
     @setVariables()
     @reload()
 
   reload: =>
     @sections.empty()
+    @renderGuardados()
     @filterByUserId = null
     Pago.deleteAll()    
     return @search() if @txt_search.val().length > 0
@@ -63,8 +71,11 @@ class ReciboLivecycle extends Spine.Controller
     Pago.ajax().query( { search: search } , afterSuccess: @renderSearch ) 
     
   renderSearch: =>
-    console.log @listSearch
     @listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemSearch")( Pago.group_by_recibo(Pago.all()) )
+
+  renderGuardados: =>
+    @listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemGuardado")(LocalPago.all() )
+
 
   render: =>
     users=[]
@@ -107,10 +118,59 @@ class ReciboLivecycle extends Spine.Controller
     @sectionStandBy.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionStandBy")(pagos: standByAgrupados )
     @sectionDigitados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionDigitados")(pagos: digitadosAgrupados )
     @sectionContabilizados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionContabilizados")(pagos: contabilizadosAgrupados )
-    @list_users.html require("views/apps/cuentasPorCobrar/reciboLivecycle/user")(users)
+
+    @listUsers.html require("views/apps/cuentasPorCobrar/reciboLivecycle/user")(users)
 
     pickers = @el.find('.txtFecha').datepicker({autoclose: true})
     pickers.on("change",@onStandbyDateChange)
+    @renderGuardados()
+
+  onCreate: =>
+    #@view.hide()
+    create = $("<div class='create'></div>")
+    @el.prepend create
+    @singlePago.reset() if @singlePago
+    @singlePago = new SinglePago 
+      el: create
+      onSuccess: (pagoId) =>
+        @renderGuardados()
+        @onCreateComplete()
+        pago = LocalPago.find pagoId
+        @print.html require("views/apps/cuentasPorCobrar/reciboLivecycle/printRecibo")(pago)
+        window.print()
+      onCancel: @onCreateComplete
+
+  onCreateComplete: =>
+    @view.show()
+
+  onBorrar: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    pago = LocalPago.find id
+    LocalPagoItem.deleteItemsInPago(pago)
+    pago.destroy()
+    @renderGuardados()
+
+  onEnviar: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    @pago = LocalPago.find id
+
+    data =
+      class: LocalPagoItem
+      restRoute: "Pago"
+      restMethod: "POST"
+      restData: 
+        pagos: LocalPagoItem.salesforceFormat( LocalPagoItem.itemsInPago(@pago) , false) 
+
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
+    return false;
+
+  after_send: =>
+    LocalPagoItem.deleteItemsInPago(@pago)
+    @pago.destroy()
+    @pago = null
+    @reload()
 
   onUserClick: (e) =>
     target = $(e.target)
@@ -159,7 +219,6 @@ class ReciboLivecycle extends Spine.Controller
       target.addClass selectedClass
       @recibosParaAplicar.push recibo
     
-    console.log @recibosParaAplicar
     return false;
 
   onAction: (e) =>
@@ -193,10 +252,6 @@ class ReciboLivecycle extends Spine.Controller
       #return setTimeout(@printDeposito , 2000 ) if action == 5
       return @reload()
 
-
-
-
-
   printEntrega: =>
     @print.html @sectionDigitados.html()
     @print.append '<br/><br/><hr/><br/><br/>'
@@ -223,6 +278,7 @@ class ReciboLivecycle extends Spine.Controller
 
   reset: ->
     @setVariables()
+    @singlePago.reset() if @singlePago
     Pago.unbind "query_success" , @render
     @release()
     @navigate "/apps"
