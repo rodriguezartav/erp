@@ -17,7 +17,7 @@
 
   <span><%= @CreatedById  %></span>
 
-  <span>Total: <%= @Total.toMoney()  %></span>
+  <span>Total: <%= @Total?.toMoney()  %></span>
 
   <span class="pull-right"><%= @Estado %></span>
 
