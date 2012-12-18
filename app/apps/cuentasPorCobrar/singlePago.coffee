@@ -83,13 +83,13 @@ class SinglePago extends Spine.Controller
   constructor: ->
     super
     @setVariables()
+    recibo = parseInt localStorage["SinglePago" + "-Recibo"] || 0
     @pago = Pago.create( UserStamp: Spine.session.getConsecutivoRecibo() , Recibo: recibo + 1)
     @render()
     @setBindings()
 
   render: ->
     @html require("views/apps/cuentasPorCobrar/singlePago/layout")(SinglePago)
-    recibo = parseInt localStorage["SinglePago" + "-Recibo"] || 0
     @refreshView(@pago,@inputs_to_validate)
     @clientes = new Clientes(el: @src_cliente)
     
