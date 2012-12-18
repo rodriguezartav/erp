@@ -72,12 +72,14 @@ class SinglePago extends Spine.Controller
     @banco = ""
     @documentos= []
 
-  setBindings: ->
-    PagoItem.bind "create update" , @updateTotal
+  setBindings: =>
+    PagoItem.bind "create" , @updateTotal
+    PagoItem.bind "update" , @updateTotal
     Cliente.bind 'current_set' , @onClienteSet
-  
-  resetBindings: ->
-    PagoItem.unbind "create update" , @updateTotal
+
+  resetBindings: =>
+    PagoItem.unbind "create" , @updateTotal
+    PagoItem.unbind "update" , @updateTotal
     Cliente.unbind 'current_set' , @onClienteSet
 
   constructor: ->
@@ -117,12 +119,10 @@ class SinglePago extends Spine.Controller
     return false;
 
   updateTotal: =>
-    console.log "updatinh"
     total =0
     if !@pago
-      console.log @
+      console.log "pago not found"
       return false
-
     for item in PagoItem.itemsInPago(@pago)
       total+= item.Monto
     @pago.Monto = total;
@@ -200,8 +200,8 @@ class SinglePago extends Spine.Controller
     @onCancel?()
 
   reset: ->
-    @minor_reset()
     @resetBindings()
+    @minor_reset()
     @release()
 
   minor_reset: () ->
