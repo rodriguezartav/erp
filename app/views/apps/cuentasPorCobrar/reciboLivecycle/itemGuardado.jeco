@@ -19,8 +19,7 @@
   <div class="details" style="display:none">
   
     <h5> <%= @FormaPago %> : <%= @Referencia %></h5>
-  
-    
+
     <ul class="unstyled mobileList">
       <% for item in PagoItem.itemsInPago(@) : %>
         <li>
@@ -29,6 +28,9 @@
         </li>
       <% end  %>
     </ul>
+
+    <a class="btn btn-danger btn_borrar" data-id="<%= @id %>">Borrar</a>    
+
 
   </div>
   

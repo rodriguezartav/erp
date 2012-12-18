@@ -4,16 +4,38 @@
 
 
 <div class="row-fluid">
-  <h1>Rodco S.A</h1>
-  <h6>Departamento de Credito y Cobro</h6>
+  <div class="span6">
+    <h1>Rodco S.A</h1>
+    <h6>Departamento de Credito y Cobro</h6>
+  </div>
   
-  <h3>Recibo</h3>
-  <h4><%= cliente.Name %></h4>
-  <h4><%= @FormaPago %></h4>
-  <h4><%= @Referencia %></h4>  
+  <div class="span6">
+    <h1 style="text-align: right;">Recibo</h1>
+    <h5  style="text-align: right; ><%= @Fecha  %></h5>
+  </div>
   
+</div>
+
+<hr/>
+
+<div class="row-fluid">
+
+  <div class="span6">
+    <h2><%= cliente.Name %></h2>
+  </div>
+  
+  <div class="span6">
+    <h4 style="text-align: right;"><%= @FormaPago %></h4>
+    <h4 style="text-align: right;"><%= @Referencia %></h4>  
+  </div>
+
+</div>
   
     <ul class="unstyled mobileList">
+      <li>
+      Factura
+      <span class="pull-right">Monto</span>
+      </li>
       <% for item in PagoItem.itemsInPago(@) : %>
         <li>
           <%= item.Consecutivo %>
@@ -21,10 +43,12 @@
         </li>
       <% end  %>
     </ul>
-  
-  
-  <h3><%= @Monto %></h3>
-  
-  
+    
+  <br/>
+  <h6>Este recibo no es valido si contiene alteraciones o raspaduras. Los extendidos en otra formula, o si los cheques con que se paga no fueran aceptados por el banco respectivo.</h6>
+  <h3 class="text-align: right;">Total: <%= @Monto.toMoney() %></h3>
+  <br/>  <br/>
+  <hr style="margin-bottom: 0px"/>
+  <h5>Firma Autorizada</h5>
   
 </div>
