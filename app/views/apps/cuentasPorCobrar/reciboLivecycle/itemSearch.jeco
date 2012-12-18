@@ -18,7 +18,9 @@
   <div class="details" style="display:none">
     <h5>Documentos: <%= @Consecutivos.join " , " %></h5>
     
-    <a class="btn btn-danger btn_standBy" data-id="<%= @id %>">Retener</a>
+    
+    <a  data-action="0" class="btn btn-danger btn_action pull-right" data-recibo="<%= @Recibo %>">Retener</a>
+    
   </div>
   
   

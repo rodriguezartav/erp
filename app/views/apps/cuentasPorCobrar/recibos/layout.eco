@@ -1,0 +1,3 @@
+<h1 class="btn_createPago"><i class="<%= @icon %>"></i> <%= @label %></h1>
+<h6 class="btn_createPago">click para crear nuevo Pago</h6>
+

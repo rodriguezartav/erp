@@ -6,7 +6,8 @@ class PagoItem extends Spine.Model
  
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
-
+  @extend Spine.Model.TransitoryModel
+  
   @avoidInsertList = ["Saldo","Total","Consecutivo"] 
   @overrideName: "Pago"
 
@@ -15,6 +16,18 @@ class PagoItem extends Spine.Model
       @Tipo = "PA"
     else
       @Tipo = "AB"
+
+  @itemsInPago: (pago) ->
+    PagoItem.findAllByAttribute("Referencia", pago.Referencia )
+
+  @deleteItemsInPago: (pago) =>
+    items = @itemsInPago(pago)
+    for item in items
+      item.destroy()
+
+  @saldoExists: (saldo) =>
+    item = PagoItem.findByAttribute "Consecutivo" , saldo.Consecutivo
+    return item || null
 
   @createFromSaldo: (saldo) ->
     PagoItem.create

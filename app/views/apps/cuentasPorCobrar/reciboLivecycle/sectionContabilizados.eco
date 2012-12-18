@@ -29,7 +29,7 @@
       
     </table>
 
-    <a data-action="4" class="btn btn-success btn_bulk_action" data-ref="ParaAplicar">Aplicar</a>
+    <a data-action="4" class="btn btn-success btn_bulk_action" data-ref="Contabilizados">Aplicar</a>
 
   </li>
 </ul>

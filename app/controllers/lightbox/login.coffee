@@ -77,7 +77,7 @@ class Login extends Spine.Controller
 
   on_continue: =>
     ##STAT
-    Spine.notifications.checkPermision()
+    #Spine.notifications.checkPermision()
     
     StatManager.identify Spine.session.user
     StatManager.sendEvent 'Session Reload'

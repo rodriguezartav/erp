@@ -1,0 +1,33 @@
+<% Spine   = require('spine') %> 
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@Cliente)  %>
+<% Producto = require("models/producto")  %>
+
+<% referencia = if @Orden then "Orden: " + @Orden else @Referencia  %>
+
+<li class="pedidoItem" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>" data-cliente="<%= cliente.id %>">
+
+  <h4>
+    <% if @Especial:  %>
+    <span class="badge badge-warning">E</span>&nbsp;
+    <% end %>
+    <span class="badge badge-info"><%= referencia %></span>&nbsp;
+    <%= cliente?.Name?.capitalize()  %>
+  </h4>
+
+  <span><%= @CreatedById  %></span>
+
+  <span>Total: <%= @Total.toMoney()  %></span>
+
+  <span class="pull-right"><%= @Estado %></span>
+
+  <div class="pedidoDetails" style="display:none">
+
+     <a data-id="<%= @id %>" class="btn btn-success pull-right btn_send"><i class="icon-ok"></i> Enviar</a>
+
+     <a  data-id="<%= @id %>" class="btn btn-danger btn_borrar "><i class="icon-remove"></i> Borrar</a>
+
+  </div>
+
+</li>
+

@@ -151,16 +151,17 @@ class SinglePedidos extends Spine.Controller
     target = $(e.target)
     @updateFromView(@pedido,@inputs_to_validate)
     @pedido.save()
-    pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
+    @after_send()
+    #pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
 
-    data =
-      class: PedidoItem
-      restRoute: "Oportunidad"
-      restMethod: "POST"
-      restData: oportunidades: pedidos 
+    #data =
+      #class: PedidoItem
+      #restRoute: "Oportunidad"
+      #restMethod: "POST"
+      #restData: oportunidades: pedidos 
 
-    console.log data
-    Spine.trigger "show_lightbox" , "rest" , data , @after_send
+    #console.log data
+    #Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
   after_send: =>
     @notify()
@@ -190,7 +191,7 @@ class SinglePedidos extends Spine.Controller
     @release()
 
   reset: =>
-    @pedido.destroy()
+    #@pedido.destroy()
     @resetBindings()
     @smartProductos.reset()
     @clientes.reset()

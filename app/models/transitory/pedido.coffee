@@ -6,10 +6,13 @@ class Pedido extends Spine.Model
 
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods  
-
   @extend Spine.Model.TransitoryModel
   
-
+  
+  
+  
+  
+  
   updateFromPedidoItems: (items)  ->
     @Total = 0
     @Descuento =0

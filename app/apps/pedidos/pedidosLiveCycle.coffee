@@ -7,6 +7,9 @@ PedidoPreparado = require("models/socketModels/pedidoPreparado")
 Saldo = require("models/socketModels/saldo")
 SinglePedido = require("apps/pedidos/singlePedidos")    
 
+Pedido = require("models/transitory/pedido")
+PedidoItem = require("models/transitory/pedidoItem")
+
 class PedidosLiveCycle extends Spine.Controller
   className: "row-fluid"
 
@@ -15,7 +18,7 @@ class PedidosLiveCycle extends Spine.Controller
   @icon = "icon-ok-sign"
 
   elements:
-    ".error" : "error"
+    ".src_pedidos_guardados" : "src_pedidos_guardados" 
     ".src_pedidos_pendientes" : "src_pedidos_pendientes" 
     ".src_pedidos_archivados" : "src_pedidos_archivados"
     ".src_pedidos_aprobados" : "src_pedidos_aprobados"
@@ -29,7 +32,6 @@ class PedidosLiveCycle extends Spine.Controller
     ".pedido_detail_info" : "pedido_detail_info"
     ".src_pedidos_list" : "src_pedidos_list"
     ".view" : "view"
-    
 
   events:
     "click .aprobar"  : "on_action_click"
@@ -37,10 +39,12 @@ class PedidosLiveCycle extends Spine.Controller
     "click .reload" : "reload"
     "click .pedidoItem"  : "onItemClick"
     "click .btn_create" : "onCreate"
+    "click .btn_send" : "onBtnSend"
+    "click .btn_borrar" : "onBtnBorrar"
+    "click .btn_delete_all" : "onBtnDeleteAll"
 
   constructor: ->
     super
-    @error.hide()
     @html require("views/apps/pedidos/pedidosLiveCycle/layout")(PedidosLiveCycle)
     @renderPedidos()
     PedidoPreparado.bind "push_success" , @renderPedidos
@@ -58,6 +62,7 @@ class PedidosLiveCycle extends Spine.Controller
     facturados = []
     anulados = []
     groups = []
+    guardados = Pedido.all()
 
     groups = PedidoPreparado.group_by_referencia(PedidoPreparado.all())
     for group in groups
@@ -73,6 +78,7 @@ class PedidosLiveCycle extends Spine.Controller
         anulados.push group if group.Estado == "Anulado"
 
     @src_pedidos_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
+    @src_pedidos_guardados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemGuardado")( guardados ) if guardados.length > 0
     @src_pedidos_pendientes.html require("views/apps/pedidos/pedidosLiveCycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
     @src_pedidos_aprobados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAprobado")( aprobados) if aprobados.length > 0
     @src_pedidos_archivados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAnulado")( archivados ) if archivados.length > 0
@@ -80,19 +86,47 @@ class PedidosLiveCycle extends Spine.Controller
     @src_pedidos_anulados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAnulado")( anulados ) if anulados.length > 0
 
   onCreate: =>
-    @view.hide()
+    #@view.hide()
     create = $("<div class='create'></div>")
-    @el.append create
+    @el.prepend create
     @singlePedido.reset() if @singlePedido
     @singlePedido = new SinglePedido 
       el: create
       onSuccess: =>
-        @reload()
+        @renderPedidos()
         @onCreateComplete()
       onCancel: @onCreateComplete
 
   onCreateComplete: =>
     @view.show()
+
+  onBtnSend: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    @pedido = Pedido.find id
+    pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
+
+    data =
+      class: PedidoItem
+      restRoute: "Oportunidad"
+      restMethod: "POST"
+      restData: oportunidades: pedidos 
+
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
+
+  after_send: =>
+    @pedido.destroy()
+    @renderPedidos()
+
+  onBtnBorrar: (e) =>
+    target = $(e.target)
+    id = target.data "id"    
+    pedido = Pedido.find id
+    pedido.destroy()
+    @renderPedidos()
+
+  onBtnDeleteAll: =>
+    Pedido.destroyAll()
 
   onItemClick: (e) =>
     target = $(e.target)
@@ -156,6 +190,7 @@ class PedidosLiveCycle extends Spine.Controller
     #, 15000
 
   reset: ->
+    @pedido = null
     PedidoPreparado.unbind "push_success" , @renderPedidos
     PedidoPreparado.unbind "refresh" , @renderPedidos
     @singlePedido.reset() if @singlePedido

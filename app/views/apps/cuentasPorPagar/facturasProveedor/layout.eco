@@ -88,7 +88,7 @@
 
 <div class="action_footer">
     <div class="modal-footer">
-    <a class="btn btn-danger cancel">Regresar</a>
+      <a class="btn btn-danger cancel">Regresar</a>
 
       <a class="btn btn-primary save">Guardar</a>
 

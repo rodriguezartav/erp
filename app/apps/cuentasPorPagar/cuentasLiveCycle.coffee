@@ -6,6 +6,7 @@ Producto = require("models/producto")
 Saldo = require("models/socketModels/saldo")
 CuentaPorPagar = require("models/transitory/cuentaPorPagar")
 Proveedor = require("models/proveedor")
+Facturas = require("apps/cuentasPorPagar/facturasProveedor")
 
 class CuentasLiveCycle extends Spine.Controller
   className: "row-fluid"
@@ -15,7 +16,6 @@ class CuentasLiveCycle extends Spine.Controller
   @icon = "icon-ok-sign"
 
   elements:
-    ".error" : "error"
     ".src_pendientes" : "src_pendientes" 
     ".src_calendarizados" : "src_calendarizados"
     ".src_paraPagar" : "src_paraPagar"
@@ -25,14 +25,15 @@ class CuentasLiveCycle extends Spine.Controller
     ".lbl_totales":"lbl_totales"
     ".hiddenParaPagar" : "hiddenParaPagar"
     ".hiddenParaAplicar" : "hiddenParaAplicar"
+    ".view" : "view"
 
   events:
-    "click .cancel"   : "reset"
     "click .actionBtn"  : "onActionClick"
     "click .reload" : "reload"
     "click .item"  : "onItemClick"
     "click .btn_aplicar" : "onAplicarGenerado"
     "click .hiddenParaPagar" : "onGenerar"
+    "click .btn_create" : "onCreate"
 
   constructor: ->
     super
@@ -124,6 +125,21 @@ class CuentasLiveCycle extends Spine.Controller
       lastWeek = thisWeek
       src.append require("views/apps/cuentasPorPagar/cuentasLiveCycle/#{template}")(item)
 
+  onCreate: =>
+    @view.hide()
+    create = $("<div class='create'></div>")
+    @el.append create
+    @facturas.reset() if @facturas
+    @facturas = new Facturas 
+      el: create
+      onSuccess: =>
+        @reload()
+        @onCreateComplete()
+      onCancel: @onCreateComplete
+
+  onCreateComplete: =>
+    @view.show()
+
   generateArchive: =>
     csv = ''
     for cuenta in @paraGenerar
@@ -198,6 +214,7 @@ class CuentasLiveCycle extends Spine.Controller
   reset: ->
     @paraGenerar = []
     @cuenta=null;
+    @facturas.reset() if @facturas
     @release()
     @navigate "/apps"
 

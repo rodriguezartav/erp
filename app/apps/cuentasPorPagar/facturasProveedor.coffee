@@ -14,7 +14,6 @@ class FacturasProveedor extends Spine.Controller
   className: "row-fluid"
 
   elements:
-    ".error" : "error"
     ".validatable" : "inputs_to_validate"
     "select" : "cuentas"
     ".src_proveedor" : "src_proveedor"
@@ -26,7 +25,7 @@ class FacturasProveedor extends Spine.Controller
     ".lbl_total_format" : "lbl_total_format"
 
   events:
-    "click .cancel" : "reset"
+    "click .cancel" : "onCancelar"
     "click .save" : "send"
     "change .totales" : "onTotalesChange"
 
@@ -100,12 +99,15 @@ class FacturasProveedor extends Spine.Controller
       Spine.socketManager.pushToProfile("Presidencia" , "He ingresado Cuentas por Pagar")
     , 100000
     @reset(false)
+    @onSuccess?()
  
-  customReset: ->
+  onCancelar: (e) =>
+    @reset()
+    @onCancel?()   
+
+  customReset: =>
     Proveedor.reset_current()
     Proveedor.unbind "current_set" , @onProveedorSet
     @cuentaPorPagar.destroy() if @cuentaPorPagar
-    @navigate "/apps"
-    
 
 module.exports = FacturasProveedor
