@@ -83,13 +83,13 @@ class SinglePago extends Spine.Controller
   constructor: ->
     super
     @setVariables()
+    @pago = Pago.create( UserStamp: Spine.session.getConsecutivoRecibo() , Recibo: recibo + 1)
     @render()
     @setBindings()
-   
+
   render: ->
     @html require("views/apps/cuentasPorCobrar/singlePago/layout")(SinglePago)
     recibo = parseInt localStorage["SinglePago" + "-Recibo"] || 0
-    @pago = Pago.create( UserStamp: Spine.session.getConsecutivoRecibo() , Recibo: recibo + 1)
     @refreshView(@pago,@inputs_to_validate)
     @clientes = new Clientes(el: @src_cliente)
     
@@ -143,7 +143,6 @@ class SinglePago extends Spine.Controller
     value = parseFloat(target.val())
     @lblDiferencia.html (value - @pago.Monto).toMoney()
     target.val value.toMoney()
-
 
   customValidation: =>
     @validationErrors.push "Ingrese el Nombre del Cliente" if @pago.Cliente == null

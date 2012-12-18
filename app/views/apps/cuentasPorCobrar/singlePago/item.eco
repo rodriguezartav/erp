@@ -1,3 +1,5 @@
+<% Saldo = require("models/socketModels/saldo")  %>
+<% documento = Saldo.findByAttribute("Consecutivo" , @Consecutivo) %>
 
 <td>
   <i class="icon-tag"></i>
