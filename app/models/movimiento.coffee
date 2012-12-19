@@ -18,7 +18,7 @@ class Movimiento extends Spine.Model
     filter = @queryFilterAddCondition(" Fecha__c   = LAST_N_DAYS:#{options.diasAtras} " , filter) if options.diasAtras
     filter = @queryFilterAddCondition(" Tipo__c IN (#{options.tipos}) "               , filter) if options.tipos
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "        , filter) if options.cliente
-    filter = @queryFilterAddCondition(" IsAplicado__c = false  and Tipo__c IN ('EN','SA','CO') "        , filter) if options.livecycle
+    filter = @queryFilterAddCondition(" IsAplicado__c = false  and Tipo__c IN ('EN','SA','CO') and Fecha__c   = LAST_N_DAYS:5 "        , filter) if options.livecycle
     filter
  
   @create_from_producto: (producto, cantidad = 1 ) ->

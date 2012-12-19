@@ -10,6 +10,8 @@ PedidosLiveCycle          = require("apps/pedidos/pedidosLiveCycle")
 NotasLivecycle = require("apps/cuentasPorCobrar/notasLivecycle")
 
 
+Compras = require("apps/auxiliares/compras")
+
 ReciboLivecycle = require("apps/cuentasPorCobrar/reciboLivecycle")
 
 VerSaldos = require("apps/vistas/verSaldos")
@@ -61,9 +63,9 @@ class SecurityManager
   
   constructor: ->
     @profiles = {}
-    apps = [  MovimientoLivecycle  , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle ,FacturasProveedor , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,PagosAnular  , AjustarNegociacion , VerClientes ,PagosProveedor   , PedidosLiveCycle ,DocumentosAnular ]
+    apps = [  Compras , MovimientoLivecycle  , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle ,FacturasProveedor , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,PagosAnular  , AjustarNegociacion , VerClientes ,PagosProveedor   , PedidosLiveCycle ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
-    @profiles["Presidencia"] =  [ CuentasLiveCycle , MovimientoLivecycle , DoCierreDiario  , AjustarNegociacion    , TomasInventario , VerRegistrosResumen  ]
+    @profiles["Presidencia"] =  [ Compras , CuentasLiveCycle , MovimientoLivecycle , DoCierreDiario  , AjustarNegociacion    , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ MovimientoLivecycle , NotasLivecycle , AjustarNegociacion   , PedidosLiveCycle   , VerRegistrosResumen ]
     @profiles["Gerencia Comercial"] = [MovimientoLivecycle , NotasLivecycle , PedidosLiveCycle , FacturasProveedor , PagosProveedor    , CuentasLiveCycle  , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes , AjustarNegociacion ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]

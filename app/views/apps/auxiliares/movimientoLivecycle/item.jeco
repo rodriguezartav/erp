@@ -13,7 +13,7 @@
   <div class="details" style="display: none;">
     <ul class="mobileList unstyled">
       <% for movimiento in @Movimientos : %>
-        <% producto = Producto.find(movimiento.Producto)  %>
+        <% producto = Producto.exists(movimiento.Producto)  %>
         <li >
           <div class="row-fluid">
             <span class="span8">

@@ -9,7 +9,7 @@ SmartProductos = require("controllers/smartProductos/smartProductos")
 SmartItemEntrada = require("controllers/smartProductos/smartItemEntrada")
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
-Movimiento = require("apps/auxiliares/movimiento")
+SingleMovimiento = require("apps/auxiliares/movimiento")
 
 class MovimientoLivecycle extends Spine.Controller
   @extend Spine.Controller.ViewDelegation
@@ -72,8 +72,8 @@ class MovimientoLivecycle extends Spine.Controller
     @panel.hide()
     create = $("<div class='create'></div>")
     @el.append create
-    @movimiento.reset() if @movimiento
-    @movimiento = new Movimiento 
+    @movimiento.reset() if @singlemovimiento
+    @singlemovimiento = new SingleMovimiento 
       el: create
       onSuccess: =>
         @reload()
@@ -120,7 +120,7 @@ class MovimientoLivecycle extends Spine.Controller
     @reload()
 
   customReset: =>
-    @movimiento.reset() if @movimiento
+    @singlemovimiento.reset() if @singlemovimiento
     @navigate "/apps"
 
 
