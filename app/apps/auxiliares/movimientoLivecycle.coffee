@@ -101,12 +101,13 @@ class MovimientoLivecycle extends Spine.Controller
   onBulkAction: (e) =>
     target = $(e.target)
     boleta = target.data "boleta"
-
+    action = target.data("action")
+    
     movimientos =  MovimientoItem.select (item) =>
       return true if parseInt(item.Referencia) == parseInt(boleta)
-
+  
     for movimiento in movimientos
-      if movimiento.Tipo == "CO" and ( !movimiento.ProductoCosto or movimiento.ProductoCosto == 0 )
+      if movimiento.Tipo == "CO" and ( !movimiento.ProductoCosto or movimiento.ProductoCosto == 0 ) and action != "delete"
         # In case this is an CO and costo was not assigned
         costo = Producto.find(movimiento.Producto).Costo
         throw "Error: No se encuentra costo para el producto y este no se ingreso" if !costo or costo == 0
@@ -119,7 +120,7 @@ class MovimientoLivecycle extends Spine.Controller
       restMethod: "PUT"
       restData: 
         movimientos: MovimientoItem.salesforceFormat(movimientos,true)
-        deleteAction: if target.data("action") == "delete" then true else false
+        deleteAction: action == "delete"
 
     Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
