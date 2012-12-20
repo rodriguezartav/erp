@@ -20,34 +20,20 @@ class MovimientoLivecycle extends Spine.Controller
   @icon = "icon-arrow-left"
 
   elements:
-    ".panel" : "panel"
-    ".create" : "create"    
-    ".movimientos_list"   :  "movimientos_list"
-    ".list_pendientes" : "list_pendientes"
-    ".list_aplicados" : "list_aplicados"
+    ".panel"               :   "panel"
+    ".create"              :   "create"    
+    ".movimientos_list"    :   "movimientos_list"
+    ".list_pendientes"     :   "list_pendientes"
+    ".list_aplicados"      :   "list_aplicados"
 
   events:
     "click .btn_create"       : "onCreate"
     "click .item" :       "onItemClick"
-    "click .costoInput" : "onInputClick"
+    "click input" : "onInputClick"
     "click .reload"  : "reload"
     "click .btn_bulk" : "onBulkAction"
     "change .costoInput" : "onInputChange"
-    
-  onInputClick: (e) =>
-    target = $(e.target)
-    target.select()
-    return false;  
-
-  onInputChange: (e) =>
-    target = $(e.target)
-    movimiento = MovimientoItem.find target.data "id"
-    costo = parseFloat(target.val())
-    movimiento.ProductoCosto = if costo == NaN or costo == undefined or costo == null then 0 else costo
-    movimiento.save()
-    target.val movimiento.ProductoCosto;
-
-    return false;
+    "change .observacionInput": "onObservacionChange"
 
   constructor: ->
     super
@@ -71,9 +57,9 @@ class MovimientoLivecycle extends Spine.Controller
   onCreate: =>
     @panel.hide()
     create = $("<div class='create'></div>")
-    @el.append create
-    @movimiento.reset() if @singlemovimiento
-    @singlemovimiento = new SingleMovimiento 
+    @el.prepend create
+    @singlemovimiento.reset() if @singlemovimiento
+    @singlemovimiento = new SingleMovimiento
       el: create
       onSuccess: =>
         @reload()
@@ -91,6 +77,26 @@ class MovimientoLivecycle extends Spine.Controller
     @el.find(".details").hide()
     target.find(".details").show() if !status    
 
+  onInputChange: (e) =>
+    target = $(e.target)
+    movimiento = MovimientoItem.find target.data "id"
+    costo = parseFloat(target.val())
+    movimiento.ProductoCosto = if costo == NaN or costo == undefined or costo == null then 0 else costo
+    movimiento.save()
+    target.val movimiento.ProductoCosto;
+    return false;
+
+  onInputClick: (e) =>
+    target = $(e.target)
+    target.select()
+    return false;  
+
+  onObservacionChange: (e) =>
+    target = $(e.target)
+    movimiento = MovimientoItem.find target.data "id"
+    movimiento.Observacion = target.val()
+    movimiento.save()
+    return false;
 
   onBulkAction: (e) =>
     target = $(e.target)
@@ -100,9 +106,10 @@ class MovimientoLivecycle extends Spine.Controller
       return true if parseInt(item.Referencia) == parseInt(boleta)
 
     for movimiento in movimientos
-      movimiento.ProductoCosto = Producto.find(movimiento.Producto).Costo if !movimiento.ProductoCosto
-      movimiento.save()
-    
+      throw "Error: El movimiento con el producto #{movimiento.Producto} tiene el costo en 0" if movimiento.Tipo == "CO"
+      #movimiento.ProductoCosto = Producto.find(movimiento.Producto).Costo if !movimiento.ProductoCosto
+      #movimiento.save()
+
     data =
       class: Movimiento
       restRoute: "Movimiento"
@@ -112,9 +119,9 @@ class MovimientoLivecycle extends Spine.Controller
         deleteAction: if target.data("action") == "delete" then true else false
 
     Spine.trigger "show_lightbox" , "rest" , data , @after_send
-  
+
   after_send: =>
-   # Spine.socketManager.pushToFeed("Hice la salida #{@documento.Referencia}")
+    #Spine.socketManager.pushToFeed("Hice la salida #{@documento.Referencia}")
     @panel.show()
     @create.hide()
     @reload()
@@ -122,6 +129,5 @@ class MovimientoLivecycle extends Spine.Controller
   customReset: =>
     @singlemovimiento.reset() if @singlemovimiento
     @navigate "/apps"
-
 
 module.exports = MovimientoLivecycle

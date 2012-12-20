@@ -71,7 +71,6 @@ class CreateMovimiento extends Spine.Controller
     
   send: (e) =>
     @updateFromView({},@inputs_to_validate)
-    
     data =
       class: Movimiento
       restRoute: "Movimiento"
@@ -85,11 +84,11 @@ class CreateMovimiento extends Spine.Controller
     # Spine.socketManager.pushToFeed("Hice la salida #{@documento.Referencia}")
     @onSuccess?()
     @reset()
-   
+
   onCancel: =>
-    @onCancel?()
     @reset()
-   
+    @onCancel?()
+
   reset: =>
     for item in Movimiento.all()
       item.destroy()

@@ -928,6 +928,7 @@ input.span1{width:50px;}
 .popover hr{margin-top:5px;margin-bottom:5px;}
 .popover table{font-size:11px;}
 .inline{display:inline;}
+.inlineBlock{display:inline-block;}
 h5.preHeader{color:#333;font-size:17px;line-height:12px;}
 .well{margin-top:10px;}
 .hero-unit{-webkit-box-shadow:0 1px 5px #999999;-moz-box-shadow:0 1px 5px #999999;box-shadow:0 1px 5px #999999;}

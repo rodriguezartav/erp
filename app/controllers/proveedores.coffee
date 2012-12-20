@@ -7,11 +7,13 @@ class Proveedores  extends Spine.Controller
   events: 
     "change .js_proveedor_search" : "on_filter"
     "click .proveedores_list>li>a" : "on_item_click"
+    "click .btn_close" : "onCloseList"
 
   elements:
-    ".proveedores_list" : "proveedores_list"
-    ".proveedores_list>li" : "proveedores_list_items"
-    ".js_proveedor_search" : "js_proveedor_search"
+    ".proveedores_list"     : "proveedores_list"
+    ".proveedores_list>li"  : "proveedores_list_items"
+    ".js_proveedor_search"  : "js_proveedor_search"
+    ".btn_close"            : "btnClose"
 
   constructor: ->
     super
@@ -34,6 +36,9 @@ class Proveedores  extends Spine.Controller
     @proveedores_list.html require("views/controllers/proveedores/list_item")(proveedores)
     @proveedores_list.show()
 
+  onCloseList: =>
+    @proveedores_list.hide()
+
   on_item_click: (e) =>
     t = $(e.target)
     parent = t.parent()
@@ -55,10 +60,8 @@ class Proveedores  extends Spine.Controller
 
   reset: =>
     Proveedor.unbind "refresh" , @render
-
     Proveedor.unbind "current_reset" , =>
       @js_proveedor_search.val ""
-      
     @release()
 
 module.exports = Proveedores

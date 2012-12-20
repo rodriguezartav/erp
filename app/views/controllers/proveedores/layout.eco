@@ -1,4 +1,8 @@
-<input type="text" placeholder="Busque Proveedores"  class="js_proveedor_search loadable">
+<div class="proveedorInput">
+  <input type="text" placeholder="Busque Proveedores"  class="js_proveedor_search loadable inlineBlock">
+  <a style="vertical-align: top;" class="btn btn_close inlineBlock">
+    <i class="icon-remove-sign icon-large"></i>
+  </a>
+</div>
 
-
-<ul class="proveedores_list block-grid two-up nav nav-tabs"></ul>
+<ul style="display: none" class="proveedores_list block-grid two-up nav nav-tabs"></ul>
