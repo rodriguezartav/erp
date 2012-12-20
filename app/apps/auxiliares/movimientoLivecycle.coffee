@@ -106,9 +106,12 @@ class MovimientoLivecycle extends Spine.Controller
       return true if parseInt(item.Referencia) == parseInt(boleta)
 
     for movimiento in movimientos
-      throw "Error: El movimiento con el producto #{movimiento.Producto} tiene el costo en 0" if movimiento.Tipo == "CO"
-      #movimiento.ProductoCosto = Producto.find(movimiento.Producto).Costo if !movimiento.ProductoCosto
-      #movimiento.save()
+      if movimiento.Tipo == "CO" and ( !movimiento.ProductoCosto or movimiento.ProductoCosto == 0 )
+        # In case this is an CO and costo was not assigned
+        costo = Producto.find(movimiento.Producto).Costo
+        throw "Error: No se encuentra costo para el producto y este no se ingreso" if !costo or costo == 0
+        movimiento.ProductoCosto = costo;
+        movimiento.save()
 
     data =
       class: Movimiento
