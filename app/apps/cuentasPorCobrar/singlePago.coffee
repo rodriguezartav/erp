@@ -112,9 +112,10 @@ class SinglePago extends Spine.Controller
       return parseInt(a.Consecutivo) - parseInt(b.Consecutivo)
     
     for documento in @documentos
-      ri = new Items(documento: documento , pago: @pago )
-      @items.push ri
-      @saldos_list.append ri.el
+      if documento.Saldo != 0
+        ri = new Items(documento: documento , pago: @pago )
+        @items.push ri
+        @saldos_list.append ri.el
 
   onDateChange: (e) =>
     target = $(e.target)
@@ -219,7 +220,6 @@ class SinglePago extends Spine.Controller
   destroyUnusedItems: =>
     for item in PagoItem.all()
       if item.Monto ==0
-        console.log item
         item.destroy()
     
 module.exports = SinglePago
