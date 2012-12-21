@@ -17,13 +17,15 @@ class Session extends Spine.SingleModel
 
   getConsecutivoPedido: =>
     consecutivo = parseInt(@consecutivoPedido or (Math.random() * 10000) )
+    consecutivo = parseInt(Math.random() * 10000) if isNaN(consecutivo)
     Spine.session.consecutivoPedido = consecutivo + 1
     Spine.session.save()
     res= "#{@user.FirstName}-#{@consecutivoPedido }"
     return res
 
   getConsecutivoRecibo: =>
-    consecutivo = parseInt(@consecutivoRecibo or (Math.random() * 10000) )
+    consecutivo = parseInt(@consecutivoRecibo)
+    consecutivo = parseInt(Math.random() * 10000) if isNaN(consecutivo)
     Spine.session.consecutivoRecibo = consecutivo + 1
     Spine.session.save()
     res= "#{@user.FirstName}-#{@consecutivoRecibo }"

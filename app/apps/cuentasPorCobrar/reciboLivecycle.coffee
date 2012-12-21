@@ -155,12 +155,19 @@ class ReciboLivecycle extends Spine.Controller
     id = target.data "id"
     @pago = LocalPago.find id
 
+    pagos = LocalPagoItem.itemsInPago(@pago) 
+
+    if pagos.length == 0
+      error = "Error del sistema, el pago no tiene lineas asignadas. Intente borrandolo e ingresandolo nuevamente."
+      Spine.trigger "show_lightbox" , "showError" , error: error
+      throw error
+
     data =
       class: LocalPagoItem
       restRoute: "Pago"
       restMethod: "POST"
       restData: 
-        pagos: LocalPagoItem.salesforceFormat( LocalPagoItem.itemsInPago(@pago) , false) 
+        pagos: LocalPagoItem.salesforceFormat( pagos, false) 
 
     Spine.trigger "show_lightbox" , "rest" , data , @after_send
     return false;

@@ -48,10 +48,17 @@ class MovimientoLivecycle extends Spine.Controller
     MovimientoItem.ajax().query {livecycle: true } , afterSuccess: @render
 
   render: =>
+
     movimientos = MovimientoItem.findAllByAttribute "IsAplicado" , false
+    movimientos = movimientos.sort (a,b) =>
+      return b.Referencia - a.Referencia
+
     @list_pendientes.html require("views/apps/auxiliares/movimientoLivecycle/item")(MovimientoItem.group_by_boleta(movimientos))
 
     movimientos = MovimientoItem.findAllByAttribute "IsAplicado" , true
+    movimientos = movimientos.sort (a,b) =>
+      return b.Referencia - a.Referencia
+
     @list_aplicados.html require("views/apps/auxiliares/movimientoLivecycle/itemAprobado")(MovimientoItem.group_by_boleta(movimientos))
 
   onCreate: =>

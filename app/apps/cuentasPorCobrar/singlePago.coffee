@@ -107,6 +107,10 @@ class SinglePago extends Spine.Controller
   onDocumentoLoaded: =>
     PagoItem.deleteItemsInPago(@pago)
     @documentos = Documento.findAllByAttribute "Cliente" , @pago.Cliente
+    
+    @documentos = @documentos.sort (a,b) =>
+      return parseInt(a.Consecutivo) - parseInt(b.Consecutivo)
+    
     for documento in @documentos
       ri = new Items(documento: documento , pago: @pago )
       @items.push ri
@@ -196,11 +200,12 @@ class SinglePago extends Spine.Controller
     @onSuccess?( pagoId )
 
   onCancelar: =>
-    @reset()
+    @reset(true)
     @onCancel?()
 
-  reset: ->
+  reset: (deletePago = false) ->
     @resetBindings()
+    @pago.destroy() if deletePago
     @minor_reset()
     @release()
 
@@ -213,6 +218,8 @@ class SinglePago extends Spine.Controller
 
   destroyUnusedItems: =>
     for item in PagoItem.all()
-      item.destroy() if !item.UsedInPago
+      if item.Monto ==0
+        console.log item
+        item.destroy()
     
 module.exports = SinglePago
