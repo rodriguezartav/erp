@@ -31,7 +31,7 @@
     </div>
     
   <div class="row-fluid">
-    <a class="btn btn-success btn_action pull-right" data-recibo="<%= @Recibo %>" data-action="3">Entregar</a>
+    <a class="btn btn-success btn_action pull-right" data-recibo="<%= @Recibo %>" data-action="2">Aplicar</a>
     <a class="btn btn-danger btn_action " data-recibo="<%= @Recibo %>" data-action="-2">Borrar</a>    
     <a class="btn btn-warning btn_action " data-recibo="<%= @Recibo %>" data-action="-1">Anular</a>
   </div>

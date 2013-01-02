@@ -53,7 +53,10 @@
       
     </table>
 
-    <a data-action="3" class="btn btn-success btn_bulk_action" data-ref="Digitados">Recibir Valores</a>
+    <a data-action="2" class="btn btn-success btn_bulk_action" data-ref="Digitados">Recibir Valores</a>
+
+    <a class="btn btn-info btn_print_entrega pull-right" data-ref="Digitados">Imprimir</a>
+
     
     <div class="show_print">
       <table class="table table-bordered"  style="margin-top:50px">

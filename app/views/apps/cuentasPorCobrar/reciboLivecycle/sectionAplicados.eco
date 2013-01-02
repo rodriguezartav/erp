@@ -1,0 +1,33 @@
+<% total = 0 %>
+
+
+<ul class="unstyled mobileList section_pendientes">
+
+  <li>
+    <h4>Recibos Aplicados</h4>
+      <ul class="list_pendientes unstyled mobileList list">
+
+        <%- "<li><h5>No hay recibos aplicados</h5></li>" if @pagos.length == 0 %>
+
+        <% for pago in @pagos:  %>
+          <% total += pago.MontoPendiente %>
+
+          <%- require("views/apps/cuentasPorCobrar/reciboLivecycle/itemAplicado")(pago) %>
+        <% end %>
+
+      </ul>
+  </li>
+
+  <li>
+    <h5>Resumen</h5>
+    <table class="table table-bordered">
+
+      <tr class="info hide_print">
+        <td>Total</td>
+        <td><%= total.toMoney() %></td>
+      </tr>
+      
+    </table>
+
+  </li>
+</ul>

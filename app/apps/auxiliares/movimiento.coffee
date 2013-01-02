@@ -7,6 +7,7 @@ MovimientoItem = require("models/transitory/movimiento")
 Movimiento = require("models/movimiento")
 SmartProductos = require("controllers/smartProductos/smartProductos")
 SmartItemEntrada = require("controllers/smartProductos/smartItemEntrada")
+
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
 

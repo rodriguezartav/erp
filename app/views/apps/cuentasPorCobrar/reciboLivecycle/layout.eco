@@ -1,5 +1,3 @@
-
-
 <div class="view hide_on_print">
 
   <div class="row-fluid widgetHeader">
@@ -43,7 +41,7 @@
 
     <div class="span4 section_digitados sections"></div>
 
-    <div class="span4 section_contabilizados sections"></div>
+    <div class="span4 section_aplicados sections"></div>
 
   </div>
   <br/><br/>

@@ -1,6 +1,5 @@
 <% Cliente = require("models/cliente")  %>
-<% PagoItem = require("models/transitory/pagoItem") %>
-<% cliente = Cliente.exists(@Cliente)  %>
+<% cliente = Cliente.exists(@pago.Cliente)  %>
 
 
 <div class="row-fluid">
@@ -10,8 +9,8 @@
   </div>
   
   <div class="span6">
-    <h1 style="text-align: right;">Recibo: <%= @Recibo %></h1>
-    <h5  style="text-align: right; ><%= @Fecha  %></h5>
+    <h1 style="text-align: right;">Recibo: <%= @pago.Recibo %></h1>
+    <h5  style="text-align: right; ><%= @pago.Fecha  %></h5>
   </div>
   
 </div>
@@ -25,8 +24,8 @@
   </div>
   
   <div class="span6">
-    <h4 style="text-align: right;"><%= @FormaPago %></h4>
-    <h4 style="text-align: right;"><%= @Referencia %></h4>  
+    <h4 style="text-align: right;"><%= @pago.FormaPago %></h4>
+    <h4 style="text-align: right;"><%= @pago.Referencia %></h4>  
   </div>
 
 </div>
@@ -36,17 +35,17 @@
       Factura
       <span class="pull-right">Monto</span>
       </li>
-      <% for item in PagoItem.itemsInPago(@) : %>
+      <% for item in @pagoItems : %>
         <li>
           <%= item.Consecutivo %>
-          <span class="pull-right"><%= item.Monto.toMoney() %></span>
+          <span class="pull-right"><%= item.Monto?.toMoney() %></span>
         </li>
       <% end  %>
     </ul>
     
   <br/>
   <h6>Este recibo no es valido si contiene alteraciones o raspaduras. Los extendidos en otra formula, o si los cheques con que se paga no fueran aceptados por el banco respectivo.</h6>
-  <h3 class="text-align: right;">Total: <%= @Monto.toMoney() %></h3>
+  <h3 class="text-align: right;">Total: <%= @pago.Monto?.toMoney() %></h3>
   <br/>  <br/>
   <hr style="margin-bottom: 0px"/>
   <h5>Firma Autorizada</h5>

@@ -109,6 +109,8 @@
 <div class="action_footer">
   <div class="modal-footer">
     <a class="btn btn-danger cancel">Borrar</a>
-    <a class="btn btn-primary save">Guardar</a>
+    <a class="btn btn-info save ">Guardar</a>
+    <a data-send="true" class="btn btn-primary save ">Enviar</a>
+
   </div>
 </div>

@@ -2,8 +2,8 @@ Spine = require('spine')
 
 class Pago extends Spine.Model
   @configure 'Pago', "Cliente", "Tipo" , "Documento" ,  "Monto" , "FormaPago"  , "MontoPendiente" ,
-    "Referencia" , "Recibo" , "Fecha", "Consecutivo" , "Estado" , "Aprobado" , "Contabilizado" , "Standby" , 
-     "CreatedById" , "AprobadoPor"  , "Custodio" , "EstadoNumerico"
+    "Referencia" , "Recibo" , "Fecha", "Consecutivo" , "Estado" ,
+     "CreatedById"  , "Custodio" , "EstadoNumerico"
 
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods    
@@ -31,8 +31,7 @@ class Pago extends Spine.Model
      filter = ""
      filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
      filter = @queryFilterAddCondition(" Fecha__c = #{options.fecha} "     ,  filter)  if options.fecha
-     filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 4) "     ,  filter)  if options.deposito
-     filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 0 , 1 , 3 ) "     ,  filter)  if options.livecycle
+     filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 0 , 1 ) or ( EstadoNumerico__c = 2 and LastModifiedDate = TODAY ) "     ,  filter)  if options.livecycle
      filter = @queryFilterAddCondition(" Recibo__c='#{options.search}'"     ,  filter)  if options.search
      #filter = @queryFilterAddCondition(" DepositadoFecha__c = LAST_N_DAYS:7 and CreatedById = '#{depositadosUsuario}'"     ,  filter)  if options.depositadosUsuario != null
      filter

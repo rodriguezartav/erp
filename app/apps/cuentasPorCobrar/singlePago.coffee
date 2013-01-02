@@ -170,10 +170,13 @@ class SinglePago extends Spine.Controller
     @pago.save()
 
   send: (e) =>
+    target = $(e.target)
+    send = if target.data("send") then true else false
     @txtReferencia.val "N/D" if @formaPago == "Efectivo" or @formaPago == "Nota Credito"
     @updateFromView(@pago,@inputs_to_validate)
     @resetBindings()
-    for item in PagoItem.itemsInPago(@pago)
+    @pagoItems = PagoItem.itemsInPago(@pago)
+    for item in @pagoItems
       item.Recibo = @pago.Recibo
       item.Cliente = @pago.Cliente
       item.FormaPago = @pago.FormaPago
@@ -183,22 +186,26 @@ class SinglePago extends Spine.Controller
       item.UsedInPago = if item.Monto == 0 then false else true
       item.save()
 
-    #data =
-    #  class: PagoItem
-    #  restRoute: "Pago"
-    #  restMethod: "POST"
-    #  restData: 
-    #    pagos: PagoItem.salesforceFormat( pagoItems , false) 
+    if send
+      data =
+        class: PagoItem
+        restRoute: "Pago"
+        restMethod: "POST"
+        restData: 
+          pagos: PagoItem.salesforceFormat( @pagoItems , false) 
+      Spine.trigger "show_lightbox" , "rest" , data , @after_send_send
+    else
+      @after_send_save()
 
-    #Spine.trigger "show_lightbox" , "rest" , data , @after_send
-
-  #after_send: =>
+  after_send_send: =>
     localStorage["SinglePago" + "-Recibo"] = @pago.Recibo
-    #cliente = Cliente.find @pago.Cliente
-    #Spine.socketManager.pushToFeed("#{cliente.Name} hizo un pago")
-    pagoId = @pago.id
+    @reset(true)
+    @onSuccess?( true )
+
+  after_send_save: =>
+    localStorage["SinglePago" + "-Recibo"] = @pago.Recibo
     @reset()
-    @onSuccess?( pagoId )
+    @onSuccess?()
 
   onCancelar: =>
     @reset(true)
@@ -206,20 +213,24 @@ class SinglePago extends Spine.Controller
 
   reset: (deletePago = false) ->
     @resetBindings()
-    @pago.destroy() if deletePago
-    @minor_reset()
-    @release()
-
-  minor_reset: () ->
     for item in @items
       item?.release()
-    @pago = null 
+    if deletePago
+      @pago.destroy()
+      if @pagoItems
+        item.destroy() for item in @pagoItems
+    @pago = null
+    @pagoItem = null
     @destroyUnusedItems()
     @setVariables()
+    @release()
+
 
   destroyUnusedItems: =>
     for item in PagoItem.all()
-      if item.Monto ==0
-        item.destroy()
+      pagoId = item.Pago
+      item.destroy() if item.Monto ==0
+        
+
     
 module.exports = SinglePago

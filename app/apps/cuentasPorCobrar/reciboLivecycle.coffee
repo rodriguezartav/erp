@@ -20,10 +20,7 @@ class ReciboLivecycle extends Spine.Controller
     ".sections"   : "sections"
     ".section_standby" : "sectionStandBy"
     ".section_digitados" : "sectionDigitados"
-    ".section_entregados" : "sectionEntregados"
-    ".section_contabilizados" : "sectionContabilizados"
     ".section_aplicados" : "sectionAplicados"
-    ".section_depositados" : "sectionDepositados"
     ".txt_search"  : "txt_search"
     ".list_search" : "listSearch"
     ".list_users" : "listUsers"
@@ -41,6 +38,8 @@ class ReciboLivecycle extends Spine.Controller
     "click .btn_create" : "onCreate"
     "click .btn_borrar" : "onBorrar"
     "click .btn_enviar" : "onEnviar"
+    "click .btn_print_entrega" : "onPrintEntrega"
+    "click .btn_print"  : "onPrint"
 
   setVariables: =>
     @recibosStandby =[]    
@@ -56,6 +55,9 @@ class ReciboLivecycle extends Spine.Controller
     @html require("views/apps/cuentasPorCobrar/reciboLivecycle/layout")(ReciboLivecycle)
     @setVariables()
     @reload()
+    
+  reloadSaldos: =>
+    
 
   reload: =>
     @sections.empty()
@@ -68,10 +70,10 @@ class ReciboLivecycle extends Spine.Controller
   search: =>
     search = @txt_search.val() 
     @txt_search.val ""
-    Pago.ajax().query( { search: search } , afterSuccess: @renderSearch ) 
+    Pago.ajax().query( { search: search } , afterSuccess: @render ) 
     
-  renderSearch: =>
-    @listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemSearch")( Pago.group_by_recibo(Pago.all()) )
+  #renderSearch: =>
+    #@listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemSearch")( Pago.group_by_recibo(Pago.all()) )
 
   renderGuardados: =>
     @listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemGuardado")(LocalPago.all() )
@@ -81,11 +83,7 @@ class ReciboLivecycle extends Spine.Controller
     usersId = []
     @recibosStandby =[]
     @recibosDigitados = []
-    @recibosEntregados = []
-    @recibosContabilizados = []
     @recibosAplicados = []
-    @recibosDepositados = []
-    @recibosParaAplicar = []
 
     pagos = Pago.select (item) =>
       return true if !@filterByUserId
@@ -95,10 +93,7 @@ class ReciboLivecycle extends Spine.Controller
     for pago in pagos
       if           pago.EstadoNumerico == 0                   then @recibosStandby.push(pago)
       else if      pago.EstadoNumerico == 1                   then @recibosDigitados.push(pago)
-      else if      pago.EstadoNumerico == 2                   then @recibosEntregados.push(pago)
-      else if      pago.EstadoNumerico == 3                   then @recibosContabilizados.push(pago)
-      else if      pago.EstadoNumerico == 4                   then @recibosAplicados.push(pago)
-      else if      pago.EstadoNumerico == 5                   then @recibosDepositados.push(pago)
+      else if      pago.EstadoNumerico == 2 or pago.EstadoNumerico == 4                   then @recibosAplicados.push(pago)
 
       if pago.Custodio and usersId.indexOf(pago.Custodio) == -1
         usersId.push pago.Custodio 
@@ -106,17 +101,14 @@ class ReciboLivecycle extends Spine.Controller
 
     standByAgrupados = Pago.group_by_recibo(@recibosStandby)
     digitadosAgrupados = Pago.group_by_recibo(@recibosDigitados)
-    entregadosAgrupados = Pago.group_by_recibo(@recibosEntregados)
-    contabilizadosAgrupados = Pago.group_by_recibo(@recibosContabilizados)
     aplicadosAgrupados = Pago.group_by_recibo(@recibosAplicados)
-    depositadosAgrupados = Pago.group_by_recibo(@recibosDepositados)
 
     standByAgrupados = standByAgrupados.sort (a,b) =>
       return new Date(a.Fecha) - new Date(b.Fecha)
 
     @sectionStandBy.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionStandBy")(pagos: standByAgrupados )
     @sectionDigitados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionDigitados")(pagos: digitadosAgrupados )
-    @sectionContabilizados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionContabilizados")(pagos: contabilizadosAgrupados )
+    @sectionAplicados.html require("views/apps/cuentasPorCobrar/reciboLivecycle/sectionAplicados")(pagos: aplicadosAgrupados )
 
     @listUsers.html require("views/apps/cuentasPorCobrar/reciboLivecycle/user")(users)
 
@@ -125,18 +117,15 @@ class ReciboLivecycle extends Spine.Controller
     @renderGuardados()
 
   onCreate: =>
-    #@view.hide()
     create = $("<div class='create'></div>")
     @el.prepend create
     @singlePago.reset() if @singlePago
     @singlePago = new SinglePago 
       el: create
-      onSuccess: (pagoId) =>
+      onSuccess: (reloadPagos) =>
         @renderGuardados()
         @onCreateComplete()
-        pago = LocalPago.find pagoId
-        @print.html require("views/apps/cuentasPorCobrar/reciboLivecycle/printRecibo")(pago)
-        window.print()
+        @reload() if reloadPagos
       onCancel: @onCreateComplete
 
   onCreateComplete: =>
@@ -224,7 +213,6 @@ class ReciboLivecycle extends Spine.Controller
     else
       target.addClass selectedClass
       @recibosParaAplicar.push recibo
-    
     return false;
 
   onAction: (e) =>
@@ -254,23 +242,30 @@ class ReciboLivecycle extends Spine.Controller
       restData: ids: ids , action: action
     
     Spine.trigger "show_lightbox" , "rest" , data , =>
-      return setTimeout(@printEntrega , 2000 ) if action == 3
-      #return setTimeout(@printDeposito , 2000 ) if action == 5
-      return @reload()
+      @reload()
 
-  printEntrega: =>
+  onPrintEntrega: =>
     @print.html @sectionDigitados.html()
     @print.append '<br/><br/><hr/><br/><br/>'
     @print.append @sectionDigitados.html()
     window.print()
     @reload()
 
-  printDeposito: =>
-    html = @sectionAplicados.html()
-    @print.html require("views/apps/cuentasPorCobrar/reciboLivecycle/printDeposito")(html)
-    @print.append require("views/apps/cuentasPorCobrar/reciboLivecycle/printDeposito")(html)
+  onPrint: (e) =>
+    target = $(e.target)
+    recibo = target.data "recibo"
+    pagoid  = target.data "pago-id"
+    pago = null
+    pagoItems=null
+    if pagoid
+      pago = LocalPago.find pagoid
+      pagoItems = LocalPagoItem.itemsInPago(pago)
+    else
+      pagoItems = Pago.findAllByAttribute "Recibo" , recibo
+      pago = Pago.group_by_recibo pagoItems
+
+    @print.html require("views/apps/cuentasPorCobrar/reciboLivecycle/printRecibo")(pago:pago , pagoItems: pagoItems )
     window.print()
-    @reload()
 
   onRetener: (e) =>
     target = $(e.target)
@@ -279,7 +274,7 @@ class ReciboLivecycle extends Spine.Controller
       class: Pago
       restRoute: "Pago"
       restMethod: "PUT"
-      restData: ids: ids , action: 1
+      restData: ids: ids , action: 0
     Spine.trigger "show_lightbox" , "rest" , data , @reload
 
   reset: ->
