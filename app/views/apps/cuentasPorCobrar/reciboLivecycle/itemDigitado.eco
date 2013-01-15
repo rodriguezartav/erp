@@ -9,7 +9,7 @@
 <li class="item">
     <strong class=""><%= @Recibo  %></strong>
 
-    <span class="pull-right"><%= @MontoPendiente.toMoney() %></span>
+    <span class="pull-right"><%= @MontoPendiente?.toMoney() %></span>
   
   <div class="details" style="display:none">
   

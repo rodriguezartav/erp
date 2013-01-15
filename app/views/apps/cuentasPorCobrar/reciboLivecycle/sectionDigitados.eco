@@ -28,27 +28,27 @@
     <table class="table table-bordered">
       <tr>
         <td>Efectivo</td>
-        <td><%= efectivo.toMoney() %></td>
+        <td><%= efectivo?.toMoney() %></td>
       </tr>
       
       <tr>
         <td>Cheque</td>
-        <td><%= cheque.toMoney() %></td>
+        <td><%= cheque?.toMoney() %></td>
       </tr>
       
       <tr>
         <td>Deposito</td>
-        <td><%= deposito.toMoney() %></td>
+        <td><%= deposito?.toMoney() %></td>
       </tr>
       
       <tr>
         <td>Nota Credito</td>
-        <td><%= notaCredito.toMoney() %></td>
+        <td><%= notaCredito?.toMoney() %></td>
       </tr>
       
       <tr class="info">
         <td>Total</td>
-        <td><%= (efectivo + deposito + cheque + notaCredito).toMoney() %></td>
+        <td><%= (efectivo + deposito + cheque + notaCredito)?.toMoney() %></td>
       </tr>
       
     </table>

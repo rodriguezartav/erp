@@ -41,6 +41,15 @@ class Routes
       req.session.destroy( =>  )
       res.redirect "/"
 
+    @app.get "/integration" , (req,res) =>
+      token = req.salesforceController.serverToken;
+      req.salesforceController.api.rest token , { restRoute: 'Integration' , restMethod: "GET" } , (response) => 
+        console.log response
+        res.send response
+      , (response , error) =>
+        console.log error
+        res.send response
+
   getJsVars: (req) ->
     jsvars = 
       pusherKeys: req.pusherController.keys()

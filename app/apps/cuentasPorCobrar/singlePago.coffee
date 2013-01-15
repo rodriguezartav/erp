@@ -63,6 +63,7 @@ class SinglePago extends Spine.Controller
     "click .save" : "send"
     "click .btn_forma_pago" : "onBtnFormaPagoClick"
     "click .btn_banco>li>a" : "onBtnBancoClick"
+    "click .btn_documentos_refresh" : "onDocumentosRefresh"
     "change .txt_diferencia" : "onTxtDifereciaChange"
 
   setVariables: ->
@@ -104,6 +105,9 @@ class SinglePago extends Spine.Controller
     @pago.save()
     @onDocumentoLoaded()
 
+  onDocumentosRefresh: =>
+    Documento.ajax().query( { saldo: true , clienteId: @pago.Cliente , autorizado: true  } , afterSuccess: @onDocumentoLoaded , avoidQueryTimeBased: true )    
+
   onDocumentoLoaded: =>
     PagoItem.deleteItemsInPago(@pago)
     @documentos = Documento.findAllByAttribute "Cliente" , @pago.Cliente
@@ -111,6 +115,7 @@ class SinglePago extends Spine.Controller
     @documentos = @documentos.sort (a,b) =>
       return parseInt(a.Consecutivo) - parseInt(b.Consecutivo)
     
+    @saldos_list.html ""
     for documento in @documentos
       if documento.Saldo != 0
         ri = new Items(documento: documento , pago: @pago )
@@ -183,16 +188,20 @@ class SinglePago extends Spine.Controller
       item.Fecha = @pago.Fecha
       item.Referencia = @pago.Referencia
       item.setTipo()
-      item.UsedInPago = if item.Monto == 0 then false else true
+      item.UsedInPago = if !item.Monto or item.Monto == 0 then false else true
       item.save()
 
     if send
+      pagoItems = []
+      for pagoItem in @pagoItems
+        pagoItems.push pagoItem if pagoItem.UsedInPago
+      console.log pagoItems
       data =
         class: PagoItem
         restRoute: "Pago"
         restMethod: "POST"
         restData: 
-          pagos: PagoItem.salesforceFormat( @pagoItems , false) 
+          pagos: PagoItem.salesforceFormat( pagoItems , false) 
       Spine.trigger "show_lightbox" , "rest" , data , @after_send_send
     else
       @after_send_save()

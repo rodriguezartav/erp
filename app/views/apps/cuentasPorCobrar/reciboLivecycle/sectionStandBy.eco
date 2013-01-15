@@ -24,7 +24,7 @@
       <% for semana,value of semanas: %>
         <tr>
           <td><%= semana %></td>
-          <td><%= value.toMoney() %></td>
+          <td><%= value?.toMoney() %></td>
         </tr>
         
       <% end %>

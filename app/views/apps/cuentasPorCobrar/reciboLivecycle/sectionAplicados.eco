@@ -10,7 +10,7 @@
         <%- "<li><h5>No hay recibos aplicados</h5></li>" if @pagos.length == 0 %>
 
         <% for pago in @pagos:  %>
-          <% total += pago.MontoPendiente %>
+          <% total += pago.Monto %>
 
           <%- require("views/apps/cuentasPorCobrar/reciboLivecycle/itemAplicado")(pago) %>
         <% end %>
@@ -24,7 +24,7 @@
 
       <tr class="info hide_print">
         <td>Total</td>
-        <td><%= total.toMoney() %></td>
+        <td><%= total?.toMoney() %></td>
       </tr>
       
     </table>

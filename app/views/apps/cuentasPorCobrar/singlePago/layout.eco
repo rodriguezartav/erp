@@ -76,6 +76,7 @@
   <h2 style="text-align: right;">
     Total: 
     <span class="lbl_total">0.00</span>
+    <a class="btn_documentos_refresh"><i class="icon-refresh"></i></a>
   </h2>
 
   <table class="table table-striped table-bordered table-condensed">

@@ -172,6 +172,8 @@ class IngresarRecibo extends Spine.Controller
       item.Fecha = @pago.Fecha
       item.Referencia = @pago.Referencia
       item.setTipo()
+      console.log item.Monto
+      console.log parseInt(item.Monto) != 0
       pagoItems.push item if item.Monto and parseInt(item.Monto) != 0
 
     data =
