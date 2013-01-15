@@ -70,7 +70,7 @@ class SecurityManager
     @profiles["Gerencia Comercial"] = [MovimientoLivecycle , NotasLivecycle , PedidosLiveCycle , FacturasProveedor , PagosProveedor    , CuentasLiveCycle  , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes , AjustarNegociacion ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
 
-    @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle , PedidosLiveCycle ,ReciboLivecycle , DepositosLivecycle , FacturasProveedor , PagosProveedor  , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
+    @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle , EstadoCuenta , PedidosLiveCycle ,ReciboLivecycle , DepositosLivecycle , FacturasProveedor , PagosProveedor  , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
     @profiles["Ejecutivo Credito"] = [  NotasLivecycle  ,  CuentasLiveCycle , ReciboLivecycle ,FacturasProveedor , EstadoCuenta , PagosAnular , DocumentosAnular ,PedidosLiveCycle ,VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Ejecutivo de Logistica"] = [ MovimientoLivecycle , ListasPrecio , TomasInventario  , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes , VerProductos ]
     @profiles["Ejecutivo Ventas"] = [  PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes ]
