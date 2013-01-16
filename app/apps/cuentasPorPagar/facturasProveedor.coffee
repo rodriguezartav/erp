@@ -23,11 +23,13 @@ class FacturasProveedor extends Spine.Controller
     ".impuesto" : "impuesto"
     ".total" : "total"
     ".lbl_total_format" : "lbl_total_format"
+    ".btn_tipoGastos_label" : "btn_tipoGastos_label"
 
   events:
     "click .cancel" : "onCancelar"
     "click .save" : "send"
     "change .totales" : "onTotalesChange"
+    "click .btn_tipoGastos" : "onBtnTipoGastos"
 
   constructor: ->
     super
@@ -39,6 +41,7 @@ class FacturasProveedor extends Spine.Controller
 
   onProveedorSet: =>
     @txtPlazo.val(Proveedor.current.Plazo || 0)
+    @setTipoGasto(Proveedor.current.CategoriaGasto || 'N/A')
 
   renderToggle: =>
     @el.find('.factura_toggle').toggleButtons
@@ -61,7 +64,18 @@ class FacturasProveedor extends Spine.Controller
     
     #pickerEl.datepicker('setValue', @cuentaPorPagar.FechaFacturacion)
     pickers.on("change",@onInputChange)
-    
+   
+  onBtnTipoGastos: (e) =>
+    target = $(e.target)
+    tipo = target.data "tipo"
+    @setTipoGasto tipo
+
+  setTipoGasto: (tipo) =>
+    return false if !tipo
+    @btn_tipoGastos_label.html tipo
+    @cuentaPorPagar.CategoriaGasto__c = tipo
+    @cuentaPorPagar.save()
+
   #####
   # ACTIONS
   #####

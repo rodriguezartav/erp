@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class Proveedor extends Spine.Model
-  @configure 'Proveedor', 'Name','Plazo' , 'CuentaCliente' , 'Cedula' , "TipoCedula" , "Moneda"
+  @configure 'Proveedor', 'Name','Plazo' , 'CuentaCliente' , 'Cedula' , "TipoCedula" , "Moneda", "CategoriaGasto"
 
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax if typeof window != 'undefined'
