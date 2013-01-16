@@ -52,12 +52,13 @@ class Routes
 
     @app.post "/quePasoHoy" , (req,res) =>
       token = req.salesforceController.serverToken;
-      console.log req.body
       data = JSON.stringify { quePaso: req.body }
       req.salesforceController.api.rest token , { restRoute: 'QuePasoHoy' , restMethod: "POST", restData: data } , (response) => 
+        console.log "ok"
         console.log arguments
         res.send response
       , (response , error) =>
+        console.log "error"
         console.log arguments
         res.send response
 
