@@ -55,10 +55,10 @@ class Routes
       console.log req.body
       data = JSON.stringify { quePaso: req.body }
       req.salesforceController.api.rest token , { restRoute: 'QuePasoHoy' , restMethod: "POST", restData: data } , (response) => 
-        console.log response
+        console.log arguments
         res.send response
       , (response , error) =>
-        console.log error
+        console.log arguments
         res.send response
 
   getJsVars: (req) ->
