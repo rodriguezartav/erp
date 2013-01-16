@@ -50,19 +50,6 @@ class Routes
         console.log error
         res.send response
 
-    @app.post "/quePasoHoy" , (req,res) =>
-      token = req.salesforceController.serverToken;
-      console.log req.body
-      data =  { quePaso: JSON.stringify(req.body.reply_plain) }
-      req.salesforceController.api.rest token , { restRoute: 'QuePasoHoy' , restMethod: "POST", restData: data } , (response) => 
-        console.log "ok"
-        console.log arguments
-        res.send response
-      , (response , error) =>
-        console.log "error"
-        console.log arguments
-        res.send response
-
   getJsVars: (req) ->
     jsvars = 
       pusherKeys: req.pusherController.keys()

@@ -46,7 +46,7 @@ class Movimiento extends Spine.Model
       for movimiento in movimientos when movimiento.Referencia == boleta
         movimientos_in_boleta.push movimiento
 
-      groups.push {Boleta: boleta, Tipo: movimientos_in_boleta[0].Tipo, Movimientos: movimientos_in_boleta } if movimientos_in_boleta.length > 0
+      groups.push {Boleta: boleta, Procucto: movimientos_in_boleta[0].Producto ,  Tipo: movimientos_in_boleta[0].Tipo , Movimientos: movimientos_in_boleta } if movimientos_in_boleta.length > 0
     groups
 
   updateSubTotal: ->

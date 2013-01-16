@@ -3,12 +3,12 @@ Spine = require('spine')
 class Movimiento extends Spine.Model
   @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "ProductoCosto" , 
    "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Observacion" , "Cliente" , "IsAplicado"
-   "CodigoExterno" , "Descuento_Unitario" , "Impuesto_Unitario" ,"Plazo", "Proveedor" , "ProductoCantidadPendiente"
+   "CodigoExterno" , "Descuento_Unitario" , "Impuesto_Unitario" ,"Plazo", "Proveedor" , "ProductoCantidadPendiente" , "CreatedDate"
   
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
    
-  @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario", "CodigoExterno"] 
+  @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario", "CodigoExterno" ] 
   #Adeed proveedor to list, because error in Devolucion 
   @avoidQueryList = ["Plazo","Proveedor","ProductoCosto"]
    
@@ -46,7 +46,7 @@ class Movimiento extends Spine.Model
       for movimiento in movimientos when movimiento.Referencia == boleta
         movimientos_in_boleta.push movimiento
 
-      groups.push {Boleta: boleta, Observacion: movimientos_in_boleta[0].Observacion , Tipo: movimientos_in_boleta[0].Tipo, Movimientos: movimientos_in_boleta } if movimientos_in_boleta.length > 0
+      groups.push {Boleta: boleta, Producto: movimientos_in_boleta[0].Producto   , Observacion: movimientos_in_boleta[0].Observacion , Tipo: movimientos_in_boleta[0].Tipo, Movimientos: movimientos_in_boleta } if movimientos_in_boleta.length > 0
     groups
 
   updateSubTotal: ->

@@ -53,7 +53,13 @@ class MovimientoLivecycle extends Spine.Controller
     movimientos = movimientos.sort (a,b) =>
       return b.Referencia - a.Referencia
 
-    @list_pendientes.html require("views/apps/auxiliares/movimientoLivecycle/item")(MovimientoItem.group_by_boleta(movimientos))
+    movimientos = MovimientoItem.group_by_boleta(movimientos)
+
+    for movimiento in movimientos
+      movimiento.Movimientos.sort (a,b) =>
+        return Producto.find(a.Producto).CodigoExterno - Producto.find(b.Producto).CodigoExterno
+
+    @list_pendientes.html require("views/apps/auxiliares/movimientoLivecycle/item")(movimientos)
 
     movimientos = MovimientoItem.findAllByAttribute "IsAplicado" , true
     movimientos = movimientos.sort (a,b) =>
