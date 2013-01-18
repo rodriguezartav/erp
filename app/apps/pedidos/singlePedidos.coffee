@@ -152,16 +152,6 @@ class SinglePedidos extends Spine.Controller
     @updateFromView(@pedido,@inputs_to_validate)
     @pedido.save()
     @after_send()
-    #pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
-
-    #data =
-      #class: PedidoItem
-      #restRoute: "Oportunidad"
-      #restMethod: "POST"
-      #restData: oportunidades: pedidos 
-
-    #console.log data
-    #Spine.trigger "show_lightbox" , "rest" , data , @after_send
 
   after_send: =>
     @notify()

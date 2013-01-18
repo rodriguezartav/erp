@@ -35,6 +35,7 @@
         <span data-forma-pago="Efectivo" class="btn btn_forma_pago">Efectivo</span>
         <span data-forma-pago="Cheque" class="btn  btn_forma_pago">Cheque</span>
         <span data-forma-pago="Deposito" class="btn btn_forma_pago">Deposito</span>
+        <span data-forma-pago="Transferencia" class="btn btn_forma_pago">Transferencia</span>
         <span data-forma-pago="Nota Credito" class="btn btn_forma_pago">Nota Credito</span>
       </div>
 
@@ -51,14 +52,14 @@
           <li><a>BN</a></li>
           <li><a>BCR</a></li>
           <li><a>BAC</a></li>
+          <li><a>BCT</a></li>
           <li><a>Popular</a></li>
           <li><a>Lafise</a></li>
           <li><a>Scotiabank</a></li>
           <li><a>Proamerica</a></li>
-          <li><a>BCT</a></li>
           <li><a>Citibank</a></li>
           <li><a>DaVivienda</a></li>
-          <li><a>BCAC</a></li>
+          <li><a>Credito Agricola</a></li>
           <li><a>Cathay</a></li>
         </ul>
       </div>

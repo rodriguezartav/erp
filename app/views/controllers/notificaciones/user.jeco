@@ -1,6 +1,8 @@
+<% Spine = require('spine') %>
+
 <li data-id="<%= @id  %>" class="notificacion_item">
   <div class="row-fluid">
-    <img src="<%= @SmallPhotoUrl %>"/>
+    <img src="<%= @SmallPhotoUrl %>?oauth_token=<%= Spine.session.token %>"/>
     <h6 style="<%= if !@Online then 'color: #333;' %>">
       
       
