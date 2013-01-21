@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class PedidoPreparado extends Spine.Model
   @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , "CreatedById", "Documento" , "Orden" ,
-  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Estado" , "Especial" , "LastModifiedDate"
+  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Estado" , "Especial" , "LastModifiedDate" , "CodigoExterno"
   
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
@@ -15,6 +15,19 @@ class PedidoPreparado extends Spine.Model
   @destroyBeforeRefresh = true;
 
   @afterSocketUpdate: (message, results) =>
+
+
+  @group_by_codigoexterno: (pedidos) ->    
+    codigosexternos = (pedido.CodigoExterno for pedido in pedidos).unique()
+    groups  = []
+    for codigoexterno in codigosexternos
+      pedidos_with_codigoexterno = []
+      total = 0
+      for pedido in pedidos when pedido.CodigoExterno == codigoexterno
+        pedidos_with_codigoexterno.push pedido
+        total += pedido.Total
+      groups.push {CodigoExterno: codigoexterno , Referencia: pedidos_with_codigoexterno[0].Referencia , Orden: pedidos_with_codigoexterno[0].Orden ,  Documento: pedidos_with_codigoexterno[0].Documento,  Estado: pedidos_with_codigoexterno[0].Estado ,  Especial: pedidos_with_codigoexterno[0].Especial ,  CreatedById: pedidos_with_codigoexterno[0].CreatedById ,  Pedidos: pedidos_with_codigoexterno , Cliente: pedidos_with_codigoexterno[0].Cliente , Total: total} if pedidos_with_codigoexterno.length > 0
+    groups
 
   @group_by_referencia: (pedidos) ->    
     referencias = (pedido.Referencia for pedido in pedidos).unique()

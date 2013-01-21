@@ -16,8 +16,8 @@ class Session extends Spine.SingleModel
     @save()
 
   getConsecutivoPedido: =>
-    consecutivo = parseInt(@consecutivoPedido or (Math.random() * 10000) )
-    consecutivo = parseInt(Math.random() * 10000) if isNaN(consecutivo)
+    consecutivo = parseInt(@consecutivoPedido or (Math.random() * 100000) )
+    consecutivo = parseInt(Math.random() * 100000) if isNaN(consecutivo)
     Spine.session.consecutivoPedido = consecutivo + 1
     Spine.session.save()
     res= "#{@user.FirstName}-#{@consecutivoPedido }"

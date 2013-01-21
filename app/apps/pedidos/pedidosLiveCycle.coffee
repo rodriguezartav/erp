@@ -63,7 +63,7 @@ class PedidosLiveCycle extends Spine.Controller
     groups = []
     guardados = Pedido.all()
 
-    groups = PedidoPreparado.group_by_referencia(PedidoPreparado.all())
+    groups = PedidoPreparado.group_by_codigoexterno(PedidoPreparado.all())
     for group in groups
       if group.Estado == 'Pendiente'
         saldos = Saldo.select (item) ->
@@ -85,7 +85,6 @@ class PedidosLiveCycle extends Spine.Controller
     @src_pedidos_anulados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAnulado")( anulados ) if anulados.length > 0
 
   onCreate: =>
-    #@view.hide()
     create = $("<div class='create'></div>")
     @el.prepend create
     @singlePedido.reset() if @singlePedido
@@ -139,18 +138,21 @@ class PedidosLiveCycle extends Spine.Controller
   on_action_click: (e) =>
     target = $(e.target)
     referencia = target.attr "data-referencia"
+    codigoexterno = target.attr "data-codigoexterno"
     @newEstado = parseInt( target.attr("data-newEstado") )
-    @pedidos = PedidoPreparado.findAllByAttribute "Referencia" , referencia
+    
+    @pedidos = PedidoPreparado.findAllByAttribute "CodigoExterno" , codigoexterno
     @cliente = target.attr "data-cliente"
     observacion = @txt_observacion.val() || ""
-    ids = []
-    ids.push pedido.id for pedido in @pedidos
+
+    #ids = []
+    #ids.push pedido.id for pedido in @pedidos
 
     data =
       class: PedidoPreparado
       restRoute: "Oportunidad"
       restMethod: "PUT"
-      restData: ids: ids , observacion: observacion, newEstado: @newEstado
+      restData: codigoexterno: codigoexterno , observacion: observacion, newEstado: @newEstado
 
     Spine.trigger "show_lightbox" , "rest" , data , @aprobarSuccess
     return false;

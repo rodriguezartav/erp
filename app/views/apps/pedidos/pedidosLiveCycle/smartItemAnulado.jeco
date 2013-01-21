@@ -6,7 +6,7 @@
 <% referencia = if @Orden then "Orden: " + @Orden else @Referencia  %>
 
 
-<li class="pedidoItem" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
+<li class="pedidoItem" data-estado="<%= @Estado %>"  data-codigoexterno=<%= @CodigoExterno %>  data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
 
   <h4>
     <% if @Especial:  %>
@@ -48,7 +48,7 @@
 
     <textarea class="txt_observacion" style="width: 96%" placeholder="Detalles para revision posterior"></textarea>
 
-     <a data-cliente="<%= @Cliente  %>" data-referencia="<%= @Referencia %>" data-newEstado="1"  class="btn btn-success aprobar"><i class="icon-ok"></i> Pendiente</a>
+     <a data-cliente="<%= @Cliente  %>"  data-codigoexterno=<%= @CodigoExterno %>  data-referencia="<%= @Referencia %>" data-newEstado="1"  class="btn btn-success aprobar"><i class="icon-ok"></i> Pendiente</a>
 
     
   </div>

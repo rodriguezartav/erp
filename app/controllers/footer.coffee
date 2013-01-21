@@ -46,9 +46,13 @@ class Footer  extends Spine.Controller
 
   onUpdate: =>
     Spine.trigger "show_lightbox" , "showWait" , error: "Esto puede tomar varios minutos, cuando se complete el proceso se refrescara la pagina."
+    Producto.bind "bulk_deleted" , @readyForUpdate
+    Producto.bulkDelete()
+    
+  readyForUpdate: =>
     Cliente.ajax().query({  credito: true , avoidQueryTimeBased: true } )
     Cliente.ajax().query({  contado: true , avoidQueryTimeBased: true })
-    Producto.ajax().query({ avoidQueryTimeBased: true } )
+    Producto.ajax().query({ avoidQueryTimeBased: true } )    
     Saldo.bind "bulk_deleted" , @onDeleteDone
     Saldo.bulkDelete()
     
