@@ -137,10 +137,12 @@ class PedidosLiveCycle extends Spine.Controller
 
   on_action_click: (e) =>
     target = $(e.target)
+    target = target.parent() until target.hasClass "btn"
     referencia = target.attr "data-referencia"
     codigoexterno = target.attr "data-codigoexterno"
-    @newEstado = parseInt( target.attr("data-newEstado") )
-    
+    return false if !codigoexterno
+
+    @newEstado = parseInt( target.attr("data-newEstado") )    
     @pedidos = PedidoPreparado.findAllByAttribute "CodigoExterno" , codigoexterno
     @cliente = target.attr "data-cliente"
     observacion = @txt_observacion.val() || ""
