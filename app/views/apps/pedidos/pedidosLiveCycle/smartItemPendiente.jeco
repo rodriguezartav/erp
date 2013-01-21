@@ -6,7 +6,7 @@
 <% referencia = if @group.Orden then "Orden: " + @group.Orden else @group.Referencia  %>
 
 
-<li class="pedidoItem"   data-codigoexterno="<%= @CodigoExterno %>"  data-estado="<%= @group.Estado %>" data-referencia="<%= @group.Referencia %>"     data-cliente="<%= cliente.id %>">
+<li class="pedidoItem"   data-codigoexterno="<%= @group.CodigoExterno %>"  data-estado="<%= @group.Estado %>" data-referencia="<%= @group.Referencia %>"     data-cliente="<%= cliente.id %>">
 
   <h4>
     <% if @group.Especial:  %>
@@ -49,9 +49,9 @@
     
     <textarea class="txt_observacion" style="width: 96%" placeholder="Detalles para revision posterior"></textarea>
 
-     <a data-cliente="<%= @group.Cliente  %>"   data-codigoexterno="<%= @CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="2"  class="btn btn-success aprobar"><i class="icon-ok"></i> Aprobar</a>
+     <a data-cliente="<%= @group.Cliente  %>"   data-codigoexterno="<%= @group.CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="2"  class="btn btn-success aprobar"><i class="icon-ok"></i> Aprobar</a>
      
-      <a  data-cliente="<%= @group.Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="0"  class="btn btn-danger archivar pull-right"><i class="icon-remove"></i> Archivar</a>
+      <a  data-cliente="<%= @group.Cliente  %>"  data-codigoexterno="<%= @group.CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="0"  class="btn btn-danger archivar pull-right"><i class="icon-remove"></i> Archivar</a>
     
   </div>
 
