@@ -4,14 +4,13 @@
 
   <div class="row-fluid">
     
-    <div class="span9 menu">
+    <div class="span8 menu">
       <div class="menuContainer"></div>
     </div>
     
-    <div class="span3 notificationContainer hidden-phone ">
-        <ul  class="unstyled people_list notificacion_list mobileList">
-
-        </ul>    
+    <div class="span4 notificationContainer hidden-phone ">
+        
+        
     </div>
   </div>
   

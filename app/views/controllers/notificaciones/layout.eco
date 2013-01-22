@@ -1,0 +1,14 @@
+<textarea type="text" class="input-nice span12 txt_createFeed" placeholder="Que Paso Hoy?"/>
+<a class="btn pull-right btn-info btn_sendFeed">publicar</a>
+<hr/>
+  
+<ul  class="unstyled feed_list notificacion_list ">
+
+</ul>    
+  
+<hr/>
+
+
+<ul  class="unstyled people_list notificacion_list ">
+
+</ul>

@@ -813,10 +813,12 @@ i.modal_success{font-size:40px;color:#46a546;}
 .notificationContainer.span3{margin-left:0px;width:25.4%;}
 .notificationContainer .tabHeader .hasNots i{font-size:20px;}
 .notificationContainer .tabHeader .hasNots.has{color:#9d261d;}
-.notificationContainer .notificacion_list li{cursor:pointer;padding-left:4px;}.notificationContainer .notificacion_list li.pending{border-right:2px solid #049cdb;}
+.notificationContainer .notificacion_list li{cursor:pointer;padding-left:4px;}.notificationContainer .notificacion_list li.withMarginTop{margin-top:15px;}
+.notificationContainer .notificacion_list li.pending{border-right:2px solid #049cdb;}
 .notificationContainer .notificacion_list li:hover{border-right:2px solid #0064cd;}
 .notificationContainer .notificacion_list li img{float:left;border:1px solid #ddd;padding:1px;margin-right:4px;height:50px;}
 .notificationContainer .notificacion_list li h6{margin-bottom:1px;line-height:11px;color:#46a546;}
+.notificationContainer .notificacion_list li p{line-height:17px;font-weight:300;}
 .notificationContainer .notificacion_list li .text{margin-bottom:0px;padding-bottom:0px;font-weight:200;font-size:12px;line-height:12px;}
 .notificationContainer .notificacion_list li .date{font-size:11px;color:#999;text-align:right;}
 header .navbar-inner{padding:0px 0px;background-image:url("/images/furley_bg.png");}
@@ -942,6 +944,16 @@ td.center{text-align:center;}
 .widgetHeader{margin-top:15px;position:relative;height:40px;line-height:40px;background-image:url("/images/furley_bg.png");border:1px solid #D5D5D5;-webkit-border-top-left-radius:4px;-webkit-border-top-right-radius:4px;-moz-border-radius-topleft:4px;-moz-border-radius-topright:4px;border-top-left-radius:4px;border-top-right-radius:4px;-webkit-background-clip:padding-box;border-image:initial;}.widgetHeader h1{position:relative;top:3px;left:10px;display:inline-block;margin-right:3em;font-size:20px;font-weight:800;color:#555;line-height:20px;text-shadow:1px 1px 2px rgba(255, 255, 255, 0.5);}
 .widgetHeader .rightOptions{position:relative;top:0px;right:10px;text-align:right;}.widgetHeader .rightOptions input{margin-bottom:0px;}
 .widgetHeader+.well{margin-top:0px;margin-bottom:0px;background-color:#fff;padding:20px 15px 15px;background:white;border:1px solid #D5D5D5;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:0px 5px 5px 0px;border-image:initial;}
-@media (max-width:2100px){body{padding-top:75px;}}@media (max-width:940px){.appCanvas{padding-top:40px;} .toolbar{width:100%;height:45px;position:absolute;border-radius:4px;border-color:#d5d5d5;border-width:0 0 1px;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;background-color:#dfdfdf;-webkit-box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);z-index:900;} .toolbar .input_wrapper{margin-top:2px;padding-left:10px;width:95%;}}body .container{max-width:980px;}
+@media (max-width:2100px){body{padding-top:75px;}}@media (max-width:940px){.appCanvas{padding-top:40px;} .toolbar{width:100%;height:45px;position:absolute;border-radius:4px;border-color:#d5d5d5;border-width:0 0 1px;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;background-color:#dfdfdf;-webkit-box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);z-index:900;} .toolbar .input_wrapper{margin-top:2px;padding-left:10px;width:95%;}}.marginLess{margin:0px;}
+.withMarginLeft{margin-left:10px;}
+.withMargin{margin:7px;}
+.display_inlineBlock{display:inline-block !important;}
+.display_block{display:block;}
+.pointer{cursor:pointer;}
+.center{text-align:center;}
+.withPadding{padding:5px;}.withPadding.double{padding:12px;}
+.rounded{-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;}
+.input-nice{font-size:15px !important;padding:4px !important;font-weight:100 !important;height:auto !important;}.input-nice.large{font-size:25px !important;padding:7px !important;}
+body .container{max-width:980px;}
 *{-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
 @media (max-width:979px){header .navbar-fixed-top{margin-bottom:10px;} header .productIcon{display:none;} .productosToolbar{position:static;max-height:390px;} .appCanvas{margin-top:0px;}}

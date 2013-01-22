@@ -24,7 +24,8 @@ Spine.Model.SalesforceModel =
         object = {}
         for attr of item.attributes()
           if @avoidInsertList.indexOf(attr) == -1
-            object[attr + "__c" ] = item[attr] if @standardFields.indexOf(attr) == -1 and attr != "id"
+            object[attr + "__c" ] = item[attr] if @standardFields.indexOf(attr) == -1 and attr != "id" and !@standardObject
+            object[attr] = item[attr] if @standardFields.indexOf(attr) == -1 and attr != "id" and @standardObject
             object["Id"] = item[attr] if attr == "id" and includeId
         return object
 

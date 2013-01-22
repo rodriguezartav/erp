@@ -6,12 +6,12 @@ class Principal extends Spine.Controller
 
   elements:
     ".menu"     : "menuDiv"
-    ".noticationContainer" : "noticationContainer"
+    ".notificationContainer" : "notificationContainer"
 
   constructor: ->
     super
     @html require("views/controllers/main/layout")
-    @notificaciones = new Notificaciones(el: @noticationContainer)
+    @notificaciones = new Notificaciones(el: @notificationContainer)
     @menu           = new Menu(el: @menuDiv)
 
   render: =>

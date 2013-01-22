@@ -1,0 +1,25 @@
+<% Spine = require('spine') %>
+
+<li data-id="<%= @user.id  %>" class="notificacion_item withMarginTop">
+  <div class="row-fluid">
+
+    <img src="<%= @user.SmallPhotoUrl + "?oauth_token=#{Spine.session.token}" if Spine.session %>" />
+
+    <h6 style="<%= if !@user.Online then 'color: #333;' %>">
+      <%= @user.Name %>
+    </h6>
+    
+    <% last = parseInt(@user.getLastUpdate().minutes_from_now())  %>
+    <%- if @user.Status then '<p class="text">hace ' + last + ' minutos</p>' %>
+
+    <p class="feedBody" data-body="<%= @feed.Body if @feed.Body.length > 150 %>">
+      <% if @feed.Body.length > 150 : %>
+        <%= @feed.Body.substring(0,150) + "..." %>
+        <a target="_blank" class="strong btn_leerMas">leer mas</a>
+      <% else : %>
+        <%= @feed.Body %>
+      <% end %>
+    </p>
+  </div>
+
+</li>

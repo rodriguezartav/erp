@@ -141,10 +141,12 @@ class Collection extends Base
 class Singleton extends Base
   constructor: (@record) ->
     @model = @record.constructor
+    type = "#{ @model.overrideName or @model.name}"
+    type += "__c" if !@model.standardObject
     @obj = 
        fields: @model.sobjectFormat(@record , false)
        id: @record.id
-       objtype: "#{ @model.overrideName or @model.name}__c"
+       objtype: type
 
   custom: (method, data, options) ->
     @queue =>
