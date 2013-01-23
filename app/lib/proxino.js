@@ -56,7 +56,13 @@ Proxino = {
         data.lineno = lineno;
       }
       //var body_str = msg + " at resource " + url + " in line " + lineno;
-      Proxino.log(data);
+      //Proxino.log(data);
+      
+      analytics.track('Error', {
+        source: "erps",
+        error: data,
+        session: Spine.session
+      });
     }
   },
   get_url:function(text) {

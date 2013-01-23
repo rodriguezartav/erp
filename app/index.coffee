@@ -34,8 +34,8 @@ class App extends Spine.Controller
     Spine.registerParse @options.parseKeys
     User.refresh @options.users
 
-    Proxino.key = "R4f9M9v5r63OtGW62AeHbw"
-    Proxino.track_errors();
+    #Proxino.key = "R4f9M9v5r63OtGW62AeHbw"
+    #Proxino.track_errors();
 
     new Header(el: $("header"))
     #new Productos(el: $(".productosToolbar"))

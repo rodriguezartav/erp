@@ -26,7 +26,6 @@ class Notificaciones extends Spine.Controller
     @html require("views/controllers/notificaciones/layout")()
     User.bind "change" , @renderPeople
     ChatterFeed.bind "refresh" , @onRenderFeed
-    ChatterFeed.ajax().query() if ChatterFeed.count() == 0
 
   render: =>
     @renderPeople()
