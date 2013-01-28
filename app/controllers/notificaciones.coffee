@@ -37,9 +37,12 @@ class Notificaciones extends Spine.Controller
       return Date.parse(b.CreatedDate) - Date.parse(a.CreatedDate)
       
     for feed in feeds
-      user = User.find feed.CreatedByid
-      html = require("views/controllers/notificaciones/notificacion")(user:user , feed: feed)
-      @feed_list.append html
+      user = User.exists feed.CreatedByid
+      if user
+        html = require("views/controllers/notificaciones/notificacion")(user:user , feed: feed)
+        @feed_list.append html
+      else
+        console.log feed.CreatedByid
 
   renderPeople: =>
     online  = []
