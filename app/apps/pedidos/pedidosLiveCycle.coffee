@@ -84,12 +84,16 @@ class PedidosLiveCycle extends Spine.Controller
     @src_pedidos_facturados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemFacturado")( facturados ) if facturados.length > 0
     @src_pedidos_anulados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAnulado")( anulados ) if anulados.length > 0
 
-  onCreate: =>
+  onCreate: (e) =>
+    target = $(e.target)
+    target = target.parent() until target.data("type")
+    type = target.data "type"
     create = $("<div class='create'></div>")
     @el.prepend create
     @singlePedido.reset() if @singlePedido
     @singlePedido = new SinglePedido 
       el: create
+      isContado: if type == "contado" then true else false
       onSuccess: =>
         @renderPedidos()
         @onCreateComplete()

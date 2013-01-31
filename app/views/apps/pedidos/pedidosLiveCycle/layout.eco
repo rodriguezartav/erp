@@ -8,11 +8,15 @@
   
     <div class="span6">
       <div class="rightOptions">
-        <a class="btn btn-primary reload">
+        <a  class="btn btn-primary reload">
           <i class="icon-refresh icon-white"></i>
         </a>
 
-        <a class="btn btn-primary btn_create">+
+        <a data-type="credito" class="btn btn-success btn_create">Credito
+          <i class="icon-create icon-white"></i>
+        </a>
+
+        <a  data-type="contado" class="btn btn-warning btn_create">Contado
           <i class="icon-create icon-white"></i>
         </a>
 

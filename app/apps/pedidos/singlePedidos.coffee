@@ -32,7 +32,6 @@ class SinglePedidos extends Spine.Controller
   events:
     "click .cancel" : "onRemove"
     "click .save" : "send"
-    "click .lbl_PedidoTipo" : "onTipoPedidoClick"
 
   setVariables: =>
     Negociacion.destroyAll()
@@ -56,11 +55,11 @@ class SinglePedidos extends Spine.Controller
     @pedidoItems = PedidoItem.itemsInPedido(@pedido) if @pedido
     referencia = Spine.session.getConsecutivoPedido()
 
-    @pedido = Pedido.create( { Referencia: referencia , Tipo_de_Documento: "FA" , IsContado: false , Especial: false }) if !@pedido
+    @pedido = Pedido.create( { Referencia: referencia , Tipo_de_Documento: "FA" , IsContado: @isContado , Especial: false }) if !@pedido
     @html require("views/apps/pedidos/pedido/layout")(Pedido)
     @el.attr "data-referencia" , @pedido.Referencia
     @setVariables()
-    @clientes = new Clientes(el: @src_cliente , cliente: @pedido.Cliente )
+    @clientes = new Clientes(el: @src_cliente , cliente: @pedido.Cliente , contado: @isContado )
     @smartProductos = new SmartProductos( el: @src_smartProductos , smartItem: SmartItemPedido , referencia: @pedido.Referencia )
     @setBindings()
     @negociaciones = Negociacion.createFromCliente(Cliente.find @pedido.Cliente) if @pedido.Cliente
