@@ -57,7 +57,6 @@ class Clientes  extends Spine.Controller
     id = parent.attr "data-id"
     cliente = Cliente.find(id)
     Cliente.set_current cliente
-    console.log "Setting Current Cliente for Pagos"
     @trigger "credito_data_changed" , cliente
     parent.toggleClass("active")
     parent.siblings().removeClass("active")
@@ -66,7 +65,7 @@ class Clientes  extends Spine.Controller
 
   filterFunction: (query,item) =>
     return false if item.Activo == false
-    #return false if item.DiasCredito  > 0  and  @contado == true
+    return false if item.DiasCredito  > 0  and  @contado == true
     return false if item.DiasCredito == 0  and  @contado == false
     return false if !item.Name
     myRegExp =new RegExp( Cliente.queryToRegex(query),'gi')
