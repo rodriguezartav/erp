@@ -66,7 +66,7 @@ class Clientes  extends Spine.Controller
 
   filterFunction: (query,item) =>
     return false if item.Activo == false
-    return false if item.DiasCredito  > 0  and  @contado == true
+    #return false if item.DiasCredito  > 0  and  @contado == true
     return false if item.DiasCredito == 0  and  @contado == false
     return false if !item.Name
     myRegExp =new RegExp( Cliente.queryToRegex(query),'gi')
