@@ -1,53 +1,84 @@
 <% Cliente = require("models/cliente")  %>
 <% cliente = Cliente.exists(@pago.Cliente)  %>
 
+  <% if @copy:  %>
+    <h1 style="position: absolute; top: 85px; width: 40%; text-align: center;">COPIA</h1>
+  <% end  %>
 
-<div class="row-fluid">
-  <div class="span6">
-    <h1>Rodco S.A</h1>
-    <h6>Departamento de Credito y Cobro</h6>
-  </div>
-  
-  <div class="span6">
-    <h1 style="text-align: right;">Recibo: <%= @pago.Recibo %></h1>
-    <h5  style="text-align: right; ><%= @pago.Fecha  %></h5>
-  </div>
-  
-</div>
-
-<hr/>
-
-<div class="row-fluid">
-
-  <div class="span6">
-    <h2><%= cliente.Name %></h2>
-  </div>
-  
-  <div class="span6">
-    <h4 style="text-align: right;"><%= @pago.FormaPago %></h4>
-    <h4 style="text-align: right;"><%= @pago.Referencia %></h4>  
-  </div>
-
-</div>
-  
-    <ul class="unstyled ">
-      <li>
-      Factura
-      <span class="pull-right">Monto</span>
-      </li>
-      <% for item in @pagoItems : %>
-        <li>
-          <%= item.Consecutivo %>
-          <span class="pull-right"><%= item.Monto?.toMoney() %></span>
-        </li>
-      <% end  %>
-    </ul>
+  <div class="inlineBlock" style="width: 45%; <%= if @copy then 'margin-left: 60px;' %>">
+    <h1 style="text-align: center">Rodco S.A.</h1>
+    <h6 style="text-align: center">Departamento de Credito y Cobro</h6>
+    <h6 style="text-align: center">Cedula Juridica: 3-101-032175-34</h6>
+    <h6 style="text-align: center">Tel: 2240-9966 | Calle Blancos</h6>
     
-  <br/>
-  <h6>Este recibo no es valido si contiene alteraciones o raspaduras. Los extendidos en otra formula, o si los cheques con que se paga no fueran aceptados por el banco respectivo.</h6>
-  <h3 class="text-align: right;">Total: <%= @pago.Monto?.toMoney() %></h3>
-  <br/>  <br/>
-  <hr style="margin-bottom: 0px"/>
-  <h5>Firma Autorizada</h5>
-  
-</div>
+  <div style="border-bottom: 3px solid #999; margin: 10px 0px;">&nbsp;</div>
+    
+    <h2 class="text-align: center;">Recibo por Dinero</h2>
+    
+    <h6 class="inlineBlock" style="width: 40%">Recibo No: <%= @pago.Recibo %> </h6>
+    <h6 class="inlineBlock" style="width: 50%; text-align: right">Fecha: <%= @pago.Fecha %></h6>
+
+<br/>
+
+<br/>
+       <p class="inlineBlock alignTop" style="width: 60%">
+          <strong >Cliente:</strong><br/>
+         <%= cliente.Name %><br/>
+         <%= cliente.CodigoExterno %>
+       </p>
+
+
+       <p class="inlineBlock alignTop" style="width: 35%; text-align: right;">
+        <strong>Detalles</strong><br/>
+         <%= @pago.FormaPago %></br>
+         <%= @pago.Referencia %>
+       </p>
+       
+       <br/>
+       
+       <table class="table table-bordered">
+         <tr>
+           <td style="">Tipo</td>
+           <td >Consecutivo</td>
+           <td>Monto</td>
+         </tr>
+
+         <% for item in @pagoItems : %>
+            <tr>
+             <td><%= item.Tipo_de_Documento %></td>
+              <td><%= item.Consecutivo %></td>
+              <td><%= item.Monto?.toMoney() %></td>
+            </tr>
+          <% end  %>
+
+          <tr>
+            <td>&nbsp;</td>
+            <td style="text-align: right"><strong>Total</strong></td>
+            <td><%= @pago.Monto?.toMoney() %></td>
+          </tr>
+
+       </table>
+       <h3 style="text-align: center;">Gracias por su Pago!</h3>
+
+       <br/>      
+       <br/>      
+
+       <div style="font-size: 12px; text-align: center;">
+        <p  style=" border-top: 1px solid #333; height:1px; margin: 0px 15%"></p>
+       </div>
+       
+       <p  style="font-size: 12px; text-align: center;">FIRMA AUTORIZADA</p>
+
+    
+<br/>
+
+    <p style="font-size: 11px;text-align: center;">Este recibo no es valido si contiene alteraciones o raspaduras. Los extendidos en otra formula, o si los cheques con que se paga no fueran aceptados por el banco respectivo.</p>
+
+    
+  </div>
+
+
+
+
+
+

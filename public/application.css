@@ -948,12 +948,14 @@ td.center{text-align:center;}
 .withMarginLeft{margin-left:10px;}
 .withMargin{margin:7px;}
 .display_inlineBlock{display:inline-block !important;}
+.inlineBlock{display:inline-block !important;}
 .display_block{display:block;}
 .pointer{cursor:pointer;}
 .center{text-align:center;}
 .withPadding{padding:5px;}.withPadding.double{padding:12px;}
 .rounded{-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;}
 .input-nice{font-size:15px !important;padding:4px !important;font-weight:100 !important;height:auto !important;}.input-nice.large{font-size:25px !important;padding:7px !important;}
+.alignTop{vertical-align:top;}
 body .container{max-width:980px;}
 *{-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
 @media (max-width:979px){header .navbar-fixed-top{margin-bottom:10px;} header .productIcon{display:none;} .productosToolbar{position:static;max-height:390px;} .appCanvas{margin-top:0px;}}

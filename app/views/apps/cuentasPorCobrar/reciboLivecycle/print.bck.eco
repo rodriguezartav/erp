@@ -1,0 +1,95 @@
+<% Cliente = require("models/cliente")  %>
+<% cliente = Cliente.exists(@pago.Cliente)  %>
+
+
+
+<div class="row-fluid" >
+
+  <div style="float: left">
+    <h1>Rodco S.A</h1>
+    <h6>Departamento de Credito y Cobro</h6>
+  </div>
+
+  <div style="float: right">
+    <h1 style="text-align: right;">Recibo: <%= @pago.Recibo %></h1>
+    <h5  style="text-align: right; ><%= @pago.Fecha  %></h5>
+  </div>
+
+</div>
+
+<div class"clearFix"></div> 
+
+  <div style="height:50px:background-color: blue;border-top: 2px solid #333; ">
+    <h3>Recibo de Pago</h3>
+  </div>
+
+
+<div class="row-fluid">
+
+  <strong class="inlineBlock alignTop">Cliente:</strong>
+
+    <p class="inlineBlock alignTop">
+      <%= cliente.Name %><br/>
+      <%= cliente.CodigoExterno %>
+    </p>
+
+        <p class="inlineBlock alignTop" style=" width: 250px; margin-left: 100px;">Este recibo no es valido si contiene alteraciones o raspaduras. Los extendidos en otra formula, o si los cheques con que se paga no fueran aceptados por el banco respectivo.</p>
+
+  </div>
+
+
+</div>
+
+
+<div class="row-fluid" style="background-color: #999;padding: 10px;">
+  
+</div>
+
+
+
+<div class="row-fluid">
+  <div class="span6">
+  </div>
+  
+  <div class="span6">
+
+  </div>
+  
+</div>
+
+<hr/>
+
+<div class="row-fluid">
+
+  <div class="span6">
+    <h2><%= cliente.Name %></h2>
+  </div>
+  
+  <div class="span6">
+    <h4 style=""><%= @pago.FormaPago %></h4>
+    <h4 style=""><%= @pago.Referencia %></h4>  
+  </div>
+
+</div>
+  
+    <ul class="unstyled ">
+      <li>
+      Factura
+      <span class="pull-right">Monto</span>
+      </li>
+      <% for item in @pagoItems : %>
+        <li>
+          <%= item.Consecutivo %>
+          <span class="pull-right"><%= item.Monto?.toMoney() %></span>
+        </li>
+      <% end  %>
+    </ul>
+    
+  <br/>
+  <h6>Este recibo no es valido si contiene alteraciones o raspaduras. Los extendidos en otra formula, o si los cheques con que se paga no fueran aceptados por el banco respectivo.</h6>
+  <h3 class="text-align: right;">Total: <%= @pago.Monto?.toMoney() %></h3>
+  <br/>  <br/>
+  <hr style="margin-bottom: 0px"/>
+  <h5>Firma Autorizada</h5>
+  
+</div>
