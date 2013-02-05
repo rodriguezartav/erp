@@ -43,18 +43,24 @@
            <td>Monto</td>
          </tr>
 
+          
+         <% montoTotal = 0 %>
          <% for item in @pagoItems : %>
+          <% montoPago = if item.Monto == 0 then item.MontoPendiente else item.Monto   %>
             <tr>
              <td><%= item.Tipo_de_Documento %></td>
               <td><%= item.Consecutivo %></td>
-              <td><%= item.Monto?.toMoney() %></td>
+              <td><%= montoPago?.toMoney() %></td>
             </tr>
+
+            <% montoTotal += montoPago  %>
+
           <% end  %>
 
           <tr>
             <td>&nbsp;</td>
             <td style="text-align: right"><strong>Total</strong></td>
-            <td><%= @pago.Monto?.toMoney() %></td>
+            <td><%= montoTotal.toMoney() %></td>
           </tr>
 
        </table>
