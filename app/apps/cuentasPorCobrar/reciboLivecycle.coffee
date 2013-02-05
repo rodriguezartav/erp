@@ -57,7 +57,7 @@ class ReciboLivecycle extends Spine.Controller
     @reload()
     
   reloadSaldos: =>
-    
+
 
   reload: =>
     @sections.empty()
@@ -256,13 +256,18 @@ class ReciboLivecycle extends Spine.Controller
     recibo = target.data "recibo"
     pagoid  = target.data "pago-id"
     pago = null
-    pagoItems=null
+    pagoItems=[]
+    
+    
     if pagoid
       pago = LocalPago.find pagoid
       pagoItems = LocalPagoItem.itemsInPago(pago)
     else
-      pagoItems = Pago.findAllByAttribute "Recibo" , recibo
-      pago = Pago.group_by_recibo pagoItems
+      recibo = "#{recibo}"
+      for pago in Pago.all()
+        pagoItems.push pago if pago.Recibo == recibo
+
+      pago = Pago.group_by_recibo(pagoItems)[0]
 
     @print.html require("views/apps/cuentasPorCobrar/reciboLivecycle/printRecibo")(pago:pago , pagoItems: pagoItems )
     @print.append require("views/apps/cuentasPorCobrar/reciboLivecycle/printRecibo")(pago:pago , pagoItems: pagoItems , copy: true )
