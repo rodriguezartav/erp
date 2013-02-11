@@ -56,6 +56,17 @@ String.prototype.getWeek = ->
   onejan = new Date(date.getFullYear(),0,1);
   return Math.ceil((((date - onejan) / 86400000) + onejan.getDay()+1)/7);
 
+Date.prototype.toArray= (monthFormat="MMM") ->
+  months = ['Enero','Febrero','Marzo','April','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+  monthsMMM = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dec']
+  
+  month = if monthFormat == "MMM" then monthsMMM[this.getMonth()] else months[this.getMonth()]
+  date = this.getDate()
+  date = "0" + date if date < 10
+
+  return [date , month , this.getFullYear()]
+
+
 Date.prototype.toSimple = ->
   months = this.getMonth() + 1
   months = "0" + months if months < 10

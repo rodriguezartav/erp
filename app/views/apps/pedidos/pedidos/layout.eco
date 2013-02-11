@@ -1,3 +1,0 @@
-<h1 class="btn_createPedido"><i class="<%= @icon %>"></i> <%= @label %></h1>
-<h6 class="btn_createPedido">click para crear nuevo pedido</h6>
-

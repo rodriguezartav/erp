@@ -32,6 +32,7 @@ class PedidosLiveCycle extends Spine.Controller
     ".pedido_detail_info" : "pedido_detail_info"
     ".src_pedidos_list" : "src_pedidos_list"
     ".view" : "view"
+    ".print" : "print"
 
   events:
     "click .aprobar"  : "on_action_click"
@@ -41,6 +42,7 @@ class PedidosLiveCycle extends Spine.Controller
     "click .btn_create" : "onCreate"
     "click .btn_send" : "onBtnSend"
     "click .btn_borrar" : "onBtnBorrar"
+    "click .btn_print" : "onPrint"
 
   constructor: ->
     super
@@ -163,7 +165,7 @@ class PedidosLiveCycle extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , @aprobarSuccess
     return false;
 
-  aprobarSuccess: (sucess,results) =>
+  aprobarSuccess: (success,results) =>
     @notify()
     showInvoice = false
     for pedido in @pedidos
@@ -185,13 +187,41 @@ class PedidosLiveCycle extends Spine.Controller
     @cliente = null
     @renderPedidos()
 
-    url = Spine.session.instance_url + "/apex/invoice_topdf?Documento__c_id=" + results?.response
-    window.open(url) if showInvoice
+    #url = Spine.session.instance_url + "/apex/invoice_topdf?Documento__c_id=" + results?.response
+    #window.open(url) if showInvoice
+    @onShowInvoice(success,results)
+
+  onPrint: (e) =>
+    target = $(e.target)
+    target = target.parent() until target.hasClass "btn"
+    @showInvoice(target.data "documento")
+    return false
+
+  showInvoice: (documentoId) =>
+    data =
+      class: PedidoPreparado
+      restRoute: "Print"
+      restMethod: "POST"
+      restData: documentoId: documentoId
+
+    Spine.trigger "show_lightbox" , "rest" , data , @onShowInvoice
+    return false;
+
+  onShowInvoice: (success , response) =>
+    Spine.trigger "hide_lightbox"
+    @print.html require("views/apps/pedidos/pedidosLiveCycle/print")(response)
+    first = @print.find ".copy"
+    first.removeClass "copy"
+    first.addClass "original"
+    @print.append require("views/apps/pedidos/pedidosLiveCycle/print")(response)
+
+    window.print()
+  
 
   notify: =>
-    cliente = Cliente.find @cliente
-    verb = if @aprobar == 2 then "Aprobe" else "Archive"
-    Spine.socketManager.pushToFeed("#{verb} un pedido de #{cliente.Name}") 
+    #cliente = Cliente.find @cliente
+    #verb = if @aprobar == 2 then "Aprobe" else "Archive"
+    #Spine.socketManager.pushToFeed("#{verb} un pedido de #{cliente.Name}") 
 
     #Spine.throttle ->
      # Spine.socketManager.pushToProfile("Ejecutivo Ventas" , "#{verb} varios pedidos, pueden proceder a revisarlos.")

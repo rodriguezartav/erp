@@ -1,4 +1,5 @@
-<div class="view">
+<div class="view hide_on_print">
+
 
   <div class="row-fluid widgetHeader">
   
@@ -95,3 +96,8 @@
   </div>
   
 </div>
+
+<div class="print show_print1 invoice">
+  
+</div>
+
