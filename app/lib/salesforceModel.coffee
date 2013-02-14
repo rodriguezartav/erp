@@ -47,11 +47,13 @@ Spine.Model.SalesforceModel =
         else
           new @(objects)
 
-      getQuery: (options) =>
+      getQuery: (options = {}) =>
+        @initQuery = true if @count() == 0 and @autoQueryTimeBased
+        options = @overrideInitQuery if @overrideInitQuery and @initQuery
         @queryOrderString  = ""
         @queryFilterString = ""
         @queryFilter(options)
-        return @queryString() + @queryFilterString + @queryOrderString if options?.avoidQueryTimeBased
+        return @queryString() + @queryFilterString + @queryOrderString if options.avoidQueryTimeBased or @initQuery
         if @autoQueryTimeBased or ( options and options.avoidQueryTimeBased == false )
           @queryFilterAddCondition " LastModifiedDate >= #{@lastUpdate.to_salesforce()}" 
         return @queryString() + @queryFilterString + @queryOrderString
@@ -85,6 +87,5 @@ Spine.Model.SalesforceModel =
         query +=  "__c"  if !@standardObject 
         query += " "
         query
-
 
 module.exports = Spine.Model.SalesforceModel

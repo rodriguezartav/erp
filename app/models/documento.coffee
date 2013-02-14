@@ -1,9 +1,9 @@
 Spine = require('spine')
 
 class Documento extends Spine.Model
-  @configure "Documento" , "Nombre_Contado" ,"Total" , "Saldo" , "Consecutivo" , "Referencia" , "Observacion" , 
+  @configure "Documento" , "Nombre_Contado" ,"Total" , "Saldo" , "Consecutivo" , "Referencia" , "Observacion" , "Transporte",
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo", "PlazoActual" , "FechaFacturacion","FechaVencimiento" ,
-   "Tipo_de_Documento" ,  "IsContado" ,"Estado" , "Autorizado" , "MontoEnRecibos"
+   "Tipo_de_Documento" ,  "IsContado" ,"Estado" , "Autorizado" , "MontoEnRecibos" , "FechaEntrega" , "OrdenEntrega","Entregado"
   
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
@@ -37,6 +37,7 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter = @queryFilterAddCondition(" Autorizado__c   = #{options.autorizado }"           , filter)   if options.autorizado == false or options.autorizado == true
     filter = @queryFilterAddCondition(" enRecibo__c        = false"                ,  filter)  if options.enRecibo
+    filter = @queryFilterAddCondition(" Entregado__c        = false"                ,  filter)  if options.sinEntregar
     filter = @queryOrderAddCondition(" order by Consecutivo__c "                   , filter)  
     filter
     

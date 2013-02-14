@@ -1,0 +1,81 @@
+<div class="view hide_on_print">
+
+  <div class="row-fluid widgetHeader">
+  
+    <div class="span6">
+      <h1><i class="<%= @icon %>"></i> <%= @label %></h2>
+    </div>
+  
+    <div class="span6">
+        
+        <div class="btn-group rightOptions pull-right" style="top: 5px;">
+          <a class="btn dropdown-toggle btn-primary btn_new_ruta" data-toggle="dropdown" href="#">
+            <i class="icon-file"></i>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <div class="dropdownContainer">
+
+                  <h3 class="alignLeft">Crear Nueva Ruta</h3>
+                  <p class="label label-primary alignLeft marginLess " for="inputEmail">Fecha</p>
+                  
+                  <div class="input-append date  inputFecha"  data-id="<%= @id  %>"  data-date-format="M-dd">
+                  
+                  <input  data-id="<%= @id  %>" style="width: 81%" placeholder="Entrega" class="txt_nueva_ruta_fecha   txt_value" type="text" >
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                                      
+                  <p class="label  label-primary alignLeft marginLess " for="inputEmail">Camion</p>
+                  <select class="withMarginBottom txt_nueva_ruta_camion txt_value">
+                    <option>Plataforma</option>
+                    <option>Camion</option>
+                    <option>Canter</option>
+                  </select>
+                  <br/>
+                  <p class="label  label-primary alignLeft marginLess  " for="inputEmail">Chofer</p>
+                  <select class="withMarginBottom txt_nueva_ruta_chofer txt_value">
+                    <option>Manuel</option>
+                    <option>Alex</option>
+                  </select>
+                  
+                  <br/>
+                  <a class="btn btn-primary btn-large txt_nueva_ruta_btn">Guardar</a>
+
+              </div>
+            
+            </li>
+          </ul>
+        
+      </div>
+    </div>
+  
+  </div>
+
+  <br/>
+
+  <div class="row-fluid">
+  
+
+    <div class="span3">  
+      <ul class="unstyled mobileList">
+        <li>
+        <h4>Pendientes de Entrega</h4>
+          <ul class=" unstyled mobileList src_sinEntregar">
+            <li><h5>No hay Ordenes</h5></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="span9">
+      <ul class=" unstyled mobileList src_rutas">
+      </ul>
+    </div>
+
+  </div>
+
+<div class="print show_print1 invoice">
+  
+</div>
+

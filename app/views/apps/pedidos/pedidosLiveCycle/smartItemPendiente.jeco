@@ -34,15 +34,15 @@
         
         <span><%= pedido.PlazoReal() %> Dias</span>
         
-        <span class="pull-right"><%= pedido.Saldo.toMoney() %></span>
+        <span class="pull-right"><%= pedido.Saldo?.toMoney() %></span>
         
       </li>
       
       <% end  %>
       
       <li>
-        <span>Credito: <%= cliente.CreditoAsignado.toMoney() %></span>
-        <span class="pull-right"><strong><%= cliente.Saldo.toMoney() %></strong></span>
+        <span>Credito: <%= cliente.CreditoAsignado?.toMoney() %></span>
+        <span class="pull-right"><strong><%= cliente.Saldo?.toMoney() %></strong></span>
       </li>
       
     </ul>

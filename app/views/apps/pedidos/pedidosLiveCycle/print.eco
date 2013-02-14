@@ -4,30 +4,29 @@
 
 <% consecutivoPlace = "0000000000000".substring(0,consecutivoAddLength) %>
 
+<% credito = if @documento.Plazo__c != 0 then "Credito #{@documento.Plazo__c} Dias" else "Contado" %>
+
 <div class="copy">
   <div class="invoiceHeader">
     <div class="logo">
       <img class="hide_on_copy" src="images/invoice/images/logo.jpg"/>
       <img class="show_on_copy"  src="images/invoice/images/logo-copy.jpg"/>
-
     </div>
     
     <div class="logoInfo">
-      RODCO S.A.<br/>
-      3-101-576889<br/>
-      Tel: 22 40 99 66<br/>
-      488-2120 Calle Blancos<br/>
-      San Jose Costa Rica<br/>
-      www.rodcocr.com<br/>
+      <span><strong>RODCO S.A.</strong></span>
+      <span><strong>Céd:</strong> 3-101-576889</span>
+      <span><strong>Tel:</strong> 22 40 99 66</span>
+      <span><strong>Apdo:</strong>488-2120 Calle Blancos</span>
+      <span>San Jose Costa Rica</span>
+      <span><strong>www.rodcocr.com</strong></span>
     </div>  
     
     <div class="factura">
-    <span class="number">N: R-<%= consecutivoPlace + "#{@documento.Consecutivo__c}" %></span>
-
-        <span class="facturaLabel">FACTURA</span>
-        <span class="fecha"> <%= "#{fecha[0]} #{fecha[1]} #{fecha[2]}" %></span>
-  
-      </p>
+      <span class="number">N&#176;: R-<%= consecutivoPlace + "#{@documento.Consecutivo__c}" %></span>
+      <span class="facturaLabel">FACTURA</span>
+      <span class="fecha show_on_copy">COPIA</span>
+      <span class="fecha"> <%= "#{fecha[0]} de #{fecha[1]} #{fecha[2]}" %></span>
     </div>
   </div>
   
@@ -35,7 +34,7 @@
   <img class="hide_on_copy" src="images/invoice/images/icon_user.gif"/>
   <div class="block">
     <span class="name"><%= @documento.Cliente__r.Name.toLowerCase() %></span>
-    <span class="address"><%= @documento.Cliente__r.Direccion__c %></span>
+    <span class="address"><%= @documento.Cliente__r.Direccion__c || "Direccion: "%></span>
     <span class="order">Orden: <%= @documento.Referencia__c  %></span>
     <span class="tel">Telefono: <%= @documento.Cliente__r.Telefono__c %></span>
   </div>
@@ -43,14 +42,15 @@
   
   
 <div class="credito">
-  <span class="mes"><%= vence[1] %></span>
-  <span class="dia"><%= vence[0] %></span>
-  <div class="block">
-    <span class="creditoLabel">RECOMENDAMOS CANCELAR</span>
-   <span class="monto"><%= @documento.Total__c.toMoney() %></span>
+  <div class="calendar hide_on_copy">
+    <img src="images/invoice/images/icon-calendar.png"/>
+    <span class="mes"><%= vence[1] %></span>
+    <span class="dia"><%= vence[0] %></span>
   </div>
-  <img class="hide_on_copy" src="images/invoice/images/icon-calendar.png"/>
+    <span class="venceLabel">Vencimiento <span class="show_on_copy"><%= vence[1] %> <%= vence[0] %></span> </span>
+
   
+  <span class="monto">&#162; <%= @documento.Saldo__c?.toMoney() %></span>  
 </div>
 
 
@@ -71,10 +71,10 @@
       <tr>
         <td class="codigo"><%= movimiento.Producto__r.CodigoCorto__c %></td>
         <td  class="cantidad"><%= movimiento.ProductoCantidad__c %></td>
-        <td  class="descripcion"><%= movimiento.Producto__r.Name %></td>
-        <td  class="precio"><%= movimiento.ProductoPrecio__c %></td>
-        <td  class="<%= movimiento.Descuento_Unitario__c %>"></td>
-        <td class="total"><%= movimiento.SubTotal__c %></td>
+        <td  class="descripcion"><%= movimiento.Producto__r.Name.capitalize() %></td>
+        <td  class="precio"><%= movimiento.ProductoPrecio__c.toMoney() %></td>
+        <td  class="descuento"><%= movimiento.Descuento_Unitario__c %></td>
+        <td class="total"><%= movimiento.SubTotal__c.toMoney() %></td>
       </tr>
   
     <% end %>
@@ -83,62 +83,66 @@
 </div>
 
 <div class="transporte">
-  <p class="legend">Recibí la mercadería conforme en clase y peso de acuerdo con el detalle arriba especificado
-  </p>
   
-  <img class="hide_on_copy" src="images/invoice/images/icon_camion.gif"/>
+  <img class="hide_on_copy" src="images/invoice/images/icon-camion.jpg"/>
   <p class="transportadoPor">Transportado por <%= @documento.Transporte__c || "Rodco" %></p>
   <p class="observaciones"><%= @documento.Observacion__c || "-" %></p>  
-  <p class="firma">
-    <span class="nombre">Recibido Conforme</span>
-    <span class="cedula">Cedula</span>
-  </p>
-  
 </div>
 
-
 <div class="totales">
-  
     <p>Sub-Total<span class="number"><%= @documento.SubTotal__c?.toMoney() %></span></p>
     <p>Descuento<span class="number"><%= @documento.Descuento__c?.toMoney() %></span></p>
     <p>Impuesto<span class="number"><%= @documento.Impuesto__c?.toMoney() %></span></p>
-    <p class="total">Total <span class="number"><%= @documento.Total__c?.toMoney() %></span></p>
+    <p class="total">Total &#162;<span class="number"><%= @documento.Total__c?.toMoney() %></span></p>
   </table>
-  <p class="gracias">Muchas Gracias</p>
+  <p class="gracias"?¡Muchas Gracias!</p>
 </div>
 
+
+
 <div class="invoiceFooter">
+
   <p class="legend">Renuncio a mi domicilio y trámite de juicio, doy por aceptadas la firma Original en poder del Cliente para trámite de pago y las condiciones del Código de Comercio en su Art. 460</p>
 
-  <div class="first">
-    <span class="rodco">Rodco S.A.</p>
-    <span class="cedula">CEDULA JURIDCA</span>
-    <span class="numero">3-101-584748-3</span>
+  <div class="firma">
+    <span class="nombre">FIRMA DEL COMPRADOR:</span>
+    <span class="cedula">CEDULA</span>
+    <p class="auth">Autorizado mediante el oficio No. 04-020-97 de la D.G. De T.D.S.J.</p>
   </div>
 
   <div>
-  <p><span class="title">Banco:</span> Banco Nacional</p>
-  <p><span class="title">Cuenta:</span> 102-4847488-2</p>
-  <p>151 345 422 433 566 66</p>
+    <p><span class="title">Banco Nacional</span></p>
+    <p><span class="title">Cuenta:</span> 102-4847488-2</p>
+    <p><span class="title">CC </span>151 345 422 433 566 66</p>
   </div>
   
   <div>
-    <p><span class="title">Banco:</span> Banco Costa Rica </p>
+    <p><span class="title">Banco Costa Rica </span></p>
     <p><span class="title">Cuenta:</span> 102-4847488-2</p>
-    <p>151 345 422 433 566 66</p>
+    <p><span class="title">CC </span>151 345 422 433 566 66</p>
   </div>
     
   <div>
-    <p><span class="title">Banco:</span> BAC San Jose </p>
-    <p><span class="title">Cuenta:</span> 102-4847488-2</p>
-    <p>151 345 422 433 566 66</p>
+    <p><span class="title">BAC San Jose</span></p>
+    <p><span class="title">N Cuenta</span> 102-4847488-2</p>
+    <p><span class="title">CC </span>151 345 422 433 566 66</p>
   </div>
     
   <div  class="last">
-    <p>  <span class="number">N: R-<%= @documento.Consecutivo__c %></span></p>
+    
+    <p>  <span class="number consecutivo"><span class="detalles"><%= credito %></span> <span> N&#176;: R-<%= consecutivoPlace + @documento.Consecutivo__c %> </p>
+
+    <div class="reciclado">
+      <span>impreso en papel reciclado</span>
+      <div class="imageMask">
+        <img class="" src="images/invoice/images/papelReciclado.jpg"/>
+      </div>
+    </div>
+
+    
+    
   </div>
   
-  <p class="auth">Autorizado mediante el oficio No. 04-020-97 de la D.G. De T.D.S.J.</p>
   
   
 </div>

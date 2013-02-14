@@ -41,8 +41,7 @@ class Notificaciones extends Spine.Controller
       if user
         html = require("views/controllers/notificaciones/notificacion")(user:user , feed: feed)
         @feed_list.append html
-      else
-        console.log feed.CreatedByid
+
 
   renderPeople: =>
     online  = []

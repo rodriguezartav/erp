@@ -17,7 +17,7 @@ class MovimientoLivecycle extends Spine.Controller
 
   @departamento = "Inventarios"
   @label = "Movimientos"
-  @icon = "icon-arrow-left"
+  @icon = "icon-retweet"
 
   elements:
     ".panel"               :   "panel"

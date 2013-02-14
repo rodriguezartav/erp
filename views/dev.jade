@@ -14,8 +14,18 @@ html(lang="en" , manifest="manifest")
     meta(charset='utf-8')
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    
+
     link(rel='stylesheet', href='/application.css', type='text/css', charset='utf-8')
+  
+
+    script.
+      (function() {
+        var config = {
+          kitId: 'ocd1vwp',
+          scriptTimeout: 3000
+        };
+        var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+      })();
 
     title Rodco S.A. || ERP
     link(rel='apple-touch-icon', href='apple-touch-icon.png')
@@ -30,6 +40,7 @@ html(lang="en" , manifest="manifest")
     script(src="http://js.pusher.com/1.12/pusher.min.js")
     
     script(src='/application.js', type='text/javascript', charset='utf-8')
+
 
 
     script(type='text/javascript', charset='utf-8')

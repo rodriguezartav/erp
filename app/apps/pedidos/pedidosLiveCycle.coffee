@@ -14,8 +14,8 @@ class PedidosLiveCycle extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Credito y Cobro"
-  @label = "Administracion de Pedidos"
-  @icon = "icon-ok-sign"
+  @label = "Pedidos"
+  @icon = "icon-shopping-cart"
 
   elements:
     ".src_pedidos_guardados" : "src_pedidos_guardados" 
@@ -214,9 +214,8 @@ class PedidosLiveCycle extends Spine.Controller
     first.removeClass "copy"
     first.addClass "original"
     @print.append require("views/apps/pedidos/pedidosLiveCycle/print")(response)
-
+    @print.append require("views/apps/pedidos/pedidosLiveCycle/print")(response)
     window.print()
-  
 
   notify: =>
     #cliente = Cliente.find @cliente

@@ -8,10 +8,6 @@
 
          <div class="actionButtons pull-right">          
           
-            <a>
-              <i class="tipable icon-pause icon-large pause"></i>
-            </a>
-          
              <a>
               <i data-placement="left"class="tipable icon-refresh icon-large update" rel="tooltip" data-original-title="Actualizar Clientes,Productos y Saldos"></i>
             </a>

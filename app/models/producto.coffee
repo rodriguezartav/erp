@@ -11,8 +11,7 @@ class Producto extends Spine.Model
   @extend Spine.Model.SocketModel
 
   @autoQueryTimeBased = true;
-
-  @bypassInventario = false
+  @bypassInventario = false;
 
   @queryFilter: (options ) =>
     return "" if !options

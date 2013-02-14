@@ -5,28 +5,26 @@
   position: relative;
   -webkit-print-color-adjust: exact;
   
-  .logoInfo{
-    color: #888;
-  }
-  
 
   .original{
     height: 890px;
     
     .show_on_copy{
-      display: none;
+      display: none !important;
+    }
+    
+    .logoInfo{
+      color: #666;
+      strong{
+        color: #555;
+      }
     }
     
     .invoiceHeader{
       .factura{
-        .fecha{color: #999;}
-
+        .fecha{color: #555;}
         .facturaLabel{color: @redRodco;}
-
-        .number{color: @blueRodco;}
-
-        .legend{color: #999 !important;}
-
+        .number{color: @redRodco;}
       }
     }  
 
@@ -37,18 +35,12 @@
       .tel{     color: @blueRodco;}
     }
 
-
-
     .credito{
      .dia{color: @redRodco;}
      .mes{color: #fff;} 
-     .block{
-      .creditoLabel{color: #999 !important;}
-      .monto{
-        color: @blueRodco;
-        background-image: url('images/invoice/images/icon-colon.gif');
-      }
-      }
+      .venceLabel{color: #666 !important;}
+      .montoLabel{color: #666 !important;}
+      .monto{ color: @blueRodco; }
     }
     
     .productos{
@@ -56,15 +48,19 @@
     }
     
     .transporte{
-      .legend{ color: @blueRodco; border-color: @blueRodco;}
-       .transportadoPor{ color: #999 !important; }
-        .observaciones{  color: #999 !important; }
-      .firma{
-        background-color: #E5E7F0 !important;
-        color: #333 !important;
-      }
+      border-color: @blueRodco;
+     .transportadoPor{ color: #666 !important; }
+      .observaciones{  color: #666 !important; }
     }
     
+    .firma{
+      background-color: #E5E7F0 !important;
+      color: #333 !important;
+      .legend{
+        color: @blueRodco;
+      }
+      
+    }
     
     .totales{
       .gracias{
@@ -78,31 +74,48 @@
     }
     
     .invoiceFooter{
-      .legend{border-bottom: 4px solid @blueRodco;}
-      .auth{ color: #999 !important;}
+      .legend{color: #555 !important;}
+      .auth{ color: #666 !important;}
+      .consecutivo{ color: @redRodco;}
+      .detalles{ color: @redRodco;}
+
+      
       div{
-        .title{color: @blueRodco;}
-        &.first{span{ color: @blueRodco;}}
+        p{color: #333}
+        .title{color: #555;}
       }
     }
   }
   .copy{
-    height: 802px;  
+    height: 880px;  
     color: #000;
+    
+    &:last-child{
+      height: 809px;
+    }
+    
     .hide_on_copy{
       display: none;
     }
+    
     .show_on_copy{
       display: inline-block;
     }
+    
+    .logoInfo{
+      color: #000;
+      strong{
+        color: #000;
+      }
+    }
+    
     .credito{
-       .dia{top:24px;right:-33px}
-       .mes{top:5px;right:-36px;font-weight: 600; }
-       .block{
-       .monto{
-          color: #000;
-          background-image: url('images/invoice/images/icon-colon-copy.gif');
-        }
+      padding-top: 42px;
+      .calendar{ position: static; }
+     .dia{top:24px;right:-33px}
+     .mes{top:5px;right:-36px;font-weight: 600; }
+     .monto{
+        color: #000;
       }
     } 
     
@@ -114,10 +127,17 @@
     }
     
     .transporte{
-      .firma{
-        border: 1px solid #000;
-      }
+      
     } 
+    
+    .firma{
+      border: 1px solid #000;
+      background-color: none;
+      
+    }
+    
+    
+    
   }
   
   .red{
@@ -133,26 +153,33 @@
   }
 
   .invoiceHeader{
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     .logo{
       width: 50%;
       display: inline-block;
       vertical-align: top;
       img{
-        width: 206px;
         vertical-align: top;
+        width: 209px;
       }
     }
   
     .logoInfo{
-      width: 101px;
-      font-size: 9px;
-      line-height: 9px;
+      width: 151px;
+      font-size: 10px;
+      line-height: 10px;
       position: absolute;
-      left: 183px;
-      top: 9px;
+      left: 245px;
+      top: 19px;
       display: inline-block;
       vertical-align: top;
+      span{
+        display: block;
+        font-weight: 200;
+        strong{
+          font-weight: 400;
+        }
+      }
     }
   
     .factura{
@@ -168,21 +195,19 @@
       .facturaLabel{
         font-size: 39px;
         line-height: 36px;
-        font-weight: 200;
+        font-weight: 800;
       }
       .number{
         text-transform: uppercase;
-        font-size: 18px;
+        font-size: 19px;
+        font-weight: 400;
       }
-      .legend{
-        font-size: 10px;
-        line-height: 9px;
-      }
+
     }
   }  
   
   .cliente{
-    width: 65%;
+    width: 71%;
     display: inline-block;
     span{ display:block; line-height: 13px;font-size: 14px;}
     img{
@@ -198,71 +223,85 @@
         font-size: 20px;
         line-height: 20px;
         text-transform: capitalize;
+        font-weight: 400;
       }
       .address{
         font-size: 14px;
+        font-weight: 200;
+        line-height: 15px;
       }
       .order{
         font-size: 14px;
+        font-weight: 200;
+        line-height: 15px;
       }
       .tel{
         font-size: 14px;
+        font-weight: 200;
+        line-height: 15px;
       }
     }
   }
   
   .credito{
     display: inline-block;
-    width: 30%;
     text-align: right;
+    text-align: center;
+    float: right;
     position: relative;
+    top: -35px;
+    
+    .calendar{
+      position: relative;
+      width: 96px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    
+    .venceLabel{
+      font-size: 17px;
+      display: block; 
+      text-align: center;   
+    }
     
     .dia{
       position: absolute;
-      top: 28px;
-      right: 10px;
-      font-size: 19px;
+      top: 38px;
+      right: 35px;
+      font-size: 21px;
     }
     .mes{
       position: absolute;  
-      top: 13px;
-      right: 9px;
-      font-weight: 100;  
+      top: 18px;
+      right: 31px;
+      font-weight: 200;  
       text-transform: uppercase;
+      z-index: 100;
+      font-size: 15px;
     }
+
     img{
       display: inline-block;
       vertical-align: top;
       margin-top: 1px;
+      vertical-align: middle;
     }
-    .block{
-      -webkit-print-color-adjust: exact;
-      vertical-align: top;
-      display: inline-block;
-      width: 141px;
-      height: 41px;
-      padding: 4px 0px;
-      text-align: center;
-      .creditoLabel{
-        display: block;
-        font-size: 10px;
-        text-align: center;
-      }
+
       .monto{
-        -webkit-print-color-adjust: exact;
-        background-position: 0px 1px;
-        background-repeat: no-repeat;
-        padding-left: 15px;
         display: block;
         font-size: 23px;
         margin-top: 2px;
-        text-align: left;
-      }
+        padding-top: 1px;
+        
+        &.montoLabel{
+          display: inline-block;
+          font-size: 17px;
+        }
     }
   }
   
   .productosPlaceHolder{
-    height: 300px; 
+    height: 380px; 
     margin-top: 30px;
      
   }
@@ -273,55 +312,75 @@
     th{border-bottom: 2px solid #000;}
     tr{ height: 25px; }
     .codigo{width: 10%; text-align: left;}
-    .cantidad{width: 15%;}
-    .descripcion{width: 50%;}
+    .cantidad{width: 12%;}
+    .descripcion{width: 52%;}
     .precio{width: 10%;}
-    .descuento{width: 5%;}
-    .total{width: 10%;}
+    .descuento{width: 6%; text-align: center}
+    .total{width: 10%; text-align: right;}
   }
   
   .transporte{
-    width: 70%;
+    width: 72%;
+    margin-top: 7px;
+    margin-right: 10px;
+    border-top: #000 1px solid; 
+    padding-top: 4px;
     display: inline-block;
     vertical-align: top;
-    .legend{  border-bottom: #000 2px solid; padding-bottom: 2px; font-size: 11px;}
-    img{ float: left; margin-right: 8px; display: inline-block; }
-    .transportadoPor{ font-size: 20px; }
+    img{ float: left; margin-right: 8px; display: inline-block; width: 68px; }
+    .transportadoPor{ font-size: 15px ;padding-top: 4px;}
     .observaciones{ font-size: 15px; }
-    .firma{
-      padding: 9px 14px;
-      .nombre{ text-transform: uppercase; }
-      .cedula{ float: right;margin-right: 100px; display: inline-block;text-transform: uppercase; }
-    }
-    
-  
   }
   
   .totales{
-      width: 29%;
+      width: 26%;
+      float: right;
       display: inline-block;
       vertical-align: top;
       p{
         margin-bottom: 1px;
         .number{
-          width: 50%;
           display: inline-block;
           text-align: right;
           float: right;
+          padding: 0px 5px;
         }
 
         &.gracias{
-          font-size: 21px;
+          font-size: 17px;
           text-transform: uppercase;
           margin-top: 4px;
           text-align: center;
         }
 
         &.total{
-          padding: 9px;
+          padding: 4px 0px;
           font-size: 15px;
+          font-weight: 400px;
         }
       }
+  }
+  
+  .firma{
+    display: block !important;
+    width: auto !important;
+    padding: 9px 5px 0px 14px;
+    margin: 0px;
+    margin-bottom: 6px;
+    .nombre{ text-transform: uppercase; }
+    .cedula{ float: right; margin-right: 100px; display: inline-block;text-transform: uppercase; }
+  
+    .auth{ 
+      font-size: 9px; 
+      text-align: right; 
+      margin: 0px; 
+      padding: 0px;
+      font-weight: 400; 
+      line-height: 10px;
+      position: relative;
+      top: -3px;
+    }
+ 
   }
   
   .invoiceFooter{
@@ -329,14 +388,16 @@
     left: auto;
     right: auto;
     font-size: 11px;
-    margin-top: 165px;
+    margin-top: 125px;
+
     .legend{
-      border-bottom: 4px solid #000;
-      font-size: 8px;
+      font-size: 7px;
+      margin: 0px;
+      line-height: 8px;
+      font-weight: 400;
     }
     
-    
-    .auth{ font-size: 11px; text-align: right;}
+
     
     div{
       vertical-align: top;
@@ -344,22 +405,55 @@
       width: 22%;
       p{
         margin: 0px;
-        font-size: 12px;
-        line-height: 14px;
+        font-size: 11px;
+        line-height: 13px;
         padding: 0px;
+        font-weight: 200;
       }
-      &.first{
-       width: 19%;
-       span{ font-size: 14px; display: block; }
-       .cedula{ font-size: 11px;}
-       .numero{ font-size: 13px;}
+      .title{
+        font-weight: 400;
       }
+      
       &.last{
-       width: 13%;
+       width: 29%;
        position: absolute;
        right: 0px;
        p{
         text-align: right;
+       }
+       .consecutivo{
+        font-size: 16px;
+        display: block;
+        font-weight: 400;
+       }
+       
+       .detalles{
+          font-size: 13px;
+          font-weight: 200;
+       }
+       
+       .reciclado{
+          width: 145px;
+          float: right;
+          span{ 
+            display: inline-block;
+            color: #9ABD3B;
+            line-height: 11px;
+            font-size: 9px;
+            text-align: center; 
+          }
+       
+         .imageMask{
+          display: inline-block;
+          height: 13px;
+          width: 28px;
+          overflow: hidden;
+         }
+       
+         img{
+          height: 34px;
+         }
+
        }
        
       }

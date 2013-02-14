@@ -9,7 +9,6 @@ StatManager = require("managers/statManager")
 
 Header = require("controllers/header")
 Productos = require("controllers/productos")
-Footer = require("controllers/footer")
 
 Lightbox = require("controllers/lightbox")
 
@@ -34,17 +33,11 @@ class App extends Spine.Controller
     Spine.registerParse @options.parseKeys
     User.refresh @options.users
 
-    #Proxino.key = "R4f9M9v5r63OtGW62AeHbw"
-    #Proxino.track_errors();
-
     new Header(el: $("header"))
-    #new Productos(el: $(".productosToolbar"))
-    
-    new Footer(el: $("footer")) 
     new Lightbox(el: $(".lightboxCanvas"))
     new Main(el: $(".appCanvas") )
     Spine.Route.setup()
-    
+
     Spine.security       =  new SecurityManager()
     Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()
@@ -59,23 +52,12 @@ class App extends Spine.Controller
     Spine.clicked = false
     @navigate "/apps"
 
-    #setInterval =>
-      #return Spine.clicked = false if Spine.clicked or Spine.paused
-      #@navigate "/apps"
-    #, 60000
-
-    #TODO CHANGE VAR NAME AND MOVE
-    #@el.bind "click" , =>
-      #Spine.clicked = true
-      
-
   #TODO PUT SOMEWHERE ELSE
   Spine.throttle= (fn,delay) ->
     clearTimeout(Spine.throttleTimer) if Spine.throttleTimer
     Spine.throttleTimer = setTimeout =>
       fn.apply(@, arguments);
     , delay
-
 
   Spine.setCookie= (c_name,value,exdays) ->
     exdate=new Date();

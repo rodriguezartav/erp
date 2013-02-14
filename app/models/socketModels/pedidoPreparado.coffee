@@ -9,7 +9,7 @@ class PedidoPreparado extends Spine.Model
   @extend Spine.Model.SocketModel
 
   @overrideName = "Oportunidad"
-  @autoQueryTimeBased   :   false
+  @autoQueryTimeBased   =   false;
   #Turned On only for certain profiles in SecurityManager
   @autoQuery = false
   @destroyBeforeRefresh = true;

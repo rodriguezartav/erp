@@ -6,8 +6,7 @@ class ChatterFeed extends Spine.Model
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
   @extend Spine.Model.SocketModel
-  
-  
+
   @overrideName = "CollaborationGroupFeed"
   @standardObject = true
   @autoQueryTimeBased = true

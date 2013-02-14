@@ -3,9 +3,8 @@ Spine = require('spine')
 MovimientoLivecycle = require("apps/auxiliares/movimientoLivecycle")
 
 #pedidos
-
 PedidosLiveCycle          = require("apps/pedidos/pedidosLiveCycle")
-
+EntregasLiveCycle          = require("apps/pedidos/entregasLiveCycle")
 
 NotasLivecycle = require("apps/cuentasPorCobrar/notasLivecycle")
 
@@ -17,7 +16,6 @@ ReciboLivecycle = require("apps/cuentasPorCobrar/reciboLivecycle")
 VerSaldos = require("apps/vistas/verSaldos")
 VerRegistros = require("apps/vistas/verRegistros")
 VerRegistrosResumen = require("apps/vistas/verRegistrosResumen")
-
 
 VerCierreDiario = require("apps/vistas/verCierreDiario")
 
@@ -60,10 +58,10 @@ PedidoPreparado = require("models/socketModels/pedidoPreparado")
 Proveedor = require("models/proveedor")
 
 class SecurityManager
-  
+
   constructor: ->
     @profiles = {}
-    apps = [   MovimientoLivecycle  , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,PagosAnular  , AjustarNegociacion , VerClientes ,PagosProveedor   , PedidosLiveCycle ,DocumentosAnular ]
+    apps = [   EntregasLiveCycle , MovimientoLivecycle  , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,PagosAnular  , AjustarNegociacion , VerClientes ,PagosProveedor   , PedidosLiveCycle ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["IT"] = apps
 
@@ -90,10 +88,11 @@ class SecurityManager
 
     Cliente.autoReQuery     = false
     Producto.autoReQuery    = false
-    
     Spine.session.updateInterval = 360
+
+
     if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
-      Saldo.autoQuery            = true if Saldo.count() > 0
+      Saldo.autoQuery            = true
       Cliente.autoQuery          = true
       PedidoPreparado.autoQuery  = true
       
@@ -108,10 +107,9 @@ class SecurityManager
     else if Spine.session.hasPerfiles([ "Vendedor" ])
       Producto.autoQuery  = true
       Cliente.autoQuery   = true
-      Saldo.autoQuery     = true if Saldo.count() > 0
+      Saldo.autoQuery     = true
 
     else if Spine.session.hasPerfiles([ "Ejecutivo de Cuentas" ])
-      #Saldo.autoQuery            =  true
       Cliente.autoQuery          =  true
       Producto.autoQuery         =  true
       Proveedor.autoQuery        =  true
@@ -131,14 +129,11 @@ class SecurityManager
     else if Spine.session.hasPerfiles([ "Platform System Admin" ])
       Cliente.autoQuery         = true
       Producto.autoQuery        = true
-      Saldo.autoQuery            = true if Saldo.count() > 0
-      #Saldo.autoReQuery         = true
+      Saldo.autoQuery           = true
       PedidoPreparado.autoQuery = true
       Proveedor.autoQuery = true
       Movimiento.attributes.push('ProductoCosto') 
       Producto.attributes.push("Costo" , "CostoAnterior") 
-
-      
 
     Spine.session.save()
 

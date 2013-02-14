@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Cliente extends Spine.Model
   @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo" , "DiasCredito" , "CreditoAsignado","Rating_Crediticio",
-  "Negociacion" , "LastModifiedDate"
+  "Negociacion" , "LastModifiedDate" , "Ruta"
 
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax
@@ -14,9 +14,12 @@ class Cliente extends Spine.Model
 
   @avoidInsertList = ["Name","Rating_Crediticio","CodigoExterno","Activo","Saldo","DiasCredito" , "LastModifiedDate"]
 
+  @overrideInitQuery = { credito: true }
+
   @queryFilter: (options) =>
     return "" if !options
     filter = ""
+    filter = @queryFilterAddCondition(" Activo__c != 0"                                 , filter) if options.activo
     filter = @queryFilterAddCondition(" Saldo__c != 0"                                 , filter) if options.saldo
     filter = @queryFilterAddCondition(" CreditoAsignado__c > 0 and DiasCredito__c > 0" , filter) if options.credito
     filter = @queryFilterAddCondition(" CreditoAsignado__c = 0 and DiasCredito__c = 0" , filter) if options.contado

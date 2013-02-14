@@ -12,7 +12,6 @@ class ConnectionManager
 
   checkOverallStatus: =>
     @fetchServerData()
-
     if Spine.session?.isExpired() and navigator.onLine
       Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
         window.location.reload();
@@ -22,6 +21,16 @@ class ConnectionManager
       for model in Spine.socketModels
         model.ajax().query( {} ) if model.autoQuery
 
+    #THIS IS A HACK
+    Cliente.bind "ajaxSuccess" , @clienteAjaxSuccess
+
+  clienteAjaxSuccess: =>
+    return true if Cliente.findByAttribute("DiasCredito" , 0) != null
+    Cliente.unbind "ajaxSuccess", @clienteAjaxSuccess
+    Cliente.query {contado: true , avoidQueryTimeBased: true } , success: =>
+      console.log arguments
+    console.log "Query Contado from Reset"
+  
   fetchLocalData: =>
     try
       Session.fetch()    

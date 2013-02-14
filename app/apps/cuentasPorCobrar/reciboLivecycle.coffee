@@ -13,8 +13,8 @@ class ReciboLivecycle extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Credito y Cobro"
-  @label = "Administracion de Recibos"
-  @icon = "icon-ok-sign"
+  @label = "Recibos"
+  @icon = "icon-inbox"
 
   elements:
     ".sections"   : "sections"

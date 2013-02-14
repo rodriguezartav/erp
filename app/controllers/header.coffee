@@ -9,16 +9,33 @@ class Header  extends Spine.Controller
   elements:
     ".users" : "users"
     ".currentUser" : "currentUser"
+    ".update"     : "updateBtn"
+    
 
   events:
     "click img"          : "onHome"
     "click .currentUser"   : "onCurrentUserClick"
+    "click .update"        : "onUpdate"
+
   
   constructor: ->
     super
     @html require('views/controllers/header/layout')
     $('.dropdown-toggle').dropdown()
     Spine.bind "login_complete" , @onUserFresh
+    
+    Spine.bind "actualizar_ahora" , @onUpdate
+
+    Spine.bind "queryBegin" , =>
+      @updateBtn.addClass "loading"      
+
+    Spine.bind "queryComplete" , =>
+      return false if Spine.queries > 0
+      @updateBtn.removeClass "loading"
+
+
+  onUpdate: =>
+    Spine.reset()
     
 
   onUserFresh: =>
