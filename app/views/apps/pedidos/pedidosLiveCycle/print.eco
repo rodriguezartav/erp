@@ -85,7 +85,7 @@
 <div class="transporte">
   
   <img class="hide_on_copy" src="images/invoice/images/icon-camion.jpg"/>
-  <p class="transportadoPor">Transportado por <%= @documento.Transporte__c || "Rodco" %></p>
+  <p class="transportadoPor">Entregado por <%= @documento.Transporte__c || "Rodco" %></p>
   <p class="observaciones"><%= @documento.Observacion__c || "-" %></p>  
 </div>
 
