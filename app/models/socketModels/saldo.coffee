@@ -15,15 +15,6 @@ class Saldo extends Spine.Model
   @autoQuery = false
   @allowCreate = false
 
-  @onQuerySuccess: ->
-    saldos = Saldo.select (saldo) ->
-      return true if saldo.Saldo == 0
-    console.log "saldos " + saldos.length
-    
-    if saldos.length > 2500
-      localStorage.removeItem "Saldo"
-      window.location.reload();
-
   @queryFilter: (options = {}) =>
     filter = ""
     filter = @queryFilterAddCondition(" IsContable__c = 'true' and IsContado__c = false"    , filter)
