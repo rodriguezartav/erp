@@ -102,9 +102,10 @@ class Collection extends Base
       @model.refresh(records, options)
       Spine.queries -= 1 
       @model.trigger "querySuccess"
-      @model.onQuerySuccess?()
       Spine.trigger "queryComplete"
       params.afterSuccess?(records)
+      @model.onQuerySuccess?()
+
 
   rest: (params,options = {}) =>
     @beforeRest

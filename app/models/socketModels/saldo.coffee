@@ -18,12 +18,11 @@ class Saldo extends Spine.Model
   @onQuerySuccess: ->
     saldos = Saldo.select (saldo) ->
       return true if saldo.Saldo == 0
-
-    if saldos.length > 1500
-      localStorage.removeItem("Saldo")
+    console.log "saldos " + saldos.length
+    
+    if saldos.length > 2500
+      localStorage.removeItem "Saldo"
       window.location.reload();
-      
-      
 
   @queryFilter: (options = {}) =>
     filter = ""
@@ -33,6 +32,7 @@ class Saldo extends Spine.Model
     filter = @queryFilterAddCondition(" Con_Saldo__c = 'true' "                             , filter)   if options.saldo or Saldo.initQuery
     filter = @queryFilterAddCondition(" Autorizado__c   = #{options.autorizado }"           , filter)   if options.autorizado == false or options.autorizado == true
     filter = @queryFilterAddCondition(" Tipo_de_Documento__c IN (#{options.tipos}) "        , filter)   if options.tipos
+    filter = @queryOrderAddCondition(" order by LastModifiedDate desc limit 3000 "                   , filter)  
     filter
 
   PlazoReal: =>
