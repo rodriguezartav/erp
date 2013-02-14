@@ -1053,6 +1053,5 @@ td.center{text-align:center;}
 .relative{position:relative;}
 .pull-right{float:right !important;}
 body .container{max-width:980px;}
-h1,h2,h3,h3,h4,h5,h6{font-family:"motor-stencil" !important;}
 *{-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
 @media (max-width:979px){header .navbar-fixed-top{margin-bottom:10px;} header .productIcon{display:none;} .productosToolbar{position:static;max-height:390px;} .appCanvas{margin-top:0px;}}
