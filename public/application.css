@@ -969,10 +969,10 @@ footer a{margin-top:15px;color:#049cdb;}footer a i{vertical-align:middle;font-si
 .invoice .invoiceHeader .factura .fecha{font-size:16px;}
 .invoice .invoiceHeader .factura .facturaLabel{font-size:39px;line-height:36px;font-weight:800;}
 .invoice .invoiceHeader .factura .number{text-transform:uppercase;font-size:19px;font-weight:400;}
-.invoice .cliente{width:71%;display:inline-block;}.invoice .cliente span{display:block;line-height:13px;font-size:14px;}
+.invoice .cliente{width:80%;display:inline-block;}.invoice .cliente span{display:block;line-height:13px;font-size:14px;}
 .invoice .cliente img{display:inline-block;vertical-align:top;position:relative;top:-2px;}
-.invoice .cliente .block{vertical-align:top;display:inline-block;}.invoice .cliente .block .name{font-size:20px;line-height:20px;text-transform:capitalize;font-weight:400;}
-.invoice .cliente .block .address{font-size:14px;font-weight:200;line-height:15px;}
+.invoice .cliente .block{vertical-align:top;display:inline-block;width:90%;height:63px;overflow-y:hidden;}.invoice .cliente .block .name{font-size:20px;line-height:20px;text-transform:capitalize;font-weight:400;}
+.invoice .cliente .block .address{font-size:13px;font-weight:200;line-height:15px;height:13px;overflow:hidden;}
 .invoice .cliente .block .order{font-size:14px;font-weight:200;line-height:15px;}
 .invoice .cliente .block .tel{font-size:14px;font-weight:200;line-height:15px;}
 .invoice .credito{display:inline-block;text-align:right;text-align:center;float:right;position:relative;top:-35px;}.invoice .credito .calendar{position:relative;width:96px;margin-right:auto;margin-left:auto;}
