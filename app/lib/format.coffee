@@ -67,6 +67,8 @@ Date.prototype.toArray= (monthFormat="MMM") ->
   return [date , month , this.getFullYear()]
 
 
+  
+
 Date.prototype.toSimple = ->
   months = this.getMonth() + 1
   months = "0" + months if months < 10

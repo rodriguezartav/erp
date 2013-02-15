@@ -20,7 +20,7 @@
                   <h3 class="alignLeft">Crear Nueva Ruta</h3>
                   <p class="label label-primary alignLeft marginLess " for="inputEmail">Fecha</p>
                   
-                  <div class="input-append date  inputFecha"  data-id="<%= @id  %>"  data-date-format="M-dd">
+                  <div class="input-append date  inputFecha"  data-id="<%= @id  %>"  data-date-format="yyyy-mm-dd">
                   
                   <input  data-id="<%= @id  %>" style="width: 81%" placeholder="Entrega" class="txt_nueva_ruta_fecha   txt_value" type="text" >
                         <span class="add-on"><i class="icon-th"></i></span>

@@ -38,6 +38,7 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" Autorizado__c   = #{options.autorizado }"           , filter)   if options.autorizado == false or options.autorizado == true
     filter = @queryFilterAddCondition(" enRecibo__c        = false"                ,  filter)  if options.enRecibo
     filter = @queryFilterAddCondition(" Entregado__c        = false"                ,  filter)  if options.sinEntregar
+    filter = @queryFilterAddCondition(" InvoiceVersion__c       = 2"                ,  filter)  if options.v2
     filter = @queryOrderAddCondition(" order by Consecutivo__c "                   , filter)  
     filter
     

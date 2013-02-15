@@ -1,5 +1,24 @@
-<li>
-  
-  <%= @Fecha %>
+<% Documento = require("models/documento") %>
+
+<% fecha = new Date(Date.parse(@Fecha)).toArray() %>
+<li class="span3 ruta" data-id="<%= @id %>">
+
+    <h4 class="inlineblock">
+      <i data-id="<%= @id %>" class="icon-remove btn_remove inlineblock " style="font-size: 11px;"></i>
+      <%= "#{fecha[1]}-#{fecha[0]}"  %> 
+    </h4>
+
+  <h5><%= @Camion %> - <%= @Chofer %></h5>
+
+
+  <% console.log @  %>
+  <ul class="documentoList unstyled">
+    <% for docId in @Documentos: %>
+      <li>
+        <% doc = Documento.find docId  %>
+        <%= doc.Total %>
+      </li>
+    <% end %>
+  </ul
 
 </li>

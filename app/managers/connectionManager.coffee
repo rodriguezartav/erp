@@ -27,7 +27,7 @@ class ConnectionManager
   clienteAjaxSuccess: =>
     return true if Cliente.findByAttribute("DiasCredito" , 0) != null
     Cliente.unbind "ajaxSuccess", @clienteAjaxSuccess
-    Cliente.query {contado: true , avoidQueryTimeBased: true } , success: =>
+    Cliente.query { contado: true , avoidQueryTimeBased: true } , success: =>
       console.log arguments
     console.log "Query Contado from Reset"
   

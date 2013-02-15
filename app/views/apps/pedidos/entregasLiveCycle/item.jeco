@@ -1,19 +1,11 @@
 <% Cliente = require("models/cliente")  %>
 <% cliente = Cliente.find @Cliente  %>
-<% console.log @  %>
 
-<li class="thumbnail">
+<li class="documentoSinEntregar" data-id="<%= @id %>" draggable="true">
 
   <%= cliente.Name.capitalize() %><br/>
 
   <span class="badge"><%=cliente.Ruta %></span>
   <span class="badge badge-info"><%= @Transporte %></span>
-  
-  
-  <div class="input-append date txtFecha inlineBlock"  data-id="<%= @id  %>"  data-date-format="M-dd">
-       <input  data-id="<%= @id  %>" style="width: 48px" placeholder="Entrega" type="text" >
-       <span class="add-on"><i class="icon-th"></i></span>
-   </div>  
 
-  
 </li>

@@ -1,4 +1,6 @@
-<% fecha = new Date(Date.parse(@documento.FechaFacturacion__c)).toArray("full") %>
+<% fecha = new Date("#{@documento.FechaFacturacion__c} 00:00") %>
+<% fecha = fecha.toArray('full') %>
+
 <% vence = new Date(Date.parse(@documento.FechaVencimiento__c)).toArray() %>
 <% consecutivoAddLength = 6 - "#{@documento.Consecutivo__c}".length %>
 
