@@ -1,9 +1,13 @@
 <% Cliente = require("models/cliente")  %>
 <% cliente = Cliente.find @Cliente  %>
 
-<li class="documentoSinEntregar" data-id="<%= @id %>" draggable="true">
 
-  <%= cliente.Name.capitalize() %><br/>
+<li class="documentoSinEntregar" data-id="<%= @id %>" draggable="true">
+  
+  <i class="icon-truck btn_entregado"  data-id="<%= @id %>" ></i>
+  
+  N&#176;:<%= @Consecutivo %> <%= cliente.Name.capitalize() %> <span class="badge badge-warning"><%= @FechaEntregaPropuesta.toMMMDate() %></span>
+
 
   <span class="badge"><%=cliente.Ruta %></span>
   <span class="badge badge-info"><%= @Transporte %></span>

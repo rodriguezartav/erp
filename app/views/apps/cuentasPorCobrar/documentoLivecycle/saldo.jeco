@@ -1,0 +1,5 @@
+<li>
+  <%= @ClienteObj.Name.capitalize() %>
+  <%= @PlazoActual %>
+  <%= @Total.toMoney() %>
+</li>

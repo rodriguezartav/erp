@@ -4,6 +4,11 @@ Array::unique = ->
   output[@[key]] = @[key] for key in [0...@length]
   value for key, value of output
 
+Array.prototype.remove = (from, to)  ->
+  rest = this.slice((to || from) + 1 || @length);
+  @length = from < 0 ? @length + from : from;
+  return @push.apply(@, rest);
+
 
 Number.prototype.toMoney = (decimals = 2, decimal_separator = ".", thousands_separator = ",") ->
   n = this
@@ -55,6 +60,13 @@ String.prototype.getWeek = ->
   date = new Date(Date.parse(this))
   onejan = new Date(date.getFullYear(),0,1);
   return Math.ceil((((date - onejan) / 86400000) + onejan.getDay()+1)/7);
+
+
+String.prototype.toMMMDate = ->
+  date = new Date(Date.parse("#{this} : 00:00"))
+  dateArray = date.toArray()
+  return "#{dateArray[1]}-#{dateArray[0]}"
+  
 
 Date.prototype.toArray= (monthFormat="MMM") ->
   months = ['Enero','Febrero','Marzo','April','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']

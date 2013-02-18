@@ -1,0 +1,151 @@
+<% Cliente = require("models/cliente")  %>
+<% Producto = require("models/producto")  %>
+
+<% fecha = new Date("#{@documento.FechaFacturacion} 00:00") %>
+<% fecha = fecha.toArray('full') %>
+<% cliente = Cliente.find @documento.Cliente  %>
+
+<% vence = new Date(Date.parse(@documento.FechaVencimiento)).toArray() %>
+<% consecutivoAddLength = 6 - "#{@documento.Consecutivo}".length %>
+
+<% consecutivoPlace = "0000000000000".substring(0,consecutivoAddLength) %>
+
+<% credito = if @documento.Plazo != 0 then "Credito #{@documento.Plazo} Dias" else "Contado" %>
+
+<div class="copy">
+  <div class="invoiceHeader">
+    <div class="logo">
+      <img class=""  src="images/invoice/images/logo-copy.jpg"/>
+    </div>
+    
+    <div class="logoInfo">
+      <span><strong>RODCO S.A.</strong></span>
+      <span><strong>Céd:</strong> 3-101-032175-34</span>
+      <span><strong>Tel:</strong> 22 40 99 66</span>
+      <span><strong>Apdo:</strong>488-2120 Calle Blancos</span>
+      <span>San Jose Costa Rica</span>
+      <span><strong>www.rodcocr.com</strong></span>
+    </div>  
+    
+    <div class="factura">
+      <span class="number">N&#176;: R-<%= consecutivoPlace + "#{@documento.Consecutivo}" %></span>
+      <span class="facturaLabel">FACTURA</span>
+      <span class="fecha show_on_copy">COPIA TRANSPORTE</span>
+      <span class="fecha"> <%= "#{fecha[0]} de #{fecha[1]} #{fecha[2]}" %></span>
+    </div>
+  </div>
+  
+<div class="cliente">
+  <img class="hide_on_copy" src="images/invoice/images/icon_user.gif"/>
+  <div class="block">
+    <span class="name"><%= cliente.Name.toLowerCase() %></span>
+    <span class="address"><%= cliente.Direccion || "Direccion: "%></span>
+    <span class="order">Orden: <%= @documento.Referencia  %></span>
+    <span class="tel">Telefono: <%= cliente.Telefono %></span>
+  </div>
+</div>
+  
+  
+<div class="credito">
+  <div class="calendar hide_on_copy">
+    <img src="images/invoice/images/icon-calendar.png"/>
+    <span class="mes"><%= vence[1] %></span>
+    <span class="dia"><%= vence[0] %></span>
+  </div>
+    <span class="venceLabel">Vencimiento <span class="show_on_copy"><%= vence[1] %> <%= vence[0] %></span> </span>
+
+  <span class="monto">&#162; <%= @documento.Saldo?.toMoney() %></span>  
+</div>
+
+<div class="productosPlaceHolder">
+  <table class="productos">
+    <tr>
+      <th class="codigo">Codigo</th>
+      <th  class="cantidad">Cantidad</th>
+      <th  class="descripcion">Descripcion</th>
+
+      <th  class="precio">Precio</th>
+      <th  class="descuento">%</th>
+      <th class="total">Total</th>
+    </tr>
+
+    <% for movimiento in @movimientos: %>
+      <% producto = Producto.find movimiento.Producto %>
+      <tr>
+        <td class="codigo"><%= producto.CodigoCorto %></td>
+        <td  class="cantidad"><%= movimiento.ProductoCantidad %></td>
+        <td  class="descripcion"><%= producto.Name.capitalize() %></td>
+        <td  class="precio"><%= movimiento.ProductoPrecio.toMoney() %></td>
+        <td  class="descuento"><%= movimiento.Descuento_Unitario %></td>
+        <td class="total"><%= movimiento.SubTotal.toMoney() %></td>
+      </tr>
+  
+    <% end %>
+
+  </table>
+</div>
+
+<div class="transporte">
+  
+  <img class="hide_on_copy" src="images/invoice/images/icon-camion.jpg"/>
+  <p class="transportadoPor">Entregado por <%= @documento.Transporte || "Rodco" %></p>
+  <p class="observaciones"><%= @documento.Observacion || "-" %></p>  
+</div>
+
+<div class="totales">
+    <p>Sub-Total<span class="number"><%= @documento.SubTotal?.toMoney() %></span></p>
+    <p>Descuento<span class="number"><%= @documento.Descuento?.toMoney() %></span></p>
+    <p>Impuesto<span class="number"><%= @documento.Impuesto?.toMoney() %></span></p>
+    <p class="total">Total &#162;<span class="number"><%= @documento.Total?.toMoney() %></span></p>
+  </table>
+  <p class="gracias"?¡Muchas Gracias!</p>
+</div>
+
+
+
+<div class="invoiceFooter">
+  <p class="legend">Renuncio a mi domicilio y trámite de juicio, doy por aceptadas la firma Original en poder del Cliente para trámite de pago y las condiciones del Código de Comercio en su Art. 460</p>
+
+  <div>
+    <p><span class="title">Banco Nacional</span></p>
+    <p><span class="title">Cuenta:</span>100011370000030</p>
+    <p><span class="title">CC 151 137 100 100 000 35</span></p>
+  </div>
+  
+  <div>
+    <p><span class="title">Banco Costa Rica </span></p>
+    <p><span class="title">Cuenta:</span> 001-128-535-1</p>
+    <p><span class="title">CC </span>152 010 010 128 535 11</p>
+  </div>
+    
+  <div>
+    <p><span class="title">BAC San Jose</span></p>
+    <p><span class="title">N Cuenta</span> 910 567 213</p>
+    <p><span class="title">CC 102 000 091 056 721 35</span></p>
+  </div>
+    
+  <div  class="last">
+    
+    <p>  <span class="number consecutivo"><span class="detalles"><%= credito %></span> <span> N&#176;: R-<%= consecutivoPlace + @documento.Consecutivo %> </p>
+
+    <div class="reciclado">
+      <span>impreso en papel reciclado</span>
+      <div class="imageMask">
+        <img class="" src="images/invoice/images/papelReciclado.jpg"/>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div class="firma" style="margin-top: 25px">
+    <span class="nombre">FIRMA DEL COMPRADOR:</span>
+    <span class="cedula">CEDULA</span>
+    <p class="auth">Recibi la mercaderia en buen estado y completa segun lo indicado en Factura R-<%= consecutivoPlace + "#{@documento.Consecutivo}" %></p>
+  </div>
+  
+  
+</div>
+  
+</div>

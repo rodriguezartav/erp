@@ -27,11 +27,13 @@ class SinglePedidos extends Spine.Controller
     ".lbl_impuesto" : "lbl_impuesto"
     ".lbl_total" : "lbl_total"
     ".lbl_PedidoTipo" : "lbl_PedidoTipo"
+    ".txtTransporte" : "txtTransporte"
     ".validatable" : "inputs_to_validate"
 
   events:
     "click .cancel" : "onRemove"
     "click .save" : "send"
+    "click .btn_set_transporte" : "onSetTransporte"
 
   setVariables: =>
     Negociacion.destroyAll()
@@ -59,6 +61,7 @@ class SinglePedidos extends Spine.Controller
     @html require("views/apps/pedidos/pedido/layout")(Pedido)
     @el.attr "data-referencia" , @pedido.Referencia
     @setVariables()
+    @lbl_PedidoTipo.html "Contado" if @isContado
     @clientes = new Clientes(el: @src_cliente , cliente: @pedido.Cliente , contado: @isContado )
     @smartProductos = new SmartProductos( el: @src_smartProductos , smartItem: SmartItemPedido , referencia: @pedido.Referencia )
     @setBindings()
@@ -74,7 +77,9 @@ class SinglePedidos extends Spine.Controller
     @pedido.Cliente = cliente.id
     if cliente.DiasCredito == 0
       @pedido.IsContado = true
+      @txtTransporte.val "Cliente Retira"
       @lbl_PedidoTipo.html "Contado"
+    @txtTransporte.val cliente.Transporte if cliente.Transporte
     @pedido.save()
     @clientes.lock()
     Negociacion.destroyAll()
@@ -86,7 +91,6 @@ class SinglePedidos extends Spine.Controller
     @throttleTimer = setTimeout =>
       @pedidoItemChanged.apply(@, arguments);
     , 300
-
 
   pedidoItemChanged: =>
     items = PedidoItem.itemsInPedido(@pedido)
@@ -120,6 +124,7 @@ class SinglePedidos extends Spine.Controller
     @pedido.Nombre = data.nombre if data.nombre
     @pedido.Identificacion = data.cedula if data.cedula
     @pedido.save()
+    @txtTransporte.val "Cliente Retira" 
     @lbl_PedidoTipo.html "Contado"
 
   onTipoPedidoClick: (e) =>
@@ -131,6 +136,7 @@ class SinglePedidos extends Spine.Controller
 
   beforeSend: (object) ->
     nombre = @el.find('.nombre').val()
+    object.Transporte = @transporte or object.Transporte
     for pi in PedidoItem.itemsInPedido(object)
       pi.Cliente = object.Cliente if object.Cliente
       pi.Referencia = object.Referencia
@@ -139,7 +145,7 @@ class SinglePedidos extends Spine.Controller
       pi.Observacion = object.Observacion
       pi.IsContado = object.IsContado
       pi.Transporte = object.Transporte
-      pi.Especial = object.Especial || false
+      pi.Especial = object.Especial or false
       pi.Estado = "Pendiente"
       if object.IsContado
         pi.Nombre = object.Nombre
@@ -164,6 +170,10 @@ class SinglePedidos extends Spine.Controller
       Spine.socketManager.pushToFeed "Ingrese un Pedido de #{cliente.Name}"
     catch error
       console.log error
+
+  onSetTransporte: (e) =>
+    target = $(e.target)
+    @txtTransporte.val target.data("transporte")
 
   onRemove: =>
     @resetBindings()

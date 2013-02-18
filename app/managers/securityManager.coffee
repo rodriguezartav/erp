@@ -7,7 +7,7 @@ PedidosLiveCycle          = require("apps/pedidos/pedidosLiveCycle")
 EntregasLiveCycle          = require("apps/pedidos/entregasLiveCycle")
 
 NotasLivecycle = require("apps/cuentasPorCobrar/notasLivecycle")
-
+DocumentoLivecycle = require("apps/cuentasPorCobrar/documentoLivecycle")
 
 #Compras = require("apps/auxiliares/compras")
 
@@ -61,7 +61,7 @@ class SecurityManager
 
   constructor: ->
     @profiles = {}
-    apps = [   EntregasLiveCycle , MovimientoLivecycle  , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,PagosAnular  , AjustarNegociacion , VerClientes ,PagosProveedor   , PedidosLiveCycle ,DocumentosAnular ]
+    apps = [ DocumentoLivecycle ,  EntregasLiveCycle , MovimientoLivecycle  , DepositosLivecycle ,  ReciboLivecycle , NotasLivecycle , CuentasLiveCycle , VerProductos , VerCierreMensual, EstadoCuenta ,  VerCierreDiario , DoCierreDiario ,  VerRegistrosResumen , VerRegistros, ListasPrecio  , TomasInventario  ,PagosAnular  , AjustarNegociacion , VerClientes ,PagosProveedor   , PedidosLiveCycle ,DocumentosAnular ]
     @profiles["Platform System Admin"] = apps
     @profiles["IT"] = apps
 
@@ -72,7 +72,7 @@ class SecurityManager
 
     @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle , EstadoCuenta , PedidosLiveCycle ,ReciboLivecycle , DepositosLivecycle , FacturasProveedor , PagosProveedor  , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
     @profiles["Ejecutivo Credito"] = [  NotasLivecycle  ,  CuentasLiveCycle , ReciboLivecycle ,FacturasProveedor , EstadoCuenta , PagosAnular , DocumentosAnular ,PedidosLiveCycle ,VerRegistrosResumen , VerRegistros , VerClientes ]
-    @profiles["Ejecutivo de Logistica"] = [ MovimientoLivecycle , ListasPrecio , TomasInventario  , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes , VerProductos ]
+    @profiles["Ejecutivo de Logistica"] = [ EntregasLiveCycle , MovimientoLivecycle , ListasPrecio , TomasInventario  , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes , VerProductos ]
     @profiles["Ejecutivo Ventas"] = [  PedidosLiveCycle  ,  ReciboLivecycle , VerRegistrosResumen , VerRegistros  , VerClientes ]
     @profiles["Coordinador"] = [ PedidosLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes ]
     @profiles["Vendedor"] = [ PedidosLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes ]

@@ -1,5 +1,8 @@
 <div class="view hide_on_print">
 
+  <div class="alert alert-error lblAlert">Hay Pedido Preparados de Abonos Agro, El Lagar, </div>
+  
+
   <div class="row-fluid widgetHeader">
   
     <div class="span6">
@@ -54,6 +57,10 @@
 
   <br/>
 
+  
+  
+
+
   <div class="row-fluid">
   
 
@@ -74,8 +81,9 @@
     </div>
 
   </div>
+</div>
 
-<div class="print show_print1 invoice">
+<div class="print show_print invoice">
   
 </div>
 

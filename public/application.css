@@ -963,13 +963,13 @@ footer a{margin-top:15px;color:#049cdb;}footer a i{vertical-align:middle;font-si
 .invoice .red{color:#EF4034;}
 .invoice .blue{color:#3D5C95;}
 .invoice .grey{color:#939597;}
-.invoice .invoiceHeader{margin-bottom:50px;}.invoice .invoiceHeader .logo{width:50%;display:inline-block;vertical-align:top;}.invoice .invoiceHeader .logo img{vertical-align:top;width:209px;}
-.invoice .invoiceHeader .logoInfo{width:151px;font-size:10px;line-height:10px;position:absolute;left:245px;top:19px;display:inline-block;vertical-align:top;}.invoice .invoiceHeader .logoInfo span{display:block;font-weight:200;}.invoice .invoiceHeader .logoInfo span strong{font-weight:400;}
-.invoice .invoiceHeader .factura{vertical-align:top;display:inline-block;width:49%;text-align:right;}.invoice .invoiceHeader .factura span{display:block;}
+.invoice .invoiceHeader{margin-bottom:50px;}.invoice .invoiceHeader .logo{display:inline-block;vertical-align:top;}.invoice .invoiceHeader .logo img{vertical-align:top;width:209px;}
+.invoice .invoiceHeader .logoInfo{font-size:10px;line-height:10px;position:relative;left:45px;top:13px;display:inline-block;vertical-align:top;}.invoice .invoiceHeader .logoInfo span{display:block;font-weight:200;}.invoice .invoiceHeader .logoInfo span strong{font-weight:400;}
+.invoice .invoiceHeader .factura{vertical-align:top;display:inline-block;float:right;text-align:right;}.invoice .invoiceHeader .factura span{display:block;}
 .invoice .invoiceHeader .factura .fecha{font-size:16px;}
 .invoice .invoiceHeader .factura .facturaLabel{font-size:39px;line-height:36px;font-weight:800;}
 .invoice .invoiceHeader .factura .number{text-transform:uppercase;font-size:19px;font-weight:400;}
-.invoice .cliente{width:76%;display:inline-block;}.invoice .cliente span{display:block;line-height:13px;font-size:14px;}
+.invoice .cliente{width:73%;display:inline-block;}.invoice .cliente span{display:block;line-height:13px;font-size:14px;}
 .invoice .cliente img{display:inline-block;vertical-align:top;position:relative;top:-2px;}
 .invoice .cliente .block{vertical-align:top;display:inline-block;width:90%;height:63px;overflow-y:hidden;}.invoice .cliente .block .name{font-size:20px;line-height:20px;text-transform:capitalize;font-weight:400;}
 .invoice .cliente .block .address{font-size:13px;font-weight:200;line-height:15px;height:13px;overflow:hidden;}
@@ -1039,6 +1039,7 @@ td.center{text-align:center;}
 @media (max-width:2100px){body{padding-top:75px;}}@media (max-width:940px){.appCanvas{padding-top:40px;} .toolbar{width:100%;height:45px;position:absolute;border-radius:4px;border-color:#d5d5d5;border-width:0 0 1px;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;background-color:#dfdfdf;-webkit-box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 0 #ffffff,0 1px 5px rgba(0, 0, 0, 0.1);z-index:900;} .toolbar .input_wrapper{margin-top:2px;padding-left:10px;width:95%;}}.marginLess{margin:0px;}
 .withMarginLeft{margin-left:10px;}
 .withMarginBottom{margin-bottom:10px !important;}
+.withMarginTop{margin-bottom:5px !important;}
 .withMargin{margin:7px;}
 .display_inlineBlock{display:inline-block !important;}
 .inlineBlock{display:inline-block !important;}
@@ -1053,6 +1054,7 @@ td.center{text-align:center;}
 .alignLeft{text-align:left;}
 .relative{position:relative;}
 .pull-right{float:right !important;}
+.blueRodco{color:#3d5c95;}
 body .container{max-width:980px;}
 *{-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
 @media (max-width:979px){header .navbar-fixed-top{margin-bottom:10px;} header .productIcon{display:none;} .productosToolbar{position:static;max-height:390px;} .appCanvas{margin-top:0px;}}

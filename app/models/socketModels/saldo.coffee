@@ -31,6 +31,15 @@ class Saldo extends Spine.Model
     date = new Date(date)
     plazo = date.days_from_now(date)
 
+  @groupBy: (list , value , sum) ->
+    map = {}
+    for item in list
+      itemValue = item[value]
+      mapped = map[itemValue] or {items: [] , sum: 0}
+      mapped.items.push item
+      mapped.sum += item[sum]
+      map[itemValue] = mapped
+
   @overDraft: (cliente) ->
     saldos = Saldo.select (item) ->
       overd = false

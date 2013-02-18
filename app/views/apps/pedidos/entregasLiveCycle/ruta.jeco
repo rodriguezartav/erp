@@ -1,24 +1,25 @@
-<% Documento = require("models/documento") %>
-
-<% fecha = new Date(Date.parse(@Fecha)).toArray() %>
+<% fecha = new Date(Date.parse("#{@Fecha} 00:00")).toArray() %>
 <li class="span3 ruta" data-id="<%= @id %>">
 
     <h4 class="inlineblock">
-      <i data-id="<%= @id %>" class="icon-remove btn_remove inlineblock " style="font-size: 11px;"></i>
+      <i data-id="<%= @id %>" class="icon-remove btn_remove_ruta inlineblock " style="font-size: 11px;"></i>
       <%= "#{fecha[1]}-#{fecha[0]}"  %> 
+      
+      <i data-id="<%= @id %>" class="icon-print btn_print_ruta inlineblock pull-right" style="font-size: 11px;"></i>
     </h4>
 
   <h5><%= @Camion %> - <%= @Chofer %></h5>
 
-
-  <% console.log @  %>
-  <ul class="documentoList unstyled">
+  <ul class="documentoList unstyled mobileList">
     <% for docId in @Documentos: %>
-      <li>
-        <% doc = Documento.find docId  %>
-        <%= doc.Total %>
-      </li>
+      <%- require("views/apps/pedidos/entregasLiveCycle/rutaItem")(ruta: @id , documentoId: docId) %>
     <% end %>
+    
+    <li>
+      
+      <a data-id="<%= @id %>" class="btn-success btn btn-large btn_completar_ruta">Completar</a>
+      
+    </li>
   </ul
 
 </li>

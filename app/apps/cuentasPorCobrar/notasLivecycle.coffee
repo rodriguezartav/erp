@@ -8,7 +8,7 @@ class NotasLivecycle extends Spine.Controller
   className: "row-fluid"
 
   @departamento = "Credito y Cobro"
-  @label = "Notas y Documentos"
+  @label = "Notas"
   @icon = "icon-copy"
 
   elements:

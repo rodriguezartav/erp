@@ -1,0 +1,64 @@
+<% Documento = require("models/documento") %>
+<% Cliente = require("models/cliente") %>
+
+<div class="invoice">
+  <div class="original">
+    <div class="invoiceHeader">
+      <div class="logo">
+        <img class="hide_on_copy" src="images/invoice/images/logo.jpg"/>
+        <img class="show_on_copy" src="images/invoice/images/logo-copy.jpg"/>
+      </div>
+
+      <div class="logoInfo">
+        <span><strong>RODCO S.A.</strong></span>
+        <span><strong>Céd:</strong> 3-101-032175-34</span>
+        <span><strong>Tel:</strong> 22 40 99 66</span>
+        <span><strong>Apdo:</strong>488-2120 Calle Blancos</span>
+        <span>San Jose Costa Rica</span>
+        <span><strong>www.rodcocr.com</strong></span>
+      </div>  
+    
+      <div class="factura">
+        <span class="number">Ruta <%= @Camion %></span>
+        <span class="facturaLabel"><%= @Fecha  %></span>
+        <span class="fecha">Conducido por <%= @Chofer %></span>
+      </div>
+    
+    </div>
+
+  <table style="width: 100%" class=table table-bordered>
+
+    <tr>
+      <td>#</td>
+      <td style="width: 25%">Cliente</td>
+      <td  style="width: 10%">Transporte</td>
+      <td  style="width: 13%">Empaque</td>
+      <td  style="width: 25%">Nombre</td>
+      <td>Firma</td>
+    </tr>
+
+    <% docs = []  %>
+
+    <% for documentoId in @Documentos:  %>
+      <% doc = Documento.exists documentoId  %>
+      <% cliente = Cliente.exists doc.Cliente %>
+      <% docs.push doc: doc , cliente: cliente  %>
+    <% end  %>
+
+    <% docs = docs.sort (a,b) -> return a.cliente.CodigoExterno - b.cliente.CodigoExterno %>
+
+    <% for item in docs:  %>
+      <tr>
+        <td><%= item.doc.Consecutivo %></td>
+        <td><%= item.cliente.Name?.capitalize() %></td>
+        <td><%= item.doc.Transporte %></td>
+        <td><%= item.doc.EntregadoEmpaque %></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+    <% end %>
+
+  </table>
+</div>
+</div>

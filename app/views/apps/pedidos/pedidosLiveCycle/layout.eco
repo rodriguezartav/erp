@@ -21,6 +21,10 @@
           <i class="icon-create icon-white"></i>
         </a>
 
+         <a class="btn btn_print_blank">Manual
+            <i class="icon-print icon-white"></i>
+          </a>
+        
       </div>
     </div>
   

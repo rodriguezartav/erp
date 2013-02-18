@@ -1,0 +1,35 @@
+<% Documento = require("models/documento") %>
+<% Cliente = require("models/cliente") %>
+<% doc = Documento.exists @documentoId  %>
+<% cliente = Cliente.exists doc.Cliente %>
+
+<li style="position: relative">
+  
+  <h5><%= cliente.Name?.capitalize() %></h5>
+  
+  <i style="position: absolute; top: 6px; right: 0px; font-size: 11px;color: #999;" data-ruta=<%= @ruta %> data-id="<%= doc.id %>" class="icon-remove btn_remove_documento inlineblock pull-right" style="font-size: 11px;"></i>
+  
+  <div>
+  
+    <% if doc.EntregadoEmpaque == null or doc.EntregadoEmpaque.length == 0 : %>
+        N&#176;:<%= doc.Consecutivo %> 
+      
+        <input class="span8 inlineBlock txtEntregadoDetail" value="<%= doc.EntregadoEmpaque %>" data-type="EntregadoEmpaque"  data-id="<%= doc.id %>" placeholder="Empaque" />
+    <% else if doc.Transporte == "Rodco":  %>
+      
+      <h6>N&#176;:<%= doc.Consecutivo %>  : <%= doc.EntregadoEmpaque %></h6>
+    
+        <input class="span9 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoGuia %>"  data-type="EntregadoValor"  data-id="<%= doc.id %>"  placeholder="Recibido Por" />
+
+    <% else:  %>
+      
+      <h6>N&#176;:<%= doc.Consecutivo %>  : <%= doc.EntregadoEmpaque %></h6>
+    
+        <input class="span6 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoGuia %>"  data-type="EntregadoGuia"  data-id="<%= doc.id %>"  placeholder="Guia" />
+        <input class="span6 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoValor %>"  data-type="EntregadoValor"  data-id="<%= doc.id %>"  placeholder="Valor" />
+    <% end %>
+
+
+  </div>
+  
+</li>

@@ -150,7 +150,7 @@ class Singleton extends Base
        id: @record.id
        objtype: type
 
-  custom: (method, data, options) ->
+  custom: (method, data, options={}) ->
     @queue =>
       request = @ajax(
         type: method
@@ -165,7 +165,7 @@ class Singleton extends Base
       request.success (records) =>
         options.afterSuccess?()
 
-  reload: (params, options) ->
+  reload: (params, options={}) ->
     @queue =>
       request = @ajax(
         params,
@@ -180,7 +180,7 @@ class Singleton extends Base
       request.success (records) =>
         options.afterSuccess?()
 
-  create: (params, options) ->
+  create: (params, options={}) ->
     @queue =>
       request = @ajax(
         params,
@@ -196,7 +196,7 @@ class Singleton extends Base
       request.success (records) =>
         options.afterSuccess?()
 
-  update: (params, options) ->
+  update: (params, options={}) ->
     @queue =>
       request = @ajax(
         params,
@@ -213,7 +213,7 @@ class Singleton extends Base
        options.afterSuccess?(records)
     
 
-  destroy: (params, options) ->
+  destroy: (params, options={}) ->
     @queue =>
       request = @ajax(
         params,

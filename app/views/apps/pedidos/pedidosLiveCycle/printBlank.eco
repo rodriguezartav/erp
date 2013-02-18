@@ -1,0 +1,131 @@
+
+<div class="copy">
+  <div class="invoiceHeader">
+    <div class="logo">
+      <img class="hide_on_copy" src="images/invoice/images/logo.jpg"/>
+      <img class="show_on_copy"  src="images/invoice/images/logo-copy.jpg"/>
+    </div>
+    
+    <div class="logoInfo">
+      <span><strong>RODCO S.A.</strong></span>
+      <span><strong>Céd:</strong> 3-101-032175-34</span>
+      <span><strong>Tel:</strong> 22 40 99 66</span>
+      <span><strong>Apdo:</strong>488-2120 Calle Blancos</span>
+      <span>San Jose Costa Rica</span>
+      <span><strong>www.rodcocr.com</strong></span>
+    </div>  
+    
+    <div class="factura">
+      <span class="number" style="margin-right: 100px;">N&#176;: R-</span>
+      <span class="facturaLabel">FACTURA</span>
+      <span class="fecha show_on_copy">COPIA</span>
+      <span class="fecha"> &nbsp;</span>
+    </div>
+  </div>
+  
+<div class="cliente">
+  <img class="hide_on_copy" src="images/invoice/images/icon_user.gif"/>
+  <div class="block">
+    <span class="name">Cliente: </span>
+    <span class="address">Direccion:</span>
+    <span class="order">Orden: </span>
+    <span class="tel">Telefono: </span>
+  </div>
+</div>
+  
+  
+<div class="credito">
+  <div class="calendar hide_on_copy">
+    <img src="images/invoice/images/icon-calendar.png"/>
+    <span class="mes">&nbsp;</span>
+    <span class="dia">&nbsp;</span>
+  </div>
+    <span class="venceLabel">Vencimiento <span class="show_on_copy">&nbsp;</span></span>
+
+  
+  <span class="monto">&#162; </span>  
+</div>
+
+
+<div class="productosPlaceHolder">
+  <table class="productos">
+    <tr>
+      <th class="codigo">Codigo</th>
+      <th  class="cantidad">Cantidad</th>
+      <th  class="descripcion">Descripcion</th>
+
+      <th  class="precio">Precio</th>
+      <th  class="descuento">%</th>
+      <th class="total">Total</th>
+    </tr>
+
+
+  </table>
+</div>
+
+<div class="transporte">
+  
+  <img class="hide_on_copy" src="images/invoice/images/icon-camion.jpg"/>
+  <p class="transportadoPor">Entregado por </p>
+  <p class="observaciones"></p>  
+</div>
+
+<div class="totales">
+    <p>Sub-Total<span class="number"></span></p>
+    <p>Descuento<span class="number"></span></p>
+    <p>Impuesto<span class="number"></span></p>
+    <p class="total" style="border: 1px solid #333; color: #000 !important; background: none;background-color: #fff !important;">Total &#162;<span class="number"></span></p>
+  </table>
+  <p class="gracias"?¡Muchas Gracias!</p>
+</div>
+
+
+
+<div class="invoiceFooter">
+
+  <p class="legend">Renuncio a mi domicilio y trámite de juicio, doy por aceptadas la firma Original en poder del Cliente para trámite de pago y las condiciones del Código de Comercio en su Art. 460</p>
+
+  <div class="firma">
+    <span class="nombre">FIRMA DEL COMPRADOR:</span>
+    <span class="cedula">CEDULA</span>
+    <p class="auth">Autorizado mediante el oficio No. 04-020-97 de la D.G. De T.D.S.J.</p>
+  </div>
+
+  <div>
+    <p><span class="title">Banco Nacional</span></p>
+    <p><span class="title">Cuenta:</span>100011370000030</p>
+    <p><span class="title">CC 151 137 100 100 000 35</span></p>
+  </div>
+  
+  <div>
+    <p><span class="title">Banco Costa Rica </span></p>
+    <p><span class="title">Cuenta:</span> 001-128-535-1</p>
+    <p><span class="title">CC </span>152 010 010 128 535 11</p>
+  </div>
+    
+  <div>
+    <p><span class="title">BAC San Jose</span></p>
+    <p><span class="title">N Cuenta</span> 910 567 213</p>
+    <p><span class="title">CC 102 000 091 056 721 35</span></p>
+  </div>
+    
+  <div  class="last">
+    
+    <p>  <span class="number consecutivo"><span style="" class="detalles"></span> <span style="margin-right: 100px;"> N&#176;: R- </p>
+
+    <div class="reciclado">
+      <span>impreso en papel reciclado</span>
+      <div class="imageMask">
+        <img class="" src="images/invoice/images/papelReciclado.jpg"/>
+      </div>
+    </div>
+
+    
+    
+  </div>
+  
+  
+  
+</div>
+  
+</div>

@@ -5,5 +5,8 @@ class Ruta extends Spine.Model
  
   @extend Spine.Model.TransitoryModel
 
+  toString: =>
+    return "#{@Fecha} #{@Camion} #{@Chofer}"
+
 module.exports = Ruta
 

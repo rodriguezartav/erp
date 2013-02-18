@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Movimiento extends Spine.Model
   @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "ProductoCosto" , 
-   "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Observacion" , "Cliente" ,
+   "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Observacion" , "Cliente" , "Documento",
    "CodigoExterno" , "Descuento_Unitario" , "Impuesto_Unitario" ,"Plazo", "Proveedor" , "ProductoCantidadPendiente"
   
   @extend Spine.Model.SalesforceModel
@@ -19,6 +19,10 @@ class Movimiento extends Spine.Model
     filter = @queryFilterAddCondition(" Tipo__c IN (#{options.tipos}) "               , filter) if options.tipos
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "        , filter) if options.cliente
     filter = @queryFilterAddCondition(" IsAplicado__c = false  and Tipo__c IN ('EN','SA','CO') and Fecha__c   = LAST_N_DAYS:5 "        , filter) if options.livecycle
+    filter = @queryFilterAddCondition(" Tipo__c= 'FA' and Documento__r.Entregado__c  = false and Documento__r.Transporte__c != 'Cliente Retira'"  ,  filter)  if options.sinEntregar
+    filter = @queryFilterAddCondition(" Documento__r.InvoiceVersion__c       = 2"                ,  filter)  if options.v2
+
+
     filter
  
   @create_from_producto: (producto, cantidad = 1 ) ->

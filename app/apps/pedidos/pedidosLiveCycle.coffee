@@ -13,7 +13,7 @@ PedidoItem = require("models/transitory/pedidoItem")
 class PedidosLiveCycle extends Spine.Controller
   className: "row-fluid"
 
-  @departamento = "Credito y Cobro"
+  @departamento = "Pedidos"
   @label = "Pedidos"
   @icon = "icon-shopping-cart"
 
@@ -43,6 +43,7 @@ class PedidosLiveCycle extends Spine.Controller
     "click .btn_send" : "onBtnSend"
     "click .btn_borrar" : "onBtnBorrar"
     "click .btn_print" : "onPrint"
+    "click .btn_print_blank" : "onPrintBlank"
 
   constructor: ->
     super
@@ -196,6 +197,13 @@ class PedidosLiveCycle extends Spine.Controller
     target = target.parent() until target.hasClass "btn"
     @showInvoice(target.data "documento")
     return false
+
+  onPrintBlank: (e) =>
+    @print.html require("views/apps/pedidos/pedidosLiveCycle/printBlank")()
+    first = @print.find ".copy"
+    first.removeClass "copy"
+    first.addClass "original"
+    window.print()
 
   showInvoice: (documentoId) =>
     data =
