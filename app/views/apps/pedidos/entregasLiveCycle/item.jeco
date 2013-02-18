@@ -1,15 +1,15 @@
 <% Cliente = require("models/cliente")  %>
-<% cliente = Cliente.find @Cliente  %>
+<% cliente = Cliente.exists @Cliente  %>
 
 
 <li class="documentoSinEntregar" data-id="<%= @id %>" draggable="true">
   
   <i class="icon-truck btn_entregado"  data-id="<%= @id %>" ></i>
   
-  N&#176;:<%= @Consecutivo %> <%= cliente.Name.capitalize() %> <span class="badge badge-warning"><%= @FechaEntregaPropuesta.toMMMDate() %></span>
+  N&#176;:<%= @Consecutivo %> <%= cliente?.Name.capitalize() %> <span class="badge badge-warning"><%= @FechaEntregaPropuesta.toMMMDate() %></span>
 
 
-  <span class="badge"><%=cliente.Ruta %></span>
+  <span class="badge"><%=cliente?.Ruta %></span>
   <span class="badge badge-info"><%= @Transporte %></span>
 
 </li>
