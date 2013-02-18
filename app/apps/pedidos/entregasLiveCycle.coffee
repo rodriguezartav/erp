@@ -64,7 +64,10 @@ class EntregasLiveCycle extends Spine.Controller
 
   renderPedidosAlert: =>
     @lblAlert.empty()
-    pedidos = PedidoPreparado.all()
+    pedidos = PedidoPreparado.select (item) ->
+      return false if item.Estado == "Facturado" or item.Estado == "Archivado"
+      return true
+      
     clientes = {}
     for pedido in pedidos
       if clientes[pedido.Cliente]

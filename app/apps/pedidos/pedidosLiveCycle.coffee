@@ -222,7 +222,7 @@ class PedidosLiveCycle extends Spine.Controller
     first.removeClass "copy"
     first.addClass "original"
     @print.append require("views/apps/pedidos/pedidosLiveCycle/print")(response)
-    @print.append require("views/apps/pedidos/pedidosLiveCycle/print")(response)
+    @print.append require("views/apps/pedidos/pedidosLiveCycle/print")(response) if response.documento.Plazo__c > 0
     window.print()
 
   notify: =>
