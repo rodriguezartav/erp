@@ -992,9 +992,9 @@ footer a{margin-top:15px;color:#049cdb;}footer a i{vertical-align:middle;font-si
 .invoice .productos .precio{width:10%;}
 .invoice .productos .descuento{width:6%;text-align:center;}
 .invoice .productos .total{width:10%;text-align:right;}
-.invoice .transporte{width:72%;margin-top:7px;margin-right:10px;border-top:#000 1px solid;padding-top:4px;display:inline-block;vertical-align:top;}.invoice .transporte img{float:left;margin-right:8px;display:inline-block;width:68px;}
-.invoice .transporte .transportadoPor{font-size:15px ;padding-top:4px;}
-.invoice .transporte .observaciones{font-size:15px;}
+.invoice .transporte{width:72%;height:65px;margin-top:7px;margin-right:10px;border-top:#000 1px solid;padding-top:4px;display:inline-block;vertical-align:top;}.invoice .transporte img{float:left;margin-right:8px;display:inline-block;width:68px;}
+.invoice .transporte .transportadoPor{font-size:15px ;padding-top:4px;margin:0px;}
+.invoice .transporte .observaciones{font-size:15px;margin:0px;}
 .invoice .totales{width:26%;float:right;display:inline-block;vertical-align:top;}.invoice .totales p{margin-bottom:1px;}.invoice .totales p .number{display:inline-block;text-align:right;float:right;padding:0px 5px;}
 .invoice .totales p.gracias{font-size:17px;text-transform:uppercase;margin-top:4px;text-align:center;}
 .invoice .totales p.total{padding:4px 0px;font-size:15px;font-weight:400px;}
