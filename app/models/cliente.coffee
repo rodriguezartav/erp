@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class Cliente extends Spine.Model
   @configure 'Cliente', 'Name', 'CodigoExterno' , "Activo" , "Saldo" , "DiasCredito" , "CreditoAsignado","Rating_Crediticio",
-  "Negociacion" , "LastModifiedDate" , "Ruta" , "Transporte" , "Direccion" , "Telefono"
+  "Negociacion" , "LastModifiedDate" , "Ruta" , "Transporte" , "Direccion" , "Telefono" 
 
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax

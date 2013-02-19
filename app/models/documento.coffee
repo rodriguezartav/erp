@@ -5,7 +5,7 @@ class Documento extends Spine.Model
   "SubTotal" , "Descuento" , "Impuesto", "Fuente" , "Cliente" , "Plazo", "PlazoActual" , "FechaFacturacion","FechaVencimiento" ,
    "Tipo_de_Documento" ,  "IsContado" ,"Estado" , "Autorizado" , "MontoEnRecibos" , "FechaEntrega" , "OrdenEntrega","Entregado" ,
    "EntregadoRuta" , "EntregadoEmpaque" , "EntregadoValor" , "EntregadoGuia"  , "FechaEntregaPropuesta"
-  
+
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
 

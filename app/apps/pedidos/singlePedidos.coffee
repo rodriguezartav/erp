@@ -29,11 +29,13 @@ class SinglePedidos extends Spine.Controller
     ".lbl_PedidoTipo" : "lbl_PedidoTipo"
     ".txtTransporte" : "txtTransporte"
     ".validatable" : "inputs_to_validate"
+    ".btn_set_transporte" : "btnSetTransporte"
 
   events:
     "click .cancel" : "onRemove"
     "click .save" : "send"
     "click .btn_set_transporte" : "onSetTransporte"
+    "click .txtTransporte" : "onTxtTransporteClick"
 
   setVariables: =>
     Negociacion.destroyAll()
@@ -56,7 +58,6 @@ class SinglePedidos extends Spine.Controller
     super
     @pedidoItems = PedidoItem.itemsInPedido(@pedido) if @pedido
     referencia = Spine.session.getConsecutivoPedido()
-
     @pedido = Pedido.create( { Referencia: referencia , Tipo_de_Documento: "FA" , IsContado: @isContado , Especial: false }) if !@pedido
     @html require("views/apps/pedidos/pedido/layout")(Pedido)
     @el.attr "data-referencia" , @pedido.Referencia
@@ -77,7 +78,9 @@ class SinglePedidos extends Spine.Controller
     @pedido.Cliente = cliente.id
     if cliente.DiasCredito == 0
       @pedido.IsContado = true
-      @txtTransporte.val "Cliente Retira"
+      @btnSetTransporte.removeClass "active"
+      @el.find(".btn_set_transporte[data-tipo=Cliente]").addClass "active"
+      @txtTransporte.val "Cliente"
       @lbl_PedidoTipo.html "Contado"
     @txtTransporte.val cliente.Transporte if cliente.Transporte
     @pedido.save()
@@ -124,7 +127,6 @@ class SinglePedidos extends Spine.Controller
     @pedido.Nombre = data.nombre if data.nombre
     @pedido.Identificacion = data.cedula if data.cedula
     @pedido.save()
-    @txtTransporte.val "Cliente Retira" 
     @lbl_PedidoTipo.html "Contado"
 
   onTipoPedidoClick: (e) =>
@@ -136,7 +138,7 @@ class SinglePedidos extends Spine.Controller
 
   beforeSend: (object) ->
     nombre = @el.find('.nombre').val()
-    object.Transporte = @transporte or object.Transporte
+    object.Transporte =  @el.find(".btn_set_transporte.active").data("tipo") + object.Transporte
     for pi in PedidoItem.itemsInPedido(object)
       pi.Cliente = object.Cliente if object.Cliente
       pi.Referencia = object.Referencia
@@ -173,7 +175,12 @@ class SinglePedidos extends Spine.Controller
 
   onSetTransporte: (e) =>
     target = $(e.target)
-    @txtTransporte.val target.data("transporte")
+    @btnSetTransporte.removeClass "active"
+    target.addClass "active"
+    @txtTransporte.val target.data "tipo"
+
+  onTxtTransporteClick: =>
+    @txtTransporte.select()
 
   onRemove: =>
     @resetBindings()
