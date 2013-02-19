@@ -138,7 +138,6 @@ class SinglePedidos extends Spine.Controller
 
   beforeSend: (object) ->
     nombre = @el.find('.nombre').val()
-    object.Transporte =  @el.find(".btn_set_transporte.active").data("tipo") + object.Transporte
     for pi in PedidoItem.itemsInPedido(object)
       pi.Cliente = object.Cliente if object.Cliente
       pi.Referencia = object.Referencia
