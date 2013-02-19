@@ -105,7 +105,7 @@ class EntregasLiveCycle extends Spine.Controller
     if doc
       doc.EntregadoRuta = ruta.toString()
       doc.save()
-      doc.ajax().update()
+      @onUpdateDocumento(doc)
             
       ruta.Documentos.push doc.id if ruta.Documentos.indexOf(doc.id) == -1
       ruta.save()
@@ -136,7 +136,8 @@ class EntregasLiveCycle extends Spine.Controller
     doc = Documento.find id
     doc[type] = target.val()
     doc.save()
-    doc.ajax().update()
+    @onUpdateDocumento(doc)
+
     @onRutaChange()
     return false
 
@@ -156,7 +157,8 @@ class EntregasLiveCycle extends Spine.Controller
     doc.EntregadoGuia = ""
     doc.EntregadoEmpaque = ""
     doc.save()
-    doc.ajax().update()
+    @onUpdateDocumento(doc)
+
     ruta = target.data "ruta"
     ruta = Ruta.find ruta
     index = ruta.Documentos.indexOf id
@@ -169,7 +171,6 @@ class EntregasLiveCycle extends Spine.Controller
     id = target.data "id"
     ruta = Ruta.find id
     @print.html require("views/apps/pedidos/entregasLiveCycle/printRuta")(ruta)
-    console.log Movimiento.all()
     
     for docId in ruta.Documentos
       doc = Documento.find docId
@@ -189,7 +190,22 @@ class EntregasLiveCycle extends Spine.Controller
     doc.FechaEntrega = new Date()
     doc.Entregado = true
     doc.save()
-    doc.ajax().update()
+    @onUpdateDocumento(doc)
+
+  onUpdateDocumento: (documento) =>
+     documentos = Documento.salesforceFormat( [documento]  , true) 
+     
+     data =
+        class: Documento
+        restRoute: "Documento"
+        restMethod: "POST"
+        restData: documentos: documentos
+
+     Documento.rest( data , afterError: @onUpdateDocumentoError ) 
+  
+  onUpdateDocumentoError: (error_obj) =>
+    Spine.trigger "show_lightbox" , "showError" , error_obj 
+
 
   onCompletarRuta: (e) =>
     target = $(e.target)
