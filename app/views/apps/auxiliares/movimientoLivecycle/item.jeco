@@ -27,7 +27,7 @@
             
             <% if movimiento.Tipo == 'CO' : %>
               <span class="span4">
-                <input style="display:inline-block" data-id="<%= movimiento.id %>"  class="span7  costoInput" value="<%= producto.CostoAnterior || 0 %>"    />
+                <input style="display:inline-block" data-id="<%= movimiento.id %>"  class="span6  costoInput" value="<%= producto.CostoAnterior || 0 %>"    />
                 <h6  class="pull-right"><%= if producto.Costo then producto.Costo.toMoney() else 0.00 %><h6>            
               </span>
             <% end %>
