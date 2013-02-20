@@ -7,7 +7,7 @@
   
   <h5><%= cliente.Name?.capitalize() %></h5>
   
-  <i style="position: absolute; top: 6px; right: 0px; font-size: 11px;color: #999;" data-ruta=<%= @ruta %> data-id="<%= doc.id %>" class="icon-remove btn_remove_documento inlineblock pull-right" style="font-size: 11px;"></i>
+  <i style="position: absolute; top: 6px; right: 0px; font-size: 11px;color: #999;" data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-remove btn_remove_documento inlineblock pull-right" style="font-size: 11px;"></i>
   
   <div>
   

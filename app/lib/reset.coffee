@@ -2,5 +2,5 @@ Spine = require('spine')
 
 Spine.reset= =>
   for index , item of localStorage
-    localStorage.removeItem(index)
+    localStorage.removeItem(index);
     location.reload();

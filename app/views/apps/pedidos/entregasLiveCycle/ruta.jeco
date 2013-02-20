@@ -10,7 +10,7 @@
 
   <h5><%= @Camion %> - <%= @Chofer %></h5>
 
-  <ul class="documentoList unstyled mobileList">
+  <ul class="documentoList unstyled whiteList">
     <% for docId in @Documentos: %>
       <%- require("views/apps/pedidos/entregasLiveCycle/rutaItem")(ruta: @id , documentoId: docId) %>
     <% end %>

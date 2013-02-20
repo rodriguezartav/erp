@@ -1,15 +1,59 @@
 <% Cliente = require("models/cliente")  %>
 <% cliente = Cliente.exists @Cliente  %>
+<% Movimiento = require("models/movimiento") %>
+<% Producto = require("models/producto") %>
+<% Ruta = require("models/transitory/ruta") %>
 
 
-<li class="documentoSinEntregar" data-id="<%= @id %>" draggable="true">
+<li style="" data-filter="<%= "#{@generalTransporte()},#{@FechaEntregaPropuesta.toMMMDate()},#{cliente?.Ruta or 'N/D'}" %>" class="documentoSinEntregar" data-id="<%= @id %>" draggable="true">
+
+  <p class="marginLess" style="line-height: 17px;">
+    <span class="badge badge-warning"><%= @FechaEntregaPropuesta.toMMMDate() %></span>
+    N&#176;:<%= @Consecutivo %> <%= cliente?.Name.capitalize() %> 
+  </p>
+
+  <div class="items inlineBlock">
+    <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+        Productos
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <% for movimiento in Movimiento.findAllByAttribute("Documento",@id) : %>
+          <%  producto = Producto.find movimiento.Producto %>
+          <li><a><%=  movimiento.ProductoCantidad %> <%= producto.Name?.capitalize() %></a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
   
-  <i class="icon-truck btn_entregado"  data-id="<%= @id %>" ></i>
+  <div class=" inlineBlock" style="">
+    <span class="badge"><%= cliente?.Ruta %></span><br/>
+    <span class="badge badge-info"><%= @Transporte %></span>
+  </div>
+
+  <div class=" inlineBlock" style="float: right">
+    <div class="btn-group">
+      <button class="btn dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="btn_entregado" data-id="<%= @id %>">
+            Entregar
+          </a>
+        </li>
+        
+        <% for ruta in Ruta.all() : %>
+          <li>
+            <a class="btn_add_to_ruta" data-ruta="<%= ruta.id %>" data-id="<%= @id %>" >
+              <%= ruta.toString() %>
+            </a>
+          </li>
+        <% end %>
+        
+      </ul>
+    </div>
   
-  N&#176;:<%= @Consecutivo %> <%= cliente?.Name.capitalize() %> <span class="badge badge-warning"><%= @FechaEntregaPropuesta.toMMMDate() %></span>
-
-
-  <span class="badge"><%=cliente?.Ruta %></span>
-  <span class="badge badge-info"><%= @Transporte %></span>
-
+  </div>
 </li>

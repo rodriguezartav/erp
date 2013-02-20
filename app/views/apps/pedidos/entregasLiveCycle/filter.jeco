@@ -1,0 +1,9 @@
+
+<% for value in @Ruta : %>
+  <li class="active "><a><%= value or "N/D"  %></a></li>
+<% end %>
+
+
+<% for value in @Transporte : %>
+  <li class="active"><a><%= value  %></a></li>
+<% end %>

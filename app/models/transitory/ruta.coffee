@@ -8,5 +8,9 @@ class Ruta extends Spine.Model
   toString: =>
     return "#{@Fecha} #{@Camion} #{@Chofer}"
 
+  @tempFromString: (string) =>
+    parts = string.split " "
+    return Fecha: parts[0] , Camion: parts[1] , Chofer: parts[2] , Documentos: []
+
 module.exports = Ruta
 

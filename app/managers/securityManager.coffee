@@ -115,7 +115,7 @@ class SecurityManager
       Producto.autoQuery         =  true
       Proveedor.autoQuery        =  true
 
-    else if Spine.session.hasPerfiles([ "Presidencia,SubGerencia"])
+    else if Spine.session.hasPerfiles([ "Presidencia", "SubGerencia" ])
       Cliente.autoQuery         = true
       Producto.autoQuery        = true
       Proveedor.autoQuery       = true
@@ -125,7 +125,7 @@ class SecurityManager
     else if Spine.session.hasPerfiles([ "Gerencia Comercial" ])
       Cliente.autoQuery         = true
       Producto.autoQuery        = true
-      Proveedor.autoQuery        = true
+      Proveedor.autoQuery       = true
 
     else if Spine.session.hasPerfiles([ "Platform System Admin" ])
       Cliente.autoQuery         = true

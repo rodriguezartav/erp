@@ -12,6 +12,13 @@ class Documento extends Spine.Model
   @avoidQueryList: [ "Fuente" ,"IsContado"]
   @avoidInsertList: ["FechaVencimiento" , "PlazoActual" , "FechaEntregaPropuesta" ]
 
+
+  generalTransporte: ->
+    if @Transporte != "Rodco" and @Transporte != "Cliente" and @Transporte != "Cliente Retira"
+      return "Transporte"
+    else
+      return @Transporte
+
   updateFromMovimientos: (movimientos)  ->
     @Total = 0
     @Descuento =0
@@ -39,11 +46,11 @@ class Documento extends Spine.Model
     filter = @queryFilterAddCondition(" AprobadoParaPagar__c  = true"                ,  filter)  if options.aprobadoParaPagar
     filter = @queryFilterAddCondition(" Autorizado__c   = #{options.autorizado }"           , filter)   if options.autorizado == false or options.autorizado == true
     filter = @queryFilterAddCondition(" enRecibo__c        = false"                ,  filter)  if options.enRecibo
-    filter = @queryFilterAddCondition(" Tipo_de_Documento__c = 'FA' and Entregado__c  = false and Transporte__c != 'Cliente Retira'"  ,  filter)  if options.sinEntregar
+    filter = @queryFilterAddCondition(" Tipo_de_Documento__c = 'FA' and Entregado__c  = false and Total__c > 0"  ,  filter)  if options.sinEntregar
     filter = @queryFilterAddCondition(" InvoiceVersion__c       = 2"                ,  filter)  if options.v2
     filter = @queryOrderAddCondition(" order by Consecutivo__c "                   , filter)  
     filter
-    
+
 
   @markedPrinted: (documento) ->
     $.ajax
