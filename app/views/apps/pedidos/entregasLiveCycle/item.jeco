@@ -5,7 +5,7 @@
 <% Ruta = require("models/transitory/ruta") %>
 
 
-<li style="" data-filter="<%= "#{@generalTransporte()},#{@FechaEntregaPropuesta.toMMMDate()},#{cliente?.Ruta or 'N/D'}" %>" class="documentoSinEntregar" data-id="<%= @id %>" draggable="true">
+<li style="" data-transporte="<%= @generalTransporte() %>" data-filter="<%= "#{@generalTransporte()},#{@FechaEntregaPropuesta.toMMMDate()},#{cliente?.RutaTransporte or 'N/D'}" %>" class="documentoSinEntregar" data-id="<%= @id %>">
 
   <p class="marginLess" style="line-height: 17px;">
     <span class="badge badge-warning"><%= @FechaEntregaPropuesta.toMMMDate() %></span>
@@ -28,7 +28,7 @@
   </div>
   
   <div class=" inlineBlock" style="">
-    <span class="badge"><%= cliente?.Ruta %></span><br/>
+    <span class="badge"><%= cliente?.RutaTransporte %></span><br/>
     <span class="badge badge-info"><%= @Transporte %></span>
   </div>
 

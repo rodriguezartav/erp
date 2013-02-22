@@ -11,7 +11,7 @@
   
   <div>
   
-    <% if doc.EntregadoEmpaque == null or doc.EntregadoEmpaque.length == 0 : %>
+    <% if !doc.EntregadoEmpaque or doc.EntregadoEmpaque.length == 0 : %>
         N&#176;:<%= doc.Consecutivo %> 
       
         <input class="span8 inlineBlock txtEntregadoDetail" value="<%= doc.EntregadoEmpaque %>" data-type="EntregadoEmpaque"  data-id="<%= doc.id %>" placeholder="Empaque" />

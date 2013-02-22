@@ -1,9 +1,13 @@
 
 <% for value in @Ruta : %>
-  <li class="active "><a><%= value or "N/D"  %></a></li>
+  <% if value :  %>
+    <li class="active "><a class="btn_filter" data-filter="<%= value %>"></a></li>
+  <% end %>
 <% end %>
 
 
 <% for value in @Transporte : %>
-  <li class="active"><a><%= value  %></a></li>
+  <% if value :  %>
+    <li class="active "><a class="orange btn_filter" data-filter="<%= value %>"><%= value  %></a></li>
+  <% end %>
 <% end %>

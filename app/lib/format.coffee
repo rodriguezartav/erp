@@ -4,11 +4,34 @@ Array::unique = ->
   output[@[key]] = @[key] for key in [0...@length]
   value for key, value of output
 
+Array.prototype.addUniqueItem = (item)  ->
+  index = this.indexOf item
+  return false if index != -1
+  this.push item
+  return true
+
+Array.prototype.addUniqueItems = (items)  ->
+  for item in items
+    index = this.indexOf item
+    this.push item if index == -1
+  return true;
+
+Array.prototype.removeItem = (item)  ->
+  index = this.indexOf item
+  return this if index == -1
+  this.splice(index,1)
+  return this
+
+Array.prototype.removeItems = (items)  ->
+  for item in items
+    index = this.indexOf item
+    this.splice(index,1) if index != -1
+  return this
+
 Array.prototype.remove = (from, to)  ->
   rest = this.slice((to || from) + 1 || @length);
   @length = from < 0 ? @length + from : from;
   return @push.apply(@, rest);
-
 
 Number.prototype.toMoney = (decimals = 2, decimal_separator = ".", thousands_separator = ",") ->
   n = this

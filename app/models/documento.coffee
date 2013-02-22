@@ -14,10 +14,14 @@ class Documento extends Spine.Model
 
 
   generalTransporte: ->
-    if @Transporte != "Rodco" and @Transporte != "Cliente" and @Transporte != "Cliente Retira"
-      return "Transporte"
+    if @Transporte.indexOf("Cliente") > -1 
+      return "Cliente"
+    else if @Transporte.indexOf("Agente") > -1 
+      return "Agente"
+    if @Transporte.indexOf("Rodco") > -1 
+      return "Rodco"
     else
-      return @Transporte
+      return "Transporte"
 
   updateFromMovimientos: (movimientos)  ->
     @Total = 0
