@@ -93,6 +93,7 @@ class SecurityManager
     if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
       Saldo.autoQuery            = true
       Cliente.autoQuery          = true
+      Producto.autoQuery          = true
       PedidoPreparado.autoQuery  = true
       
     else if Spine.session.hasPerfiles([ "Ejecutivo Ventas" ])

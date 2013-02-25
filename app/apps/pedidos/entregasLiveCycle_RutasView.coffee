@@ -145,7 +145,6 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     mov = Movimiento.findAllByAttribute("Documento" , doc.id)
     @print.html require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
     @print.find("div:last-child").css("page-break-after","avoid")
-    $('head').append('<link href="print.css" title="printLandscape" rel="stylesheet" />');
     window.print()
 
   onCompletarRuta: (e) =>

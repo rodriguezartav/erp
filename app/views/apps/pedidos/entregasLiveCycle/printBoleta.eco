@@ -8,8 +8,8 @@
 
  <% for movimiento in @movimientos: %>
     <% producto = Producto.find movimiento.Producto %>
-    <div style="border-bottom: 1px solid #333;font-size: 12px;">
-      <span class="inlineblock" style="width: 25px;font-weight: 800;"><%= movimiento.ProductoCantidad %></span> <%= producto.Name.capitalize() %>  
+    <div style="border-bottom: 1px solid #333;font-size: 13px;padding: 3px 0px;">
+      <span class="inlineblock" style="width: 35px;font-weight: 800;"><%= movimiento.ProductoCantidad %></span> <%= producto.Name.capitalize() %>  
     </div>
   <% end %>
   
