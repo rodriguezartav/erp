@@ -6,16 +6,14 @@ class Ruta extends Spine.Model
   @extend Spine.Model.TransitoryModel
 
   toString: =>
-    return "#{@Fecha} #{@Camion} #{@Chofer}"
+    return @Name
 
-  createFromAttributes: (attr) =>
+  @createFromAttributes: (attr) =>
     name = "#{attr.Fecha} #{attr.Camion} #{attr.Chofer}"
     test = Ruta.findByAttribute "Name" , name
-    if test
-      test.Name += "*"
+    name = test.Name + "*" if test
     ruta = Ruta.create Name: name , Fecha: attr.Fecha , Chofer: attr.Chofer, Camion: attr.Camion, Documentos: [] , Enviado: false
     return ruta
-
 
   @tempFromString: (string) =>
     parts = string.split " "

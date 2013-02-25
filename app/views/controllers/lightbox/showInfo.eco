@@ -1,0 +1,14 @@
+
+
+
+<div class="modal-body">
+  <h2><%= @ %></h2>
+
+</div>
+
+
+
+
+
+
+

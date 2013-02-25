@@ -1,5 +1,5 @@
 Spine = require('spine')
-Documento = require("models/documento")
+Documento = require("models/socketModels/facturaEntregada")
 Movimiento = require("models/movimiento")
 Cliente = require("models/cliente")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
@@ -13,9 +13,13 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     "click .btn_remove_ruta" : "onRutaRemove"
     "click .btn_remove_documento" : "onDocumentoRemove"
     "change .txtEntregadoDetail" : "onTxtEntregadoValorChange"
+    "click .txtEntregadoDetail"  : "onTxtEntregadoDetailClick"
     "keypress .txtEntregadoDetail" : "onTxtEntregadoEnter"
     "click .btn_print_ruta" : "onPrintRuta"
+    "click .btn_print_boleta" : "onPrintBoleta"
     "click .btn_completar_ruta"  : "onCompletarRuta"
+    "click .btn_filter_rutas" : "onBtnFilterRutas"
+    "click .btn_print_ruta_item" : "onPrintRutaItem"
  
   elements: 
     ".dropdownContainer" : "dropdownContainer"
@@ -24,6 +28,7 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     super
     @html require("views/apps/pedidos/entregasLiveCycle/layoutRutas")(@)
     Ruta.bind "create update destroy" , @render
+    Documento.bind "push_success" , @render
 
   render: =>
     rutas = Ruta.all()
@@ -36,7 +41,7 @@ class entregasLiveCycle_RutasView extends Spine.Controller
 
   createRutasFromDocumentos: =>
     documentos = Documento.select (item) ->
-      return true if item.EntregadoRuta and item.EntregadoRuta.length > 0
+      return true if item.hasEntregadoRuta()
       return false
 
     tempRutas = {}
@@ -48,6 +53,10 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     rutas = []
     rutas.push ruta for index,ruta of tempRutas
     return rutas
+
+  onTxtEntregadoDetailClick: (e) =>
+    $(e.target).select()
+    return false
 
   onTxtEntregadoEnter: (e) ->
     return false if e.keyCode == 13
@@ -75,10 +84,10 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     target = $(e.target)
     id = target.data "id"
     doc = Documento.find id
-    doc.EntregadoRuta = ""
-    doc.EntregadoValor = ""
-    doc.EntregadoGuia = ""
-    doc.EntregadoEmpaque = ""
+    doc.EntregadoRuta = " "
+    doc.EntregadoValor = " "
+    doc.EntregadoGuia = " "
+    doc.EntregadoEmpaque = " "
     doc.save()
     @entregasLiveCycle.updateDocumento(doc)
 
@@ -88,6 +97,18 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     if index > -1
       ruta.Documentos.splice index , 1
       ruta.save()
+
+  onBtnFilterRutas: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    ruta = Ruta.find id
+    documentos = []
+    rutas = []
+    for documentoId in ruta.Documentos
+      documento = Documento.find documentoId 
+      cliente = Cliente.find documento.Cliente
+      rutas.addUniqueItem cliente.RutaTransporte
+    @entregasLiveCycle.filterByRuta rutas
 
   onPrintRuta: (e) =>
     target = $(e.target)
@@ -99,6 +120,32 @@ class entregasLiveCycle_RutasView extends Spine.Controller
       doc = Documento.find docId
       mov = Movimiento.findAllByAttribute("Documento" , docId)
       @print.append require("views/apps/pedidos/entregasLiveCycle/printRosada")(documento: doc, movimientos: mov)
+    $("body").addClass "label"
+    window.print()
+
+  onPrintBoleta: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    ruta = Ruta.find id
+    @print.html ""
+
+    for docId in ruta.Documentos
+      doc = Documento.find docId
+      if !doc.hasEntregadoEmpaque()
+        mov = Movimiento.findAllByAttribute("Documento" , docId)
+        @print.append require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
+    @print.find("div:last-child").css("page-break-after","avoid")
+    $('head').append('<link href="print.css" title="printLandscape" rel="stylesheet" />');
+    window.print()
+
+  onPrintRutaItem: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    doc = Documento.find id
+    mov = Movimiento.findAllByAttribute("Documento" , doc.id)
+    @print.html require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
+    @print.find("div:last-child").css("page-break-after","avoid")
+    $('head').append('<link href="print.css" title="printLandscape" rel="stylesheet" />');
     window.print()
 
   onCompletarRuta: (e) =>
@@ -118,5 +165,10 @@ class entregasLiveCycle_RutasView extends Spine.Controller
   onCompletarRutaSuccess: =>
     @ruta.destroy();
     @entregasLiveCycle.reset()
+
+  reset: =>
+    Ruta.unbind "create update destroy" , @render
+    Documento.unbind "push_success" , @render
+    @release
 
 module.exports = entregasLiveCycle_RutasView

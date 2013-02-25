@@ -1,35 +1,87 @@
-<% Documento = require("models/documento") %>
+<% Documento = require("models/socketModels/facturaEntregada") %>
 <% Cliente = require("models/cliente") %>
 <% doc = Documento.exists @documentoId  %>
 <% cliente = Cliente.exists doc.Cliente %>
+<% Movimiento = require("models/movimiento") %>
+<% Producto = require("models/producto") %>
+
 
 <li style="position: relative">
   
-  <h5><%= cliente.Name?.capitalize() %></h5>
-  
-  <i style="position: absolute; top: 6px; right: 0px; font-size: 11px;color: #999;" data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-remove btn_remove_documento inlineblock pull-right" style="font-size: 11px;"></i>
-  
-  <div>
-  
-    <% if !doc.EntregadoEmpaque or doc.EntregadoEmpaque.length == 0 : %>
-        N&#176;:<%= doc.Consecutivo %> 
-      
-        <input class="span8 inlineBlock txtEntregadoDetail" value="<%= doc.EntregadoEmpaque %>" data-type="EntregadoEmpaque"  data-id="<%= doc.id %>" placeholder="Empaque" />
-    <% else if doc.Transporte == "Rodco":  %>
-      
-      <h6>N&#176;:<%= doc.Consecutivo %>  : <%= doc.EntregadoEmpaque %></h6>
+  <div style="width: 79%;overflow: hidden" class="inlineBlock">
     
-        <input class="span9 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoGuia %>"  data-type="EntregadoValor"  data-id="<%= doc.id %>"  placeholder="Recibido Por" />
+     <% if doc.generalTransporte() == "Cliente" or doc.generalTransporte() == "Agente": %>
+      <i data-filter="Cliente,Agente" class=" icon-user"></i>
 
-    <% else:  %>
-      
-      <h6>N&#176;:<%= doc.Consecutivo %>  : <%= doc.EntregadoEmpaque %></h6>
-    
-        <input class="span6 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoGuia %>"  data-type="EntregadoGuia"  data-id="<%= doc.id %>"  placeholder="Guia" />
-        <input class="span6 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoValor %>"  data-type="EntregadoValor"  data-id="<%= doc.id %>"  placeholder="Valor" />
-    <% end %>
+     <% else if doc.generalTransporte() == "Transporte": %>
+      <i data-filter="Transporte" class=" icon-external-link"></i>
 
+     <% else if doc.generalTransporte() == "Rodco": %>    
+      <i data-filter="Rodco" class=" icon-truck"></i>
 
+     <% end %>
+    N&#176;:<%= doc.Consecutivo %>
+    <h5 class="inlineBlock"><%= cliente.Name?.capitalize() %></h5>
   </div>
-  
+
+  <div class=" inlineBlock" style="float: right">
+     <div class="btn-group">
+       <button class=" btn dropdown-toggle" data-toggle="dropdown">
+         <span class="caret"></span>
+       </button>
+       <ul class="dropdown-menu">
+       
+       <li>
+        <a><%= cliente.Name.capitalize()  %></a>
+       </li>
+       
+       <li>
+        <a><%= doc.Transporte %> en <%= cliente.RutaTransporte  %></a>
+       </li>
+       
+       <li class="divider"></li>
+       
+        <li>
+             <a> <input class="span8 inlineBlock txtEntregadoDetail" value="<%= doc.EntregadoEmpaque %>" data-type="EntregadoEmpaque"  data-id="<%= doc.id %>" placeholder="Empaque" /></a>
+        </li>
+        
+          <li>
+          <a>              
+          <% if doc.Transporte == "Rodco":  %>
+
+              <input class="span9 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoGuia %>"  data-type="EntregadoValor"  data-id="<%= doc.id %>"  placeholder="Recibido Por" />
+
+          <% else:  %>
+
+              <input class="span6 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoGuia %>"  data-type="EntregadoGuia"  data-id="<%= doc.id %>"  placeholder="Guia" />
+              <input class="span6 inlineBlock txtEntregadoDetail"  value="<%= doc.EntregadoValor %>"  data-type="EntregadoValor"  data-id="<%= doc.id %>"  placeholder="Valor" />
+          <% end %>
+          </a>
+        </li>
+        
+      <li class="divider"></li>
+
+      <li>
+        <a>
+         <i data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-print btn_print_ruta_item inlineblock" style="font-size: 11px;"></i> Imprimir Boleta
+         </a>
+      </li>
+
+       <li>
+         <a>
+          <i data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-remove btn_remove_documento inlineblock" style="font-size: 11px;"></i> Eliminar Documento
+          </a>
+       </li>
+
+       <li class="divider"></li>
+         <% for movimiento in Movimiento.findAllByAttribute("Documento",doc.id) : %>
+           <%  producto = Producto.find movimiento.Producto %>
+           <li><a> <span style="margin-right: 9px;" class="inlineBlock"><%=  movimiento.ProductoCantidad %></span> <%= producto.Name?.capitalize() %></a></li>
+         <% end %>
+
+
+       </ul>
+     </div>
+   </div>
+
 </li>

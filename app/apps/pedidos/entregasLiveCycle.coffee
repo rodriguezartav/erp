@@ -1,5 +1,5 @@
 Spine = require('spine')
-Documento = require("models/documento")
+Documento = require("models/socketModels/facturaEntregada")
 Movimiento = require("models/movimiento")
 Cliente = require("models/cliente")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
@@ -17,9 +17,7 @@ class EntregasLiveCycle extends Spine.Controller
     "click .dropdownContainer" : "onDropdownClick"
     "click .btn_new_ruta" : "onBtnNewRutaClick"
     "click .txt_nueva_ruta_btn" : "onSaveRuta"
-    "change .txtEntregadoDetail" : "onTxtEntregadoValorChange"
-    "keypress .txtEntregadoDetail" : "onTxtEntregadoEnter"
-    "click .btn_entregado" : "onTempDocumentoEntregado"
+    "click .btn_entregado" : "onDocumentoEntregado"
     "click .btn_add_to_ruta" : "onBtnAddToRuta"
     "click .btn_filter_entregados" : "onBtnFilter"
 
@@ -44,6 +42,8 @@ class EntregasLiveCycle extends Spine.Controller
     Documento.destroyAll()
     Documento.bind "update" , @renderDocumentos
 
+    Documento.bind "push_success" , @renderDocumentos
+
     Movimiento.ajax().query {sinEntregar: true , v2: true} , afterSuccess: (results) =>
       @renderDocumentos(results)
 
@@ -63,51 +63,97 @@ class EntregasLiveCycle extends Spine.Controller
       btn.addClass "active"
     @renderDocumentos()
     
+  filterByRuta: (rutas) =>
+    @el.find("a+.btn_filter_entregados").removeClass "active"
+    documentos = Documento.select (item) =>
+      cliente = Cliente.find item.Cliente
+      return false if rutas.indexOf( cliente.RutaTransporte ) == -1
+      return true if item.hasEntregadoRuta() == false
+      return false
+    @renderHtml documentos
+  
   renderDocumentos:  =>
     return false if Movimiento.count() == 0 and Documento.count() ==0
     documentos = Documento.select (item) =>
       return false if @filters.indexOf(item.generalTransporte()) == -1
-      return true if !item.EntregadoRuta or item.EntregadoRuta.length == 0
+      return true if item.hasEntregadoRuta() == false
       return false
 
-    documento = documentos.sort (a,b) ->
-      f1 = Date.parse(a.FechaEntregaPropuesta)
-      f2 = Date.parse(b.FechaEntregaPropuesta)
-      return f1 - f2
-
-    @sinEntregar.html require("views/apps/pedidos/entregasLiveCycle/item")(documentos)
-    @rutas.render()
-
-  createRutasFromDocumentos: =>
-    documentos = Documento.select (item) ->
-      return true if item.EntregadoRuta and item.EntregadoRuta.length > 0
-      return false
-
-    tempRutas = {}
+    @renderHtml documentos
+    
+  groupByFecha: (documentos) =>
+    mapFecha = {}
     for documento in documentos
-      ruta = tempRutas[documento.EntregadoRuta] or Ruta.tempFromString documento.EntregadoRuta
-      ruta.Documentos.push documento.id
-      tempRutas[documento.EntregadoRuta]  = ruta
+      list = mapFecha[documento.FechaEntregaPropuesta] or []
+      list.push documento
+      mapFecha[documento.FechaEntregaPropuesta] = list
+    return mapFecha
 
-    rutas = []
-    rutas.push ruta for index,ruta of tempRutas
-    return rutas
+  renderHtml: (documentos) =>
+    mapFecha = @groupByFecha(documentos)
+    
+    @sinEntregar.html ""
+    for index,list of mapFecha
+      list = list.sort (a,b) ->
+        #return a.Consecutivo - b.Consecutivo
+        return Date.parse(a.FechaPedido) - Date.parse(b.FechaPedido)
+      
+      @sinEntregar.append "<li class='label'>#{index.toMMMDate()}</li>"
+      for documento in list
+        @sinEntregar.append require("views/apps/pedidos/entregasLiveCycle/item")(documento)
+    
+    @rutas.render()
 
   onDropdownClick: (e) ->
     return false if !e.saved;
+
+  onDocumentoEntregado: (e) ->
+    target = $(e.target)
+    docId = target.data("id")
+
+    doc = Documento.find docId
+    doc.Entregado = true;
+    doc.EntregadoRuta = 'Entregado Sin Ruta';
+    doc.save()
+    @updateDocumento(doc);
+    
+    showInfo = false
+    for documento in Documento.findAllByAttribute("Cliente" , doc.Cliente)
+      showInfo = true if !documento.hasEntregadoRuta()
+
+    if showInfo
+      cliente = Cliente.find doc.Cliente
+      Spine.trigger 'show_lightbox', "showInfo" , "Hay mas facturas de #{cliente.Name}" 
+      Spine.trigger "hide_lightbox" , 2000
 
   onBtnAddToRuta: (e) =>
     target = $(e.target)
     rutaId = target.data "ruta"
     ruta = Ruta.find rutaId
-    ruta.Documentos.push target.data("id")
+    docId = target.data("id")
+    ruta.Documentos.push docId
     ruta.save()
+    
+    doc = Documento.find docId
+    doc.EntregadoRuta = ruta.toString()
+    doc.save()
+    @updateDocumento(doc);
+    
+    showInfo = false
+    for documento in Documento.findAllByAttribute("Cliente" , doc.Cliente)
+      showInfo = true if documento.hasEntregadoRuta() == false
+
+    if showInfo
+      cliente = Cliente.find doc.Cliente
+      Spine.trigger 'show_lightbox', "showInfo" , "Hay mas pedidos de #{cliente.Name}" 
+      Spine.trigger "hide_lightbox" , 2000
 
   onSaveRuta: (e) =>
     for item in @txt_value
       if item
         return false if $(item).val().lenght == 0
-    ruta = Ruta.create Documentos: [] , Fecha: @el.find(".txt_nueva_ruta_fecha").val() , Camion: @el.find(".txt_nueva_ruta_camion").val() ,Chofer: @el.find(".txt_nueva_ruta_chofer").val()
+    ruta = Ruta.createFromAttributes Fecha: @el.find(".txt_nueva_ruta_fecha").val() , Camion: @el.find(".txt_nueva_ruta_camion").val() , Chofer: @el.find(".txt_nueva_ruta_chofer").val()
+
     e.saved = true
     @renderDocumentos()
 
@@ -141,8 +187,11 @@ class EntregasLiveCycle extends Spine.Controller
     Spine.trigger "show_lightbox" , "rest" , data , callback
 
 
-  reset: ->
-    @ruta = null;
+  reset: =>
+    Documento.unbind "update" , @renderDocumentos
+    Documento.unbind "push_success" , @renderDocumentos
+    @rutas.reset()
+    @rutas = null
     @release()
     @navigate "/apps"
 

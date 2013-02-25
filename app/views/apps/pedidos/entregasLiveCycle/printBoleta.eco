@@ -1,0 +1,16 @@
+<% Cliente = require("models/cliente")  %>
+<% Producto = require("models/producto")  %>
+<% cliente = Cliente.find @documento.Cliente  %>
+
+<div style="width: 300px; page-break-inside:avoid; page-break-after: always">
+
+<h5 class="name"><%= cliente.Name.toLowerCase() %></h5>
+
+ <% for movimiento in @movimientos: %>
+    <% producto = Producto.find movimiento.Producto %>
+    <div style="border-bottom: 1px solid #333;font-size: 12px;">
+      <span class="inlineblock" style="width: 25px;font-weight: 800;"><%= movimiento.ProductoCantidad %></span> <%= producto.Name.capitalize() %>  
+    </div>
+  <% end %>
+  
+</div>

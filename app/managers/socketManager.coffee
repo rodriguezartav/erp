@@ -1,6 +1,8 @@
 Spine = require('spine')
 PedidoPreparado  =  require("models/socketModels/pedidoPreparado")
 FacturaPreparada  =  require("models/socketModels/facturaPreparada")
+FacturaEntregada  =  require("models/socketModels/facturaEntregada")
+
 Saldo  =  require("models/socketModels/saldo")
 Notificacion = require "models/notificacion"
 Cliente  =  require("models/cliente")

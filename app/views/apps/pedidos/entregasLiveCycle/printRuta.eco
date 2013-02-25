@@ -1,4 +1,4 @@
-<% Documento = require("models/documento") %>
+<% Documento = require("models/socketModels/facturaEntregada") %>
 <% Cliente = require("models/cliente") %>
 
 <div class="invoice">

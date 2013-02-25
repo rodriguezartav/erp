@@ -3,57 +3,65 @@
 <% Movimiento = require("models/movimiento") %>
 <% Producto = require("models/producto") %>
 <% Ruta = require("models/transitory/ruta") %>
+<% fechaPedido = new Date(Date.parse(@FechaPedido))  %>
 
+<li style="height: 26px;" data-transporte="<%= @generalTransporte() %>" class="documentoSinEntregar smallMargin" data-id="<%= @id %>">
 
-<li style="" data-transporte="<%= @generalTransporte() %>" data-filter="<%= "#{@generalTransporte()},#{@FechaEntregaPropuesta.toMMMDate()},#{cliente?.RutaTransporte or 'N/D'}" %>" class="documentoSinEntregar" data-id="<%= @id %>">
+  <p class="marginLess inlineBlock alignMiddle" style="width: 79%;overflow: hidden;line-height: 14px;">
+   
+   <% if @generalTransporte() == "Cliente" or @generalTransporte() == "Agente": %>
+    <i data-filter="Cliente,Agente" class=" icon-user"></i>
 
-  <p class="marginLess" style="line-height: 17px;">
-    <span class="badge badge-warning"><%= @FechaEntregaPropuesta.toMMMDate() %></span>
-    N&#176;:<%= @Consecutivo %> <%= cliente?.Name.capitalize() %> 
+   <% else if @generalTransporte() == "Transporte": %>
+    <i data-filter="Transporte" class=" icon-external-link"></i>
+
+   <% else if @generalTransporte() == "Rodco": %>    
+    <i data-filter="Rodco" class=" icon-truck"></i>
+   
+   <% end %>
+   N&#176;:<%= @Consecutivo %>
+  <%=  cliente?.Name.capitalize() %> 
+  
   </p>
 
-  <div class="items inlineBlock">
-    <div class="btn-group">
-      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-        Productos
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <% for movimiento in Movimiento.findAllByAttribute("Documento",@id) : %>
-          <%  producto = Producto.find movimiento.Producto %>
-          <li><a><%=  movimiento.ProductoCantidad %> <%= producto.Name?.capitalize() %></a></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-  
-  <div class=" inlineBlock" style="">
-    <span class="badge"><%= cliente?.RutaTransporte %></span><br/>
-    <span class="badge badge-info"><%= @Transporte %></span>
-  </div>
 
-  <div class=" inlineBlock" style="float: right">
-    <div class="btn-group">
-      <button class="btn dropdown-toggle" data-toggle="dropdown">
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <a class="btn_entregado" data-id="<%= @id %>">
-            Entregar
-          </a>
-        </li>
-        
-        <% for ruta in Ruta.all() : %>
-          <li>
-            <a class="btn_add_to_ruta" data-ruta="<%= ruta.id %>" data-id="<%= @id %>" >
-              <%= ruta.toString() %>
-            </a>
-          </li>
-        <% end %>
-        
-      </ul>
-    </div>
-  
-  </div>
+   <div class=" inlineBlock" style="float: right">
+     <div class="btn-group">
+       <button class=" btn dropdown-toggle" data-toggle="dropdown">
+         <span class="caret"></span>
+       </button>
+       <ul class="dropdown-menu">
+        <li><a>
+          N&#176;:<%= @Consecutivo %> por
+          <%= @Transporte %> en <%= cliente.RutaTransporte  %>
+          <span class="label pull-right inlineBlock" style="margin-left: 20px;"><%= fechaPedido.getHours() %>:<%= fechaPedido.getMinutes() %></span>
+        </a> </li>
+        <li class="divider"></li>
+    
+         <% for ruta in Ruta.all() : %>
+           <li>
+             <a class="btn_add_to_ruta" data-ruta="<%= ruta.id %>" data-id="<%= @id %>" >
+               <i class="icon-arrow-right"></i>Entregar el <%= ruta.toString() %>
+             </a>
+           </li>
+         <% end %>
+         
+              <li>
+                <a class="btn_entregado" data-id="<%= @id %>">
+                  <i class="icon-ok"></i> Mercaderia fue Entregada
+                </a>
+              </li>
+        <li class="divider"></li>
+          <% for movimiento in Movimiento.findAllByAttribute("Documento",@id) : %>
+            <%  producto = Producto.find movimiento.Producto %>
+            <li><a><%=  movimiento.ProductoCantidad %> <%= producto.Name?.capitalize() %></a></li>
+          <% end %>
+
+        <li class="divider"></li>
+        <li><a><i class="icon-road"></i> <%= cliente.Direccion  %></a></li>
+
+       </ul>
+     </div>
+   </div>
+ 
 </li>

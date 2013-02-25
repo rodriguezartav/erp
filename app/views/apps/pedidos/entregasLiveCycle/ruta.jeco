@@ -1,25 +1,64 @@
 <% fecha = new Date(Date.parse("#{@Fecha} 00:00")).toArray() %>
 <li class="span3 ruta" data-id="<%= @id %>">
 
-    <h4 class="inlineblock">
-      <i data-id="<%= @id %>" class="icon-remove btn_remove_ruta inlineblock " style="font-size: 11px;"></i>
-      <%= "#{fecha[1]}-#{fecha[0]}"  %> 
-      
-      <i data-id="<%= @id %>" class="icon-print btn_print_ruta inlineblock pull-right" style="font-size: 11px;"></i>
-    </h4>
+  <div class="btn-group inlineBlock">
+     <button class=" btn dropdown-toggle" data-toggle="dropdown">
+       <span class="caret"></span>
+     </button>
+     <ul class="dropdown-menu">
+
+     <li>
+     <a data-id="<%= @id %>" class="" style="padding-left:9px;padding-right:9px;">  
+       <i data-id="<%= @id %>" class="icon-print btn_print_boleta inlineBlock " style="font-size: 11px;"></i>
+       Imprimir Boletas de Entrega
+     </a>
+     </li>
+     
+        <li>
+        <a data-id="<%= @id %>" class=" " style="padding-left:9px;padding-right:9px;">  
+          <i data-id="<%= @id %>" class="icon-print btn_print_ruta inlineBlock " style="font-size: 11px;"></i>
+          Imprimir Documentos
+        </a>
+        </li>
+        
+        <li>
+        <a data-id="<%= @id %>" class="" style="padding-left:9px;padding-right:9px;">
+          <i data-id="<%= @id %>" class="icon-magic btn_filter_rutas inlineblock " style="font-size: 11px;"></i>
+          Buscar Parecidos
+        </a>
+        </li>
+        
+        <li>
+        <a data-id="<%= @id %>" class="" style="padding-left:9px;padding-right:9px;">
+          <i data-id="<%= @id %>" class="icon-ok btn_completar_ruta inlineblock " style="font-size: 11px;"></i>
+          Marcar Ruta Completa
+        </a>
+       </li>
+       
+       <li>
+        <a data-id="<%= @id %>" class="" style="padding-left:9px;padding-right:9px;">
+          <i data-id="<%= @id %>" class="icon-remove btn_remove_ruta inlineblock " style="font-size: 11px;"></i>
+          Borrar Ruta
+        </a>
+        </li>
+       
+      </ul>  
+  </div>
+  
+  <h4 class="inlineBlock alignTop" style="padding-top: 5px;">
+    <%= "#{fecha[1]}-#{fecha[0]}"  %> 
+  </h4>
 
   <h5><%= @Camion %> - <%= @Chofer %></h5>
+    
+  
 
   <ul class="documentoList unstyled whiteList">
     <% for docId in @Documentos: %>
       <%- require("views/apps/pedidos/entregasLiveCycle/rutaItem")(ruta: @id , documentoId: docId) %>
     <% end %>
     
-    <li>
-      
-      <a data-id="<%= @id %>" class="btn-success btn btn-large btn_completar_ruta">Completar</a>
-      
-    </li>
+
   </ul
 
 </li>

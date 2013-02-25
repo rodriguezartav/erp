@@ -65,8 +65,8 @@
 
     <div class="span4">  
       <a class="btn active"><i data-filter="Cliente,Agente" class="btn_filter_entregados icon-user"></i></a>
-      <a class="btn active"><i data-filter="Transporte" class="btn_filter_entregados icon-truck"></i></a>
-      <a class="btn active">R<i data-filter="Rodco" class="btn_filter_entregados icon-truck"></i></a>
+      <a class="btn active"><i data-filter="Transporte" class="btn_filter_entregados icon-external-link"></i></a>
+      <a class="btn active"><i data-filter="Rodco" class="btn_filter_entregados icon-truck"></i></a>
       <h4 class="inlineBlock withMarginLeft">Pendientes de Entrega</h4>
       
       <ul class=" unstyled whiteList src_sinEntregar">
