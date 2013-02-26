@@ -20,6 +20,7 @@ class EntregasLiveCycle extends Spine.Controller
     "click .btn_entregado" : "onDocumentoEntregado"
     "click .btn_add_to_ruta" : "onBtnAddToRuta"
     "click .btn_filter_entregados" : "onBtnFilter"
+    "click .btn_imprimir" : "onBtnImprimir"
 
   elements: 
     ".print" : "print"
@@ -33,6 +34,7 @@ class EntregasLiveCycle extends Spine.Controller
     ".lblAlert" : "lblAlert"
     ".documentoSinEntregar" : "documentoSinEntregar"
     ".btn_filter_entregados" : "btn_filter_entregados"
+    
 
   constructor: ->
     super
@@ -147,6 +149,16 @@ class EntregasLiveCycle extends Spine.Controller
       cliente = Cliente.find doc.Cliente
       Spine.trigger 'show_lightbox', "showInfo" , "Hay mas pedidos de #{cliente.Name}" 
       Spine.trigger "hide_lightbox" , 2000
+
+  onBtnImprimir: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    doc = Documento.find id
+    mov = Movimiento.findAllByAttribute("Documento" , doc.id)
+    @print.html require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
+    @print.find("div:last-child").css("page-break-after","avoid")
+    window.print()
+    
 
   onSaveRuta: (e) =>
     for item in @txt_value

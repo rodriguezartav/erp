@@ -2,15 +2,21 @@
 <% Producto = require("models/producto")  %>
 <% cliente = Cliente.find @documento.Cliente  %>
 
-<div style="width: 300px; page-break-inside:avoid; page-break-after: always">
-
-<h5 class="name"><%= cliente.Name.toLowerCase() %></h5>
+<div style="width: 235px; page-break-inside:avoid; page-break-after: always">
+<h5>RODCO <span class="inlineBlock pull-right">Boleta de Empaque</span></h5>
+<h3 class="name" style="line-height:15px;width: 235px;overflow:hidden;"><%= cliente.Name.capitalize() %></h3>
+<h5>N&#176;:<%= @documento.Consecutivo %> <span class="inlineBlock pull-right"><%= @documento.Transporte %></span></h5>
 
  <% for movimiento in @movimientos: %>
     <% producto = Producto.find movimiento.Producto %>
-    <div style="border-bottom: 1px solid #333;font-size: 13px;padding: 3px 0px;">
-      <span class="inlineblock" style="width: 35px;font-weight: 800;"><%= movimiento.ProductoCantidad %></span> <%= producto.Name.capitalize() %>  
+    <div style="border-top: 1px solid #333;font-size: 13px;padding: 3px 0px;">
+      <span class="inlineBlock" style="width: 40px;font-weight: 800;font-size: 14px;font-family: Arial;"><%= movimiento.ProductoCantidad %></span> <%= producto.Name.capitalize() %>  
     </div>
   <% end %>
+  
+  <div>
+    <span class="inlineBlock" style="text-align:center;width:40%;border-bottom: 1px solid #333;margin-top:5px"> Empacado Por  </span>
+    <span class="inlineBlock pull-right" style="text-align:center;width:40%;border-bottom: 1px solid #333;margin-top:5px">Revisado Por  </span>
+  </div>
   
 </div>

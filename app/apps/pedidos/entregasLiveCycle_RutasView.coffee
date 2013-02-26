@@ -75,13 +75,16 @@ class entregasLiveCycle_RutasView extends Spine.Controller
 
   onRutaRemove: (e) =>
     target = $(e.target)
-    id = target.data "id"
-    ruta = Ruta.find id
+    rutaLi = target.parents(".rutaLi")
+    ruta = Ruta.findByName rutaLi.data "name"
     return Spine.trigger "show_lightbox", "showError" , error: "La ruta tiene documentos, borrelos primero." if ruta.Documentos.length > 0
     ruta.destroy()
 
   onDocumentoRemove: (e) =>
     target = $(e.target)
+    rutaLi = target.parents(".rutaLi")
+    ruta = Ruta.findByName rutaLi.data "name"
+    
     id = target.data "id"
     doc = Documento.find id
     doc.EntregadoRuta = " "
@@ -90,52 +93,47 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     doc.EntregadoEmpaque = " "
     doc.save()
     @entregasLiveCycle.updateDocumento(doc)
-
-    ruta = target.data "ruta"
-    ruta = Ruta.find ruta
-    index = ruta.Documentos.indexOf id
-    if index > -1
-      ruta.Documentos.splice index , 1
-      ruta.save()
+    
+    if ruta
+      index = ruta.Documentos.indexOf id
+      if index > -1
+        ruta.Documentos.splice index , 1
+        ruta.save()
 
   onBtnFilterRutas: (e) =>
     target = $(e.target)
-    id = target.data "id"
-    ruta = Ruta.find id
+    rutaLi = target.parents(".rutaLi")
+    rutaName = rutaLi.data "name"
     documentos = []
     rutas = []
-    for documentoId in ruta.Documentos
-      documento = Documento.find documentoId 
+    for documento in Documento.findAllByAttribute "EntregadoRuta" , rutaName
       cliente = Cliente.find documento.Cliente
       rutas.addUniqueItem cliente.RutaTransporte
     @entregasLiveCycle.filterByRuta rutas
 
   onPrintRuta: (e) =>
     target = $(e.target)
-    id = target.data "id"
-    ruta = Ruta.find id
+    rutaLi = target.parents(".rutaLi")
+    ruta = Ruta.findByName rutaLi.data("name")
+    
     @print.html require("views/apps/pedidos/entregasLiveCycle/printRuta")(ruta)
     
-    for docId in ruta.Documentos
-      doc = Documento.find docId
-      mov = Movimiento.findAllByAttribute("Documento" , docId)
+    for doc in Documento.findAllByAttribute "EntregadoRuta" , ruta.Name
+      mov = Movimiento.findAllByAttribute("Documento" , doc.id)
       @print.append require("views/apps/pedidos/entregasLiveCycle/printRosada")(documento: doc, movimientos: mov)
-    $("body").addClass "label"
     window.print()
 
   onPrintBoleta: (e) =>
     target = $(e.target)
-    id = target.data "id"
-    ruta = Ruta.find id
+    rutaLi = target.parents(".rutaLi")
+    rutaName = rutaLi.data "name"
     @print.html ""
 
-    for docId in ruta.Documentos
-      doc = Documento.find docId
+    for doc in Documento.findAllByAttribute "EntregadoRuta" , rutaName
       if !doc.hasEntregadoEmpaque()
-        mov = Movimiento.findAllByAttribute("Documento" , docId)
+        mov = Movimiento.findAllByAttribute("Documento" , doc.id)
         @print.append require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
     @print.find("div:last-child").css("page-break-after","avoid")
-    $('head').append('<link href="print.css" title="printLandscape" rel="stylesheet" />');
     window.print()
 
   onPrintRutaItem: (e) =>
@@ -149,8 +147,9 @@ class entregasLiveCycle_RutasView extends Spine.Controller
 
   onCompletarRuta: (e) =>
     target = $(e.target)
-    id = target.data "id"
-    ruta = Ruta.find id
+    rutaLi = target.parents(".rutaLi")
+    ruta = Ruta.findByName rutaLi.data "name"
+
     @ruta = ruta
     documentos = []
     for doc in ruta.Documentos
@@ -158,11 +157,10 @@ class entregasLiveCycle_RutasView extends Spine.Controller
       documento.FechaEntrega = new Date()
       documento.Entregado = true
       documentos.push documento
-    
     @entregasLiveCycle.updateDocumentos(documentos , @onCompletarRutaSuccess )
 
   onCompletarRutaSuccess: =>
-    @ruta.destroy();
+    @ruta.destroy?();
     @entregasLiveCycle.reset()
 
   reset: =>

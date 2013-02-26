@@ -8,6 +8,9 @@ class Ruta extends Spine.Model
   toString: =>
     return @Name
 
+  @findByName: (name) =>
+    return @findByAttribute "Name" , name
+
   @createFromAttributes: (attr) =>
     name = "#{attr.Fecha} #{attr.Camion} #{attr.Chofer}"
     test = Ruta.findByAttribute "Name" , name
@@ -16,8 +19,11 @@ class Ruta extends Spine.Model
     return ruta
 
   @tempFromString: (string) =>
-    parts = string.split " "
-    return Fecha: parts[0] , Camion: parts[1] , Chofer: parts[2] , Documentos: []
+    parts =  string.replace("*","").split " "
+    fecha =  parts[0]
+    camion = parts[1]
+    chofer = parts[2]
+    return Name: string , Fecha: fecha , Camion: camion , Chofer: chofer , Documentos: []
 
 module.exports = Ruta
 

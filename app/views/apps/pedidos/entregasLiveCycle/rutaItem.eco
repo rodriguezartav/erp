@@ -22,6 +22,9 @@
      <% end %>
     N&#176;:<%= doc.Consecutivo %>
     <h5 class="inlineBlock"><%= cliente.Name?.capitalize() %></h5>
+    
+
+    
   </div>
 
   <div class=" inlineBlock" style="float: right">
@@ -32,7 +35,10 @@
        <ul class="dropdown-menu">
        
        <li>
-        <a><%= cliente.Name.capitalize()  %></a>
+        <a>
+          <%= cliente.Name.capitalize()  %>
+          <i data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-print btn_print_ruta_item inlineblock pull-right" style="font-size: 18px;"></i>
+        </a>
        </li>
        
        <li>
@@ -61,14 +67,8 @@
         
       <li class="divider"></li>
 
-      <li>
-        <a>
-         <i data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-print btn_print_ruta_item inlineblock" style="font-size: 11px;"></i> Imprimir Boleta
-         </a>
-      </li>
-
        <li>
-         <a>
+         <a data-id="<%= doc.id %>" class="btn_remove_documento">
           <i data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-remove btn_remove_documento inlineblock" style="font-size: 11px;"></i> Eliminar Documento
           </a>
        </li>
@@ -76,7 +76,7 @@
        <li class="divider"></li>
          <% for movimiento in Movimiento.findAllByAttribute("Documento",doc.id) : %>
            <%  producto = Producto.find movimiento.Producto %>
-           <li><a> <span style="margin-right: 9px;" class="inlineBlock"><%=  movimiento.ProductoCantidad %></span> <%= producto.Name?.capitalize() %></a></li>
+           <li><a class=""> <span style="margin-right: 9px;" class="inlineBlock"><%=  movimiento.ProductoCantidad %></span> <%= producto.Name?.capitalize() %></a></li>
          <% end %>
 
 
