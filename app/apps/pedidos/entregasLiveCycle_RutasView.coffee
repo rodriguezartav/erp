@@ -41,6 +41,7 @@ class entregasLiveCycle_RutasView extends Spine.Controller
 
   createRutasFromDocumentos: =>
     documentos = Documento.select (item) ->
+      return false if item.Entregado
       return true if item.hasEntregadoRuta()
       return false
 
