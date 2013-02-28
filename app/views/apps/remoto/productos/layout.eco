@@ -9,7 +9,31 @@
     <thead>
       <tr>
         
-      
+      <td>
+        <p>Producto</p>
+      </td>
+
+      <td>
+      Inventario
+      </td>
+
+      <td>
+        Precio
+      </td>
+
+      <td>
+        Descuento
+      </td>
+
+      <td>
+        Precio Neto
+      </td>
+
+
+        <td>
+
+        </td>
+            
       </tr>
     </thead>
     <tbody class="productosList">

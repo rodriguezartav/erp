@@ -5,19 +5,23 @@
   </td>
   
   <td>
-  <%= @InventarioActual.toMoney(0) %>
+  <%= @InventarioActual?.toMoney(0) %>
   </td>
   
   <td>
-    c<%= @Precio_Distribuidor.toMoney() %>
+    &#162;<%= @Precio_Distribuidor?.toMoney() %>
   </td>
   
-  <% if @UtilidadVenta: %>
+  <td>
+    <%= @DescuentoMaximo?.toMoney() %>%
+  </td>
+  
+  <td>
+    &#162;<%= @PrecioDescuento?.toMoney() %>
+  </td>
 
     <td>
       <%= @UtilidadVenta %>%
     </td>
-
-  <% end  %>
   
 </tr>
