@@ -9,7 +9,15 @@
   </td>
   
   <td>
-    c<%= @Precio_Distribuidor.toMoney(0) %>
+    c<%= @Precio_Distribuidor.toMoney() %>
   </td>
+  
+  <% if @UtilidadVenta: %>
+
+    <td>
+      <%= @UtilidadVenta %>%
+    </td>
+
+  <% end  %>
   
 </tr>

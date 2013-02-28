@@ -121,7 +121,7 @@ class SecurityManager
       Producto.autoQuery        = true
       Proveedor.autoQuery       = true
       Movimiento.attributes.push('ProductoCosto') 
-      Producto.attributes.push("Costo" , "CostoAnterior") 
+      Producto.attributes.push("Costo" , "CostoAnterior" , "UtilidadVenta") 
       
     else if Spine.session.hasPerfiles([ "Gerencia Comercial" ])
       Cliente.autoQuery         = true
