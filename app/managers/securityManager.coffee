@@ -65,7 +65,7 @@ class SecurityManager
     @profiles["Platform System Admin"] = apps
     @profiles["IT"] = apps
 
-    @profiles["Presidencia"] =  [ CuentasLiveCycle , MovimientoLivecycle , DoCierreDiario  , AjustarNegociacion    , TomasInventario , VerRegistrosResumen  ]
+    @profiles["Presidencia"] =  [ CuentasLiveCycle , MovimientoLivecycle , DoCierreDiario  , VerProductos , PedidosLiveCycle , AjustarNegociacion    , TomasInventario , VerRegistrosResumen  ]
     @profiles["SubGerencia"] =  [ MovimientoLivecycle , NotasLivecycle , AjustarNegociacion   , PedidosLiveCycle   , VerRegistrosResumen ]
     @profiles["Gerencia Comercial"] = [MovimientoLivecycle , NotasLivecycle , PedidosLiveCycle , FacturasProveedor , PagosProveedor    , CuentasLiveCycle  , DocumentosAnular , TomasInventario , VerRegistrosResumen , VerRegistros , VerClientes , AjustarNegociacion ]
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
