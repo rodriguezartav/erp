@@ -119,15 +119,16 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     target = $(e.target)
     rutaLi = target.parents(".rutaLi")
     ruta = Ruta.findByName rutaLi.data "name"
-    
     id = target.data "id"
-    doc = Documento.find id
-    doc.EntregadoRuta = " "
-    doc.EntregadoValor = " "
-    doc.EntregadoGuia = " "
-    doc.EntregadoEmpaque = " "
-    doc.save()
-    @entregasLiveCycle.updateDocumento(doc)
+    doc = Documento.exists id
+
+    if doc
+      doc.EntregadoRuta = " "
+      doc.EntregadoValor = " "
+      doc.EntregadoGuia = " "
+      doc.EntregadoEmpaque = " "
+      doc.save()
+      @entregasLiveCycle.updateDocumento(doc)
     
     if ruta
       index = ruta.Documentos.indexOf id
