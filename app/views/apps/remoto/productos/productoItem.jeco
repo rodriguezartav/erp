@@ -13,15 +13,15 @@
   </td>
   
   <td>
-    <%= @DescuentoMaximo?.toMoney() %>%
+    <%= @DescuentoMaximo?.toMoney(0) %>%
   </td>
   
   <td>
     &#162;<%= @PrecioDescuento?.toMoney() %>
   </td>
 
-    <td>
-      <%= @UtilidadVenta %>%
-    </td>
+  <td>
+    <%= @UtilidadVenta %>%
+  </td>
   
 </tr>

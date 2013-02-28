@@ -33,9 +33,7 @@
         <li><a>
           N&#176;:<%= @Consecutivo %> por
           <%= @Transporte %> en <%= cliente.RutaTransporte  %>
-       
-          <span data-id="<%= @id %>" class="pull-right inlineBlock btn_imprimir" style="margin: 0px 4px;"><i data-id="<%= @id %>" class="icon-print" style="font-size: 14px;"></i></span>
-          
+
           <span class="label pull-right inlineBlock" style="margin-left: 20px;"><%= fechaPedido.getHours() %>:<%= fechaPedido.getMinutes() %></span>
        
        
@@ -53,6 +51,18 @@
           <li>
             <a class="btn_entregado" data-id="<%= @id %>">
               <i data-id="<%= @id %>" class="icon-ok"></i> Mercaderia fue Entregada
+            </a>
+          </li>
+          
+          <li>
+            <a data-id="<%= @id %>" class="  btn_imprimir">
+              <i data-id="<%= @id %>" class="icon-print" style="font-size: 14px;"></i> Imprimir Boleta
+            </a>
+          </li>
+          
+          <li>
+            <a data-id="<%= @id %>" class=" btn_imprimir_rosada">
+              <i data-id="<%= @id %>" class="icon-print" style="font-size: 14px;"></i> Imprimir Rosada
             </a>
           </li>
           

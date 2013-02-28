@@ -21,6 +21,8 @@ class EntregasLiveCycle extends Spine.Controller
     "click .btn_add_to_ruta" : "onBtnAddToRuta"
     "click .btn_filter_entregados" : "onBtnFilter"
     "click .btn_imprimir" : "onBtnImprimir"
+    "click .btn_imprimir_rosada" : "onBtnImprimirRosada"
+
 
   elements: 
     ".print" : "print"
@@ -158,7 +160,16 @@ class EntregasLiveCycle extends Spine.Controller
     @print.html require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
     @print.find("div:last-child").css("page-break-after","avoid")
     window.print()
-    
+
+
+  onBtnImprimirRosada: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    doc = Documento.find id
+    mov = Movimiento.findAllByAttribute("Documento" , doc.id)
+    @print.html require("views/apps/pedidos/entregasLiveCycle/printRosada")(documento: doc, movimientos: mov)
+    window.print()
+
 
   onSaveRuta: (e) =>
     for item in @txt_value

@@ -95,9 +95,10 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     type = target.data "type"
     ruta = Ruta.findByName target.data "name"
     return false if !ruta
-    docs = Documento.findAllByAttribute "EntregadoRuta" , Ruta.Name
+    docs = Documento.findAllByAttribute "EntregadoRuta" , ruta.Name
+
     ruta[type] = target.val()
-    ruta.updateName()
+    ruta.Name = Ruta.updateName(ruta)
     ruta.save()
     for doc in docs
       doc["EntregadoRuta"] = ruta.Name
