@@ -1,11 +1,25 @@
 <% fecha = new Date(Date.parse("#{@Fecha} 00:00")).toArray() %>
-<li class="span3 ruta rutaLi" data-name="<%= @Name %>">
+<li class="span3 ruta rutaLi" data-name="<%= @Name %>" style="width: 168px;">
 
   <div class="btn-group inlineBlock">
      <button class=" btn dropdown-toggle" data-toggle="dropdown">
        <span class="caret"></span>
      </button>
      <ul class="dropdown-menu">
+
+          <li>
+                <a> <input  data-name="<%= @Name %>" class="span8 inlineBlock txtRutaDetail" value="<%= @Fecha %>" data-type="Fecha"   placeholder="Empaque" /></a>
+           </li>
+           
+ 
+      <li>
+             <a> 
+             <input data-name="<%= @Name %>" class="span5 inlineBlock txtRutaDetail" value="<%= @Camion %>" data-type="Camion"   placeholder="Empaque" />
+             <input  data-name="<%= @Name %>" class="span5 inlineBlock txtRutaDetail" value="<%= @Chofer %>" data-type="Chofer"   placeholder="Empaque" />
+             </a>
+        </li>
+
+     <li class="divider"></li>
 
      <li>
      <a  class="btn_print_boleta" style="padding-left:9px;padding-right:9px;">  

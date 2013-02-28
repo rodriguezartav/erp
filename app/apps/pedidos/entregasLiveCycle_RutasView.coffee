@@ -12,9 +12,15 @@ class entregasLiveCycle_RutasView extends Spine.Controller
   events:
     "click .btn_remove_ruta" : "onRutaRemove"
     "click .btn_remove_documento" : "onDocumentoRemove"
+
     "change .txtEntregadoDetail" : "onTxtEntregadoValorChange"
     "click .txtEntregadoDetail"  : "onTxtEntregadoDetailClick"
     "keypress .txtEntregadoDetail" : "onTxtEntregadoEnter"
+
+    "change .txtRutaDetail" : "onTxtRutaDetailValorChange"
+    "click .txtRutaDetail"  : "onTxtRutaDetailDetailClick"
+    "keypress .txtRutaDetail" : "onTxtRutaDetailEnter"
+
     "click .btn_print_ruta" : "onPrintRuta"
     "click .btn_print_boleta" : "onPrintBoleta"
     "click .btn_completar_ruta"  : "onCompletarRuta"
@@ -26,7 +32,6 @@ class entregasLiveCycle_RutasView extends Spine.Controller
  
   constructor: (@el , @print , @entregasLiveCycle) ->
     super
-    @html require("views/apps/pedidos/entregasLiveCycle/layoutRutas")(@)
     Ruta.bind "create update destroy" , @render
     Documento.bind "push_success" , @render
 
@@ -38,6 +43,9 @@ class entregasLiveCycle_RutasView extends Spine.Controller
       f2 = new Date(b.Fecha)
       return f1 - f2
     @html require("views/apps/pedidos/entregasLiveCycle/ruta")(rutas)
+
+    @el.width( ( 168 * ( rutas.length + 1 ) ) + 'px')
+
 
   createRutasFromDocumentos: =>
     documentos = Documento.select (item) ->
@@ -73,6 +81,32 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     @entregasLiveCycle.updateDocumento(doc)
     @render()
     return false
+
+  onTxtRutaDetailDetailClick: (e) =>
+    $(e.target).select()
+    return false
+    
+  onTxtRutaDetailEnter: (e) =>
+    return false if e.keyCode == 13
+
+  onTxtRutaDetailValorChange: (e) =>
+    e.preventDefault()
+    target = $(e.target)
+    type = target.data "type"
+    ruta = Ruta.findByName target.data "name"
+    return false if !ruta
+    docs = Documento.findAllByAttribute "EntregadoRuta" , Ruta.Name
+    ruta[type] = target.val()
+    ruta.updateName()
+    ruta.save()
+    for doc in docs
+      doc["EntregadoRuta"] = ruta.Name
+      doc.save()
+    @entregasLiveCycle.updateDocumentos(docs , @onRutaUpdateSuccess)
+    return false
+
+  onRutaUpdateSuccess: =>
+    @render()
 
   onRutaRemove: (e) =>
     target = $(e.target)
@@ -115,11 +149,11 @@ class entregasLiveCycle_RutasView extends Spine.Controller
   onPrintRuta: (e) =>
     target = $(e.target)
     rutaLi = target.parents(".rutaLi")
-    ruta = Ruta.findByName rutaLi.data("name")
-    
+    rutaName = rutaLi.data("name")
+    ruta = Ruta.tempFromString rutaName
     @print.html require("views/apps/pedidos/entregasLiveCycle/printRuta")(ruta)
     
-    for doc in Documento.findAllByAttribute "EntregadoRuta" , ruta.Name
+    for doc in Documento.findAllByAttribute "EntregadoRuta" , rutaName
       mov = Movimiento.findAllByAttribute("Documento" , doc.id)
       @print.append require("views/apps/pedidos/entregasLiveCycle/printRosada")(documento: doc, movimientos: mov)
     window.print()

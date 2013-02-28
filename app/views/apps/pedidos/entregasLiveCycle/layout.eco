@@ -8,7 +8,6 @@
 
     <div class="span8">
       <h1 class="inlineBlock"><i class="<%= @icon %>"></i> <%= @label %></h1>
-      
      </div>
 
     <div class="span4">
@@ -47,7 +46,6 @@
                   
                   <br/>
                   <a class="btn btn-primary btn-large txt_nueva_ruta_btn">Guardar</a>
-
               </div>
             
             </li>
@@ -61,27 +59,26 @@
   <br/>
 
   <div class="row-fluid">
-  
-
-    <div class="span4">  
+    <div class="span3">  
       <a class="btn active"><i data-filter="Cliente,Agente" class="btn_filter_entregados icon-user"></i></a>
       <a class="btn active"><i data-filter="Transporte" class="btn_filter_entregados icon-external-link"></i></a>
       <a class="btn active"><i data-filter="Rodco" class="btn_filter_entregados icon-truck"></i></a>
-      <h4 class="inlineBlock withMarginLeft">Pendientes de Entrega</h4>
+      <h4 class="inlineBlock withMarginLeft">Pendientes</h4>
       
       <ul class=" unstyled whiteList src_sinEntregar">
         <li><h5>No hay Ordenes</h5></li>
       </ul>
     </div>
 
-    <div class="span8 src_rutas">
-
+    <div class="span9" style="overflow-x: scroll">
+      <ul class=" unstyled  whiteList src_rutas">
+      </ul>
     </div>
 
   </div>
 </div>
 
-<div class="print show_print invoice">
+<div class="print show_print1 invoice">
   
 </div>
 

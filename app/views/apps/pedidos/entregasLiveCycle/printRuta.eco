@@ -33,14 +33,13 @@
       <td style="width: 25%">Cliente</td>
       <td  style="width: 10%">Transporte</td>
       <td  style="width: 13%">Empaque</td>
-      <td  style="width: 25%">Nombre</td>
+      <td  style="width: 25%">Nombre/Valor</td>
       <td>Firma</td>
     </tr>
 
     <% docs = []  %>
-
-    <% for documentoId in @Documentos:  %>
-      <% doc = Documento.exists documentoId  %>
+    <% console.log @ %>
+    <% for doc in Documento.findAllByAttribute("EntregadoRuta" , @Name) :  %>
       <% cliente = Cliente.exists doc.Cliente %>
       <% docs.push doc: doc , cliente: cliente  %>
     <% end  %>

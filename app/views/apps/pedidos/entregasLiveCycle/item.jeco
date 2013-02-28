@@ -59,7 +59,7 @@
         <li class="divider"></li>
           <% for movimiento in Movimiento.findAllByAttribute("Documento",@id) : %>
             <%  producto = Producto.find movimiento.Producto %>
-            <li><a><%=  movimiento.ProductoCantidad %> <%= producto.Name?.capitalize() %></a></li>
+            <li><a> <span class="inlineBlock" style="width: 30px;margin-right: 4px;"><%=  movimiento.ProductoCantidad %></span> <%= producto.Name?.capitalize() %></a></li>
           <% end %>
 
         <li class="divider"></li>

@@ -2,8 +2,8 @@ Spine = require('spine')
 
 class FacturaEntregada extends Spine.Model
   @configure "Documento" , "Consecutivo" , "Observacion" , "Transporte",
-    "Cliente" , "Plazo" , "FechaFacturacion" ,
-    "Autorizado" , "MontoEnRecibos" , "FechaEntrega" , "OrdenEntrega","Entregado" ,
+    "Cliente" , "Plazo" , "FechaFacturacion" , "Referencia"
+    "Autorizado" , "FechaEntrega" , "OrdenEntrega","Entregado" , "FechaVencimiento"  , "Total"
     "EntregadoRuta" , "EntregadoEmpaque" , "EntregadoValor" , "EntregadoGuia"  , "FechaEntregaPropuesta" , "FechaPedido"
 
   @extend Spine.Model.SalesforceModel
@@ -11,7 +11,7 @@ class FacturaEntregada extends Spine.Model
   @extend Spine.Model.SocketModel
 
   @avoidQueryList: []
-  @avoidInsertList: [ "FechaEntregaPropuesta" ]
+  @avoidInsertList: [ "FechaEntregaPropuesta" , "Total" , "FechaVencimiento" , "FechaPedido" , "Referencia" , "Transporte" , "Observacion" , "Consecutivo" , "FechaFacturacion" , "Cliente" ]
 
   hasEntregadoRuta: =>
     return false if !@EntregadoRuta

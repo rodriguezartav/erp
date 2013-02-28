@@ -9,6 +9,29 @@
   .original{
     height: 890px;
     
+    &.copiaTransporte{
+
+      .invoiceHeader{
+        margin-bottom: 25px;
+      }
+    
+
+      .productosPlaceHolder{
+        height: 320px; 
+        margin-top: 0px;
+      }
+      
+      .invoiceFooter{
+        margin-top: 5px;
+        page-break-after: avoid;
+      }
+      
+      .boletaFirma{
+        page-break-after: always;
+      }
+      
+    }
+    
     .show_on_copy{
       display: none !important;
     }
@@ -85,7 +108,12 @@
         .title{color: #555;}
       }
     }
+
+
+
+
   }
+  
   .copy{
     height: 880px;  
     color: #000;

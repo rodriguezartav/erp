@@ -12,10 +12,10 @@
 
 <% credito = if @documento.Plazo != 0 then "Credito #{@documento.Plazo} Dias" else "Contado" %>
 
-<div class="copy">
+<div class="original copiaTransporte">
   <div class="invoiceHeader">
     <div class="logo">
-      <img class=""  src="images/invoice/images/logo-copy.jpg"/>
+      <img class=""  src="images/invoice/images/logo.jpg"/>
     </div>
     
     <div class="logoInfo">
@@ -29,8 +29,7 @@
     
     <div class="factura">
       <span class="number">N&#176;: R-<%= consecutivoPlace + "#{@documento.Consecutivo}" %></span>
-      <span class="facturaLabel">FACTURA</span>
-      <span class="fecha show_on_copy">COPIA TRANSPORTE</span>
+      <span class="facturaLabel">COPIA</span>
       <span class="fecha"> <%= "#{fecha[0]} de #{fecha[1]} #{fecha[2]}" %></span>
     </div>
   </div>
@@ -52,9 +51,7 @@
     <span class="mes"><%= vence[1] %></span>
     <span class="dia"><%= vence[0] %></span>
   </div>
-    <span class="venceLabel">Vencimiento <span class="show_on_copy"><%= vence[1] %> <%= vence[0] %></span> </span>
-
-  <span class="monto">&#162; <%= @documento.Saldo?.toMoney() %></span>  
+    <span class="detalles block"><%= credito %></span>
 </div>
 
 <div class="productosPlaceHolder">
@@ -93,18 +90,17 @@
 </div>
 
 <div class="totales">
-    <p>Sub-Total<span class="number"><%= @documento.SubTotal?.toMoney() %></span></p>
     <p>Descuento<span class="number"><%= @documento.Descuento?.toMoney() %></span></p>
     <p>Impuesto<span class="number"><%= @documento.Impuesto?.toMoney() %></span></p>
     <p class="total">Total &#162;<span class="number"><%= @documento.Total?.toMoney() %></span></p>
   </table>
-  <p class="gracias"?¡Muchas Gracias!</p>
+  <p class="gracias">¡Muchas Gracias!</p>
 </div>
 
 
 
 <div class="invoiceFooter">
-  <p class="legend">Renuncio a mi domicilio y trámite de juicio, doy por aceptadas la firma Original en poder del Cliente para trámite de pago y las condiciones del Código de Comercio en su Art. 460</p>
+  <p class="legend"></p>
 
   <div>
     <p><span class="title">Banco Nacional</span></p>
@@ -126,7 +122,7 @@
     
   <div  class="last">
     
-    <p>  <span class="number consecutivo"><span class="detalles"><%= credito %></span> <span> N&#176;: R-<%= consecutivoPlace + @documento.Consecutivo %> </p>
+    <p>&nbsp;</p>
 
     <div class="reciclado">
       <span>impreso en papel reciclado</span>
@@ -137,15 +133,42 @@
 
   </div>
 
-
-
-  <div class="firma" style="margin-top: 25px">
-    <span class="nombre">FIRMA DEL COMPRADOR:</span>
-    <span class="cedula">CEDULA</span>
-    <p class="auth">Recibi la mercaderia en buen estado y completa segun lo indicado en Factura R-<%= consecutivoPlace + "#{@documento.Consecutivo}" %></p>
   </div>
   
-  
-</div>
-  
+  <div  class="row-fluid boletaFirma" style="border-top: 3px dashed #777;margin-top: 15px;padding-top: 15px;">
+    <div style="border: 1px solid #999; padding: 5px 15px 2px 15px;">
+      <div class="row-fluid" style="margin-top: 5px;">
+        <div class="inlineBlock alignTop" style="width: 60%;border-right: 1px solid #ddd;">
+          
+          <h3 class="red inlineBlock" style="margin-left: 5px; margin-right: 20px;text-align: right">Mercaderia Entregada </h3>
+          <ul class="unstyled">
+          <% for movimiento in @movimientos: %>
+              <% producto = Producto.find movimiento.Producto %>
+              <li>
+                <span class="inlineBlock" style="width: 20px;" ><%= movimiento.ProductoCantidad %></span>
+                <span class="inlineBlock" style="font-size: 11px"><%= producto.Name.capitalize() %></span>
+                <span class="inlineBlock pull-right" style="text-align: right;font-size: 11px;margin-right: 20px;" ><%= movimiento.ProductoPrecio.toMoney() %></span>
+              </li>
+
+            <% end %>
+          </ul>
+        </div>
+    
+        <div class="inlineBlock" style="width: 37%;margin-left: 2%;">
+            <img align="left" style="width: 50px;" class="inlineBlock" src="images/invoice/images/logo.jpg">
+            
+            <h3 class=" red" style="text-align: right">Factura N&#176; <%= @documento.Consecutivo %></h3>
+            <p class="auth">Recibi la mercaderia en buen estado y estoy autorizado por <%= cliente.Name?.capitalize()  %> para recibirla. </p>
+            <p>Nombre: </p>
+            
+            <div class="" style="padding: 35px 10px 5px 10px;background-color:#ddd;border: 1px solid #999;margin-bottom: 4px;">
+              <span class="inlineBlock" style="width: 40%;text-align:center;border-top: 1px solid #999">Firma</span>
+              <span class="inlineBlock pull-right" style="width: 40%;text-align:center;border-top: 1px solid #999">Cedula</span>
+            </div>
+          </div>
+        </div>
+    <p style="font-size: 10px;line-height:12px;" class="noMargin">Renuncio a mi domicilio y trámite de juicio, doy por aceptadas la firma Original en poder del Cliente para trámite de pago y las condiciones del Código de Comercio en su Art. 460</p>
+      </div>
+
+    </div>
 </div>

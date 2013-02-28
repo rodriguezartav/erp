@@ -7,6 +7,10 @@ class Ruta extends Spine.Model
 
   toString: =>
     return @Name
+  
+  updateName: =>
+    @Name = "#{@Fecha} #{@Camion} #{@Chofer}"
+    
 
   @findByName: (name) =>
     return @findByAttribute "Name" , name

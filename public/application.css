@@ -926,7 +926,11 @@ footer a{margin-top:15px;color:#049cdb;}footer a i{vertical-align:middle;font-si
 .toggle-button span.success{color:#fefefe;background:#62c462;background-image:-webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #62c462), color-stop(100%, #51a351));background-image:-webkit-linear-gradient(bottom, #62c462, #51a351);background-image:-moz-linear-gradient(bottom, #62c462, #51a351);background-image:-o-linear-gradient(bottom, #62c462, #51a351);background-image:linear-gradient(bottom, #62c462, #51a351);}
 .toggle-button span.warning{color:#fefefe;background:#dbb450;background-image:-webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #dbb450), color-stop(100%, #f89406));background-image:-webkit-linear-gradient(bottom, #dbb450, #f89406);background-image:-moz-linear-gradient(bottom, #dbb450, #f89406);background-image:-o-linear-gradient(bottom, #dbb450, #f89406);background-image:linear-gradient(bottom, #dbb450, #f89406);}
 .toggle-button span.danger{color:#fefefe;background:#ee5f5b;background-image:-webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #ee5f5b), color-stop(100%, #bd362f));background-image:-webkit-linear-gradient(bottom, #ee5f5b, #bd362f);background-image:-moz-linear-gradient(bottom, #ee5f5b, #bd362f);background-image:-o-linear-gradient(bottom, #ee5f5b, #bd362f);background-image:linear-gradient(bottom, #ee5f5b, #bd362f);}
-.invoice{position:relative;-webkit-print-color-adjust:exact;}.invoice .original{height:890px;}.invoice .original .show_on_copy{display:none !important;}
+.invoice{position:relative;-webkit-print-color-adjust:exact;}.invoice .original{height:890px;}.invoice .original.copiaTransporte .invoiceHeader{margin-bottom:25px;}
+.invoice .original.copiaTransporte .productosPlaceHolder{height:320px;margin-top:0px;}
+.invoice .original.copiaTransporte .invoiceFooter{margin-top:5px;page-break-after:avoid;}
+.invoice .original.copiaTransporte .boletaFirma{page-break-after:always;}
+.invoice .original .show_on_copy{display:none !important;}
 .invoice .original .logoInfo{color:#666;}.invoice .original .logoInfo strong{color:#555;}
 .invoice .original .invoiceHeader .factura .fecha{color:#555;}
 .invoice .original .invoiceHeader .factura .facturaLabel{color:#ef4034;}
