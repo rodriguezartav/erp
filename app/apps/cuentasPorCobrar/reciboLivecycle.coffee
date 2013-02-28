@@ -3,10 +3,8 @@ Spine = require('spine')
 Pago = require("models/pago")
 Cliente = require("models/cliente")
 User = require("models/user")
-
 LocalPago = require("models/transitory/pago")
 LocalPagoItem = require("models/transitory/pagoItem")
-
 SinglePago = require("apps/cuentasPorCobrar/singlePago")
 
 class ReciboLivecycle extends Spine.Controller
@@ -55,9 +53,6 @@ class ReciboLivecycle extends Spine.Controller
     @html require("views/apps/cuentasPorCobrar/reciboLivecycle/layout")(ReciboLivecycle)
     @setVariables()
     @reload()
-    
-  reloadSaldos: =>
-
 
   reload: =>
     @sections.empty()
@@ -71,9 +66,7 @@ class ReciboLivecycle extends Spine.Controller
     search = @txt_search.val() 
     @txt_search.val ""
     Pago.ajax().query( { search: search } , afterSuccess: @render ) 
-    
-  #renderSearch: =>
-    #@listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemSearch")( Pago.group_by_recibo(Pago.all()) )
+
 
   renderGuardados: =>
     @listSearch.html require("views/apps/cuentasPorCobrar/reciboLivecycle/itemGuardado")(LocalPago.all() )
