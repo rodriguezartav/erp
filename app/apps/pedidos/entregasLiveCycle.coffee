@@ -202,8 +202,6 @@ class EntregasLiveCycle extends Spine.Controller
   reset: =>
     Documento.unbind "update" , @renderDocumentos
     Documento.unbind "push_success" , @renderDocumentos
-    @rutas.reset()
-    @rutas = null
     @release()
     @navigate "/apps"
 
