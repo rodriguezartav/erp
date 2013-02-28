@@ -5,6 +5,20 @@
 <% Movimiento = require("models/movimiento") %>
 <% Producto = require("models/producto") %>
 
+<% if doc == false : %>
+
+  <li>
+    
+    <h5 class="inlineBlock">Factura Anulada</h5>
+    
+    <a href="https://na7.salesforce.com/<%= @documentoId %>" target="_blank">Revisar Documento</a>
+    
+    <a data-id="<%= @documentoId %>" class="btn_remove_documento">
+      <i data-id="<%= @documentoId %>" class="icon-remove btn_remove_documento inlineblock" style="font-size: 11px;"></i> Eliminar Documento
+    </a>
+  </li>
+  
+<% else : %>
 
 <li style="position: relative">
   
@@ -22,9 +36,7 @@
      <% end %>
     N&#176;:<%= doc.Consecutivo %>
     <h5 class="inlineBlock"><%= cliente.Name?.capitalize() %></h5>
-    
 
-    
   </div>
 
   <div class=" inlineBlock" style="float: right">
@@ -85,3 +97,5 @@
    </div>
 
 </li>
+
+<% end %>

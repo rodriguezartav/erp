@@ -36,7 +36,7 @@ class FacturaEntregada extends Spine.Model
   @queryFilter: (options ) =>
     return "" if !options
     filter = ""
-    filter = @queryFilterAddCondition(" Tipo_de_Documento__c = 'FA' and Entregado__c  = false and Total__c > 0 and Estado__c != 'Anulado'"  ,  filter)  if options.sinEntregar
+    filter = @queryFilterAddCondition(" Tipo_de_Documento__c = 'FA' and Entregado__c  = false and Total__c > 0"  ,  filter)  if options.sinEntregar
     filter = @queryFilterAddCondition(" InvoiceVersion__c       = 2"                ,  filter)  if options.v2
     filter = @queryOrderAddCondition(" order by Consecutivo__c "                   , filter)  
     filter
