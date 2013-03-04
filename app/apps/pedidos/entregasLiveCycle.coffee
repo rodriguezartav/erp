@@ -3,7 +3,7 @@ Documento = require("models/socketModels/facturaEntregada")
 Movimiento = require("models/movimiento")
 Cliente = require("models/cliente")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
-Ruta  =  require("models/transitory/ruta")
+Ruta  =  require("models/ruta")
 Rutas =  require("apps/pedidos/entregasLiveCycle_RutasView")
 
 class EntregasLiveCycle extends Spine.Controller
@@ -83,7 +83,6 @@ class EntregasLiveCycle extends Spine.Controller
       return false if @filters.indexOf(item.generalTransporte()) == -1
       return true if item.hasEntregadoRuta() == false
       return false
-
     @renderHtml documentos
     
   groupByFecha: (documentos) =>
@@ -96,17 +95,17 @@ class EntregasLiveCycle extends Spine.Controller
 
   renderHtml: (documentos) =>
     mapFecha = @groupByFecha(documentos)
-    
+
     @sinEntregar.html ""
     for index,list of mapFecha
       list = list.sort (a,b) ->
         #return a.Consecutivo - b.Consecutivo
         return Date.parse(a.FechaPedido) - Date.parse(b.FechaPedido)
-      
+
       @sinEntregar.append "<li class='label'>#{index.toMMMDate()}</li>"
       for documento in list
         @sinEntregar.append require("views/apps/pedidos/entregasLiveCycle/item")(documento)
-    
+
     @rutas.render()
 
   onDropdownClick: (e) ->

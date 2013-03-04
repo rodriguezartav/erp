@@ -3,7 +3,7 @@ Documento = require("models/socketModels/facturaEntregada")
 Movimiento = require("models/movimiento")
 Cliente = require("models/cliente")
 PedidoPreparado = require("models/socketModels/pedidoPreparado")
-Ruta  =  require("models/transitory/ruta")
+Ruta  =  require("models/ruta")
 Rutas =  require("apps/pedidos/entregasLiveCycle_RutasView")
 
 class entregasLiveCycle_RutasView extends Spine.Controller
@@ -32,6 +32,7 @@ class entregasLiveCycle_RutasView extends Spine.Controller
  
   constructor: (@el , @print , @entregasLiveCycle) ->
     super
+    Ruta.destroyAll()
     Ruta.bind "create update destroy" , @render
     Documento.bind "push_success" , @render
 

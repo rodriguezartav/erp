@@ -2,7 +2,7 @@
 <% cliente = Cliente.exists @Cliente  %>
 <% Movimiento = require("models/movimiento") %>
 <% Producto = require("models/producto") %>
-<% Ruta = require("models/transitory/ruta") %>
+<% Ruta = require("models/ruta") %>
 <% fechaPedido = new Date(Date.parse(@FechaPedido))  %>
 
 <li style="height: 26px;" data-transporte="<%= @generalTransporte() %>" class="documentoSinEntregar smallMargin" data-id="<%= @id %>">
