@@ -28,10 +28,10 @@
     
   <ul class="pedidoItems unstyled mobileList">
     <% for pedido in @Pedidos:  %>
-    <% producto = Producto.find(pedido.Producto)  %>
+    <% producto = Producto.exists(pedido.Producto)  %>
   
     <li>
-      <h5><%= producto.Name?.capitalize() %></h5>
+      <h5><%= producto?.Name?.capitalize() %></h5>
        <span> <i class="icon-chevron-up"></i><%= pedido.Cantidad %> </span>
 
         <span> 

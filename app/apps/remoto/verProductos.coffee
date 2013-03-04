@@ -51,7 +51,6 @@ class VerProductos extends Spine.Controller
 
   renderGrupos: (categoria) =>
     grupos = []
-    console.log categoria
     for producto in Producto.all()
       grupos.push producto.Grupo if grupos.indexOf(producto.Grupo) == -1 and producto.Categoria == categoria
     @productosList.html require("views/apps/remoto/productos/grupoItem")(grupos)
@@ -66,6 +65,10 @@ class VerProductos extends Spine.Controller
   renderProductos: (grupo) =>
     productos = Producto.select (item) =>
       return true if item.Grupo == grupo
+    
+    productos = productos.sort (a,b) ->
+      return a.CodigoExterno - b.CodigoExterno
+    
     @productosList.html require("views/apps/remoto/productos/productoItem")(productos)
  
   onBackClick: =>

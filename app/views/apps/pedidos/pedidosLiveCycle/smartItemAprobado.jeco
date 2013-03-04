@@ -27,22 +27,22 @@
     
     <ul class="pedidoItems unstyled mobileList">
       <% for pedido in @Pedidos:  %>
-      <% producto = Producto.find(pedido.Producto)  %>
-  
-      <li>
-        <h5><%= producto.Name?.capitalize() %></h5>
-         <span> <i class="icon-chevron-up"></i><%= pedido.Cantidad %> </span>
+        <% producto = Producto.exists(pedido.Producto)  %>
 
-          <span> 
-            <i class="icon-money"></i>
-            <%= pedido.Precio?.toMoney?() %>
-          </span>
+        <li>
+          <h5><%= producto?.Name?.capitalize() %></h5>
+           <span> <i class="icon-chevron-up"></i><%= pedido.Cantidad %> </span>
 
-          <span> 
-            <i class="icon-adjust"></i><%= pedido.Descuento %>
-          </span>
+            <span> 
+              <i class="icon-money"></i>
+              <%= pedido.Precio?.toMoney?() %>
+            </span>
 
-      </li>
+            <span> 
+              <i class="icon-adjust"></i><%= pedido.Descuento %>
+            </span>
+
+        </li>
       <% end  %>
     </ul>
 

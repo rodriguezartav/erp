@@ -44,6 +44,7 @@ class EntregasLiveCycle extends Spine.Controller
     @rutas = new Rutas(el: @src_rutas , print: @print , entregasLiveCycle: @)
     @filters = ["Cliente","Agente","Transporte","Rodco"]
     Documento.destroyAll()
+
     Documento.bind "update" , @renderDocumentos
 
     Documento.bind "push_success" , @renderDocumentos
