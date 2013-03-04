@@ -23,7 +23,6 @@ class EntregasLiveCycle extends Spine.Controller
     "click .btn_imprimir" : "onBtnImprimir"
     "click .btn_imprimir_rosada" : "onBtnImprimirRosada"
 
-
   elements: 
     ".print" : "print"
     ".src_sinEntregar" : "sinEntregar"
@@ -76,14 +75,18 @@ class EntregasLiveCycle extends Spine.Controller
       return true if item.hasEntregadoRuta() == false
       return false
     @renderHtml documentos
-  
+
   renderDocumentos:  =>
     return false if Movimiento.count() == 0 and Documento.count() ==0
-    documentos = Documento.select (item) =>
-      return false if @filters.indexOf(item.generalTransporte()) == -1
-      return true if item.hasEntregadoRuta() == false
-      return false
-    @renderHtml documentos
+    pending = []
+    for documento in Documento.all()
+      if documento.hasEntregadoRuta() == false
+        pending.push documento
+      else
+        if !Ruta.findByName(documento.EntregadoRuta) then Ruta.createFromString documento.EntregadoRuta
+    
+    @renderHtml pending
+    @rutas.render()
     
   groupByFecha: (documentos) =>
     mapFecha = {}
@@ -99,14 +102,11 @@ class EntregasLiveCycle extends Spine.Controller
     @sinEntregar.html ""
     for index,list of mapFecha
       list = list.sort (a,b) ->
-        #return a.Consecutivo - b.Consecutivo
         return Date.parse(a.FechaPedido) - Date.parse(b.FechaPedido)
 
       @sinEntregar.append "<li class='label'>#{index.toMMMDate()}</li>"
       for documento in list
         @sinEntregar.append require("views/apps/pedidos/entregasLiveCycle/item")(documento)
-
-    @rutas.render()
 
   onDropdownClick: (e) ->
     return false if !e.saved;
@@ -132,16 +132,16 @@ class EntregasLiveCycle extends Spine.Controller
 
   onBtnAddToRuta: (e) =>
     target = $(e.target)
-    rutaId = target.data "ruta"
-    ruta = Ruta.find rutaId
+    rutaName = target.data "ruta"
+    ruta = Ruta.findByName rutaName
     docId = target.data("id")
-    ruta.Documentos.push docId
-    ruta.save()
+
     
     doc = Documento.find docId
     doc.EntregadoRuta = ruta.toString()
     doc.save()
     @updateDocumento(doc);
+    
     
     showInfo = false
     for documento in Documento.findAllByAttribute("Cliente" , doc.Cliente)

@@ -1,7 +1,7 @@
 Spine = require('spine')
 
 class Ruta extends Spine.Model
-  @configure "Ruta" , "Fecha" , "Camion" , "Chofer" ,  "Documentos" , "Name" , "Enviado"
+  @configure "Ruta" , "Fecha" , "Camion" , "Chofer" , "Name" , "Enviado"
  
   toString: =>
     return @Name
@@ -19,12 +19,12 @@ class Ruta extends Spine.Model
     ruta = Ruta.create Name: name , Fecha: attr.Fecha , Chofer: attr.Chofer, Camion: attr.Camion, Documentos: [] , Enviado: false
     return ruta
 
-  @tempFromString: (string) =>
+  @createFromString: (string) =>
+    return false if @findByName(string)
     parts =  string.replace("*","").split " "
     fecha =  parts[0]
     camion = parts[1]
     chofer = parts[2]
-    return Name: string , Fecha: fecha , Camion: camion , Chofer: chofer , Documentos: []
+    return @create Name: string , Fecha: fecha , Camion: camion , Chofer: chofer
 
 module.exports = Ruta
-

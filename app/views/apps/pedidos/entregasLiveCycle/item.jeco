@@ -42,8 +42,8 @@
     
          <% for ruta in Ruta.all() : %>
            <li>
-             <a class="btn_add_to_ruta" data-ruta="<%= ruta.id %>" data-id="<%= @id %>" >
-               <i data-ruta="<%= ruta.id %>" data-id="<%= @id %>" class="icon-arrow-right"></i>Entregar el <%= ruta.toString() %>
+             <a class="btn_add_to_ruta" data-ruta="<%= ruta.Name %>" data-id="<%= @id %>" >
+               <i data-ruta="<%= ruta.Name %>" data-id="<%= @id %>" class="icon-arrow-right"></i>Entregar el <%= ruta.toString() %>
              </a>
            </li>
          <% end %>

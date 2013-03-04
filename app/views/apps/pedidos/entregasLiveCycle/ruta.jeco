@@ -1,3 +1,6 @@
+<% Documento = require("models/socketModels/facturaEntregada") %>
+
+
 <% fecha = new Date(Date.parse("#{@Fecha} 00:00")).toArray() %>
 <li class="span3 ruta rutaLi" data-name="<%= @Name %>" style="width: 168px;">
 
@@ -10,8 +13,7 @@
           <li>
                 <a> <input  data-name="<%= @Name %>" class="span8 inlineBlock txtRutaDetail" value="<%= @Fecha %>" data-type="Fecha"   placeholder="Empaque" /></a>
            </li>
-           
- 
+
       <li>
              <a> 
              <input data-name="<%= @Name %>" class="span5 inlineBlock txtRutaDetail" value="<%= @Camion %>" data-type="Camion"   placeholder="Empaque" />
@@ -66,8 +68,8 @@
   <h5><%= @Camion %> - <%= @Chofer %></h5>
 
   <ul class="documentoList unstyled whiteList">
-    <% for docId in @Documentos: %>
-      <%- require("views/apps/pedidos/entregasLiveCycle/rutaItem")(ruta: @Name , documentoId: docId) %>
+    <% for doc in Documento.findByRuta @Name: %>
+      <%- require("views/apps/pedidos/entregasLiveCycle/rutaItem")(ruta: @Name , doc: doc) %>
     <% end %>
     
 

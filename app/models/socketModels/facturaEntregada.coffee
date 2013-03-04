@@ -33,6 +33,9 @@ class FacturaEntregada extends Spine.Model
     else
       return "Transporte"
 
+  @findByRuta: (rutaName) ->
+    return @findAllByAttribute "EntregadoRuta" , rutaName
+
   @queryFilter: (options ) =>
     return "" if !options
     filter = ""

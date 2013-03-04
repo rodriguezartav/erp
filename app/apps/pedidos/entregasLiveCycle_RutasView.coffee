@@ -38,7 +38,6 @@ class entregasLiveCycle_RutasView extends Spine.Controller
 
   render: =>
     rutas = Ruta.all()
-    rutas = @createRutasFromDocumentos() if rutas.length == 0
     rutas = rutas.sort (a,b) ->
       f1 = new Date(a.Fecha)
       f2 = new Date(b.Fecha)
@@ -46,23 +45,6 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     @html require("views/apps/pedidos/entregasLiveCycle/ruta")(rutas)
 
     @el.width( ( 168 * ( rutas.length + 1 ) ) + 'px')
-
-
-  createRutasFromDocumentos: =>
-    documentos = Documento.select (item) ->
-      return false if item.Entregado
-      return true if item.hasEntregadoRuta()
-      return false
-
-    tempRutas = {}
-    for documento in documentos
-      ruta = tempRutas[documento.EntregadoRuta] or Ruta.tempFromString documento.EntregadoRuta
-      ruta.Documentos.push documento.id
-      tempRutas[documento.EntregadoRuta]  = ruta
-
-    rutas = []
-    rutas.push ruta for index,ruta of tempRutas
-    return rutas
 
   onTxtEntregadoDetailClick: (e) =>
     $(e.target).select()
@@ -113,8 +95,9 @@ class entregasLiveCycle_RutasView extends Spine.Controller
   onRutaRemove: (e) =>
     target = $(e.target)
     rutaLi = target.parents(".rutaLi")
-    ruta = Ruta.findByName rutaLi.data "name"
-    return Spine.trigger "show_lightbox", "showError" , error: "La ruta tiene documentos, borrelos primero." if ruta.Documentos.length > 0
+    rutaName = rutaLi.data "name"
+    return Spine.trigger "show_lightbox", "showError" , error: "La ruta tiene documentos, borrelos primero." if Documento.findByRuta(rutaName).length > 0
+    ruta = Ruta.findByName rutaName
     ruta.destroy()
 
   onDocumentoRemove: (e) =>
@@ -153,7 +136,7 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     target = $(e.target)
     rutaLi = target.parents(".rutaLi")
     rutaName = rutaLi.data("name")
-    ruta = Ruta.tempFromString rutaName
+    ruta = Ruta.findByName rutaName
     @print.html require("views/apps/pedidos/entregasLiveCycle/printRuta")(ruta)
     
     for doc in Documento.findAllByAttribute "EntregadoRuta" , rutaName

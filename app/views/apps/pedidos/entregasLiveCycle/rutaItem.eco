@@ -1,6 +1,5 @@
-<% Documento = require("models/socketModels/facturaEntregada") %>
+<% doc = @doc  %>
 <% Cliente = require("models/cliente") %>
-<% doc = Documento.exists @documentoId  %>
 <% cliente = Cliente.exists doc.Cliente %>
 <% Movimiento = require("models/movimiento") %>
 <% Producto = require("models/producto") %>
