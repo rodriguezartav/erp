@@ -42,7 +42,6 @@
 
      <% end %>
     N&#176;:<%= doc.Consecutivo %>
-    <h5 class="inlineBlock"><%= cliente.Name?.capitalize() %></h5>
 
   </div>
 
@@ -63,6 +62,16 @@
        <li>
         <a><%= doc.Transporte %> en <%= cliente.RutaTransporte  %></a>
        </li>
+       
+       
+       <% if doc.Observacion: %>
+         <li class="divider"></li>
+       
+         <li>
+          <a><%= doc.Observacion %></a>
+         </li>
+       
+       <% end %>
        
        <li class="divider"></li>
        

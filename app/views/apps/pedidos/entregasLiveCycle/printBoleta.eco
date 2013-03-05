@@ -8,29 +8,33 @@
   <div style="margin-top: 5px;">
     <img class="" style="width: 35%" src="images/invoice/images/logo-copy.jpg"/>
 
-    <h4 class="inlineBlock pull-right" style="text-align: center;margin-top: 8px;">
-    Lista Empaque<br/>
-    N&#176;:<%= @documento.Consecutivo %> 
-    </h4>
+    <h5 class="inlineBlock pull-right" style="text-align: center;margin-top: 8px;">
+    N&#176;:<%= @documento.Consecutivo %><br/>
+    <%= @documento.Transporte %>
+    </h5>
+
   </div>
 
-  <h4 class="name inlineBlock" style="line-height:23px; margin-top: 7px;"><%= cliente.Name?.capitalize() %></h4>
+  <h4 class="name inlineBlock" style="line-height:23px; margin-top: 5px;font-weight:800;"><%= cliente.Name?.capitalize() %></h4>
+  <h6 style="text-transform: lowercase;font-size: 11px;font-weight:300; line-height: 11px;margin-bottom: 3px;height: 12px;overflow:hidden;border-bottom: 1px solid #ddd;">
+  
+    <%= @documento.Observacion or cliente.Direccion %>
+  
+  </h6>
 
   <div>
   <% for movimiento in @movimientos: %>
     <% producto = Producto.find movimiento.Producto %>
-    <div style=";font-size: 14px;padding: 3px 0px;">
-        <input type="checkbox" class="inlineBlock pull-left" style="margin-right: 8px;"/>
+    <div style="font-size: 13px;padding: 1px 0px;">
 
-       <span class="inlineBlock pull-right" style="width: 43px;font-weight: 800;font-size: 14px;font-family: Arial;text-align: right;"><%= movimiento.ProductoCantidad %></span>
-       
+    <input type="checkbox" class="inlineBlock pull-right" style="margin-left: 8px;"/>
+
+       <span class="inlineBlock pull-right" style="width: 43px;font-weight: 800;font-size: 13px;font-family: Arial;text-align: right;"><%= movimiento.ProductoCantidad %></span>
+
        <%= producto.Name?.capitalize() %>  
 
     </div>
   <% end %>
   </div>
-
-    <span style="border-top: 1px solid #333;margin-top:5px;position: fixed;bottom:15px;left: 25px;width: 40%;"> Empacado Por</span>
-    <span style="border-top: 1px solid #333;margin-top:5px;position: fixed;bottom:15px;right: 10px;width: 40%;">Revisado Por</span>
 
 </div>
