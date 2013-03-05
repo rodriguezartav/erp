@@ -163,8 +163,6 @@ class EntregasLiveCycle extends Spine.Controller
     doc.EntregadoEmpacado = true;
     doc.save()
     @updateDocumento(doc)
-    
-
 
   onBtnImprimirRosada: (e) =>
     target = $(e.target)
@@ -173,7 +171,6 @@ class EntregasLiveCycle extends Spine.Controller
     mov = Movimiento.findAllByAttribute("Documento" , doc.id)
     @print.html require("views/apps/pedidos/entregasLiveCycle/printRosada")(documento: doc, movimientos: mov)
     window.print()
-
 
   onSaveRuta: (e) =>
     for item in @txt_value
@@ -190,7 +187,7 @@ class EntregasLiveCycle extends Spine.Controller
 
   updateDocumento: (documento) =>
      documentos = Documento.salesforceFormat( [documento]  , true) 
-     
+
      data =
         class: Documento
         restRoute: "Documento"
@@ -198,7 +195,7 @@ class EntregasLiveCycle extends Spine.Controller
         restData: documentos: documentos
 
      Documento.rest( data , afterError: @onUpdateDocumentoError ) 
-  
+
   updateDocumentoError: (error_obj) =>
     Spine.trigger "show_lightbox" , "showError" , error_obj 
 
@@ -212,7 +209,6 @@ class EntregasLiveCycle extends Spine.Controller
       restData: documentos: documentos
 
     Spine.trigger "show_lightbox" , "rest" , data , callback
-
 
   reset: =>
     Documento.unbind "update" , @renderDocumentos

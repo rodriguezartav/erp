@@ -3,7 +3,7 @@
 <% cliente = Cliente.find @documento.Cliente  %>
 
 
-<div style="height: 400px; overflow: hidden">
+<div style="height: 385px; overflow: hidden">
 
   <div style="margin-top: 10px;">
     <img class="" style="width: 35%" src="images/invoice/images/logo-copy.jpg"/>
@@ -17,7 +17,7 @@
   <h4 class="name inlineBlock" style="line-height:23px; margin-top: 15px;"><%= cliente.Name?.capitalize() %></h4>
 
 
-  <div style="height: 350px">
+  <div>
   <% for movimiento in @movimientos: %>
     <% producto = Producto.find movimiento.Producto %>
     <div style=";font-size: 13px;padding: 3px 0px;">
