@@ -29,7 +29,7 @@
   <div style="width: 79%;overflow: hidden" class="inlineBlock">
     
     <% color = if doc.EntregadoEmpacado then "yellow" else "red"  %>
-    <% if doc.hasEntregadoEmpaque() and !doc.EntregadoEmpacado then color = "green" %>
+    <% if doc.hasEntregadoEmpaque() then color = "green" %>
 
      <% if doc.generalTransporte() == "Cliente" or doc.generalTransporte() == "Agente": %>
       <i data-filter="Cliente,Agente" class="<%= color %> icon-user"></i>

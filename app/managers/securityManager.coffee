@@ -73,9 +73,9 @@ class SecurityManager
     @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle , EstadoCuenta , PedidosLiveCycle , VerProductos ,ReciboLivecycle , DepositosLivecycle , FacturasProveedor , PagosProveedor  , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
     @profiles["Ejecutivo Credito"] = [  NotasLivecycle  ,  CuentasLiveCycle , ReciboLivecycle , VerProductos ,FacturasProveedor , EstadoCuenta , PagosAnular , DocumentosAnular ,PedidosLiveCycle ,VerRegistrosResumen , VerRegistros , VerClientes ]
     @profiles["Ejecutivo de Logistica"] = [ EntregasLiveCycle , MovimientoLivecycle , ListasPrecio , VerProductos , TomasInventario  , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes , VerProductos ]
-    @profiles["Ejecutivo Ventas"] = [  PedidosLiveCycle  ,  ReciboLivecycle , VerRegistrosResumen , VerProductos , VerRegistros  , VerClientes ]
-    @profiles["Coordinador"] = [ PedidosLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes , VerProductos ]
-    @profiles["Vendedor"] = [ PedidosLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes ]
+    @profiles["Ejecutivo Ventas"] = [  PedidosLiveCycle  , EntregasLiveCycle  , ReciboLivecycle , VerRegistrosResumen , VerProductos , VerRegistros  , VerClientes ]
+    @profiles["Coordinador"] = [ PedidosLiveCycle , EntregasLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes , VerProductos ]
+    @profiles["Vendedor"] = [ PedidosLiveCycle , EntregasLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes ]
     Spine.bind "login_complete" , @onLoginComplete
 
   onLoginComplete: =>
