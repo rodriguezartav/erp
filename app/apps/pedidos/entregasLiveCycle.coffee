@@ -117,10 +117,11 @@ class EntregasLiveCycle extends Spine.Controller
 
     doc = Documento.find docId
     doc.Entregado = true;
-    doc.EntregadoRuta = 'Entregado Sin Ruta';
-    doc.save()
+    doc.EntregadoRuta = '';
     @updateDocumento(doc);
-    
+    doc.destroy()
+    @renderDocumentos()
+
     showInfo = false
     for documento in Documento.findAllByAttribute("Cliente" , doc.Cliente)
       showInfo = true if !documento.hasEntregadoRuta()
@@ -129,6 +130,7 @@ class EntregasLiveCycle extends Spine.Controller
       cliente = Cliente.find doc.Cliente
       Spine.trigger 'show_lightbox', "showInfo" , "Hay mas facturas de #{cliente.Name}" 
       Spine.trigger "hide_lightbox" , 2000
+    @renderDocumentos()
 
   onBtnAddToRuta: (e) =>
     target = $(e.target)

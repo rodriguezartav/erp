@@ -50,14 +50,14 @@
              </a>
            </li>
          <% end %>
-         
+
+          <li class="divider"></li>
+          
           <li>
             <a class="btn_entregado" data-id="<%= @id %>">
               <i data-id="<%= @id %>" class="icon-ok"></i> Mercaderia fue Entregada
             </a>
           </li>
-          
-          <li class="divider"></li>
           
           <li>
             <a data-id="<%= @id %>" class="  btn_imprimir">
