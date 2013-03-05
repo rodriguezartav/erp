@@ -177,7 +177,7 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     target = $(e.target)
     rutaLi = target.parents(".rutaLi")
     rutaName = rutaLi.data "name"
-    for doc in Documento.findAllByAttribute "EntregadoRuta" , rutaName
+    for documento in Documento.findAllByAttribute "EntregadoRuta" , rutaName
       documento.FechaEntrega = new Date()
       documento.Entregado = true
       documento.save()
