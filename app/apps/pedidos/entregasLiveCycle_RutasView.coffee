@@ -176,19 +176,14 @@ class entregasLiveCycle_RutasView extends Spine.Controller
   onCompletarRuta: (e) =>
     target = $(e.target)
     rutaLi = target.parents(".rutaLi")
-    ruta = Ruta.findByName rutaLi.data "name"
-
-    @ruta = ruta
-    documentos = []
-    for doc in ruta.Documentos
-      documento = Documento.find doc
+    rutaName = rutaLi.data "name"
+    for doc in Documento.findAllByAttribute "EntregadoRuta" , rutaName
       documento.FechaEntrega = new Date()
       documento.Entregado = true
-      documentos.push documento
+      documento.save()
     @entregasLiveCycle.updateDocumentos(documentos , @onCompletarRutaSuccess )
 
   onCompletarRutaSuccess: =>
-    @ruta.destroy?();
     @entregasLiveCycle.reset()
 
   reset: =>
