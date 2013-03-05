@@ -22,20 +22,20 @@
         </li>
 
      <li class="divider"></li>
-
-     <li>
-     <a  class="btn_print_boleta" style="padding-left:9px;padding-right:9px;">  
-       <i  class="icon-print btn_print_boleta inlineBlock " style="font-size: 11px;"></i>
-       Imprimir Boletas de Entrega
-     </a>
-     </li>
      
-        <li>
-        <a  class=" btn_print_ruta" style="padding-left:9px;padding-right:9px;">  
-          <i  class="icon-print btn_print_ruta inlineBlock " style="font-size: 11px;"></i>
-          Imprimir Documentos
-        </a>
-        </li>
+         <li>
+         <a  class=" btn_print_ruta" style="padding-left:9px;padding-right:9px;">  
+           <i  class="icon-print btn_print_ruta inlineBlock " style="font-size: 11px;"></i>
+           Imprimir Ruta
+         </a>
+         </li>
+
+      <li>
+      <a  class=" btn_print_rosadas" style="padding-left:9px;padding-right:9px;">  
+        <i  class="icon-print btn_print_rosadas inlineBlock " style="font-size: 11px;"></i>
+        Imprimir Documentos
+      </a>
+      </li>
         
         <li>
         <a class="btn_filter_rutas" style="padding-left:9px;padding-right:9px;">

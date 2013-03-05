@@ -160,6 +160,10 @@ class EntregasLiveCycle extends Spine.Controller
     @print.html require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
     @print.find("div:last-child").css("page-break-after","avoid")
     window.print()
+    doc.EntregadoEmpacado = true;
+    doc.save()
+    @updateDocumento(doc)
+    
 
 
   onBtnImprimirRosada: (e) =>

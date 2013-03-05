@@ -22,10 +22,13 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     "keypress .txtRutaDetail" : "onTxtRutaDetailEnter"
 
     "click .btn_print_ruta" : "onPrintRuta"
-    "click .btn_print_boleta" : "onPrintBoleta"
+    "click .btn_print_rosadas" : "onPrintRosadas"
+    
     "click .btn_completar_ruta"  : "onCompletarRuta"
     "click .btn_filter_rutas" : "onBtnFilterRutas"
     "click .btn_print_ruta_item" : "onPrintRutaItem"
+    
+    "click .btn_print_single_boleta" : "onPrintSingleBoleta"
  
   elements: 
     ".dropdownContainer" : "dropdownContainer"
@@ -138,24 +141,28 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     rutaName = rutaLi.data("name")
     ruta = Ruta.findByName rutaName
     @print.html require("views/apps/pedidos/entregasLiveCycle/printRuta")(ruta)
-    
+    window.print()
+
+  onPrintRosadas: (e) =>
+    target = $(e.target)
+    rutaLi = target.parents(".rutaLi")
+    rutaName = rutaLi.data("name")
+    @print.html ""
     for doc in Documento.findAllByAttribute "EntregadoRuta" , rutaName
       mov = Movimiento.findAllByAttribute("Documento" , doc.id)
       @print.append require("views/apps/pedidos/entregasLiveCycle/printRosada")(documento: doc, movimientos: mov)
     window.print()
 
-  onPrintBoleta: (e) =>
+  onPrintSingleBoleta: (e) =>
     target = $(e.target)
-    rutaLi = target.parents(".rutaLi")
-    rutaName = rutaLi.data "name"
-    @print.html ""
-
-    for doc in Documento.findAllByAttribute "EntregadoRuta" , rutaName
-      if !doc.hasEntregadoEmpaque()
-        mov = Movimiento.findAllByAttribute("Documento" , doc.id)
-        @print.append require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
-    @print.find("div:last-child").css("page-break-after","avoid")
+    docId = target.data "id"
+    doc = Documento.find docId
+    mov = Movimiento.findAllByAttribute("Documento" , doc.id)
+    @print.html require("views/apps/pedidos/entregasLiveCycle/printBoleta")(documento: doc, movimientos: mov)
     window.print()
+    doc.EntregadoEmpacado = true;
+    doc.save()
+    @entregasLiveCycle.updateDocumento(doc)
 
   onPrintRutaItem: (e) =>
     target = $(e.target)

@@ -2,21 +2,40 @@
 <% Producto = require("models/producto")  %>
 <% cliente = Cliente.find @documento.Cliente  %>
 
-<div style="width: 235px; page-break-inside:avoid; page-break-after: always">
-<h5>RODCO <span class="inlineBlock pull-right">Boleta de Empaque</span></h5>
-<h3 class="name" style="line-height:15px;width: 235px;overflow:hidden;"><%= cliente.Name.capitalize() %></h3>
-<h5>N&#176;:<%= @documento.Consecutivo %> <span class="inlineBlock pull-right"><%= @documento.Transporte %></span></h5>
 
- <% for movimiento in @movimientos: %>
+<div style="height: 400px; overflow: hidden">
+
+  <div style="margin-top: 10px;">
+    <img class="" style="width: 35%" src="images/invoice/images/logo-copy.jpg"/>
+
+    <h4 class="inlineBlock pull-right" style="text-align: center;margin-top: 8px;">
+    Lista Empaque<br/>
+    N&#176;:<%= @documento.Consecutivo %> 
+    </h4>
+  </div>
+
+  <h4 class="name inlineBlock" style="line-height:23px; margin-top: 15px;"><%= cliente.Name?.capitalize() %></h4>
+
+
+  <div style="height: 350px">
+  <% for movimiento in @movimientos: %>
     <% producto = Producto.find movimiento.Producto %>
-    <div style="border-top: 1px solid #333;font-size: 13px;padding: 3px 0px;">
-      <span class="inlineBlock" style="width: 40px;font-weight: 800;font-size: 14px;font-family: Arial;"><%= movimiento.ProductoCantidad %></span> <%= producto.Name.capitalize() %>  
+    <div style=";font-size: 13px;padding: 3px 0px;">
+        <input type="checkbox" class="inlineBlock pull-left" style="margin-right: 8px;"/>
+
+       <span class="inlineBlock pull-right" style="width: 43px;font-weight: 800;font-size: 14px;font-family: Arial;text-align: right;"><%= movimiento.ProductoCantidad %></span>
+       
+       <%= producto.Name?.capitalize() %>  
+     
+
     </div>
   <% end %>
-  
-  <div>
-    <span class="inlineBlock" style="text-align:center;width:40%;border-bottom: 1px solid #333;margin-top:5px"> Empacado Por  </span>
-    <span class="inlineBlock pull-right" style="text-align:center;width:40%;border-bottom: 1px solid #333;margin-top:5px">Revisado Por  </span>
   </div>
-  
+
+
+    <span style="border-top: 1px solid #333;margin-top:5px;position: fixed;bottom:10px;left: 25px;width: 40%;"> Empacado Por  </span>
+    <span style="border-top: 1px solid #333;margin-top:5px;position: fixed;bottom:10px;right: 10px;width: 40%;">Revisado Por  </span>
+
+
+
 </div>

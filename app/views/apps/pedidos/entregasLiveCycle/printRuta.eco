@@ -6,7 +6,6 @@
     <div class="invoiceHeader">
       <div class="logo">
         <img class="hide_on_copy" src="images/invoice/images/logo.jpg"/>
-        <img class="show_on_copy" src="images/invoice/images/logo-copy.jpg"/>
       </div>
 
       <div class="logoInfo">
@@ -38,7 +37,6 @@
     </tr>
 
     <% docs = []  %>
-    <% console.log @ %>
     <% for doc in Documento.findAllByAttribute("EntregadoRuta" , @Name) :  %>
       <% cliente = Cliente.exists doc.Cliente %>
       <% docs.push doc: doc , cliente: cliente  %>

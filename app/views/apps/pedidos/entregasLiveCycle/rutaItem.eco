@@ -20,20 +20,25 @@
     
   </li>
   
+  
+  
 <% else : %>
 
 <li style="position: relative">
   
   <div style="width: 79%;overflow: hidden" class="inlineBlock">
     
+    <% color = if doc.EntregadoEmpacado then "yellow" else "red"  %>
+    <% if doc.hasEntregadoEmpaque() and !doc.EntregadoEmpacado then color = "green" %>
+
      <% if doc.generalTransporte() == "Cliente" or doc.generalTransporte() == "Agente": %>
-      <i data-filter="Cliente,Agente" class=" icon-user"></i>
+      <i data-filter="Cliente,Agente" class="<%= color %> icon-user"></i>
 
      <% else if doc.generalTransporte() == "Transporte": %>
-      <i data-filter="Transporte" class=" icon-external-link"></i>
+      <i data-filter="Transporte" class="<%= color %> icon-external-link"></i>
 
      <% else if doc.generalTransporte() == "Rodco": %>    
-      <i data-filter="Rodco" class=" icon-truck"></i>
+      <i data-filter="Rodco" class="<%= color %> icon-truck"></i>
 
      <% end %>
     N&#176;:<%= doc.Consecutivo %>
@@ -50,7 +55,7 @@
        
        <li>
         <a>
-          <%= cliente.Name.capitalize()  %>
+          <%= cliente.Name?.capitalize()  %>
           <i data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-print btn_print_ruta_item inlineblock pull-right" style="font-size: 18px;"></i>
         </a>
        </li>
@@ -81,11 +86,18 @@
         
       <li class="divider"></li>
 
+      <li>
+        <a data-id="<%= doc.id %>" class="btn_print_single_boleta">
+         <i data-id="<%= doc.id %>" class="icon-print btn_print_single_boleta inlineblock" style="font-size: 11px;"></i> Imprimir Boleta
+         </a>
+      </li>
+
        <li>
          <a data-id="<%= doc.id %>" class="btn_remove_documento">
           <i data-ruta="<%= @ruta %>" data-id="<%= doc.id %>" class="icon-remove btn_remove_documento inlineblock" style="font-size: 11px;"></i> Eliminar Documento
           </a>
        </li>
+
 
        <li class="divider"></li>
          <% for movimiento in Movimiento.findAllByAttribute("Documento",doc.id) : %>

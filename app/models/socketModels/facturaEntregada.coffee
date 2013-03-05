@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class FacturaEntregada extends Spine.Model
   @configure "Documento" , "Consecutivo" , "Observacion" , "Transporte",
-    "Cliente" , "Plazo" , "FechaFacturacion" , "Referencia"
+    "Cliente" , "Plazo" , "FechaFacturacion" , "Referencia" , "EntregadoEmpacado"
     "Autorizado" , "FechaEntrega" , "OrdenEntrega","Entregado" , "FechaVencimiento"  , "Total"
     "EntregadoRuta" , "EntregadoEmpaque" , "EntregadoValor" , "EntregadoGuia"  , "FechaEntregaPropuesta" , "FechaPedido"
 

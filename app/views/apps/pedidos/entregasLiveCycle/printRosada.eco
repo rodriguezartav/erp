@@ -37,7 +37,7 @@
 <div class="cliente">
   <img class="hide_on_copy" src="images/invoice/images/icon_user.gif"/>
   <div class="block">
-    <span class="name"><%= cliente.Name.toLowerCase() %></span>
+    <span class="name"><%= cliente.Name?.toLowerCase() %></span>
     <span class="address"><%= cliente.Direccion || "Direccion: "%></span>
     <span class="order">Orden: <%= @documento.Referencia  %></span>
     <span class="tel">Telefono: <%= cliente.Telefono %></span>
@@ -71,7 +71,7 @@
       <tr>
         <td class="codigo"><%= producto.CodigoCorto %></td>
         <td  class="cantidad"><%= movimiento.ProductoCantidad %></td>
-        <td  class="descripcion"><%= producto.Name.capitalize() %></td>
+        <td  class="descripcion"><%= producto.Name?.capitalize() %></td>
         <td  class="precio"><%= movimiento.ProductoPrecio.toMoney() %></td>
         <td  class="descuento"><%= movimiento.Descuento_Unitario %></td>
         <td class="total"><%= movimiento.SubTotal.toMoney() %></td>
@@ -146,7 +146,7 @@
               <% producto = Producto.find movimiento.Producto %>
               <li>
                 <span class="inlineBlock" style="width: 20px;" ><%= movimiento.ProductoCantidad %></span>
-                <span class="inlineBlock" style="font-size: 11px"><%= producto.Name.capitalize() %></span>
+                <span class="inlineBlock" style="font-size: 11px"><%= producto.Name?.capitalize() %></span>
                 <span class="inlineBlock pull-right" style="text-align: right;font-size: 11px;margin-right: 20px;" ><%= movimiento.ProductoPrecio.toMoney() %></span>
               </li>
 

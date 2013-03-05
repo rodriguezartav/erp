@@ -9,17 +9,20 @@
 
   <p class="marginLess inlineBlock alignMiddle" style="width: 79%;overflow: hidden;line-height: 14px;">
    
+   <% color = if @EntregadoEmpacado then "yellow" else "red"  %>
+   <% if @hasEntregadoEmpaque() and !@EntregadoEmpacado then color = "green" %>
+
    <% if @generalTransporte() == "Cliente" or @generalTransporte() == "Agente": %>
-    <i data-filter="Cliente,Agente" class=" icon-user"></i>
+    <i data-filter="Cliente,Agente" class="<%= color %> icon-user"></i>
 
    <% else if @generalTransporte() == "Transporte": %>
-    <i data-filter="Transporte" class=" icon-external-link"></i>
+    <i data-filter="Transporte" class="<%= color %> icon-external-link"></i>
 
    <% else if @generalTransporte() == "Rodco": %>    
-    <i data-filter="Rodco" class=" icon-truck"></i>
+    <i data-filter="Rodco" class="<%= color %> icon-truck"></i>
    
    <% end %>
-  <%=  cliente?.Name.capitalize() %> 
+  <%=  cliente?.Name?.capitalize() %> 
   
   </p>
 
@@ -42,8 +45,8 @@
     
          <% for ruta in Ruta.all() : %>
            <li>
-             <a class="btn_add_to_ruta" data-ruta="<%= ruta.Name %>" data-id="<%= @id %>" >
-               <i data-ruta="<%= ruta.Name %>" data-id="<%= @id %>" class="icon-arrow-right"></i>Entregar el <%= ruta.toString() %>
+             <a class="btn_add_to_ruta" data-ruta="<%= ruta.Name? %>" data-id="<%= @id %>" >
+               <i data-ruta="<%= ruta.Name? %>" data-id="<%= @id %>" class="icon-arrow-right"></i>Entregar el <%= ruta.toString() %>
              </a>
            </li>
          <% end %>
@@ -53,6 +56,8 @@
               <i data-id="<%= @id %>" class="icon-ok"></i> Mercaderia fue Entregada
             </a>
           </li>
+          
+          <li class="divider"></li>
           
           <li>
             <a data-id="<%= @id %>" class="  btn_imprimir">
