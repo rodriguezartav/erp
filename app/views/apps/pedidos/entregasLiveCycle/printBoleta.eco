@@ -8,16 +8,17 @@
   <div style="margin-top: 5px;">
     <img class="" style="width: 35%" src="images/invoice/images/logo-copy.jpg"/>
 
-    <h5 class="inlineBlock pull-right" style="text-align: center;margin-top: 8px;">
+    <h5 class="inlineBlock pull-right" style="text-align: center;margin-top: 4px;line-height: 14px;">
     N&#176;:<%= @documento.Consecutivo %><br/>
-    <%= @documento.Transporte %>
+    <%= @documento.Transporte %><br/>
+    <%= cliente.RutaTransporte %>
     </h5>
 
   </div>
 
-  <h4 class="name inlineBlock" style="line-height:23px; margin-top: 5px;font-weight:800;"><%= cliente.Name?.capitalize() %></h4>
+  <h4 class="name inlineBlock" style="line-height:19px;font-size:15px; margin-top: 5px;font-weight:800;"><%= cliente.Name?.capitalize() %></h4>
   
-  <h6 style="text-transform: lowercase;font-size: 11px; line-height: 11px;margin-bottom: 3px;height: 12px;overflow:hidden;border-bottom: 1px solid #333;">
+  <h6 style="text-transform: lowercase;font-size: 11px;font-weight:300; line-height: 11px;margin-bottom: 3px;color:#333;height: 12px;overflow:hidden;border-bottom: 1px solid #333;">
   
     <%= @documento.Observacion or cliente.Direccion %>
   
