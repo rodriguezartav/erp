@@ -7,11 +7,11 @@
 <% if doc == false : %>
 
   <li>
-    
+
     <h5 class="inlineBlock">Factura Anulada</h5>
-    
+
     <h6><a class="block" href="https://na7.salesforce.com/<%= @documentoId %>" target="_blank">Revisar Documento</a></h6>
-    
+
     <h6>
       <a data-id="<%= @documentoId %>" class="btn_remove_documento">
         <i data-id="<%= @documentoId %>" class="icon-remove btn_remove_documento inlineblock" style="font-size: 11px;"></i> Eliminar Documento
@@ -19,9 +19,7 @@
     </h6>
     
   </li>
-  
-  
-  
+
 <% else : %>
 
 <li style="position: relative">
