@@ -70,11 +70,17 @@
       </ul>
     </div>
 
-    <div class="span9" style="overflow-x: scroll">
-      <ul class=" unstyled  whiteList src_rutas" style="min-height: 500px;">
-      </ul>
+    <div>
+      <div>
+        <a class="btn btn-large pull-right btn_rutas_right"> > </a>
+        <a class="btn btn-large pull-left  btn_rutas_left" style="margin-left: 5px;"> < </a>
+      </div>
+      <div class="span9 rutas_scrollable" style="overflow-x: scroll">
+        <ul class=" unstyled  whiteList src_rutas" style="min-height: 600px;">
+        </ul>
+      </div>
     </div>
-
+    
   </div>
 </div>
 

@@ -1,4 +1,3 @@
-require('lib/setup')
 Spine = require('spine')
 Productos = require("controllers/productos")
 Documento = require("models/documento")
@@ -10,6 +9,8 @@ SmartItemEntrada = require("controllers/smartProductos/smartItemEntrada")
 Proveedores = require("controllers/proveedores")
 Proveedor = require("models/proveedor")
 SingleMovimiento = require("apps/auxiliares/movimiento")
+
+Devolucion = require("")
 
 class MovimientoLivecycle extends Spine.Controller
   @extend Spine.Controller.ViewDelegation

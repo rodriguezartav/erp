@@ -47,8 +47,6 @@
     <% end  %>
   </ul>
 
-     <a data-cliente="<%= @Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"  data-referencia="<%= @Referencia %>" data-newEstado="-1"  class="btn btn-danger aprobar"><i class="icon-ok"></i> Anular</a>
-
      <a data-documento="<%= @Documento  %>"   class="btn btn-success btn_print pull-right"><i class="icon-ok"></i> Imprimir</a>
     
   </div>

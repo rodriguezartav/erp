@@ -15,17 +15,23 @@ class DocumentosAnular extends Spine.Controller
     "click .anularCuenta"  : "anularCuenta"
     "click .anularDocumento"  : "anularDocumento"
     "click .reload" : "reload"
+    "click .btn_search" : "onSearch"
 
   elements: 
     ".src_documentos" : "list"
+    ".txt_search" : "txt_search"
+    
 
   constructor: ->
     super
     @html require("views/apps/procesos/documentosAnular/layout")(@constructor)
+    @beforeSearch()
+    @reload()
+
+  beforeSearch: =>
     CuentaPorPagar.destroyAll()
     Documento.destroyAll()
     @list.empty()
-    @reload()
 
   reload: ->
     Documento.ajax().query( { fecha: "TODAY" } , afterSuccess: @renderDocumentos )
@@ -39,6 +45,10 @@ class DocumentosAnular extends Spine.Controller
      for doc in CuentaPorPagar.all()
        @list.append require("views/apps/procesos/documentosAnular/itemCuenta")(doc)
 
+  onSearch: =>
+    @beforeSearch()
+    Documento.ajax().query( { consecutivo: @txt_search.val() } , afterSuccess: @renderDocumentos )
+    
 
   anularDocumento: (e) =>
     target = $(e.target)

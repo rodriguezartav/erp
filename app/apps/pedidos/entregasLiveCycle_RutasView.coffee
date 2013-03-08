@@ -29,9 +29,13 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     "click .btn_print_ruta_item" : "onPrintRutaItem"
     
     "click .btn_print_single_boleta" : "onPrintSingleBoleta"
+    
+    "click .btn_rutas_right" : "onBtnRutasRight"
+    "click .btn_rutas_left" : "onBtnRutasLeft"
  
   elements: 
     ".dropdownContainer" : "dropdownContainer"
+    ".rutas_scrollable" : "rutasScrollable"
  
   constructor: (@el , @print , @entregasLiveCycle) ->
     super
@@ -117,7 +121,7 @@ class entregasLiveCycle_RutasView extends Spine.Controller
       doc.EntregadoEmpaque = " "
       doc.save()
       @entregasLiveCycle.updateDocumento(doc)
-    
+
     if ruta
       index = ruta.Documentos.indexOf id
       if index > -1
@@ -134,6 +138,13 @@ class entregasLiveCycle_RutasView extends Spine.Controller
       cliente = Cliente.find documento.Cliente
       rutas.addUniqueItem cliente.RutaTransporte
     @entregasLiveCycle.filterByRuta rutas
+
+  onBtnRutasRight: (e) =>
+    console.log e
+    @rutasScrollable.scrollLeft 400
+
+  onBtnRutasLeft: (e) =>
+    @rutasScrollable.scrollLeft 400
 
   onPrintRuta: (e) =>
     target = $(e.target)

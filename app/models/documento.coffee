@@ -37,7 +37,7 @@ class Documento extends Spine.Model
   @queryFilter: (options ) =>
     return "" if !options
     filter =""
-
+    filter = @queryFilterAddCondition("Consecutivo__c = #{options.consecutivo} " ,filter) if options.consecutivo
     filter = @queryFilterAddCondition( "Tipo_de_Documento__c IN ('NC' , 'ND') and ( Autorizado__c = false or Estado__c != 'Impreso'  )" ,  filter)  if options.livecycle
     filter = @queryFilterAddCondition( "Tipo_de_Documento__c = 'FA' and isContado__c = true and isEntregado__c = false" ,  filter)  if options.contadoSinEntregar
     filter = @queryFilterAddCondition(" Saldo__c   != 0"                             ,  filter)  if options.saldo
