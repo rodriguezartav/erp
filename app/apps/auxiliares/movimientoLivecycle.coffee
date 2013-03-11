@@ -49,9 +49,7 @@ class MovimientoLivecycle extends Spine.Controller
     MovimientoItem.ajax().query {livecycle: true } , afterSuccess: @render
 
   render: =>
-
     movimientos = MovimientoItem.findAllByAttribute "IsAplicado" , false
-    console.log movimientos
     movimientos = movimientos.sort (a,b) =>
       return b.Referencia - a.Referencia
 

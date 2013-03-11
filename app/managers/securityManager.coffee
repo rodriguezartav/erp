@@ -71,7 +71,7 @@ class SecurityManager
 
     @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle , EstadoCuenta , PedidosLiveCycle , VerProductos ,ReciboLivecycle , DepositosLivecycle , FacturasProveedor , PagosProveedor  , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
     @profiles["Ejecutivo Credito"] = [  NotasLivecycle  ,  CuentasLiveCycle , ReciboLivecycle , VerProductos ,FacturasProveedor , EstadoCuenta  , DocumentosAnular ,PedidosLiveCycle ,VerRegistrosResumen , VerRegistros , VerClientes ]
-    @profiles["Ejecutivo de Logistica"] = [ EntregasLiveCycle , MovimientoLivecycle , ListasPrecio , VerProductos , TomasInventario  , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes , VerProductos ]
+    @profiles["Ejecutivo de Logistica"] = [ EntregasLiveCycle , MovimientoLivecycle , ListasPrecio , VerProductos , TomasInventario  , DocumentosAnular , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros  , VerClientes , VerProductos ]
     @profiles["Ejecutivo Ventas"] = [  PedidosLiveCycle  , EntregasLiveCycle  , ReciboLivecycle , VerRegistrosResumen , VerProductos , VerRegistros  , VerClientes ]
     @profiles["Coordinador"] = [ PedidosLiveCycle , EntregasLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes , VerProductos ]
     @profiles["Vendedor"] = [ PedidosLiveCycle , EntregasLiveCycle ,ReciboLivecycle ,  VerProductos  , VerClientes ]
@@ -135,6 +135,10 @@ class SecurityManager
       Proveedor.autoQuery = true
       Movimiento.attributes.push('ProductoCosto') 
       Producto.attributes.push("Costo" , "CostoAnterior") 
+
+    else if Spine.session.hasPerfiles([ "IT" ])
+      Cliente.autoQuery         = true
+      Producto.autoQuery        = true
 
     Spine.session.save()
 
