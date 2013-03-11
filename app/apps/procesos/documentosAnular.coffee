@@ -1,6 +1,8 @@
 require('lib/setup')
 Spine = require('spine')
 Documento = require("models/documento")
+Movimiento = require("models/movimiento")
+
 CuentaPorPagar = require("models/cuentaPorPagar")
 
 class DocumentosAnular extends Spine.Controller
@@ -16,6 +18,9 @@ class DocumentosAnular extends Spine.Controller
     "click .anularDocumento"  : "anularDocumento"
     "click .reload" : "reload"
     "click .btn_search" : "onSearch"
+    "click .showItems"  : "onShowItems"
+    "click .txt_item_detail" : "onTxtItemDetailClick"
+    "click .btn_item_action" : "onBtnItemAction"
 
   elements: 
     ".src_documentos" : "list"
@@ -49,6 +54,15 @@ class DocumentosAnular extends Spine.Controller
     @beforeSearch()
     Documento.ajax().query( { consecutivo: @txt_search.val() } , afterSuccess: @renderDocumentos )
     
+  onShowItems: (e) =>
+    target = $(e.target)
+    group = target.parents ".showItemsPlaceHolder"
+    consecutivo = group.data "consecutivo"
+    Movimiento.destroyAll()
+    Movimiento.ajax().query { consecutivo: consecutivo } , afterSuccess: =>
+      ul = group.find ".itemsMenu"
+      ul.html require("views/apps/procesos/documentosAnular/movimientoItemDetail")()
+      ul.append require("views/apps/procesos/documentosAnular/movimientoItem")(Movimiento.all())
 
   anularDocumento: (e) =>
     target = $(e.target)
@@ -78,6 +92,30 @@ class DocumentosAnular extends Spine.Controller
     @list.empty()
     @renderDocumentos()
     @renderCuentasPorPagar()
+
+  onBtnItemAction: (e) =>
+    target = $(e.target)
+    malo = target.data "malo"
+    group = target.parents "ul"
+    referencia = group.find(".txt_referencia").val()
+    observacion = group.find(".txt_observacion").val()
+    id = target.data "id"
+    @devolucionMovimiento(malo,referencia,observacion,id) if referencia and observacion
+
+  devolucionMovimiento: (malo,referencia,observacion,id) =>
+    data =
+       class: Movimiento
+       restRoute: "Anular"
+       restMethod: "Put"
+       restData: id: id , referencia: referencia , observacion: observacion , estaMalo: malo
+    Spine.trigger "show_lightbox" , "rest" , data , @onDevolucionMovimientSuccess   
+  
+  onDevolucionMovimientSuccess: =>
+    @beforeSearch()
+    @reload()
+  
+  onTxtItemDetailClick: (e) =>
+    return false
 
   reset: =>
     @release()

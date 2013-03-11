@@ -1,0 +1,10 @@
+<li>
+  <a>
+  <div class="row-fluid">
+    <textarea class="span8 inlineBlock txt_observacion txt_item_detail" placeholder="Observacion"></textarea>
+    <input class="span4 inlineBlock txt_referencia txt_item_detail" placeholder="Boleta"/>
+  </div>
+  </a>
+</li>
+
+<li class="divider"></li>

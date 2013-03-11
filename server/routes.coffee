@@ -23,7 +23,7 @@ class Routes
       res.send 500
 
     @app.all "/parse/users/?*" , (req,res) ->
-      req.parseController.handleProxy(req,res)
+      #req.parseController.handleProxy(req,res)
 
     @app.all "/salesforce/sobjects/?*" , (req,res) ->
       req.salesforceController.handleProxy(req,res)
@@ -53,7 +53,7 @@ class Routes
   getJsVars: (req) ->
     jsvars = 
       pusherKeys: req.pusherController.keys()
-      parseKeys: req.parseController.keys()
+      #parseKeys: req.parseController.keys()
       statApi: "7fe222080e1ae26d9f89ba1ba8f320b2"
       server: "http://rodco-api2.heroku.com"
       instance_url: "https://na7.salesforce.com"

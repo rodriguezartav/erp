@@ -4,7 +4,7 @@ express = require('express')
 Opf = require "opf"
 
 
-ParseController  = require('./controllers/parseController')
+#ParseController  = require('./controllers/parseController')
 PusherController = require('./controllers/pusherController')
 SalesforceController = require('./controllers/salesforceController')
 
@@ -23,7 +23,7 @@ app.set 'views' , './views'
 app.set 'view engine'  , 'jade'
 
 new Cors(app)
-new ParseController(app)
+#new ParseController(app)
 new PusherController(app)
 new SalesforceController(app)
 

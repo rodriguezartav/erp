@@ -134,6 +134,11 @@ class Collection extends Base
   errorResponse: (xhr, statusText, error) =>
     @model.trigger('ajaxError', null, xhr, statusText, error)
 
+    if xhr.status == "503"
+      Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
+        window.location.reload();
+
+
   customErrorResponse: (options = {}) =>
     (xhr, statusText, error) =>
       @model = Spine if !@model # to allow external access
@@ -258,6 +263,11 @@ class Singleton extends Base
     (xhr, statusText, error) =>
       @record.trigger('ajaxError', xhr, statusText, error)
       options.error?.apply(@record, [xhr, statusText, error] )
+      
+      if xhr.status == "503"
+        Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
+          window.location.reload();
+        
 
 # Ajax endpoint
 Model.host = '/salesforce/sobjects'

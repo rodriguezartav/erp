@@ -13,15 +13,17 @@ class Movimiento extends Spine.Model
   @avoidQueryList = ["Plazo","Proveedor","ProductoCosto"]
    
   @queryFilter: (options ) =>
+    console.log options
+    
     return "" if !options
     filter =""
+    filter = @queryFilterAddCondition(" Documento__r.Consecutivo__c   = #{options.consecutivo} " , filter) if options.consecutivo
     filter = @queryFilterAddCondition(" Fecha__c   = LAST_N_DAYS:#{options.diasAtras} " , filter) if options.diasAtras
     filter = @queryFilterAddCondition(" Tipo__c IN (#{options.tipos}) "               , filter) if options.tipos
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "        , filter) if options.cliente
     filter = @queryFilterAddCondition(" IsAplicado__c = false  and Tipo__c IN ('EN','SA','CO') and Fecha__c   = LAST_N_DAYS:5 "        , filter) if options.livecycle
     filter = @queryFilterAddCondition(" Tipo__c= 'FA' and Documento__r.Entregado__c  = false and Total__c > 0"  ,  filter)  if options.sinEntregar
     filter = @queryFilterAddCondition(" Documento__r.InvoiceVersion__c       = 2"                ,  filter)  if options.v2
-
 
     filter
  

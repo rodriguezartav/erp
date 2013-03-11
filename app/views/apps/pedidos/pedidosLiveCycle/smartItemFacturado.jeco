@@ -16,7 +16,6 @@
     <span class="badge badge-info"><%= referencia %></span>&nbsp;
     <%= cliente?.Name?.capitalize()  %>
   </h4>
-  
 
   <span><%= @CreatedById  %></span>
 

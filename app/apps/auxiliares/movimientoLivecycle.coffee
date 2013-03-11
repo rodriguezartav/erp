@@ -51,6 +51,7 @@ class MovimientoLivecycle extends Spine.Controller
   render: =>
 
     movimientos = MovimientoItem.findAllByAttribute "IsAplicado" , false
+    console.log movimientos
     movimientos = movimientos.sort (a,b) =>
       return b.Referencia - a.Referencia
 

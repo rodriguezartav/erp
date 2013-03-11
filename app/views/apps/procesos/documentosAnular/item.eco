@@ -4,10 +4,27 @@
 <% cliente = Cliente.exists(@Cliente)  %>
 
 <tr>
+
   <td>
-    <a target="_blank" href="<%= Spine.session.instance_url + "/" + @id %>">
-       <%= @Consecutivo || "No Impreso :" + @Referencia %>
+
+    <a class="inlineBlock" target="_blank" href="<%= Spine.session.instance_url + "/" + @id %>">
+       <%= @Consecutivo || @Referencia %>
     </a> 
+    
+    <% if @Tipo_de_Documento == "FA": %>
+    
+    <div style="margin-left: 15px;" class="btn-group showItemsPlaceHolder inlineBlock" data-tipo="<%= @Tipo_de_Documento %>" data-consecutivo="<%= @Consecutivo %>">
+      <button class=" btn dropdown-toggle showItems" data-toggle="dropdown">
+        <i class="icon-chevron-down showItems"></i>
+      </button>
+
+      <ul class="dropdown-menu itemsMenu">
+
+      </ul>
+    
+    <% end %>
+    
+    
   </td>
   <td>
     <a target="_blank" href="<%= Spine.session.instance_url + "/" + @id %>">
@@ -20,6 +37,9 @@
   <td><%= @Total.toMoney() %></td>
   <td><%= @Estado %></td>
 
- <td><a data-type="Documento" data-id="<%= @id %>" class="anularDocumento btn btn-info"><i class="icon-print icon-white"> </i> Anular</a></td>
+  <td>
+    <a data-type="Documento" data-id="<%= @id %>" class="anularDocumento btn btn-info"><i class="icon-print icon-white"> </i> Anular</a>
+
+  </td>
 
 </tr>

@@ -26,8 +26,8 @@ class RestApi
       else
         options.error data
     
-    req.on "error", (data, response) =>
-      options.error data, response
+    #req.on "error", (data, response) =>
+      #options.error data, response
 
 
   @versions: (oauth,callback, error) ->

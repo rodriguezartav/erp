@@ -60,11 +60,11 @@ class SalesforceController
       res.statusCode = 503
       return res.send "Error de login, favor volver a cargar"
 
-    req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
+    #req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
     SalesforceApi.rest token , req.body  , (response) ->
       res.send response
     , (error) =>
-      req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
+      #req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send error
     
@@ -76,7 +76,7 @@ class SalesforceController
     if method == "GET" or method == "get"
       @handleGet(req,res)
     else  
-      req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
+      #req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
       if method == "POST" or method == "post"
         @handlePost(req,res)
       
@@ -94,7 +94,7 @@ class SalesforceController
       res.statusCode >= 200
       res.send response
     , (error) =>
-      req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
+      #req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send  error
 
@@ -108,7 +108,7 @@ class SalesforceController
       res.statusCode >= 201
       res.send response
     , (error) =>
-      req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
+      #req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
       res.statusCode = 500
       res.send  error
 
@@ -129,7 +129,7 @@ class SalesforceController
       res.send response
     , (error) =>
       try
-        req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
+        #req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
         res.statusCode = 503
         res.send error
 
@@ -154,7 +154,7 @@ class SalesforceController
       res.redirect("/");
 
     post.on "error" , (error) ->
-      req.parseController.logAudit "Error" , "" , "Server - SF Controller" , error
+      #req.parseController.logAudit "Error" , "" , "Server - SF Controller" , error
 
 
 module.exports = SalesforceController

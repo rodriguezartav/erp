@@ -24,6 +24,7 @@
   <table class="table table-striped table-bordered ">
     <thead>
         <tr>
+          <th>Movimientos</th>
           <th>Consecutivo</th>
           <th>Tipo</th>
           <th>Cliente</th>
