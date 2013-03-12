@@ -3,7 +3,7 @@
 
 <li>
   <a>
-    <span class="inlineBlock" style="width: 30px;margin-right: 4px;"><%=  @ProductoCantidad %></span> 
+    <input type="text" class="inlineBlock txt_item_detail" style="width: 30px;margin-right: 4px;" value="<%=  @ProductoCantidad %>"/> 
     <%= producto.Name?.capitalize() %>    
     <span  data-malo="false"  data-id="<%= @id %>"  class="btn btn_item_action">Devolver</span>
     <span data-malo="true" data-id="<%= @id %>"  class="btn btn_item_action">Malo</span>

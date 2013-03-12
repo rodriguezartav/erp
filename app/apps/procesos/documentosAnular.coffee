@@ -100,14 +100,17 @@ class DocumentosAnular extends Spine.Controller
     referencia = group.find(".txt_referencia").val()
     observacion = group.find(".txt_observacion").val()
     id = target.data "id"
-    @devolucionMovimiento(malo,referencia,observacion,id) if referencia and observacion
+    cantidadInput = target.siblings("input")
+    cantidad = parseFloat(cantidadInput.val())
+    return false if cantidad == null or cantidad == undefined or cantidad == NaN
+    @devolucionMovimiento(malo,cantidad ,referencia,observacion,id) if referencia and observacion
 
-  devolucionMovimiento: (malo,referencia,observacion,id) =>
+  devolucionMovimiento: (malo,cantidad,referencia,observacion,id) =>
     data =
        class: Movimiento
        restRoute: "Anular"
        restMethod: "Put"
-       restData: id: id , referencia: referencia , observacion: observacion , estaMalo: malo
+       restData: id: id , cantidad: cantidad , referencia: referencia , observacion: observacion , estaMalo: malo
     Spine.trigger "show_lightbox" , "rest" , data , @onDevolucionMovimientSuccess   
   
   onDevolucionMovimientSuccess: =>
