@@ -57,6 +57,7 @@ class AjustarNegociacion extends Spine.Controller
     "click .cancel" : "reset"
     "click .save" : "send"
     "click .clienteItem>a" : "onClienteItemClick"
+    "click .btn_agregarNegociacion" : "onAddNegociacion"
 
   constructor: ->
     super
@@ -77,7 +78,7 @@ class AjustarNegociacion extends Spine.Controller
   
   resetBindings: =>
     Cliente.unbind "current_set" , @addCliente
-    Producto.unbind "current_set" , @addMovimiento
+    Producto.unbind "current_set" , @addItem
 
   addClientesWithNegociacion: =>
     clientes = Cliente.select (cliente) ->
@@ -95,13 +96,17 @@ class AjustarNegociacion extends Spine.Controller
     Negociacion.destroyAll()
     @addItems()
 
+  onAddNegociacion: =>
+    return false if !Cliente.current
+    @addItem("0","0")
+
   addItems: =>
     for item in @items
       item.reset()
    
     @lbl_cliente.html "<a>#{Cliente.current.Name}</a>"
     Negociacion.createFromCliente(Cliente.current)
-    
+
     for negociacion in Negociacion.all()
       item = new Items(negociacion: negociacion )
       @items.push item
@@ -109,12 +114,14 @@ class AjustarNegociacion extends Spine.Controller
       @items_list.append item.el
       @onNegociacionChange()
   
-  addItem: =>
+  addItem: (familia,subfamilia) =>
     negociacion1 = Negociacion.findAllByAttribute( "SubFamilia" , Producto.SubFamilia )
     negociacion2 = Negociacion.findAllByAttribute( "Familia" , Producto.Familia )
     return false if negociacion1.length > 0 and negociacion2.length > 0
     return false if !Cliente.current
-    item = new Items(producto: Producto.current)
+    negociacion = new Negociacion Familia: familia ,  SubFamilia: subfamilia , Descuento: 0 
+    
+    item = new Items(negociacion: negociacion)
     @items.push item
     @itemToControllerMap[item.negociacion.id] = item
     @items_list.append item.el
@@ -137,15 +144,8 @@ class AjustarNegociacion extends Spine.Controller
     item.checkItem() for item in @items
     
   send: (e) =>
-    Cliente.current.Negociacion =  JSON.stringify Negociacion.all() 
+    Cliente.current.Negociacion =  JSON.stringify Negociacion.all()
     Cliente.current.save()
-    data =
-      class: Cliente
-      restRoute: "Cliente"
-      restMethod: "PUT"
-      restData: JSON.stringify({ cliente: Cliente.toSalesforce(Cliente.current) })
-      
-    Spine.trigger "show_lightbox" , "rest" , data , @after_send   
 
   after_send: =>
     Spine.socketManager.pushToFeed("He ingresado nueva negociaciones fijas.")

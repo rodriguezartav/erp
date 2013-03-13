@@ -1,6 +1,15 @@
 
-<td><h4><%= @Familia %></h4></td>
-<td><h4><%= @SubFamilia %></h4></td>
+<td>
+  
+  <input class="span2 validatable" data-min-value="0" data-type="Familia" data-numeric="false" value="<%= @Familia %>" />
+  
+
+</td>
+
+<td>
+<input class="span2 validatable" data-min-value="0" data-type="SubFamilia" data-numeric="false" value="<%= @SubFamilia %>" />
+
+</td>
 
 <td>
   <input class="span2 validatable" data-min-value="0" data-type="Descuento" data-numeric="true" value="<%= @Descuento || 0 %>" />

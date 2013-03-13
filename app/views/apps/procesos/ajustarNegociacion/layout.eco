@@ -16,8 +16,11 @@
 </div>
 
 <div class="content well">
-<h4 class="lbl_cliente">
-<h4/>
+<h4 class="lbl_cliente inlineBlock">
+</h4>
+
+<a class="btn pull-right inlineBlock btn_agregarNegociacion btn-primary withMargin">+</a>
+
  <table class="table table-striped table-bordered table-condensed">
     <thead>
       <tr>

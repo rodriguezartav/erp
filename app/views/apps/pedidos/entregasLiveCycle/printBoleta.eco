@@ -5,29 +5,32 @@
 
 <div style="height: 385px; overflow: hidden">
 
-  <div style="margin-top: 5px;">
-    <img class="" style="width: 35%" src="images/invoice/images/logo-copy.jpg"/>
+  <div style="margin-top: 5px;width: 100%;margin-bottom: 7px;">
+  <h5 style="margin-top: 4px;line-height: 14px;font-size: 13px;">
+    <%= cliente.RutaTransporte?.capitalize() %>
+    por <%= @documento.Transporte?.capitalize() %>
+    
+    <span class="pull-right">
+      N&#176;: <%= @documento.Consecutivo %>
+    </span>
+    
+  </h5>
 
-    <h5 class="inlineBlock pull-right" style="text-align: right;margin-top: 4px;line-height: 14px;">
-      N&#176;:<%= @documento.Consecutivo %><br/>
-      <%= cliente.RutaTransporte?.capitalize() %><br/>
-      por <%= @documento.Transporte?.capitalize() %>
-    </h5>
+      <h4 class="name " style="line-height:19px;font-size:19px; margin-top: 5px;font-weight:800;"><%= cliente.Name?.capitalize() %></h4>
+
+      <span class="block" style="text-transform: lowercase;font-size: 15px; line-height: 16px;margin-bottom: 4px;padding-bottom: 3px;color:#333;overflow:hidden;border-bottom: 1px solid #333;padding-top: 5px;">
+
+      <%= @documento.Observacion or cliente.Direccion %>
+
+      </span>
 
   </div>
 
-  <h4 class="name inlineBlock" style="line-height:19px;font-size:15px; margin-top: 5px;font-weight:800;"><%= cliente.Name?.capitalize() %></h4>
-  
-  <h6 style="text-transform: lowercase;font-size: 13px;font-weight:300; line-height: 11px;margin-bottom: 4px;padding-bottom: 3px;color:#333;height: 12px;overflow:hidden;border-bottom: 1px solid #333;">
-  
-    en: <%= @documento.Observacion or cliente.Direccion %>
-  
-  </h6>
 
   <div>
   <% for movimiento in @movimientos: %>
     <% producto = Producto.find movimiento.Producto %>
-    <div style="font-size: 13px;padding: 1px 0px;">
+    <div style="font-size: 14px;padding: 1px 0px;">
 
     <input type="checkbox" class="inlineBlock pull-right" style="margin-left: 8px;"/>
 
