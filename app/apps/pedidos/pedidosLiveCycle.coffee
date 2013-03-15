@@ -78,6 +78,10 @@ class PedidosLiveCycle extends Spine.Controller
         saldos = Saldo.select (item) ->
           return true if item.Cliente == group.Cliente and item.Saldo != 0
           return false
+          
+        saldos.sort (a,b) ->
+          return a.PlazoActual - b.PlazoActual
+          
         pendientes.push group: group, saldos: saldos
       else
         aprobados.push group if group.Estado == "Aprobado"
