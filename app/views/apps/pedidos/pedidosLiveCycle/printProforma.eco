@@ -8,7 +8,7 @@
 <div class="original">
   <div class="invoiceHeader">
     <div class="logo">
-      <img class="show_on_copy"  src="images/invoice/images/logo-copy.jpg"/>
+      <img class=""  src="images/invoice/images/logo.jpg"/>
     </div>
     
     <div class="logoInfo">
@@ -21,6 +21,7 @@
     </div>  
     
     <div class="factura">
+      <span class="number">N&#176;: <%= @pedido.Orden || @pedido.Referencia  %></span>
       <span class="facturaLabel">PROFORMA</span>
       <span class="fecha"> <%= "#{fecha[0]} de #{fecha[1]} #{fecha[2]}" %></span>
     </div>
@@ -53,7 +54,7 @@
     <% for movimiento in @items: %>
     <% producto = Producto.find movimiento.Producto %>
       <tr>
-        <td class="codigo"><%= producto.CodigoCorto__c %></td>
+        <td class="codigo"><%= producto.CodigoCorto %></td>
         <td  class="cantidad"><%= movimiento.Cantidad %></td>
         <td  class="descripcion"><%= producto.Name.capitalize() %></td>
         <td  class="precio"><%= movimiento.Precio.toMoney() %></td>
