@@ -197,8 +197,10 @@ class PedidosLiveCycle extends Spine.Controller
     @notify()
     showInvoice = false
     for pedido in @pedidos
-      if @newEstado == -1
-        pedido.Estado = "Anulado"
+      if @newEstado == -2
+        pedido.Estado = "Borrardo"
+      else if @newEstado == -1
+        pedido.Estado = "Perdido"
       else if @newEstado == 0
         pedido.Estado = "Archivado"
       else if @newEstado == 1
