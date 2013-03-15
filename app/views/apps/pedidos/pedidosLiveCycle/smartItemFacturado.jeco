@@ -7,7 +7,7 @@
 <% referencia = if @Orden then "Orden: " + @Orden else @Referencia  %>
 
 
-<li data-documento="<%= @documento %>"  data-codigoexterno="<%= @CodigoExterno %>"   class="pedidoItem" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
+<li data-documento="<%= @documento %>"  data-codigoexterno="<%= @CodigoExterno %>"   class="pedidoItem thumbnail" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
 
   <h5>
     <% if @Especial:  %>

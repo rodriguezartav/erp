@@ -68,7 +68,7 @@
 
   <div class="row-fluid">
       <h4  class="withBorderBottom"> Facturados</h4>
-      <ul class="src_pedidos_facturados unstyled whiteList  src_pedidos_list">
+      <ul class="src_pedidos_facturados unstyled whiteList thumbnails src_pedidos_list">
         <li><h5>No hay pedidos facturados</h5></li>
       </ul>
   </div>

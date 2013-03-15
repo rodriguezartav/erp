@@ -79,8 +79,8 @@ class PedidosLiveCycle extends Spine.Controller
           return true if item.Cliente == group.Cliente and item.Saldo != 0
           return false
           
-        saldos.sort (a,b) ->
-          return a.PlazoActual - b.PlazoActual
+        saldos = saldos.sort (a,b) ->
+          return b.PlazoActual - a.PlazoActual
           
         pendientes.push group: group, saldos: saldos
       else
@@ -134,9 +134,12 @@ class PedidosLiveCycle extends Spine.Controller
     id = target.data "id"
     @pedido = Pedido.find id
     pedidos = PedidoItem.itemsInPedido(@pedido)
+    li = target.parents("li")
+    observacion = li.prev().find("textarea").val() || ""
+
     for pedido in pedidos
       pedido.Estado = "Archivado"
-      pedido.Observacion = @txtObservacionGuardados.val()
+      pedido.Observacion = observacion
       pedido.save()
     pedidos = PedidoItem.salesforceFormat(  pedidos , false) 
 

@@ -113,7 +113,7 @@ class SinglePago extends Spine.Controller
     @documentos = Documento.findAllByAttribute "Cliente" , @pago.Cliente
     
     @documentos = @documentos.sort (a,b) =>
-      return parseInt(a.Consecutivo) - parseInt(b.Consecutivo)
+      return new Date(a.FechaFacturacion) - new Date(b.FechaFacturacion)
     
     @saldos_list.html ""
     for documento in @documentos

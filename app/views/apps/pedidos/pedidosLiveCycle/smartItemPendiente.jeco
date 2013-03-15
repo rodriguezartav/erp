@@ -83,15 +83,13 @@
     </a>
     <ul class="dropdown-menu">
     
-      <% @saldos.sort (a,b) -> return a.Consecutivo - b.Consecutivo %>
-    
       <% for pedido in @saldos:  %>
       <li class="pedido_detail_info">
        <a style="min-width: 200px;">
         
         <strong><%= pedido.Tipo_de_Documento %> : </strong>
         
-        <span><%= pedido.PlazoReal() %> Dias</span>
+        <span><%= pedido.PlazoActual %> Dias</span>
         
         <span class="pull-right"><%= pedido.Saldo?.toMoney() %></span>
         </a>
