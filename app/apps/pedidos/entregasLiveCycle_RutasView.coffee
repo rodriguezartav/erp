@@ -51,7 +51,7 @@ class entregasLiveCycle_RutasView extends Spine.Controller
       return f1 - f2
     @html require("views/apps/pedidos/entregasLiveCycle/ruta")(rutas)
 
-    @el.width( ( 168 * ( rutas.length + 1 ) ) + 'px')
+    @el.width( ( 168 * ( rutas.length + 2 ) ) + 'px')
 
   onTxtEntregadoDetailClick: (e) =>
     $(e.target).select()

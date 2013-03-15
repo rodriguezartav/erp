@@ -3,6 +3,8 @@
 <% cliente = Cliente.exists(@group.Cliente)  %>
 <% Producto = require("models/producto")  %>
 
+<% observacion= "" %>
+
 <% referencia = if @group.Orden then "Orden: " + @group.Orden else @group.Referencia  %>
 
 
@@ -12,46 +14,101 @@
     <% if @group.Especial:  %>
     <span class="badge badge-warning">E</span>&nbsp;
     <% end %>
-    <span class="badge badge-info"><%= referencia %></span>&nbsp;
     <%= cliente?.Name?.capitalize()  %>
   </h4>
-  
 
-  <span><%= @group.CreatedById  %></span>
+  <div class="btn-group inlineBlock">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+      Total: <%= @group.Total?.toMoney()  %>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
 
-  <span>Total: <%= @group.Total.toMoney()  %></span>
+       <% for pedido in @group.Pedidos:  %>
+           <% producto = Producto.exists(pedido.Producto)  %>
+           <% observacion = pedido.Observacion  %>
 
-  <span class="pull-right"><%= @group.Estado %></span>
+           <li>
+            <a>
+             <h5><%= producto?.Name?.capitalize() %></h5>
+              <span> <i class="icon-chevron-up"></i><%= pedido.Cantidad %> </span>
 
-  <div class="pedidoDetails" style="display:none">
-    
-    <ul class="unstyled mobileList">
-      <% for pedido in @saldos:  %>
+               <span> 
+                 <i class="icon-money"></i>
+                 <%= pedido.Precio?.toMoney?() %>
+               </span>
 
-      <li class="pedido_detail_info">
+               <span> 
+                 <i class="icon-adjust"></i><%= pedido.Descuento %>
+               </span>
+            </a>
+           </li>
+        <% end %>
+           
+           <li class="divider"></li>
+           
+           
+           <li>
+             <a>
+             <textarea class="txt_observacion" style="width: 96%" placeholder="Detalles para revision posterior"><%= observacion %>
+             </textarea>
+             </a>
+           </li>
+
+           <li>
+               <a>
+               
+                <span data-cliente="<%= @group.Cliente  %>"   data-codigoexterno="<%= @group.CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="2"  class="btn btn-success aprobar pull-right"><i class="icon-thumbs-up"></i></span>
+
+
+                <span  data-cliente="<%= @group.Cliente  %>"  data-codigoexterno="<%= @group.CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="-2"  class="btn btn-danger archivar "><i class="icon-remove"></i></span>
+
+                 <span  data-cliente="<%= @group.Cliente  %>"  data-codigoexterno="<%= @group.CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="-1"  class="btn btn-danger archivar "><i class="icon-thumbs-down"></i></span>
+
+                 <span  data-cliente="<%= @group.Cliente  %>"  data-codigoexterno="<%= @group.CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="0"  class="btn btn-warning archivar "><i class="icon-beaker"></i></span>
+
+      
+
+               </a>
+           </li>
+
        
-        <strong><%= pedido.Tipo_de_Documento %> : <%= pedido.Consecutivo %></strong>
+     
+  </div>
+
+  <div class="btn-group inlineBlock">
+    <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+      
+      <span class=" icon-dashboard"></span>
+    </a>
+    <ul class="dropdown-menu">
+    
+      <% @saldos.sort (a,b) -> return a.Consecutivo - b.Consecutivo %>
+    
+      <% for pedido in @saldos:  %>
+      <li class="pedido_detail_info">
+       <a style="min-width: 200px;">
+        
+        <strong><%= pedido.Tipo_de_Documento %> : </strong>
         
         <span><%= pedido.PlazoReal() %> Dias</span>
         
         <span class="pull-right"><%= pedido.Saldo?.toMoney() %></span>
-        
+        </a>
       </li>
       
-      <% end  %>
+      <% end %>
+
+      <li class="divider"></li>
       
       <li>
-        <span>Credito: <%= cliente.CreditoAsignado?.toMoney() %></span>
-        <span class="pull-right"><strong><%= cliente.Saldo?.toMoney() %></strong></span>
+          <a><span class="">Saldo: <strong><%= cliente.Saldo?.toMoney() %></strong></span>
+          </a>
       </li>
       
     </ul>
+  </div>
     
-    <textarea class="txt_observacion" style="width: 96%" placeholder="Detalles para revision posterior"></textarea>
-
-     <a data-cliente="<%= @group.Cliente  %>"   data-codigoexterno="<%= @group.CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="2"  class="btn btn-success aprobar"><i class="icon-ok"></i> Aprobar</a>
-     
-      <a  data-cliente="<%= @group.Cliente  %>"  data-codigoexterno="<%= @group.CodigoExterno %>"  data-referencia="<%= @group.Referencia %>" data-newEstado="0"  class="btn btn-danger archivar pull-right"><i class="icon-remove"></i> Archivar</a>
     
   </div>
 

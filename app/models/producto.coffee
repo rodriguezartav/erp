@@ -20,8 +20,8 @@ class Producto extends Spine.Model
     filter += " order by CodigoExterno__c "
     filter
 
-  @groupByFamilia:  ->
-    items = @all()
+  @groupByFamilia: (items = null)  ->
+    items = @all() if !items
     familiasMap = {}
     for item in items
       group = familiasMap[item.Familia] || []

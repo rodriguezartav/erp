@@ -5,10 +5,10 @@
 
 <% observacion= "" %>
 
-
 <% referencia = if @Orden then "Orden: " + @Orden else @Referencia  %>
 
-<li class="pedidoItem" data-estado="<%= @Estado %>"  data-codigoexterno="<%= @CodigoExterno %>"   data-referencia="<%= @Referencia %>" data-cliente="<%= cliente.id %>">
+
+<li class="pedidoItem" data-estado="<%= @Estado %>"  data-codigoexterno="<%= @CodigoExterno %>"   data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
 
   <h5>
     <% if @Especial:  %>
@@ -25,12 +25,12 @@
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
+
         
       
        <% for pedido in @Pedidos:  %>
            <% producto = Producto.exists(pedido.Producto)  %>
            <% observacion = pedido.Observacion  %>
-
            <li>
             <a>
              <h5><%= producto?.Name?.capitalize() %></h5>
@@ -46,9 +46,7 @@
                </span>
             </a>
            </li>
-           
            <% end  %>
-           
            <li class="divider"></li>
            
            
@@ -58,28 +56,32 @@
              </textarea>
              </a>
            </li>
-
+           
            <li>
                <a>
 
-                <span data-cliente="<%= @Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"  data-referencia="<%= @Referencia %>" data-newEstado="3"  class="btn btn-success aprobar pull-right"><i class="icon-print"></i> </span>
+                <span data-cliente="<%= @Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"   data-referencia="<%= @Referencia %>" data-newEstado="1"  class="btn btn-success aprobar pull-right"><i class=" icon-thumbs-up"></i></span>
+
+                <span  data-codigoexterno="<%= @CodigoExterno %>"   class="btn btn-success btn_print_proforma pull-right"><i class=" icon-print"></i></span> 
+
+                <span data-cliente="<%= @Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"   data-referencia="<%= @Referencia %>" data-newEstado="-2"  class="btn btn-danger aprobar"><i class="icon-remove"></i></span>
+
+                <span data-cliente="<%= @Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"   data-referencia="<%= @Referencia %>" data-newEstado="-1"  class="btn btn-danger aprobar"><i class=" icon-thumbs-down"></i></span>          
 
 
-                <span  data-cliente="<%= @Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"    data-referencia="<%= @Referencia %>" data-newEstado="-2"  class="btn btn-danger archivar "><i class="icon-remove"></i></span>
-
-
-                 <span  data-cliente="<%= @Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"    data-referencia="<%= @Referencia %>" data-newEstado="-1"  class="btn btn-danger archivar "><i class="icon-thumbs-down"></i></span>
-
-                 <span  data-cliente="<%= @Cliente  %>"  data-codigoexterno="<%= @CodigoExterno %>"    data-referencia="<%= @Referencia %>" data-newEstado="0"  class="btn btn-warning archivar "><i class="icon-beaker"></i> </span>
 
                </a>
            </li>
 
+
+
+           
+         
+     
   </div>
- 
- 
- 
- 
+  
+
+
 
 
 </li>

@@ -37,7 +37,8 @@ class listasPrecio extends Spine.Controller
     @setBindings()
    
   render: ->
-    @html require("views/apps/procesos/listasPrecio/layout")(app: listasPrecio , familias: Producto.groupByFamilia())
+    productos = Producto.findAllByAttribute("Activo",true)
+    @html require("views/apps/procesos/listasPrecio/layout")(app: listasPrecio , familias: Producto.groupByFamilia(productos))
 
   onBtnGrupo: (e) =>
     target = $(e.target)

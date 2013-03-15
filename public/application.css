@@ -1067,6 +1067,7 @@ td.center{text-align:center;}
 .green{color:#46a546;}
 .red{color:#9d261d;}
 .yellow{color:#ffc40d;}
+.withBorderBottom{border-bottom:1px solid #efefef;}
 body .container{max-width:980px;}
 *{-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}
 @media (max-width:979px){header .navbar-fixed-top{margin-bottom:10px;} header .productIcon{display:none;} .productosToolbar{position:static;max-height:390px;} .appCanvas{margin-top:0px;}}

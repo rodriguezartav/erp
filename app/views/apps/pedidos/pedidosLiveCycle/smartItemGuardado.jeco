@@ -2,32 +2,75 @@
 <% Cliente = require("models/cliente")  %>
 <% cliente = Cliente.exists(@Cliente)  %>
 <% Producto = require("models/producto")  %>
-
+<% PedidoItem = require("models/transitory/pedidoItem") %>
 <% referencia = if @Orden then "Orden: " + @Orden else @Referencia  %>
+
+<% observacion= "" %>
 
 <li class="pedidoItem" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>" data-cliente="<%= cliente.id %>">
 
-  <h4>
+  <h5>
     <% if @Especial:  %>
     <span class="badge badge-warning">E</span>&nbsp;
     <% end %>
-    <span class="badge badge-info"><%= referencia %></span>&nbsp;
     <%= cliente?.Name?.capitalize()  %>
-  </h4>
+  </h5>
 
-  <span><%= @CreatedById  %></span>
+  <div class="btn-group">
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+      Total: <%= @Total?.toMoney()  %>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
 
-  <span>Total: <%= @Total?.toMoney()  %></span>
+      
+      <% for pedido in PedidoItem.itemsInPedido(@):  %>
+         <% producto = Producto.exists(pedido.Producto)  %>
+         <% observacion = pedido.Observacion  %>
 
-  <span class="pull-right"><%= @Estado %></span>
+         <li>
+          <a>
+           <h5><%= producto?.Name?.capitalize() %></h5>
+            <span> <i class="icon-chevron-up"></i><%= pedido.Cantidad %> </span>
 
-  <div class="pedidoDetails" style="display:none">
+             <span> 
+               <i class="icon-money"></i>
+               <%= pedido.Precio?.toMoney?() %>
+             </span>
 
-     <a data-id="<%= @id %>" class="btn btn-success pull-right btn_send"><i class="icon-ok"></i> Enviar</a>
+             <span> 
+               <i class="icon-adjust"></i><%= pedido.Descuento %>
+             </span>
+          </a>
+         </li>
+       <% end  %>
+      
+       <li class="divider"></li>
+      
+      
+       <li>
+         <a>
+         <textarea class="txt_observacion_guardado txtObservacionGuardados" style="width: 96%" placeholder="Detalles para revision posterior"><%= observacion %>
+         </textarea>
+         </a>
+       </li>
 
-     <a  data-id="<%= @id %>" class="btn btn-danger btn_borrar "><i class="icon-remove"></i> Borrar</a>
+       <li>
+           <a>
+           <span data-id="<%= @id %>" class="inlineBlock btn btn-success pull-right btn_send"><i class="icon-ok"></i></span>
 
+           <span  data-id="<%= @id %>" class="inlineBlock btn btn-danger btn_borrar "><i class="icon-remove"></i></span>
+
+           <span data-id="<%= @id %>" class="inlineBlock btn btn-warning btn_send_espera"><i class="icon-beaker"></i></span>
+
+           </a>
+       </li>
+
+      
+    </ul>
   </div>
+
+
 
 </li>
 

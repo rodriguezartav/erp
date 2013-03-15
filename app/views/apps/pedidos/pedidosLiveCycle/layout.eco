@@ -35,70 +35,44 @@
   <div class="row-fluid">
   
 
-  <div class="span4">  
-    <ul class="unstyled mobileList">
-      <li>
-      <h4>Pedidos Guardados</h4>
-    <ul class="src_pedidos_guardados unstyled mobileList src_pedidos_list">
-      <li><h5>No hay pedidos guardados</h5></li>
-    </ul>
-    </li></ul>
-  </div>
+    <div class="span3">  
+        <h4 class="withBorderBottom">Guardados</h4>
+      <ul class="src_pedidos_guardados unstyled whiteList src_pedidos_list">
+        <li><h5>No hay pedidos guardados</h5></li>
+      </ul>
+    </div>
 
-    <div class="span4">  
-      <ul class="unstyled mobileList">
-        <li>
-        <h4>Pedidos Pendientes</h4>
-      <ul class="src_pedidos_pendientes unstyled mobileList src_pedidos_list">
+    <div class="span3">  
+      <h4 class="withBorderBottom">Archivados</h4>
+      <ul class="src_pedidos_archivados unstyled whiteList  src_pedidos_list">
+        <li><h5>No hay pedidos archivados</h5></li>
+      </ul>
+    </div>
+
+    <div class="span3">  
+        <h4  class="withBorderBottom">Pendientes</h4>
+      <ul class="src_pedidos_pendientes unstyled whiteList src_pedidos_list">
         <li><h5>No hay pedidos pendientes</h5></li>
       </ul>
-      </li></ul>
+
     </div>
 
-    <div class="span4">
-      <ul class="unstyled mobileList">
-        <li>
-        <h4>Pedidos Aprobados</h4>
-      <ul class="src_pedidos_aprobados unstyled mobileList src_pedidos_list">
+    <div class="span3">
+      <h4 class="withBorderBottom">Aprobados</h4>
+      <ul class="src_pedidos_aprobados unstyled whiteList src_pedidos_list">
         <li><h5>No hay pedidos aprobados</h5></li>
       </ul>
-      </li>
-      </ul>
     </div>
-
   </div>
 
-  <hr/>
+
   <div class="row-fluid">
-    <ul class="unstyled mobileList span4">
-      <li>
-        <h4>Pedidos Archivados</h4>
-        <ul class="src_pedidos_archivados unstyled mobileList  src_pedidos_list">
-          <li><h5>No hay pedidos archivados</h5></li>
-        </ul>
-      </li>
-    </ul>
-  
-
-    <ul class="unstyled mobileList span4">
-      <li>
-        <h4>Pedidos Facturados</h4>
-        <ul class="src_pedidos_facturados unstyled mobileList  src_pedidos_list">
-          <li><h5>No hay pedidos facturados</h5></li>
-        </ul>
-      </li>
-    </ul>
-
-    <ul class="unstyled mobileList span4">
-      <li>
-        <h4>Pedidos Anulados</h4>
-        <ul class="src_pedidos_anulados unstyled mobileList  src_pedidos_list">
-          <li><h5>No hay pedidos anulados</h5></li>
-        </ul>
-      </li>
-    </ul>
+      <h4  class="withBorderBottom"> Facturados</h4>
+      <ul class="src_pedidos_facturados unstyled whiteList  src_pedidos_list">
+        <li><h5>No hay pedidos facturados</h5></li>
+      </ul>
   </div>
-  
+
 </div>
 
 <div class="print show_print invoice">

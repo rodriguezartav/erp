@@ -29,21 +29,28 @@ class PedidosLiveCycle extends Spine.Controller
     ".src_options" : "src_options"
     ".content" : "content"
     ".txt_observacion" : "txt_observacion"
+    ".txt_observacion_guardado" : "txtObservacionGuardado"
     ".pedido_detail_info" : "pedido_detail_info"
     ".src_pedidos_list" : "src_pedidos_list"
     ".view" : "view"
     ".print" : "print"
+    ".txtObservacionGuardados" : "txtObservacionGuardados"
 
   events:
-    "click .aprobar"  : "on_action_click"
-    "click .archivar" : "on_action_click"
+    "click .aprobar"  : "onActionClick"
+    "click .archivar" : "onActionClick"
     "click .reload" : "reload"
-    "click .pedidoItem"  : "onItemClick"
     "click .btn_create" : "onCreate"
     "click .btn_send" : "onBtnSend"
+    "click .btn_send_espera" : "onBtnSendEspera"
+
     "click .btn_borrar" : "onBtnBorrar"
     "click .btn_print" : "onPrint"
     "click .btn_print_blank" : "onPrintBlank"
+    "click .btn_print_proforma" : "onPrintProforma"
+    
+    "click textarea" : "onTextAreaClick"
+    
 
   constructor: ->
     super
@@ -62,7 +69,6 @@ class PedidosLiveCycle extends Spine.Controller
     archivados = []
     pendientes = []
     facturados = []
-    anulados = []
     groups = []
     guardados = Pedido.all()
 
@@ -77,15 +83,13 @@ class PedidosLiveCycle extends Spine.Controller
         aprobados.push group if group.Estado == "Aprobado"
         archivados.push group if group.Estado == "Archivado"
         facturados.push group if group.Estado == "Facturado"
-        anulados.push group if group.Estado == "Anulado"
 
     @src_pedidos_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
     @src_pedidos_guardados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemGuardado")( guardados ) if guardados.length > 0
     @src_pedidos_pendientes.html require("views/apps/pedidos/pedidosLiveCycle/smartItemPendiente")( pendientes ) if pendientes.length > 0
     @src_pedidos_aprobados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAprobado")( aprobados) if aprobados.length > 0
-    @src_pedidos_archivados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAnulado")( archivados ) if archivados.length > 0
+    @src_pedidos_archivados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemArchivado")( archivados ) if archivados.length > 0
     @src_pedidos_facturados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemFacturado")( facturados ) if facturados.length > 0
-    @src_pedidos_anulados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemAnulado")( anulados ) if anulados.length > 0
 
   onCreate: (e) =>
     target = $(e.target)
@@ -107,9 +111,30 @@ class PedidosLiveCycle extends Spine.Controller
 
   onBtnSend: (e) =>
     target = $(e.target)
+    target = target.parent() until target.hasClass "btn"
     id = target.data "id"
     @pedido = Pedido.find id
     pedidos = PedidoItem.salesforceFormat( PedidoItem.itemsInPedido(@pedido)  , false) 
+
+    data =
+      class: PedidoItem
+      restRoute: "Oportunidad"
+      restMethod: "POST"
+      restData: oportunidades: pedidos 
+
+    Spine.trigger "show_lightbox" , "rest" , data , @after_send
+
+  onBtnSendEspera: (e) =>
+    target = $(e.target)
+    target = target.parent() until target.hasClass "btn"
+    id = target.data "id"
+    @pedido = Pedido.find id
+    pedidos = PedidoItem.itemsInPedido(@pedido)
+    for pedido in pedidos
+      pedido.Estado = "Archivado"
+      pedido.Observacion = @txtObservacionGuardados.val()
+      pedido.save()
+    pedidos = PedidoItem.salesforceFormat(  pedidos , false) 
 
     data =
       class: PedidoItem
@@ -125,6 +150,7 @@ class PedidosLiveCycle extends Spine.Controller
 
   onBtnBorrar: (e) =>
     target = $(e.target)
+    target = target.parent() until target.hasClass "btn"
     id = target.data "id"    
     pedido = Pedido.find id
     pedido.destroy()
@@ -134,17 +160,18 @@ class PedidosLiveCycle extends Spine.Controller
     Pedido.destroyAll()
     @renderPedidos()
 
-  onItemClick: (e) =>
+  onTextAreaClick: (e) =>
     target = $(e.target)
-    target = target.parent() until target.hasClass "pedidoItem"
-    details = target.find(".pedidoDetails")
-    status = details.is(":visible")
-    @el.find(".pedidoDetails").hide()
-    target.find(".pedidoDetails").show() if !status
+    target.val target.val().trim()
+    target.select()
+    return false;
 
-  on_action_click: (e) =>
+  onActionClick: (e) =>
     target = $(e.target)
     target = target.parent() until target.hasClass "btn"
+    li = target.parents("li")
+    observacion = li.prev().find("textarea").val() || ""
+    
     referencia = target.attr "data-referencia"
     codigoexterno = target.attr "data-codigoexterno"
     return false if !codigoexterno
@@ -152,11 +179,11 @@ class PedidosLiveCycle extends Spine.Controller
     @newEstado = parseInt( target.attr("data-newEstado") )    
     @pedidos = PedidoPreparado.findAllByAttribute "CodigoExterno" , codigoexterno
     @cliente = target.attr "data-cliente"
-    observacion = @txt_observacion.val() || ""
 
-    #ids = []
-    #ids.push pedido.id for pedido in @pedidos
-
+    for pedido in @pedidos
+      pedido.Observacion = observacion
+      pedido.save()
+      
     data =
       class: PedidoPreparado
       restRoute: "Oportunidad"
@@ -190,7 +217,7 @@ class PedidosLiveCycle extends Spine.Controller
 
     #url = Spine.session.instance_url + "/apex/invoice_topdf?Documento__c_id=" + results?.response
     #window.open(url) if showInvoice
-    @onShowInvoice(success,results)
+    @onShowInvoice(success,results) if showInvoice
 
   onPrint: (e) =>
     target = $(e.target)
@@ -223,6 +250,20 @@ class PedidosLiveCycle extends Spine.Controller
     first.addClass "original"
     @print.append require("views/apps/pedidos/pedidosLiveCycle/print")(response)
     @print.append require("views/apps/pedidos/pedidosLiveCycle/print")(response) if response.documento.Plazo__c > 0
+    window.print()
+
+  onPrintProforma: (e) =>
+    target = $(e.target)
+    target = target.parent() until target.hasClass "btn"
+    codigoexterno = target.attr "data-codigoexterno"
+
+    pedidos = PedidoPreparado.findAllByAttribute "CodigoExterno" , codigoexterno
+
+    pedido = PedidoPreparado.group_by_codigoexterno pedidos
+
+
+    
+    @print.html require("views/apps/pedidos/pedidosLiveCycle/printProforma")(pedido: pedido[0], items: pedidos)
     window.print()
 
   notify: =>

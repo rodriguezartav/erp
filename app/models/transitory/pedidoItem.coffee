@@ -2,7 +2,7 @@ Spine = require('spine')
 
 class PedidoItem extends Spine.Model
   @configure 'PedidoItem' , "Cliente" , "Producto" , "Cantidad" , "Precio" , "Impuesto_Monto" , "Impuesto", "Descuento" , 
-  "Descuento_Monto" ,"SubTotal" , "Total" , "Referencia" , "Observacion" , "Fuente" , "Referencia" , "IsContado",
+  "Descuento_Monto" ,"SubTotal" , "Total" , "Referencia" , "Observacion" , "Fuente" , "Referencia" , "IsContado", "Estado",
   "Nombre", "Telefono", "Email" , "Identificacion" , "Orden" , "Transporte" , "Especial" , "LastModifiedDate" , "DescuentoNegociacion"
     
   @extend Spine.Model.SalesforceModel
