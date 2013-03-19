@@ -30,6 +30,8 @@ class Saldo extends Spine.Model
     date = Date.parse @FechaFacturacion 
     date = new Date(date)
     plazo = date.days_from_now(date)
+    plazo -=1
+    plazo
 
   @groupBy: (list , value , sum) ->
     map = {}
