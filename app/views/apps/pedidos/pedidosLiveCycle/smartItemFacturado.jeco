@@ -7,20 +7,12 @@
 <% referencia = if @Orden then "Orden: " + @Orden else @Referencia  %>
 
 
-<li data-documento="<%= @documento %>"  data-codigoexterno="<%= @CodigoExterno %>"   class="pedidoItem thumbnail" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
+<li data-documento="<%= @documento %>"  data-codigoexterno="<%= @CodigoExterno %>"   class="pedidoItem alignTop" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
 
-  <h5>
-    <% if @Especial:  %>
-    <span class="badge badge-warning">E</span>&nbsp;
-    <% end %>
-    <%= cliente?.Name?.capitalize()  %>
-  </h5>
 
-  <a href="<%= Spine.session.instance_url + "/" + @Documento  %>">Ver Documento</a>
 
-  <div class="btn-group">
-     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-       Total: <%= @Total?.toMoney()  %>
+  <div class="btn-group inlineBlock">
+     <a class="btn dropdown-toggle pull-left" data-toggle="dropdown" href="#">
        <span class="caret"></span>
      </a>
      <ul class="dropdown-menu">
@@ -60,6 +52,8 @@
 
    </div>
 
+  
+   <a class="inlineBlock" style="height: 24px; margin-left:4px;" href="<%= Spine.session.instance_url + "/" + @Documento  %>"><%= cliente?.Name?.capitalize()  %></a>
   
  
 

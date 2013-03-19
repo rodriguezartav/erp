@@ -91,15 +91,15 @@ class PedidosLiveCycle extends Spine.Controller
         archivados.push group if group.Estado == "Archivado"
       
     archivadosMapFamilias = {}
+    archivadosList.sort (a,b) =>
+      return b.Cantidad - a.Cantidad
     for item in archivadosList
       producto = Producto.find item.Producto
-      familiaAmount = archivadosMapFamilias[producto.Familia] || 0
-      familiaAmount += item.Cantidad
+      familiaAmount = archivadosMapFamilias[producto.Familia] || cantidad: 0, clientes: [] , familia: producto.Familia
+      familiaAmount.cantidad += item.Cantidad
+      familiaAmount.clientes.push item.Cliente if familiaAmount.clientes.indexOf(item.Cliente) == -1
       archivadosMapFamilias[producto.Familia] = familiaAmount
       
-    @src_archivados_detail.empty()
-    for index,item of archivadosMapFamilias
-      @src_archivados_detail.append "<li class='badge inlineBlock'>#{index}: #{item.toMoney()}</li>"
 
     @src_pedidos_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
     @src_pedidos_guardados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemGuardado")( guardados ) if guardados.length > 0
@@ -108,6 +108,15 @@ class PedidosLiveCycle extends Spine.Controller
     @src_pedidos_archivados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemArchivado")( archivados ) if archivados.length > 0
     @src_pedidos_facturados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemFacturado")( facturados ) if facturados.length > 0
 
+    @src_archivados_detail.html require("views/apps/pedidos/pedidosLiveCycle/item_archivado_detail")(archivadosMapFamilias)
+    
+    setTimeout ( ->
+      $('.archivoDetail').popover()
+    ), 1000
+
+      
+    
+    
   onCreate: (e) =>
     target = $(e.target)
     target = target.parent() until target.data("type")

@@ -1,0 +1,24 @@
+<% Cliente = require("models/cliente") %>
+
+  <% for index,item of @ : %>
+      <% if item.cantidad > 0 : %>
+
+      <li class='label inlineBlock label-info' style="margin-right: 5px;">
+
+        <span  class="archivoDetail" data-placement="bottom" data-toggle="popover" title="Detalles del Pendiente" data-content="
+        
+          <% for cliente in item.clientes : %>
+            <% cliente = Cliente.find cliente %>
+            <p class='font-size: 11px !important;'><%= cliente.Name %></p>
+          <% end %>
+        
+        " data-original-title="Detalles del Pendiente">
+
+          <%= index %>: <%= item.cantidad.toMoney(0) %>
+
+        </span>
+
+      <% end %>
+
+    <% end %>
+    </li>
