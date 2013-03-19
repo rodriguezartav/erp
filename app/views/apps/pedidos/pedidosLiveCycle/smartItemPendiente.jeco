@@ -3,7 +3,7 @@
 <% cliente = Cliente.exists(@group.Cliente)  %>
 <% Producto = require("models/producto")  %>
 
-<% observacion= "" %>
+<% detalleAprobacion= "" %>
 
 <% referencia = if @group.Orden then "Orden: " + @group.Orden else @group.Referencia  %>
 
@@ -26,7 +26,7 @@
 
        <% for pedido in @group.Pedidos:  %>
            <% producto = Producto.exists(pedido.Producto)  %>
-           <% observacion = pedido.Observacion  %>
+           <% detalleAprobacion = pedido.DetalleAprobacion  %>
 
            <li>
             <a>
@@ -50,7 +50,7 @@
            
            <li>
              <a>
-             <textarea class="txt_observacion" style="width: 96%" placeholder="Detalles para revision posterior"><%= observacion %>
+             <textarea class="txt_detalleAprobacion" style="width: 96%" placeholder="Detalles para revision posterior"><%= detalleAprobacion %>
              </textarea>
              </a>
            </li>

@@ -31,7 +31,7 @@
 
         <% for pedido in @Pedidos:  %>
             <% producto = Producto.exists(pedido.Producto)  %>
-            <% observacion = pedido.Observacion  %>
+            <% detalleAprobacion = pedido.DetalleAprobacion  %>
 
             <li>
              <a>

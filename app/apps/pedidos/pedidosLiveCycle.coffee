@@ -36,6 +36,8 @@ class PedidosLiveCycle extends Spine.Controller
     ".view" : "view"
     ".print" : "print"
     ".txtObservacionGuardados" : "txtObservacionGuardados"
+    
+    ".tab-pane" : "tabPane"
 
   events:
     "click .aprobar"  : "onActionClick"
@@ -49,6 +51,8 @@ class PedidosLiveCycle extends Spine.Controller
     "click .btn_print" : "onPrint"
     "click .btn_print_blank" : "onPrintBlank"
     "click .btn_print_proforma" : "onPrintProforma"
+    
+    "click .archivadoTab" : "onArchivadosClick"
     
     "click textarea" : "onTextAreaClick"
     
@@ -112,12 +116,8 @@ class PedidosLiveCycle extends Spine.Controller
     
     setTimeout ( ->
       $('.archivoDetail').popover()
-      $('.archivadosTabs a:first').tab('show');
     ), 1000
 
-      
-    
-    
   onCreate: (e) =>
     target = $(e.target)
     target = target.parent() until target.data("type")
@@ -195,6 +195,15 @@ class PedidosLiveCycle extends Spine.Controller
     target.val target.val().trim()
     target.select()
     return false;
+
+  onArchivadosClick: (e) =>
+    target = $(e.target)
+    target = target.parent() until target.hasClass "archivadoTab"
+    @tabPane.hide()
+    div = target.data "div"
+    divEl = @el.find "##{div}"
+    divEl.show()
+
 
   onActionClick: (e) =>
     target = $(e.target)
@@ -293,8 +302,6 @@ class PedidosLiveCycle extends Spine.Controller
 
     pedido = PedidoPreparado.group_by_codigoexterno pedidos
 
-
-    
     @print.html require("views/apps/pedidos/pedidosLiveCycle/printProforma")(pedido: pedido[0], items: pedidos)
     window.print()
 
