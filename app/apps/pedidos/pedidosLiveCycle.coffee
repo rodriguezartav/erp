@@ -73,7 +73,6 @@ class PedidosLiveCycle extends Spine.Controller
     groups = []
     guardados = Pedido.all()
     archivadosList = PedidoPreparado.findAllByAttribute "Estado" , "Archivado"
-    archivadosMapFamilias = {}
 
     groups = PedidoPreparado.group_by_codigoexterno(PedidoPreparado.all())
     for group in groups
@@ -81,23 +80,24 @@ class PedidosLiveCycle extends Spine.Controller
         saldos = Saldo.select (item) ->
           return true if item.Cliente == group.Cliente and item.Saldo != 0
           return false
-          
+
         saldos = saldos.sort (a,b) ->
           return b.PlazoActual - a.PlazoActual
-          
+
         pendientes.push group: group, saldos: saldos
       else
         aprobados.push group if group.Estado == "Aprobado"
         facturados.push group if group.Estado == "Facturado"
         archivados.push group if group.Estado == "Archivado"
       
-    @src_archivados_detail.html =""
+    archivadosMapFamilias = {}
     for item in archivadosList
       producto = Producto.find item.Producto
       familiaAmount = archivadosMapFamilias[producto.Familia] || 0
       familiaAmount += item.Cantidad
       archivadosMapFamilias[producto.Familia] = familiaAmount
       
+    @src_archivados_detail.empty()
     for index,item of archivadosMapFamilias
       @src_archivados_detail.append "<li class='badge inlineBlock'>#{index}: #{item.toMoney()}</li>"
 
