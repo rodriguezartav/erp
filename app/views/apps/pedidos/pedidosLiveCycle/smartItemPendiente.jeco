@@ -10,12 +10,12 @@
 
 <li class="pedidoItem"   data-codigoexterno="<%= @group.CodigoExterno %>"  data-estado="<%= @group.Estado %>" data-referencia="<%= @group.Referencia %>"     data-cliente="<%= cliente.id %>">
 
-  <h4>
+  <h5>
     <% if @group.Especial:  %>
     <span class="badge badge-warning">E</span>&nbsp;
     <% end %>
     <%= cliente?.Name?.capitalize()  %>
-  </h4>
+  </h5>
 
   <div class="btn-group inlineBlock">
     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -89,7 +89,7 @@
         
         <strong><%= pedido.Tipo_de_Documento %> : </strong>
         
-        <span><%= pedido.PlazoActual %> Dias</span>
+        <span><%= pedido.PlazoReal() %> Dias</span>
         
         <span class="pull-right"><%= pedido.Saldo?.toMoney() %></span>
         </a>

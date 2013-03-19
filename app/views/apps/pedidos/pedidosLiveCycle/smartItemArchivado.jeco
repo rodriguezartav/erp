@@ -8,20 +8,11 @@
 <% referencia = if @Orden then "Orden: " + @Orden else @Referencia  %>
 
 
-<li class="pedidoItem" data-estado="<%= @Estado %>"  data-codigoexterno="<%= @CodigoExterno %>"   data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
+<li class="pedidoItem alignTop" data-estado="<%= @Estado %>"  data-codigoexterno="<%= @CodigoExterno %>"   data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
 
-  <h5>
-    <% if @Especial:  %>
-    <span class="badge badge-warning">E</span>&nbsp;
-    <% end %>
-    <%= cliente?.Name?.capitalize()  %>
-  </h5>
-  
-
-
-  <div class="btn-group">
+  <div class="btn-group inlineBlock pull-left">
     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-      Total: <%= @Total?.toMoney()  %>
+      
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
@@ -81,6 +72,9 @@
   </div>
   
 
+  <h5 style="height: 24px; width: 90%;margin-left: 30px;line-height: 14px;">
+  <%= cliente?.Name?.capitalize()  %>
+  </h5>
 
 
 

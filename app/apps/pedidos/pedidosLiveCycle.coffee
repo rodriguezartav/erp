@@ -24,6 +24,7 @@ class PedidosLiveCycle extends Spine.Controller
     ".src_pedidos_aprobados" : "src_pedidos_aprobados"
     ".src_pedidos_facturados" : "src_pedidos_facturados"
     ".src_pedidos_anulados" : "src_pedidos_anulados"
+    ".src_pedidos_archivados_detail" : "src_archivados_detail"
     ".src_saldos" : "src_saldos"
     ".src_cliente" : "src_cliente"
     ".src_options" : "src_options"
@@ -71,6 +72,8 @@ class PedidosLiveCycle extends Spine.Controller
     facturados = []
     groups = []
     guardados = Pedido.all()
+    archivadosList = PedidoPreparado.findAllByAttribute "Estado" , "Archivado"
+    archivadosMapFamilias = {}
 
     groups = PedidoPreparado.group_by_codigoexterno(PedidoPreparado.all())
     for group in groups
@@ -85,8 +88,18 @@ class PedidosLiveCycle extends Spine.Controller
         pendientes.push group: group, saldos: saldos
       else
         aprobados.push group if group.Estado == "Aprobado"
-        archivados.push group if group.Estado == "Archivado"
         facturados.push group if group.Estado == "Facturado"
+        archivados.push group if group.Estado == "Archivado"
+      
+    @src_archivados_detail.html =""
+    for item in archivadosList
+      producto = Producto.find item.Producto
+      familiaAmount = archivadosMapFamilias[producto.Familia] || 0
+      familiaAmount += item.Cantidad
+      archivadosMapFamilias[producto.Familia] = familiaAmount
+      
+    for index,item of archivadosMapFamilias
+      @src_archivados_detail.append "<li class='badge inlineBlock'>#{index}: #{item.toMoney()}</li>"
 
     @src_pedidos_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
     @src_pedidos_guardados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemGuardado")( guardados ) if guardados.length > 0
