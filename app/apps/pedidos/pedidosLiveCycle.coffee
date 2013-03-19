@@ -112,6 +112,7 @@ class PedidosLiveCycle extends Spine.Controller
     
     setTimeout ( ->
       $('.archivoDetail').popover()
+      $('.archivadosTabs a:first').tab('show');
     ), 1000
 
       
