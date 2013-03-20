@@ -50,6 +50,17 @@ class Routes
         console.log error
         res.send response
 
+      
+    @app.get "/AQuienLlamo" , (req,res) =>
+      token = req.salesforceController.serverToken;
+      req.salesforceController.api.rest token , { restRoute: 'AQuienLlamo' , restMethod: "GET" } , (response) => 
+        console.log arguments
+        res.send response
+      , (response , error) =>
+        console.log error
+        res.send response
+      
+
   getJsVars: (req) ->
     jsvars = 
       pusherKeys: req.pusherController.keys()

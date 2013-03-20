@@ -36,8 +36,6 @@ class PedidosLiveCycle extends Spine.Controller
     ".view" : "view"
     ".print" : "print"
     ".txtObservacionGuardados" : "txtObservacionGuardados"
-    
-    ".tab-pane" : "tabPane"
 
   events:
     "click .aprobar"  : "onActionClick"
@@ -51,11 +49,7 @@ class PedidosLiveCycle extends Spine.Controller
     "click .btn_print" : "onPrint"
     "click .btn_print_blank" : "onPrintBlank"
     "click .btn_print_proforma" : "onPrintProforma"
-    
-    "click .archivadoTab" : "onArchivadosClick"
-    
     "click textarea" : "onTextAreaClick"
-    
 
   constructor: ->
     super
@@ -103,7 +97,6 @@ class PedidosLiveCycle extends Spine.Controller
       familiaAmount.cantidad += item.Cantidad
       familiaAmount.clientes.push item.Cliente if familiaAmount.clientes.indexOf(item.Cliente) == -1
       archivadosMapFamilias[producto.Familia] = familiaAmount
-      
 
     @src_pedidos_list.html "<li><h5>No hay pedidos en la lista</h5></li>"
     @src_pedidos_guardados.html require("views/apps/pedidos/pedidosLiveCycle/smartItemGuardado")( guardados ) if guardados.length > 0
@@ -162,7 +155,7 @@ class PedidosLiveCycle extends Spine.Controller
 
     for pedido in pedidos
       pedido.Estado = "Archivado"
-      pedido.Observacion = observacion
+      pedido.DetalleAprobacion = observacion
       pedido.save()
     pedidos = PedidoItem.salesforceFormat(  pedidos , false) 
 
@@ -220,7 +213,7 @@ class PedidosLiveCycle extends Spine.Controller
     @cliente = target.attr "data-cliente"
 
     for pedido in @pedidos
-      pedido.Observacion = observacion
+      pedido.DetalleAprobacion = observacion
       pedido.save()
       
     data =

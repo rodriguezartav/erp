@@ -7,31 +7,24 @@
 <% referencia = if @Orden then "Orden: " + @Orden else @Referencia  %>
 
 
-<li data-documento="<%= @documento %>"  data-codigoexterno="<%= @CodigoExterno %>"   class="pedidoItem alignTop" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
+<li style="width:25%;height: 22px; margin-bottom: 4px; margin-top: 3px;" data-documento="<%= @documento %>"  data-codigoexterno="<%= @CodigoExterno %>"   class="pedidoItem alignTop inlineBlock" data-estado="<%= @Estado %>" data-referencia="<%= @Referencia %>"     data-cliente="<%= cliente.id %>">
 
 
 
-  <div class="btn-group inlineBlock">
-     <a class="btn dropdown-toggle pull-left" data-toggle="dropdown" href="#">
+  <div class="btn-group inlineBlock pull-right" style="margin-top: 2px;">
+     <a class=" dropdown-toggle " data-toggle="dropdown" href="#">
        <span class="caret"></span>
      </a>
      <ul class="dropdown-menu">
-       <li>
-           <a>
 
-           <span data-documento="<%= @Documento  %>"   class="btn btn-success btn_print pull-right"><i class="icon-ok"></i> Imprimir</span>
-
-           </a>
-       </li>
- 
-
-       <li class="divider">
-
-       </li>
+      <li>
+        <a><%= cliente?.Name?.capitalize()  %></a>
+      </li>
 
         <% for pedido in @Pedidos:  %>
             <% producto = Producto.exists(pedido.Producto)  %>
-            <% detalleAprobacion = pedido.DetalleAprobacion  %>
+
+
 
             <li>
              <a>
@@ -48,12 +41,21 @@
                 </span>
              </a>
             </li>
+            
           <% end  %>
+
+          <li>
+              <a>
+
+              <span data-documento="<%= @Documento  %>"   class="btn btn-success btn_print pull-right"><i class="icon-ok"></i> Imprimir</span>
+
+              </a>
+          </li>
 
    </div>
 
   
-   <a class="inlineBlock" style="height: 24px; margin-left:4px;" href="<%= Spine.session.instance_url + "/" + @Documento  %>"><%= cliente?.Name?.capitalize()  %></a>
+   <a class="inlineBlock" style="width: 80%;height: 20px;overflow: hidden; margin-left:4px;" href="<%= Spine.session.instance_url + "/" + @Documento  %>"><%= cliente?.Name?.capitalize()  %></a>
   
  
 

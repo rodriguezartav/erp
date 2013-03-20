@@ -1,8 +1,8 @@
 Spine = require('spine')
 
 class PedidoPreparado extends Spine.Model
-  @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , "CreatedById", "Documento" , "Orden" ,"Observacion",
-  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Estado" , "Especial" , "LastModifiedDate" , "CodigoExterno"
+  @configure 'Pedido' , "Cliente", "Producto" , "Cantidad" , "Precio" , "CreatedById", "Documento" , "Orden" ,"Observacion","DetalleAprobacion",
+  "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Estado" , "Especial" , "LastModifiedDate" , "CodigoExterno" , "Tipo"
   
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
@@ -32,7 +32,7 @@ class PedidoPreparado extends Spine.Model
         subtotal += pedido.Total
         descuento += pedido.Subtotal * (pedido.Descuento/100)
       impuesto = total - (total / (1 + (pedidos_with_codigoexterno[0].Impuesto /100) ))
-      groups.push {Observacion: pedidos_with_codigoexterno[0].Observacion , CodigoExterno: codigoexterno , Referencia: pedidos_with_codigoexterno[0].Referencia , Orden: pedidos_with_codigoexterno[0].Orden ,  Documento: pedidos_with_codigoexterno[0].Documento,  Estado: pedidos_with_codigoexterno[0].Estado ,  Especial: pedidos_with_codigoexterno[0].Especial ,  CreatedById: pedidos_with_codigoexterno[0].CreatedById ,  Pedidos: pedidos_with_codigoexterno , Cliente: pedidos_with_codigoexterno[0].Cliente , SubTotal: subtotal ,Descuento: descuento, Impuesto: impuesto, Total: total} if pedidos_with_codigoexterno.length > 0
+      groups.push {Tipo: pedidos_with_codigoexterno[0].Tipo , Observacion: pedidos_with_codigoexterno[0].Observacion , CodigoExterno: codigoexterno , Referencia: pedidos_with_codigoexterno[0].Referencia , Orden: pedidos_with_codigoexterno[0].Orden ,  Documento: pedidos_with_codigoexterno[0].Documento,  Estado: pedidos_with_codigoexterno[0].Estado ,  Especial: pedidos_with_codigoexterno[0].Especial ,  CreatedById: pedidos_with_codigoexterno[0].CreatedById ,  Pedidos: pedidos_with_codigoexterno , Cliente: pedidos_with_codigoexterno[0].Cliente , SubTotal: subtotal ,Descuento: descuento, Impuesto: impuesto, Total: total} if pedidos_with_codigoexterno.length > 0
     groups
 
   @group_by_referencia: (pedidos) ->    

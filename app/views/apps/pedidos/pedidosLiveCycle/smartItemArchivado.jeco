@@ -12,13 +12,19 @@
 
   <div class="btn-group inlineBlock pull-left">
     <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-      
-      <span class="caret"></span>
+      <% if @Tipo == "Potencial": %>
+        <i class="icon-phone-sign"/>
+      <% else if @Tipo == "Proforma": %>
+        <i class="icon-copy"/>
+      <% else if @Tipo == "Pedido": %>
+        <i class="icon-legal"/>
+      <% end %>
     </a>
     <ul class="dropdown-menu">
 
-        
+      <li><a>  <%= @Tipo %> </a></li>
       
+      <li class="divider"></li>
        <% for pedido in @Pedidos:  %>
            <% producto = Producto.exists(pedido.Producto)  %>
            <% detalleAprobacion = pedido.DetalleAprobacion  %>
@@ -72,7 +78,7 @@
   </div>
   
 
-  <h5 style="height: 24px; width: 90%;margin-left: 30px;line-height: 14px;">
+  <h5 style="height: 24px; width: 90%;margin-left: 38px;line-height: 14px;">
   <%= cliente?.Name?.capitalize()  %>
   </h5>
 

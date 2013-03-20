@@ -16,15 +16,22 @@
         <div class="src_cliente"></div>
       </div>
 
-        <div class="span5 transportePlaceholder">
+        <div class="span3 transportePlaceholder">
           <h4>Transporte</h4>
           <i data-tipo="Rodco" class="icon-truck icon-large btn btn_set_transporte active"></i> 
           <i data-tipo="Cliente" class="icon-user  icon-large  icon-large btn btn_set_transporte"></i>
           <i data-tipo="Agente" class="icon-briefcase icon-large btn btn_set_transporte"></i>
-          <input type="text"  class="span6 validatable txtTransporte marginLess withMarginTop inlineBlock" data-required="true" data-type="Transporte" placeholder="Transporte" value="Rodco" />
+          <input type="text"  class="span5 validatable txtTransporte marginLess withMarginTop inlineBlock" data-required="true" data-type="Transporte" placeholder="Transporte" value="Rodco" />
       </div>
 
-      <div class="span2">
+        <div class="span3 ">
+          <h4>Tipo</h4>
+          <i data-tipo="Potencial" class=" icon-phone-sign icon-large btn btn_set_tipo "></i> 
+          <i data-tipo="Proforma" class="icon-copy  icon-large  icon-large btn btn_set_tipo"></i>
+          <i data-tipo="Pedido" class="icon-legal icon-large btn btn_set_tipo active"></i>
+        </div>
+
+      <div class="span1">
           <h4>Orden</h4>
           <input type="text" class="validatable withMarginTop " data-required="false" data-type="Orden" placeholder="Orden" />
       </div>

@@ -30,12 +30,14 @@ class SinglePedidos extends Spine.Controller
     ".txtTransporte" : "txtTransporte"
     ".validatable" : "inputs_to_validate"
     ".btn_set_transporte" : "btnSetTransporte"
+    ".btn_set_tipo" : "btnSetTipo"
 
   events:
     "click .cancel" : "onRemove"
     "click .save" : "send"
     "click .btn_set_transporte" : "onSetTransporte"
     "click .txtTransporte" : "onTxtTransporteClick"
+    "click .btn_set_tipo" : "onSetTipo"
 
   setVariables: =>
     Negociacion.destroyAll()
@@ -58,7 +60,7 @@ class SinglePedidos extends Spine.Controller
     super
     @pedidoItems = PedidoItem.itemsInPedido(@pedido) if @pedido
     referencia = Spine.session.getConsecutivoPedido()
-    @pedido = Pedido.create( { Referencia: referencia , Tipo_de_Documento: "FA" , IsContado: @isContado , Especial: false }) if !@pedido
+    @pedido = Pedido.create( { Tipo: "Pedido", Referencia: referencia , Tipo_de_Documento: "FA" , IsContado: @isContado , Especial: false }) if !@pedido
     @html require("views/apps/pedidos/pedido/layout")(Pedido)
     @el.attr "data-referencia" , @pedido.Referencia
     @setVariables()
@@ -145,6 +147,7 @@ class SinglePedidos extends Spine.Controller
       pi.Fuente = Spine.options.locationType
       pi.Observacion = object.Observacion
       pi.IsContado = object.IsContado
+      pi.Tipo = object.Tipo
       pi.Transporte = object.Transporte
       pi.Especial = object.Especial or false
       pi.Estado = "Pendiente"
@@ -177,6 +180,13 @@ class SinglePedidos extends Spine.Controller
     @btnSetTransporte.removeClass "active"
     target.addClass "active"
     @txtTransporte.val target.data "tipo"
+
+  onSetTipo: (e) =>
+    target = $(e.target)
+    @btnSetTipo.removeClass "active"
+    target.addClass "active"
+    @pedido.Tipo = target.data "tipo"
+    @pedido.save()
 
   onTxtTransporteClick: =>
     @txtTransporte.select()
