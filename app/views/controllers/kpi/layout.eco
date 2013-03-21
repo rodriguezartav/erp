@@ -1,0 +1,10 @@
+<% color = "info" %>
+<% color = if @sales < 70 then "warning" %>
+<% color = if @sales < 30 then "danger" %>
+<% color = if @sales > 95 then "success" %>
+
+
+
+<div class="progress progress-<%= color %>" style="margin-bottom: 5px;">
+  <div class="bar salesBar" style="width: <%= @sales %>%"> <%= parseInt(@sales) %>%  </div>
+</div>

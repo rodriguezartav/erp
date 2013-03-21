@@ -13,6 +13,15 @@
            1.7.4
         </div>
        
+        <div class="inlineBlock withMargin" style="width: 20%">
+          <div class="src_kpi">
+            <div class="progress" style="margin-bottom: 5px;">
+              <div class="bar" style="width: 1%"></div>
+            </div>
+          </div>
+          <h4>Ventas</h4>
+        </div>
+       
           <ul class="nav pull-right">
             
             <li>

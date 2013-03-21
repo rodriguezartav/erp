@@ -60,8 +60,13 @@ class SalesforceController
       res.statusCode = 503
       return res.send "Error de login, favor volver a cargar"
 
+    data = 
+      restRoute: req.param("restRoute")
+      restMethod:   req.param("restMethod")
+      restData:     req.param("restData")
+
     #req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
-    SalesforceApi.rest token , req.body  , (response) ->
+    SalesforceApi.rest token , data  , (response) ->
       res.send response
     , (error) =>
       #req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
@@ -82,7 +87,6 @@ class SalesforceController
       
       if method == "PUT" or method == "put"
         @handlePut(req,res)
-    
 
   handlePut: (req,res) =>
     token = @parseToken(req,res)

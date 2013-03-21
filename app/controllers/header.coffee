@@ -3,6 +3,7 @@ Cliente = require("models/cliente")
 Producto = require("models/producto")
 User = require("models/user")
 
+Kpi = require("controllers/kpi")
 
 class Header  extends Spine.Controller
 
@@ -10,6 +11,7 @@ class Header  extends Spine.Controller
     ".users" : "users"
     ".currentUser" : "currentUser"
     ".update"     : "updateBtn"
+    ".src_kpi" : "srcKpi"
     
 
   events:
@@ -21,6 +23,8 @@ class Header  extends Spine.Controller
   constructor: ->
     super
     @html require('views/controllers/header/layout')
+    kpi = new Kpi(el: @srcKpi )
+    
     $('.dropdown-toggle').dropdown()
     Spine.bind "login_complete" , @onUserFresh
     

@@ -106,13 +106,18 @@ class Collection extends Base
       params.afterSuccess?(records)
       @model.onQuerySuccess?()
 
-
   rest: (params,options = {}) =>
     @beforeRest
+    data={}
+    if params.restMethod == 'GET'
+      data = "restRoute=#{params.restRoute}&restData=#{JSON.stringify(params.restData)}&restMethod=GET"
+    else
+      data = JSON.stringify { restRoute: params.restRoute , restData: params.restData , restMethod: params.restMethod } 
+
     request = @ajax(
       params,
       type:  params.restMethod,
-      data:  JSON.stringify { restRoute: params.restRoute , restData: params.restData , restMethod: params.restMethod }
+      data:  data
       url:   "/salesforce/rest"
     ).success(@recordsResponse)
      .error(@errorResponse)

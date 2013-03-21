@@ -87,7 +87,7 @@ class SecurityManager
 
     Cliente.autoReQuery     = false
     Producto.autoReQuery    = false
-    Spine.session.updateInterval = 360
+    Spine.session.updateInterval = 1360
 
     if Spine.session.hasPerfiles([ "Ejecutivo Credito" ])
       Saldo.autoQuery            = true
@@ -112,7 +112,6 @@ class SecurityManager
     else if Spine.session.hasPerfiles([ "Ejecutivo de Cuentas" ])
       Cliente.autoQuery          =  true
       Producto.autoQuery         =  true
-      Proveedor.autoQuery        =  true
       Saldo.autoQuery            =  true
 
     else if Spine.session.hasPerfiles([ "Presidencia", "SubGerencia" ])
