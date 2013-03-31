@@ -11,7 +11,7 @@ class ConnectionManager
     window.setInterval( @checkOverallStatus , 1000000 )
 
   checkOverallStatus: =>
-    @fetchServerData()
+    #@fetchServerData()
     if Spine.session?.isExpired() and navigator.onLine
       Spine.trigger "show_lightbox" , "showWarning" , error: "Su session ha expirado, vamos a cargar la pagina otra vez" , ->
         window.location.reload();
@@ -41,6 +41,5 @@ class ConnectionManager
         model.fetch()
 
     catch e
-      
 
 module.exports = ConnectionManager

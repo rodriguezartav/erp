@@ -1,0 +1,31 @@
+<div>
+  <div class="circleStat">
+    <span class="saldosTotal">
+      <%= parseInt(@Saldo__c / 1000000) %>
+    </span>
+  </div>
+  <div class="circleLabel">
+    Saldo
+  </div>
+</div>   
+
+
+<div>
+  <div class="circleStat">
+    <span>
+    <%= @PlazoPago__c %>
+    <span>
+  </div>
+  <div class="circleLabel">
+    Plazo
+  </div>
+</div>
+
+<div>
+  <div class="circleStat">
+    <span><span>
+  </div>
+  <div class="circleLabel">
+    Ratio
+  </div>
+</div>

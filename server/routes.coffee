@@ -60,6 +60,15 @@ class Routes
         console.log error
         res.send response
       
+    @app.get "/rest" , (req,res) =>
+      restRoute = req.query['restRoute']
+      token = req.salesforceController.serverToken;
+      req.salesforceController.api.rest token , { restRoute: restRoute , restMethod: "GET" , restData: '{}' } , (response) => 
+        console.log arguments
+        res.send response
+      , (response , error) =>
+        console.log error
+        res.send response
 
   getJsVars: (req) ->
     jsvars = 

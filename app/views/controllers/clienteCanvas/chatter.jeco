@@ -1,0 +1,8 @@
+<li>
+  <h6>
+    <%= new Date(Date.parse(@CreatedDate)).to_pretty() %>
+  </h6>
+  <p>
+    <%= @Body %>
+  </p>
+</li>

@@ -1,9 +1,7 @@
 <li class="clienteItem" data-id="<%= @id %>">
   
   <a>
-  <h5>
     <%= @Name %>
-  </h5>
   </a>
 
 </li>

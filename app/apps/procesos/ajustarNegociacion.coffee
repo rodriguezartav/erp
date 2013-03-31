@@ -52,12 +52,18 @@ class AjustarNegociacion extends Spine.Controller
     ".lbl_total" : "lbl_total"
     ".clientes_list" : "clientes_list"
     ".lbl_cliente"   : "lbl_cliente"
+    ".itemsSubFamilias" : "itemsSubFamilias"
+    ".itemsFamilias" : "itemsFamilias"
+    ".srcSubfamilias" : "srcSubfamilias"
 
   events:
     "click .cancel" : "reset"
     "click .save" : "send"
     "click .clienteItem>a" : "onClienteItemClick"
     "click .btn_agregarNegociacion" : "onAddNegociacion"
+    "click .src_cliente" : "onClientesClick"
+    "click .itemFamilia" : "onItemFamiliaClick"
+    "click .itemSubFamilia" : "onItemSubFamiliaClick"
 
   constructor: ->
     super
@@ -143,6 +149,28 @@ class AjustarNegociacion extends Spine.Controller
     @validationErrors.push "Ingrese al menos un Producto" if Negociacion.count() == 0
     item.checkItem() for item in @items
     
+  
+  onItemFamiliaClick: (e) =>
+    @itemsFamilias.removeClass "active"
+    target = $(e.target)
+    target.parents("li").addClass "active"
+    familia = target.data("familia")
+    familia = familia.substring(0, familia.length - 1)
+    subs = Producto.getSubFamilias(familia)
+    @srcSubfamilias.html require("views/apps/procesos/ajustarNegociacion/itemSubFamilia")(subs)
+  
+  onItemSubFamiliaClick: (e) =>
+    target = $(e.target)
+    subfamilia = target.data "subfamilia"
+    familia = $("li.itemsFamilias.active").find(".itemFamilia").data "familia"
+    familia = familia.substring(0, familia.length - 1)
+    @addItem(familia,subfamilia)
+    
+    return false;
+  
+  onClientesClick: (e) =>
+    return false
+  
   send: (e) =>
     Cliente.current.Negociacion =  JSON.stringify Negociacion.all()
     Cliente.current.save()

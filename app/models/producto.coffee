@@ -20,6 +20,15 @@ class Producto extends Spine.Model
     filter += " order by CodigoExterno__c "
     filter
 
+  @getFamilias: =>
+    familias = (producto.Familia for producto in Producto.all()).unique()
+
+  @getSubFamilias: (familia) =>
+    productos = Producto.findAllByAttribute "Familia" , familia
+    subfamilias = (producto.SubFamilia for producto in productos).unique()
+
+      
+
   @groupByFamilia: (items = null)  ->
     items = @all() if !items
     familiasMap = {}

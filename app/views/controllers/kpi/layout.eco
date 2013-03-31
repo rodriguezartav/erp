@@ -5,6 +5,6 @@
 
 
 
-<div class="progress progress-<%= color %>" style="margin-bottom: 5px;">
+<div class="progress progress-<%= color %>" style="margin-top: 10px;margin-bottom: 0px;">
   <div class="bar salesBar" style="width: <%= @sales %>%"> <%= parseInt(@sales) %>%  </div>
 </div>

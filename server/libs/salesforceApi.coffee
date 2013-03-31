@@ -1,5 +1,7 @@
 rest = require("restler")
 
+querystring = require("querystring")
+
 class RestApi
 
   @apiVersion = "24.0"
@@ -158,11 +160,16 @@ class RestApi
     RestApi.request options
 
   @rest: (oauth,data, callback, error) ->
+    
+    path =  "/services/apexrest/#{data.restRoute}"
+    path += "?#{querystring.stringify(JSON.parse(data.restData) )}" if data.restMethod == "GET"
+    restData = if data.restMethod == "GET" then {} else JSON.stringify(data.restData)
+    
     options =
       oauth:     oauth
-      path:      "/services/apexrest/#{data.restRoute}"
+      path:      path
       method:    data.restMethod
-      data:      JSON.stringify(data.restData)
+      data:      restData
       callback:  callback
       error:     error
     RestApi.request options

@@ -821,12 +821,13 @@ i.modal_success{font-size:40px;color:#46a546;}
 .notificationContainer .notificacion_list li p{line-height:17px;font-weight:300;}
 .notificationContainer .notificacion_list li .text{margin-bottom:0px;padding-bottom:0px;font-weight:200;font-size:12px;line-height:12px;}
 .notificationContainer .notificacion_list li .date{font-size:11px;color:#999;text-align:right;}
-header .navbar-inner{padding:0px 0px;background-image:url("/images/furley_bg.png");}
+header .navbar{background-color:#fff;}
+header .navbar-inner{padding:0px 0px;background:none;border-bottom:1px solid #777;}
 header .headerWrapper{text-align:center;}header .headerWrapper input{color:#0064cd;margin-top:12px;background-color:#fff;display:inline-block;padding:7px 13px;-webkit-border-radius:25px;-moz-border-radius:25px;border-radius:25px;}
 header .productIcon{font-size:25px;vertical-align:middle;color:#666;margin-right:5%;}
 header .navbar .brand{vertical-align:top;padding:0px;font-size:50px;color:#fff;text-shadow:0 1px 1px rgba(33, 33, 33, 0.65);vertical-align:baseline;}header .navbar .brand img{vertical-align:top;height:50px;margin-top:2px;cursor:pointer;margin-bottom:2px;}
 header .nav .toSalesforce{margin-top:8px;color:#049cdb !important;}
-header .nav .actionButtons{padding-top:10px;}header .nav .actionButtons a{color:#fff;display:inline-block;margin:0px;padding-right:0px;}header .nav .actionButtons a:hover{color:#9d261d;text-decoration:none;}
+header .nav .actionButtons{padding-top:10px;}header .nav .actionButtons a{color:#46a546;display:inline-block;margin:0px;padding-right:0px;}header .nav .actionButtons a:hover{color:#9d261d;text-decoration:none;}
 header .nav .actionButtons a i{font-size:20px;width:auto;}header .nav .actionButtons a i.active{color:#9d261d;}
 header .nav .actionButtons a i.loading{-webkit-animation-name:loading;-webkit-animation-duration:0.85s;-webkit-animation-iteration-count:infinite;-webkit-transition-timing-function:linear;color:#f89406;}
 header .nav .dropdown .userWrapper{max-height:350px;width:200px;overflow-y:scroll;}
@@ -1017,6 +1018,10 @@ footer a{margin-top:15px;color:#049cdb;}footer a i{vertical-align:middle;font-si
 .invoice .invoiceFooter div.last .reciclado{width:145px;float:right;}.invoice .invoiceFooter div.last .reciclado span{display:inline-block;color:#9ABD3B;line-height:11px;font-size:9px;text-align:center;}
 .invoice .invoiceFooter div.last .reciclado .imageMask{display:inline-block;height:13px;width:28px;overflow:hidden;}
 .invoice .invoiceFooter div.last .reciclado img{height:34px;}
+.clienteCanvas{position:fixed;height:90%;width:100%;z-index:5;top:60px;left:0;display:none;}.clienteCanvas .container{background:rgba(33, 33, 33, 0.3);border:5px solid #fff;height:90%;}.clienteCanvas .container .innerContainer{overflow:scroll;background-color:#fff;height:90%;margin:20px;padding:15px;}
+.circlePanel{margin-bottom:10px;}.circlePanel>div{display:inline-block;margin:5px;}
+.circleStat{position:relative;background:rgba(255, 255, 255, 0.7);border-radius:60px;width:50px;height:50px;border:6px solid #46a546;-webkit-box-shadow:2px 2px 2px #999999;-moz-box-shadow:2px 2px 2px #999999;box-shadow:2px 2px 2px #999999;}.circleStat span{padding-top:35%;font-size:14px;display:inline-block;text-align:center;width:100%;color:#999;font-weight:800;}
+.circleLabel{display:inline-block;color:#999;margin-top:3px;width:100%;text-align:center;}
 html{height:100%;}
 body{font-family:"pragmatica-web",sans-serif !important;padding-top:75px;}
 .container{max-width:940px;}

@@ -1,0 +1,32 @@
+<div>
+  <div class="circleStat">
+    <span class="saldosTotal">
+      <%= (@Ventas__c / 1000000).toMoney(2) %>
+    </span>
+  </div>
+  <div class="circleLabel">
+    Ventas
+  </div>
+</div>
+
+<div>
+  <div class="circleStat">
+    <span class="">
+      <%= (@Ventas__c / @Meta__c).toMoney(2) * 100 + "%"   %>
+    </span>
+  </div>
+  <div class="circleLabel">
+    Meta
+  </div>
+</div>
+
+<div>
+  <div class="circleStat">
+    <span>
+      <%= @PlazoRecompra__c %>
+    </span>
+  </div>
+  <div class="circleLabel">
+    Recompra
+  </div>
+</div>

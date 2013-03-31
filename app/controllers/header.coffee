@@ -12,21 +12,23 @@ class Header  extends Spine.Controller
     ".currentUser" : "currentUser"
     ".update"     : "updateBtn"
     ".src_kpi" : "srcKpi"
-    
 
   events:
     "click img"          : "onHome"
     "click .currentUser"   : "onCurrentUserClick"
     "click .update"        : "onUpdate"
+    "click .showClienteCanvas" : "onShowClienteCanvas"
+    "click input" : "onInputClick"
 
   
   constructor: ->
     super
     @html require('views/controllers/header/layout')
-    kpi = new Kpi(el: @srcKpi )
+
+   # kpi = new Kpi(el: @srcKpi )
     
     $('.dropdown-toggle').dropdown()
-    Spine.bind "login_complete" , @onUserFresh
+    Spine.bind "login_complete" , @onLoginComplete
     
     Spine.bind "actualizar_ahora" , @onUpdate
 
@@ -37,40 +39,37 @@ class Header  extends Spine.Controller
       return false if Spine.queries > 0
       @updateBtn.removeClass "loading"
 
+  onInputClick: (e) =>
+    target = $(e.target)
+    target.select()
 
   onUpdate: =>
     Spine.reset()
-    
 
-  onUserFresh: =>
+  onLoginComplete: =>
     user = User.exists Spine.session.userId
     @currentUser.html require("views/controllers/header/user")([user])
+
+    clientes = []
+    for cliente in Cliente.all()
+      clientes.push cliente.Name
+
+    typeahead = @el.find(".searchClientes").typeahead source: clientes , updater: @onClienteItemClick
+
+  onClienteItemClick: (name) =>
+    cliente = Cliente.findByAttribute "Name" , name
+    Spine.trigger "showClienteCanvas" , cliente
+    return name
 
   onCurrentUserClick: =>
     @users.html require("views/controllers/header/user")(User.all()) if !@loaded
     @loaded = true
 
+  onShowClienteCanvas: =>
+    Spine.trigger "showClienteCanvas"
+
   onHome: ->
     @navigate "/apps"
-
-  obsolte: ->
-    Spine.bind "query_start",=>
-      @loader.addClass "animate"
-
-    Spine.bind "query_complete",=>
-      @loader.removeClass "animate" if Spine.salesforceQueryQueue == 0
-
-    Spine.bind "status_changed" , =>
-      if navigator.onLine
-        @status_button.addClass "btn-success" 
-        @status_button.removeClass "btn-danger"
-        @status_button.removeClass "btn-warning"
-        @status_button_label.html '<i class="icon-ok"></i>'
-      else 
-        @status_button.addClass "btn-danger" 
-        @status_button.removeClass "btn-success"
-        @status_button.removeClass "btn-warning"
-        @status_button_label.html '<i class="icon-remove"></i>'
 
   
 module.exports = Header

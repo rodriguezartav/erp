@@ -1,0 +1,77 @@
+<div class="container">
+  
+  <div class="innerContainer">
+
+    <div class="srcCliente">      
+    </div>
+
+    <div class="row-fluid">
+
+    <div class="span5">
+
+    <div class="circlePanel ventasDash">
+  
+    </div>
+    
+      <h4>Ventas</h4>
+      
+      <canvas class="ventas" height="150" style="width: 100%">
+      </canvas>
+
+
+      <h4>Productos</h4>
+      
+      <table class="table table-bordered table-condensed" style="width: 100%">
+
+        <thead>
+          <th style="width: 80%;">Producto</th>
+          <% week = new Date().getWeek() %>
+          <% week = week - 10 %>
+          <% weekEnd = week + 10 %>
+          <% while week < weekEnd :  %>
+            <th style="font-size: 11px;"><%= week %></th>
+            <% week += 1 %>
+          <% end %>
+        </thead>
+
+        <tbody class="srcProductos">
+
+        </tbody>
+
+      </table>
+
+    
+    </div>
+
+      <div class="span4">
+        
+        <div class="circlePanel pagosDash">
+        </div>
+
+        <h4>Pagos</h4>
+        <canvas class="pagos" height="150"></canvas>
+
+        <canvas class="pagosMontos" height="150"></canvas>
+
+        <h4>Saldos</h4>
+        <table class="table table-bordered table-condensed" style="width: 100%">
+          <thead>
+            <th style="">Numero</th>
+            <th style="">Plazo</th>
+            <th style="">Monto</th>
+          </thead>
+          <tbody class="srcSaldos">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="span3">
+        <h4>Que Paso con el Cliente</h4>
+        <textarea class="span12 txtChatter" placeholder="Escriba su comentario"></textarea>
+        <a class="btn btn-info btnPostToChatter pull-right">Publicar</a>
+        <hr/>
+        <ul class="srcChatter unstyled"></ul>
+      </div>
+    </div>
+  </div>
+</div>

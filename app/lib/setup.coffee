@@ -41,6 +41,7 @@ require('./salesforceModel')
 require("./an.hour.ago")
 
 require("./toggleButtons")
+require("./chart")
 
 
 

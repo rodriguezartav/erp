@@ -1,0 +1,26 @@
+<tr>
+
+<td>
+  <p style="font-size: 9px;line-height: 11px;"><%= @producto.Name %>
+</td>
+
+
+<% @items.sort (a,b) => return a.Semana - b.Semana %>
+
+<% week = new Date().getWeek() %>
+<% week = week - 10 %>
+<% weekEnd = week + 10 %>
+<% while week < weekEnd :  %>
+  <td>
+    <% if @semanas[week] : %>
+    
+      <a class="lblVentaSemana" data-toggle="tooltip" data-placement="top" title="" data-original-title="<%= @semanas[week] %>">x</a>
+    
+    <% end %>
+    
+  </td>
+  <% week += 1 %>
+<% end %>
+
+  <%= @total %>
+</p>

@@ -1,0 +1,5 @@
+<tr>
+  <td><%= @Consecutivo %></td>
+  <td><%= @PlazoReal() %></td>
+  <td><%= @Saldo.toMoney(2) %></td>
+</tr>

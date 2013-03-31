@@ -1,0 +1,5 @@
+<li class="itemsSubFamilias">
+  <a class="itemSubFamilia" data-subfamilia="<%= @ %>">
+    <%= @ %>
+  </a>
+</li>

@@ -9,6 +9,8 @@ StatManager = require("managers/statManager")
 
 Header = require("controllers/header")
 Productos = require("controllers/productos")
+ClienteCanvas = require("controllers/clienteCanvas")
+
 
 Lightbox = require("controllers/lightbox")
 
@@ -36,6 +38,7 @@ class App extends Spine.Controller
     new Header(el: $("header"))
     new Lightbox(el: $(".lightboxCanvas"))
     new Main(el: $(".appCanvas") )
+    new ClienteCanvas(el: $(".clienteCanvas"))
     Spine.Route.setup()
 
     Spine.security       =  new SecurityManager()
