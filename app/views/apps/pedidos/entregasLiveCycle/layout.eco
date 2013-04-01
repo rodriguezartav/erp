@@ -42,6 +42,7 @@
                   <select class="withMarginBottom txt_nueva_ruta_chofer txt_value">
                     <option>Manuel</option>
                     <option>Alex</option>
+                    <option>Jaime</option>
                   </select>
                   
                   <br/>
