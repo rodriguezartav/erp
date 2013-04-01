@@ -90,7 +90,7 @@ class SalesforceController
     
     if method == "GET" or method == "get"
       @handleGet(req,res)
-      @mixpanel.track "SF API CALL" , { type: "QUERY" , method: method , path: path  ,  distinct_id: req.session.salesforceToken.user.id }
+      @mixpanel.track "SF API CALL" , { type: "QUERY" , query: req.query['soql'] , method: method , path: path  ,  distinct_id: req.session.salesforceToken.user.id }
       
     else  
       @mixpanel.track "SF API CALL" , { type: "API" , method: method , path: path  ,  distinct_id: req.session.salesforceToken.user.id }
