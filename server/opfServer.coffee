@@ -3,8 +3,6 @@ port =  process.env.PORT || 9294
 express = require('express')
 Opf = require "opf"
 
-
-#ParseController  = require('./controllers/parseController')
 PusherController = require('./controllers/pusherController')
 SalesforceController = require('./controllers/salesforceController')
 
@@ -23,10 +21,8 @@ app.set 'views' , './views'
 app.set 'view engine'  , 'jade'
 
 new Cors(app)
-#new ParseController(app)
 new PusherController(app)
 new SalesforceController(app)
-
 
 OpfDevUtil.setupCompilers(app) if process.env.NODE_ENV != "production"
 app.use(express.static("./public"))

@@ -51,7 +51,7 @@ class Base
     processData: false
     
     beforeSend: (request, settings) ->
-      
+      Spine.statManager.pushEvent "API Call" , @url
 
   ajax: (params, defaults) ->
     $.ajax($.extend({}, @defaults, defaults, params))
@@ -113,6 +113,9 @@ class Collection extends Base
       data = "restRoute=#{params.restRoute}&restData=#{JSON.stringify(params.restData)}&restMethod=GET"
     else
       data = JSON.stringify { restRoute: params.restRoute , restData: params.restData , restMethod: params.restMethod } 
+    
+    
+    Spine.statManager.pushEvent "REST Call" , params.restRoute
 
     request = @ajax(
       params,

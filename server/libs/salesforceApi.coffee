@@ -1,5 +1,4 @@
 rest = require("restler")
-
 querystring = require("querystring")
 
 class RestApi

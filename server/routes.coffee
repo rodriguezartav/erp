@@ -75,6 +75,7 @@ class Routes
       pusherKeys: req.pusherController.keys()
       #parseKeys: req.parseController.keys()
       statApi: "7fe222080e1ae26d9f89ba1ba8f320b2"
+      mixPanel: process.env["MIXPANEL_API"]
       server: "http://rodco-api2.heroku.com"
       instance_url: "https://na7.salesforce.com"
       apiServer: "http://api2s.heroku.com"

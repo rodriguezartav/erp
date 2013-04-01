@@ -3,7 +3,7 @@ SalesforceLogin = require("../libs/salesforceLogin")
 SalesforceApi = require("../libs/salesforceApi")
 SalesforceModel = require("../../app/lib/salesforceModel")
 User = require("../../app/models/user")
-
+Mixpanel = require('mixpanel');
 #async = require "async"
 
 class SalesforceController
@@ -14,6 +14,9 @@ class SalesforceController
     @loginServer = process.env.FORCE_DOT_COM_HOSTNAME
     @baseUrl= process.env.BASE_URL
     @redirectUrl = "#{@baseUrl}/sessions/salesforce/callback"
+
+    @mixpanel = Mixpanel.init('e980478d760bd1bd06b2af38233baadc');
+    
 
     @app.use @middleware()
     @api = SalesforceApi
@@ -56,6 +59,7 @@ class SalesforceController
     
   rest: (req,res) =>
     token = @parseToken(req,res)
+
     if !token
       res.statusCode = 503
       return res.send "Error de login, favor volver a cargar"
@@ -64,6 +68,10 @@ class SalesforceController
       restRoute: req.param("restRoute")
       restMethod:   req.param("restMethod")
       restData:     req.param("restData")
+
+    @mixpanel.track "SF API CALL" , { type: "REST" , path: data.restRoute , method: data.restMethod , distinct_id: req.session.salesforceToken.user.id }
+    @mixpanel.people.track_charge(req.session.salesforceToken.user.Name , 1);
+    
 
     #req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
     SalesforceApi.rest token , data  , (response) ->
@@ -78,10 +86,15 @@ class SalesforceController
     method = req.route.method
     path = req.route.path
     
+    @mixpanel.people.track_charge(req.session.salesforceToken.user.Name , 1);
+    
     if method == "GET" or method == "get"
       @handleGet(req,res)
+      @mixpanel.track "SF API CALL" , { type: "QUERY" , method: method , path: path  ,  distinct_id: req.session.salesforceToken.user.id }
+      
     else  
-      #req.parseController.logAudit "Audit" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , req.body
+      @mixpanel.track "SF API CALL" , { type: "API" , method: method , path: path  ,  distinct_id: req.session.salesforceToken.user.id }
+
       if method == "POST" or method == "post"
         @handlePost(req,res)
       
@@ -155,6 +168,15 @@ class SalesforceController
       userId = data.id.substring(lastS + 1) 
       data.user = User.exists userId
       req.session.salesforceToken = data
+      
+      @mixpanel.people.set(data.user.id , {
+          $first_name: data.user.Name,
+          $last_name: "",
+          $created: (new Date()).toISOString(),
+          Perfil: data.user.Perfil
+      });
+      
+      
       res.redirect("/");
 
     post.on "error" , (error) ->

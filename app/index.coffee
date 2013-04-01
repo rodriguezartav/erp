@@ -41,17 +41,17 @@ class App extends Spine.Controller
     new ClienteCanvas(el: $(".clienteCanvas"))
     Spine.Route.setup()
 
+    Spine.statManager    =  StatManager
+    Spine.statManager.registerManager(@options.mixPanel)
     Spine.security       =  new SecurityManager()
     Spine.connection     =  new ConnectionManager()
     Spine.notifications  =  new NotificationManager()
     Spine.socketManager  =  new SocketManager(Spine.frontEndServer)
-    Spine.statManager    =  StatManager
-    Spine.statManager.registerManager(@options.statApi)
 
     Spine.trigger "show_lightbox" , "authLogin" , @options , @loginComplete
 
   loginComplete: =>
-    Spine.statManager.identify Spine.session.user.Name
+    Spine.statManager.identify Spine.session.user
     Spine.clicked = false
     @navigate "/apps"
 
