@@ -1,7 +1,10 @@
+<%= @Ventas__c = 0 if !@Ventas__c %>
+<%= @Meta__c = 0 if !@Meta__c %>
+
 <div>
   <div class="circleStat">
     <span class="saldosTotal">
-      <%= (@Ventas__c / 1000000).toMoney(2) %>
+      <%= ( @Ventas__c / 1000000).toMoney(2) %>
     </span>
   </div>
   <div class="circleLabel">
