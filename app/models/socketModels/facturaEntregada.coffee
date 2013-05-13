@@ -24,6 +24,7 @@ class FacturaEntregada extends Spine.Model
     return true
 
   generalTransporte: ->
+    return "Rodco" if !@Transporte
     if @Transporte.indexOf("Cliente") > -1 
       return "Cliente"
     else if @Transporte.indexOf("Agente") > -1 
