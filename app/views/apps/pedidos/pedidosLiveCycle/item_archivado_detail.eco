@@ -8,8 +8,8 @@
         <span  class="archivoDetail" data-placement="bottom" data-toggle="popover" title="Detalles del Pendiente" data-content="
         
           <% for cliente in item.clientes : %>
-            <% cliente = Cliente.find cliente %>
-            <p class='font-size: 11px !important;'><%= cliente.Name %></p>
+            <% cliente = Cliente.exists cliente %>
+            <p class='font-size: 11px !important;'><%= cliente?.Name %></p>
           <% end %>
         
         " data-original-title="Detalles del Pendiente">
