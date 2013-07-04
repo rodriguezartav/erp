@@ -4,7 +4,7 @@
 
 <input  name="Celular"  data-required="true" pattern="[0-9]*" required data-class="phone" class="span2 alignMiddle withoutMarginBottom" type="number" data-type="Celular"  placeholder="Celular"  value="<%= @Celular %>"/>
 
-<input  name="Email"  data-required="true" required data-class="email"  class="span2 alignMiddle withoutMarginBottom" type="email" data-type="Email"  placeholder="Email"  value="<%= @Email %>"/>
+<input  name="Email" data-class="email"  class="span2 alignMiddle withoutMarginBottom" type="email" data-type="Email"  placeholder="Email"  value="<%= @Email %>"/>
 
 <input  name="Puesto"   data-required="true" required class="span2 txtPuesto alignMiddle withoutMarginBottom" data-type="Puesto" type="text"  value="<%= @Puesto %>" />
 

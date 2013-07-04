@@ -20,11 +20,12 @@ class Producto extends Spine.Model
     filter += " order by CodigoExterno__c "
     filter
 
-  @getPrecio: (cliente , format = true) =>
-    precio = 0
-    precio = @Precio_Distribuidor__c if cliente.Clase == "Mayoreo"
-    precio = @Precio_Retail if cliente.Clase == "Retail"
-    precio = @Precio_Industria if cliente.Clase == "Industria"
+  getPrecio: (cliente , format = true , basePrice = null) =>
+    precio = basePrice or @Precio_Distribuidor
+    if cliente
+      precio = @Precio_Distribuidor__c if cliente.Clase == "Mayoreo"
+      precio = @Precio_Retail if cliente.Clase == "Retail"
+      precio = @Precio_Industria if cliente.Clase == "Industria"
     return if format then precio.toMoney() else precio
 
   @getFamilias: =>
@@ -33,8 +34,6 @@ class Producto extends Spine.Model
   @getSubFamilias: (familia) =>
     productos = Producto.findAllByAttribute "Familia" , familia
     subfamilias = (producto.SubFamilia for producto in productos).unique()
-
-      
 
   @groupByFamilia: (items = null)  ->
     items = @all() if !items

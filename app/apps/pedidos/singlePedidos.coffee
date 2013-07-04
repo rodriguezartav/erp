@@ -60,6 +60,7 @@ class SinglePedidos extends Spine.Controller
 
   constructor: ->
     super
+    Cliente.reset_current()
     @pedidoItems = PedidoItem.itemsInPedido(@pedido) if @pedido
     referencia = Spine.session.getConsecutivoPedido()
     @pedido = Pedido.create( { Tipo: "Pedido", Referencia: referencia , Tipo_de_Documento: "FA" , IsContado: @isContado , Especial: false }) if !@pedido

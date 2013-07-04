@@ -7,18 +7,18 @@ class Contacto extends Spine.Model
   @createFromCliente: (cliente) ->
     contactos = []
     try
-      contacto = cliente.Contacto
-      contacto = $('<div/>').html(contacto).text();
-      contactos = JSON.parse(negociacion)
+      contactoStr = cliente.Contactos
+      contactoStr = $('<div/>').html(contactoStr).text();
+      contactos = JSON.parse(contactoStr)
     catch error
       contactos = []
       
     for contacto in contactos
       Contacto.create
         Nombre: contacto.Nombre
-        Puesto: negociacion.Puesto
-        Email: negociacion.Email
-        Celular: negociacion.Celular
+        Puesto: contacto.Puesto
+        Email: contacto.Email
+        Celular: contacto.Celular
     contactos
 
   @fromJson: (json) ->

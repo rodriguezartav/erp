@@ -1,36 +1,18 @@
+<% Contacto = require("models/contacto")  %>
+
 <h2 class=" inlineBlock alignMiddle withMarginLeft">
   <%= @Name %>
 </h2>
 
 
+<% for contacto in Contacto.all():  %>
 
-    
-    
-     <button class=" btn dropdown-toggle withMarginLeft alignMiddle" data-toggle="dropdown">
-       Roberto
-       <span class="caret"></span>
-     </button>
-     <ul class="dropdown-menu">
+  <div class="btn-group inlineBlock  withMarginLeft alignMiddle">
+    <button data-id="<%= contacto.id %>" class="btn btnEditContacto"> <%= contacto.Nombre %>  </button>
+  </div>
 
-          <li>
-                <a> <input  data-name="<%= @Name %>" class="span8 inlineBlock txtRutaDetail" value="<%= @Fecha %>" data-type="Fecha"   placeholder="Empaque" /></a>
-           </li>
-          </ul>
-          
-          
+<% end %>
 
-           <button class=" btn dropdown-toggle withMarginLeft alignMiddle" data-toggle="dropdown">
-             Roberto
-             <span class="caret"></span>
-           </button>
-           <ul class="dropdown-menu">
-
-                <li>
-                      <a> <input  data-name="<%= @Name %>" class="span8 inlineBlock txtRutaDetail" value="<%= @Fecha %>" data-type="Fecha"   placeholder="Empaque" /></a>
-                 </li>
-                </ul>
-
-  
   <a class="btn btn-large btn-primary alignMiddle pull-right btnAddContacto"> <i class="icon-print"></i></a>
 
   

@@ -3,8 +3,8 @@ Cliente = require("models/cliente")
 Producto = require("models/producto")
 User = require("models/user")
 Saldos = require("models/socketModels/saldo")
+Contacto = require("models/contacto")
 ClienteFeed = require("models/clienteFeed")
-
 
 class ClienteCanvas  extends Spine.Controller
 
@@ -20,6 +20,9 @@ class ClienteCanvas  extends Spine.Controller
     "click .container" : "onClose"
     "click .btnPostToChatter" : "onPostToChatter"
     "click .btnAddContacto" : "onAddContacto"
+    "click .btnEditContacto" : "onClickEditContacto"
+    "click .btnSaveContacto" : "onSaveContacto"
+    "click .btnDeleteContacto" : "onDeleteContacto"
 
   constructor: ->
     super
@@ -28,19 +31,69 @@ class ClienteCanvas  extends Spine.Controller
 
   onShowCliente: (cliente) =>
     document.body.style.overflow = 'hidden';
-    
+    @currentCliente = cliente
+
     if !cliente
       @el.show()
     else
       @html require('views/controllers/clienteCanvas/layout')
       @el.show()
-      @srcCliente.html require("views/controllers/clienteCanvas/cliente")(cliente)
+      @renderContacto(cliente)
       @getClienteDetails(cliente.id)
       return name
+
+  renderContacto: (cliente) =>
+    Contacto.destroyAll()
+    Contacto.createFromCliente(cliente)
+    @srcCliente.html require("views/controllers/clienteCanvas/cliente")(cliente)
+    @srcContacto.empty()
 
   onAddContacto: =>
     @srcContacto.html require('views/controllers/clienteCanvas/contacto')()
 
+  onClickEditContacto: (e) =>
+    target = $(e.target)
+    contacto = Contacto.find target.data("id")
+    @srcContacto.html require('views/controllers/clienteCanvas/contacto')(contacto)
+
+  onDeleteContacto: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    contacto = Contacto.find id
+    contacto.destroy()
+    cliente = @currentCliente
+    cliente.Contactos = Contacto.toJson()
+    cliente.save()
+    cliente.ajax().update()
+    @renderContacto(cliente)
+
+  onSaveContacto: (e) =>
+    target = $(e.target)
+    id = target.data "id"
+    contacto = Contacto.exists(id) 
+    flag_newContacto = false
+    if !contacto
+      contacto = Contacto.create {} 
+      flag_newContacto = true
+
+    for input in $(".srcContacto > * > input")
+      if !input.checkValidity()
+        alert "Error en " + input.name
+        contacto.destroy() if flag_newContacto
+        return false
+
+      input = $(input)
+      contacto[input.data("type")] = input.val()
+
+    contacto.save()
+
+    cliente = @currentCliente
+    return false if !cliente
+    cliente.Contactos = Contacto.toJson()
+    cliente.save()
+    
+    @renderContacto(cliente)
+    
   getClienteDetails: (id) =>
     @clienteDetailId = id
     data =

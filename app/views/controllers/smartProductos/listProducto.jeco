@@ -1,3 +1,5 @@
+<% Cliente  = require("models/cliente") %>
+
 <li class="span6 hideable" data-inventario="<%= @InventarioActual %>" data-id="<%= @id  %>">
 
   <p class="productoName"> <%= @Name?.capitalize() %> </p>
@@ -12,7 +14,7 @@
   </span>
 
   <span> 
-    <i class="icon-money"></i> <%= @Precio_Distribuidor?.toMoney() %>
+    <i class="icon-money"></i> <%= @getPrecio(Cliente.current , true ) %>
   </span>
 
   <span> 
