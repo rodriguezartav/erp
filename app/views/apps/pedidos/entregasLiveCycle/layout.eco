@@ -33,18 +33,22 @@
                                       
                   <p class="label  label-primary alignLeft marginLess " for="inputEmail">Camion</p>
                   <select class="withMarginBottom txt_nueva_ruta_camion txt_value">
-                    <option>Plataforma</option>
-                    <option>Camion</option>
+                    <option>Platforma</option>
+                    <option>Hino 6T</option>
+                    <option>Hino 2.5T</option>
                     <option>Canter</option>
                   </select>
                   <br/>
+
                   <p class="label  label-primary alignLeft marginLess  " for="inputEmail">Chofer</p>
                   <select class="withMarginBottom txt_nueva_ruta_chofer txt_value">
                     <option>Manuel</option>
                     <option>Alex</option>
                     <option>Jaime</option>
+                    <option>William</option>
+                    <option>Felipe</option>
                   </select>
-                  
+
                   <br/>
                   <a class="btn btn-primary btn-large txt_nueva_ruta_btn">Guardar</a>
               </div>

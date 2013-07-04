@@ -15,14 +15,14 @@ class PedidoItem extends Spine.Model
   @avoidQueryList = ["DescuentoNegociacion"]
   @avoidInsertList = ["Total","Descuento_Monto","Impuesto_Monto", "SubTotal" , "LastModifiedDate" , "DescuentoNegociacion"] 
 
-  @createFromProducto: (producto ) ->
+  @createFromProducto: (producto , cliente ) ->
     pedido = PedidoItem.create
       Producto: producto.id
       Name: producto.Name
       Cantidad: 1
       Costo: producto.Costo
       Impuesto: producto.Impuesto
-      Precio: producto.Precio_Distribuidor
+      Precio: producto.getPrecio(cliente,false)
       Descuento: producto.DescuentoMaximo
     pedido.updateSubTotal()
     pedido.applyDescuento()

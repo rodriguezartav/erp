@@ -50,11 +50,13 @@ class SinglePedidos extends Spine.Controller
     @clientes.bind "credito_data_changed"    , @addCliente
     @clientes.bind "contado_data_changed"    , @onContadoMode
 
+
   resetBindings: =>
     PedidoItem.unbind "update"        , @onPedidoItemChange
     PedidoItem.unbind "destroy"          , @onPedidoItemChange
     @clientes.unbind "credito_data_changed"  , @addCliente
     @clientes.unbind "contado_data_changed"  , @onContadoMode
+
 
   constructor: ->
     super
@@ -90,6 +92,7 @@ class SinglePedidos extends Spine.Controller
     Negociacion.destroyAll()
     @negociaciones = Negociacion.createFromCliente(cliente)
     @smartProductos.loadNegociaciones(@negociaciones)
+    @smartProductos.loadPrecios(cliente)
 
   onPedidoItemChange: (e) =>
     clearTimeout(@throttleTimer) if @throttleTimer

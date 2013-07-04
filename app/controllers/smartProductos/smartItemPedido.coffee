@@ -1,5 +1,6 @@
 Spine = require('spine')
 Producto = require("models/producto")
+Cliente = require("models/cliente")
 PedidoItem = require("models/transitory/pedidoItem")
 Negociacion = require("models/transitory/negociacion")
 
@@ -23,7 +24,7 @@ class SmartItemPedido extends Spine.Controller
     "click .btnSave"       : "onEditSave"
     "click .btnDelete"     : "onDelete"
     "change .especialValue" : "onEspecialValueChange"
-    "click .selectPrecio" : "onSelectedPrecio"
+   # "click .selectPrecio" : "onSelectedPrecio"
 
   constructor: ->
     super
@@ -38,6 +39,11 @@ class SmartItemPedido extends Spine.Controller
     @dataItem.DescuentoNegociacion = @negociacion.Descuento
     @dataItem.save()
     @checkItem()
+    @render()
+
+  setPrecio: (cliente) =>
+    @dataItem.Precio = @producto.getPrecio(cliente,false)
+    @checkItem(pedidoItem)
     @render()
 
   validateCreation: =>
@@ -56,7 +62,7 @@ class SmartItemPedido extends Spine.Controller
     @html require("views/controllers/smartProductos/pedido/listItem")(@dataItem)
 
   createItem: (producto,cantidad,referencia,especial=false) =>
-    @dataItem = PedidoItem.createFromProducto(@producto)
+    @dataItem = PedidoItem.createFromProducto(@producto,Cliente.current)
     @dataItem.Referencia = referencia
     @dataItem.Especial = especial
     @dataItem.Cantidad= cantidad

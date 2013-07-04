@@ -140,7 +140,6 @@ class entregasLiveCycle_RutasView extends Spine.Controller
     @entregasLiveCycle.filterByRuta rutas
 
   onBtnRutasRight: (e) =>
-    console.log e
     @rutasScrollable.scrollLeft 400
 
   onBtnRutasLeft: (e) =>

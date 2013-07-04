@@ -1,0 +1,15 @@
+<div class="withMarginTop alignMiddle" >
+
+<input name="Nombre" data-required="true" required class="span2 alignMiddle withoutMarginBottom" type="text" data-type="Nombre" placeholder="Nombre" value="<%= @Nombre %>"/>
+
+<input  name="Celular"  data-required="true" pattern="[0-9]*" required data-class="phone" class="span2 alignMiddle withoutMarginBottom" type="number" data-type="Celular"  placeholder="Celular"  value="<%= @Celular %>"/>
+
+<input  name="Email"  data-required="true" required data-class="email"  class="span2 alignMiddle withoutMarginBottom" type="email" data-type="Email"  placeholder="Email"  value="<%= @Email %>"/>
+
+<input  name="Puesto"   data-required="true" required class="span2 txtPuesto alignMiddle withoutMarginBottom" data-type="Puesto" type="text"  value="<%= @Puesto %>" />
+
+
+<a data-id="<%= @id %>" class="btn alignMiddle btn btnSaveContacto">Guardar</a>
+<a  data-id="<%= @id %>"  class="btn alignMiddle btn-danger btn btnDeleteContacto">Borrar</a>
+
+</div>

@@ -14,10 +14,12 @@ class ClienteCanvas  extends Spine.Controller
     ".srcCliente" : "srcCliente"
     ".srcVentas" : "srcVentas"
     ".srcProductos" : "srcProductos"
+    ".srcContacto" : "srcContacto"
 
   events:
     "click .container" : "onClose"
     "click .btnPostToChatter" : "onPostToChatter"
+    "click .btnAddContacto" : "onAddContacto"
 
   constructor: ->
     super
@@ -35,6 +37,9 @@ class ClienteCanvas  extends Spine.Controller
       @srcCliente.html require("views/controllers/clienteCanvas/cliente")(cliente)
       @getClienteDetails(cliente.id)
       return name
+
+  onAddContacto: =>
+    @srcContacto.html require('views/controllers/clienteCanvas/contacto')()
 
   getClienteDetails: (id) =>
     @clienteDetailId = id

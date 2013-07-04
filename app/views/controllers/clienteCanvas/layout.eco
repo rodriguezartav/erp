@@ -2,9 +2,17 @@
   
   <div class="innerContainer">
 
-    <div class="srcCliente">      
+    <div class="srcCliente alignMiddle">      
     </div>
-
+    
+    <div class="srcContacto">      
+    </div>
+    
+    
+    
+    <hr/>
+    
+    
     <div class="row-fluid">
 
     <div class="span5">

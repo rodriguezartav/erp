@@ -37,6 +37,7 @@ DepositosLivecycle = require("apps/cuentasPorPagar/depositosLivecycle")
 
 
 TomasInventario = require("apps/procesos/tomasInventario")
+
 ListasPrecio = require("apps/procesos/listasPrecio")
 
 EstadoCuenta = require("apps/print/estadoCuenta")

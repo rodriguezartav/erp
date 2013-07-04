@@ -20,6 +20,13 @@ class Producto extends Spine.Model
     filter += " order by CodigoExterno__c "
     filter
 
+  @getPrecio: (cliente , format = true) =>
+    precio = 0
+    precio = @Precio_Distribuidor__c if cliente.Clase == "Mayoreo"
+    precio = @Precio_Retail if cliente.Clase == "Retail"
+    precio = @Precio_Industria if cliente.Clase == "Industria"
+    return if format then precio.toMoney() else precio
+
   @getFamilias: =>
     familias = (producto.Familia for producto in Producto.all()).unique()
 

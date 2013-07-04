@@ -60,6 +60,11 @@ class SmartProductos  extends Spine.Controller
     for index,item in @smartItemMap
       item.setNegociacion?(@negociaciones)
 
+  loadPrecios: (cliente) =>
+    @cliente = cliente
+    for index,item in @smartItemMap
+      item.setPrecio?(@cliente)
+
   render: (productos , renderGroups=true  ) =>
     @smartProductos_list.html require("views/controllers/smartProductos/listProducto")(productos)
     @smartProductos_list.show()
