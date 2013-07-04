@@ -71,7 +71,7 @@ class SecurityManager
     @profiles["Contabilidad"] = [  VerCierreMensual ,  VerCierreDiario , DoCierreDiario , VerRegistros ,  VerRegistrosResumen ]
 
 
-    @profiles["Tesoreria"] = [MovimientoLivecycle , VerProductos  , PagosProveedor  , CuentasLiveCycle , ReciboLivecycle ]
+    @profiles["Tesoreria"] = [MovimientoLivecycle ,  DocumentosAnular , VerProductos  , PagosProveedor  , CuentasLiveCycle , ReciboLivecycle ]
 
 
     @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle , EstadoCuenta , PedidosLiveCycle , VerProductos ,ReciboLivecycle , DepositosLivecycle , FacturasProveedor , PagosProveedor  , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
