@@ -23,7 +23,7 @@ class Producto extends Spine.Model
   getPrecio: (cliente , format = true , basePrice = null) =>
     precio = basePrice or @Precio_Distribuidor
     if cliente
-      precio = @Precio_Distribuidor__c if cliente.Clase == "Mayoreo"
+      precio = @Precio_Distribuidor if cliente.Clase == "Mayoreo"
       precio = @Precio_Retail if cliente.Clase == "Retail"
       precio = @Precio_Industria if cliente.Clase == "Industria"
     return if format then precio.toMoney() else precio
