@@ -141,14 +141,34 @@ class SalesforceController
       res.statusCode = 500
       res.send  "NOT YET IMPLEMENTED"
 
+
+
   handleQuery: (req,res, token) =>
-    SalesforceApi.query token , soql: req.query['soql']  , (response) ->
-      res.send response
-    , (error) =>
-      try
-        #req.parseController.logAudit "Error" , req.session.salesforceToken.user.id , req.session.salesforceToken.user.Name , error
-        res.statusCode = 503
-        res.send error
+    res.records = []
+    @doQuery(req,res,token)
+
+  doQuery: (req,res,token,nextRecordsUrl ) =>
+    if !nextRecordsUrl
+      SalesforceApi.query token , soql: req.query['soql']  ,  (response) =>
+        @doQueryCallback(req,res,token,response)
+      , (error) =>
+        res.statusCode = 500
+        return res.send error
+
+    else
+      SalesforceApi.queryMore token , nextRecordsUrl: nextRecordsUrl  ,  (response) =>
+        @doQueryCallback(req,res,token,response)
+      , (error) =>
+        res.statusCode = 500
+        return res.send error
+
+  doQueryCallback: (req,res,token,response) =>
+    objResponse = JSON.parse response
+    res.records = res.records.concat(objResponse.records)
+    if objResponse.done
+      res.send JSON.stringify records: res.records
+    else
+      @doQuery(req,res,token,objResponse.nextRecordsUrl)
 
   startAuth: (req, res) =>
     url = "#{@loginServer}/services/oauth2/authorize?response_type=code&client_id=#{@consumerKey}&redirect_uri=#{@redirectUrl}&display=touch"

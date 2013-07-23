@@ -158,8 +158,15 @@ class RestApi
       error: error
     RestApi.request options
 
+  @queryMore: (oauth,data,callback,error) ->
+    options =
+      oauth: oauth
+      path: data.nextRecordsUrl
+      callback: callback
+      error: error
+    RestApi.request options
+
   @rest: (oauth,data, callback, error) ->
-    
     path =  "/services/apexrest/#{data.restRoute}"
     path += "?#{querystring.stringify(JSON.parse(data.restData) )}" if data.restMethod == "GET"
     restData = if data.restMethod == "GET" then {} else JSON.stringify(data.restData)
