@@ -168,7 +168,7 @@ class SinglePago extends Spine.Controller
       total += item.pagoItem.Monto if item.pagoItem.Monto and parseFloat(item.pagoItem.Monto) != 0
       item.checkItem()
     @validationErrors.push "El pago debe tener al menos una factura o nota de debito" if !hasFactura
-    @validationErrors.push "El pago debe ser mayor o igual a 0" if total < 0
+    @validationErrors.push "El pago debe ser mayor o igual a 0 y fue #{total}" if total < -0.0009
     @pago.Monto = total;
     @pago.Fecha = @txtFechaInput.val() if !@pago.Fecha
     @pago.FormaPago = @formaPago

@@ -16,7 +16,6 @@ class SalesforceController
     @redirectUrl = "#{@baseUrl}/sessions/salesforce/callback"
 
     @mixpanel = Mixpanel.init('e980478d760bd1bd06b2af38233baadc');
-    
 
     @app.use @middleware()
     @api = SalesforceApi
