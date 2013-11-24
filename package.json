@@ -23,6 +23,7 @@
     "async"         :  "0.1.22" ,
     "node-pusher"   :  "0.0.2"  ,
     "twilio"        :  "0.4.0" , 
-    "mixpanel"      :  "*"
+    "mixpanel"      :  "*",
+    "newrelic"      : "latest"
   }
 }
