@@ -2,8 +2,8 @@
   "name": "app",
   "version": "0.0.1",
   "engines": {
-    "node": "~0.6.6",
-    "npm" : "~1.0.106"
+    "node": "~0.8.12",
+    "npm" : "~1.1.63"
   },
   "dependencies": { 
     "serveup"       :  "~0.0.2" ,
