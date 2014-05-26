@@ -68,7 +68,7 @@ class CreateMovimiento extends Spine.Controller
       movimiento.Observacion      = object.Observacion
       movimiento.Referencia       = object.Referencia
       movimiento.save()
-      object.Observacion = ""
+    object.Observacion = ""
     
   send: (e) =>
     @updateFromView({},@inputs_to_validate)
