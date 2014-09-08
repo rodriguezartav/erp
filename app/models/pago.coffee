@@ -32,7 +32,7 @@ class Pago extends Spine.Model
      filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "       ,  filter)  if options.cliente
      filter = @queryFilterAddCondition(" Fecha__c = #{options.fecha} "     ,  filter)  if options.fecha
      #filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 0 , 1 ) or ( EstadoNumerico__c = 2 and LastModifiedDate = TODAY ) "     ,  filter)  if options.livecycle
-     filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 0 , 1 ) or ( EstadoNumerico__c = 2 ) "     ,  filter)  if options.livecycle
+     filter = @queryFilterAddCondition(" EstadoNumerico__c in ( 0 , 1 )  "     ,  filter)  if options.livecycle
      filter = @queryFilterAddCondition(" Recibo__c='#{options.search}'"     ,  filter)  if options.search
      #filter = @queryFilterAddCondition(" DepositadoFecha__c = LAST_N_DAYS:7 and CreatedById = '#{depositadosUsuario}'"     ,  filter)  if options.depositadosUsuario != null
      filter
