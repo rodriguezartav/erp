@@ -49,8 +49,8 @@ class PedidoPreparado extends Spine.Model
 
   @queryFilter: (options ) =>
     filter =""
-    filter = @queryFilterAddCondition(" Estado__c  IN ( 'Pendiente' , 'Aprobado' ,'Archivado' ) or LastModifiedDate = TODAY" , filter)
-    
+    #filter = @queryFilterAddCondition(" Estado__c  IN ( 'Pendiente' , 'Aprobado' ,'Archivado' ) or LastModifiedDate = TODAY" , filter)
+    filter = @queryFilterAddCondition(" Estado__c  IN ( 'Pendiente' , 'Aprobado' ,'Archivado' )" , filter) 
     filter
 
 module.exports = PedidoPreparado
