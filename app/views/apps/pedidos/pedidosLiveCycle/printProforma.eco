@@ -59,7 +59,7 @@
         <td  class="descripcion"><%= producto.Name.capitalize() %></td>
         <td  class="precio"><%= movimiento.Precio.toMoney() %></td>
         <td  class="descuento"><%= movimiento.Descuento %></td>
-        <td class="total"><%= movimiento.Total?.toMoney() %></td>
+        <td class="total"><%= movimiento.Total.toMoney() %></td>
       </tr>
   
     <% end %>

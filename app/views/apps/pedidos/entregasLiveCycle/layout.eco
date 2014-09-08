@@ -33,9 +33,9 @@
                                       
                   <p class="label  label-primary alignLeft marginLess " for="inputEmail">Camion</p>
                   <select class="withMarginBottom txt_nueva_ruta_camion txt_value">
-                    <option>Platforma</option>
-                    <option>Hino 6T</option>
-                    <option>Hino 2.5T</option>
+                    <option>Plataforma</option>
+                    <option>Dutro</option>
+                    <option>Hino</option>
                     <option>Canter</option>
                   </select>
                   <br/>
@@ -47,6 +47,7 @@
                     <option>Jaime</option>
                     <option>William</option>
                     <option>Felipe</option>
+                    <option>Hugo</option>
                   </select>
 
                   <br/>

@@ -53,7 +53,7 @@ class Compras extends Spine.Controller
       movimiento.Referencia       = object.Referencia
       movimiento.SubTotal         = 0
       movimiento.save()
-      object.Observacion = " "
+    object.Observacion = " "
    
   send: (e) =>
     @updateFromView(@documento,@inputs_to_validate)
