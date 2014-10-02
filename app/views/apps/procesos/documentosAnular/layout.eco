@@ -13,7 +13,7 @@
         <i class="icon-search icon-white"></i>
       </a>
       
-      <a class="btn btn-primary reload-anulado"><i class="icon-refresh-anulado icon-white"></i></a><br/>
+      <a class="btn btn-primary reload"><i class="icon-refresh icon-white"></i></a><br/>
     </div>
   </div>
   
