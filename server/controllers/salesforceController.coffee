@@ -197,7 +197,7 @@ class SalesforceController
           subject: 'ERP LOGIN ERROR',
           html: 'msg'
       
-        mailgun.messages().send(data),  (err, body) ->
+        mailgun.messages().send data,  (err, body) ->
           console.log(e);
         return res.send(500,500);
       
