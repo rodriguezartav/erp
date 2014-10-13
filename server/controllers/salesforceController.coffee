@@ -183,7 +183,12 @@ class SalesforceController
         client_secret: @consumerSecret
 
     post.on 'complete' , (data, response) =>
-      lastS = data.id.lastIndexOf "/"
+      try
+        lastS = data.id.lastIndexOf "/"
+      
+      catch(e)
+        return res.send(500,500);
+      
       userId = data.id.substring(lastS + 1) 
       data.user = User.exists userId
       req.session.salesforceToken = data
