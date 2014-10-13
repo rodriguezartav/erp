@@ -190,7 +190,7 @@ class SalesforceController
       try
         lastS = data.id.lastIndexOf "/"
       
-      catch(e)
+      catch e
         data = 
           from: "ERP",
           to: "roberto@3vot.com",
@@ -199,7 +199,6 @@ class SalesforceController
       
         mailgun.messages().send(data,  (err, body) ->
           console.log(e);
-          
         return res.send(500,500);
       
       userId = data.id.substring(lastS + 1) 
