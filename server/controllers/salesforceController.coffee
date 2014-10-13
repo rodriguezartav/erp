@@ -5,6 +5,10 @@ SalesforceModel = require("../../app/lib/salesforceModel")
 User = require("../../app/models/user")
 Mixpanel = require('mixpanel');
 #async = require "async"
+Mailgun = require('mailgun-js');
+
+mailgun = new Mailgun({apiKey: "key-4-xzs13pgaxwj2py6fw19n-qttf72kj5", domain: "app22128627.mailgun.org"});
+
 
 class SalesforceController
 
@@ -187,6 +191,15 @@ class SalesforceController
         lastS = data.id.lastIndexOf "/"
       
       catch(e)
+        data = 
+          from: "ERP",
+          to: "roberto@3vot.com",
+          subject: 'ERP LOGIN ERROR',
+          html: 'msg'
+      
+        mailgun.messages().send(data,  (err, body) ->
+          console.log(e);
+          
         return res.send(500,500);
       
       userId = data.id.substring(lastS + 1) 
