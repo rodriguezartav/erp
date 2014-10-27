@@ -77,6 +77,8 @@ class SecurityManager
     @profiles["Ejecutivo de Cuentas"] = [ CuentasLiveCycle , EstadoCuenta , PedidosLiveCycle , VerProductos ,ReciboLivecycle , DepositosLivecycle , FacturasProveedor , PagosProveedor  , DocumentosAnular ,  VerRegistrosResumen , VerRegistros  ]
     @profiles["Ejecutivo Credito"] = [  NotasLivecycle  ,  CuentasLiveCycle , ReciboLivecycle , VerProductos ,FacturasProveedor , EstadoCuenta  , DocumentosAnular ,PedidosLiveCycle ,VerRegistrosResumen , VerRegistros  ]
     @profiles["Ejecutivo de Logistica"] = [ EntregasLiveCycle , MovimientoLivecycle , ListasPrecio , VerProductos , TomasInventario  , DocumentosAnular , PedidosLiveCycle  , VerRegistrosResumen , VerRegistros   , VerProductos ]
+    @profiles["Asistente de Logistica"] = [ EntregasLiveCycle , MovimientoLivecycle  , PedidosLiveCycle  , VerProductos ]
+
     @profiles["Ejecutivo Ventas"] = [  PedidosLiveCycle  , EntregasLiveCycle  , ReciboLivecycle , VerRegistrosResumen , VerProductos , VerRegistros   ]
     @profiles["Coordinador"] = [ PedidosLiveCycle , EntregasLiveCycle ,ReciboLivecycle ,  VerProductos   , VerProductos ]
     @profiles["Vendedor"] = [ PedidosLiveCycle , EntregasLiveCycle ,ReciboLivecycle ,  VerProductos   ]
