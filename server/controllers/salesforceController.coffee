@@ -44,6 +44,8 @@ class SalesforceController
 
   updateUsers: (cb) =>
     SalesforceApi.query @serverToken , soql: "select id , Name , SmallPhotoUrl, Perfil__c , FirstName from User where IsActive = true" , (response) ->
+      console.log("********************")
+      console.log(response)
       User.refresh response
     , @onError
 
