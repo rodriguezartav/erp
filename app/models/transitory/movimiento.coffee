@@ -1,26 +1,26 @@
 Spine = require('spine')
 
 class Movimiento extends Spine.Model
-  @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "ProductoCosto" , 
+  @configure 'Movimiento', "Tipo", "Nombre_Contado",  "Producto" , "ProductoCantidad" , "ProductoPrecio" , "ProductoCosto" ,
    "Impuesto" , "Descuento" , "SubTotal" , "Total" , "Referencia" , "Observacion" , "Cliente" , "IsAplicado"
    "CodigoExterno" , "Descuento_Unitario" , "Impuesto_Unitario" ,"Plazo", "Proveedor" , "ProductoCantidadPendiente" , "CreatedDate"
-  
+
   @extend Spine.Model.SalesforceModel
   @extend Spine.Model.SalesforceAjax.Methods
-   
-  @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario", "CodigoExterno" ] 
-  #Adeed proveedor to list, because error in Devolucion 
+
+  @avoidInsertList = ["Total","Descuento_Unitario","Impuesto_Unitario", "CodigoExterno" ]
+  #Adeed proveedor to list, because error in Devolucion
   @avoidQueryList = ["Plazo","Proveedor","ProductoCosto"]
-   
+
   @queryFilter: (options ) =>
     return "" if !options
     filter =""
     filter = @queryFilterAddCondition(" Fecha__c   = LAST_N_DAYS:#{options.diasAtras} " , filter) if options.diasAtras
     filter = @queryFilterAddCondition(" Tipo__c IN (#{options.tipos}) "               , filter) if options.tipos
     filter = @queryFilterAddCondition(" Cliente__c = '#{options.cliente.id}' "        , filter) if options.cliente
-    filter = @queryFilterAddCondition(" ( IsAplicado__c=false or Fecha__c = LAST_N_DAYS:30 )  and Tipo__c IN ('EN','SA','CO') ", filter) if options.livecycle
+    filter = @queryFilterAddCondition(" ( IsAplicado__c=false or Fecha__c = LAST_N_DAYS:30 )  and Tipo__c IN ('EN','SA','CO','DE','DEM') ", filter) if options.livecycle
     filter
- 
+
   @create_from_producto: (producto, cantidad = 1 ) ->
     movimiento = Movimiento.create
       Producto: producto.id
